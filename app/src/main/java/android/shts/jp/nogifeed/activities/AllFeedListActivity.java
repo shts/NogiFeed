@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-/**
- * Get and show all member feed list.
- */
 public class AllFeedListActivity extends Activity {
 
     @Override
