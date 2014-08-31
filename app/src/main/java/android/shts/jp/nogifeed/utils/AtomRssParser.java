@@ -2,8 +2,6 @@ package android.shts.jp.nogifeed.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -107,7 +105,7 @@ public class AtomRssParser {
 					} else if (tag.equals(TAG_CONTENT)) {
 						if (entry != null) {
 							String text = parser.nextText();
-							entry.content = ignoreCdata(text); // without CDATA tag
+							entry.content = ignoreCdataTag(text); // without CDATA tag
 							Log.d(TAG, "content " + text);
 						}
 
@@ -139,7 +137,7 @@ public class AtomRssParser {
 		return entries;
 	}
 
-    private static String ignoreCdata(String target) {
+    private static String ignoreCdataTag(String target) {
         // delete cdata tag
         String ignoreCdataStartTag = target.replace("<![CDATA[", "");
         String ignoreCdataEndTag = ignoreCdataStartTag.replace("]]>", "");

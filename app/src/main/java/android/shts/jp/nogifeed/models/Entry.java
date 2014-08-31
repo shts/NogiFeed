@@ -12,8 +12,4 @@ public class Entry {
     public String summary;
     public String name;
     public String content;
-
-    public String parse() {
-        return null;
-    }
 }

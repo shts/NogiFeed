@@ -1,15 +1,24 @@
 package android.shts.jp.nogifeed.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.shts.jp.nogifeed.R;
+import android.shts.jp.nogifeed.fragment.AllFeedListFragment;
+import android.support.v4.app.*;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class AllFeedListActivity extends Activity {
+public class AllFeedListActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_all_feed_list);
+
+        AllFeedListFragment allFeedListFragment = new AllFeedListFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.container, allFeedListFragment);
+        ft.commit();
     }
 
     @Override
@@ -18,7 +27,8 @@ public class AllFeedListActivity extends Activity {
     }
 
     @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        return super.onMenuItemSelected(featureId, item);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
+
 }
