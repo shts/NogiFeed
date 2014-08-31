@@ -57,22 +57,13 @@ public class AllFeedListFragment extends android.support.v4.app.Fragment {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Entries entries) {
                 // refresh feed list
-                setupAdapterOnUiThread(entries);
+                setupAdapter(entries);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 // Show error dialog
                 Toast.makeText(getActivity(), "フィードの取得に失敗しました", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void setupAdapterOnUiThread(final Entries entries) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                setupAdapter(entries);
             }
         });
     }
