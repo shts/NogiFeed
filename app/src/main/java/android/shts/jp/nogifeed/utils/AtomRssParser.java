@@ -107,7 +107,7 @@ public class AtomRssParser {
 					} else if (tag.equals(TAG_CONTENT)) {
 						if (entry != null) {
 							String text = parser.nextText();
-							entry.content = text; // with CDATA
+							entry.content = ignoreCdata(text); // without CDATA tag
 							Log.d(TAG, "content " + text);
 						}
 
@@ -138,5 +138,13 @@ public class AtomRssParser {
 		}
 		return entries;
 	}
+
+    private static String ignoreCdata(String target) {
+        // delete cdata tag
+        String ignoreCdataStartTag = target.replace("<![CDATA[", "");
+        String ignoreCdataEndTag = ignoreCdataStartTag.replace("]]>", "");
+        String ignoreCrLf = ignoreCdataEndTag.replace("\n", "");
+        return ignoreCrLf;
+    }
 
 }
