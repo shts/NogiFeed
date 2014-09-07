@@ -2,6 +2,7 @@ package android.shts.jp.nogifeed.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.activities.MainActivity;
 import android.shts.jp.nogifeed.adapters.AllFeedListAdapter;
@@ -10,6 +11,8 @@ import android.shts.jp.nogifeed.listener.RssClientListener;
 import android.shts.jp.nogifeed.models.Entries;
 import android.shts.jp.nogifeed.models.Entry;
 import android.shts.jp.nogifeed.utils.UrlUtils;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +22,12 @@ import android.widget.Toast;
 
 import org.apache.http.Header;
 
-public class AllFeedListFragment extends android.support.v4.app.Fragment {
+public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private ListView mAllFeedList;
     private AllFeedListAdapter mAllFeedListAdapter;
     private MainActivity mActivity;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,11 @@ public class AllFeedListFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_all_feed_list, null);
         mAllFeedList = (ListView) view.findViewById(R.id.all_feed_list);
+
+        // SwipeRefreshLayoutの設定
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+
         return view;
     }
 
@@ -90,6 +99,16 @@ public class AllFeedListFragment extends android.support.v4.app.Fragment {
         blogFragment.setArguments(bundle);
 
         return blogFragment;
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        }, 3000);
     }
 
 }

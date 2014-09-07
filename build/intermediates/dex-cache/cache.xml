@@ -2,17 +2,29 @@
 <pre-dex-items>
 
     <item
-        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/support-v4-19.1.0-fe930dc68beb1e566675ce71b270d4091c6c249b.jar"
-        jar="/Applications/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/internal_impl-20.0.0-e6961f17fda400e8211dc43d8d0cca3b7b39a7f0.jar"
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/libs/internal_impl-20.0.0.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
     <item
-        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-1ee6130e53532d3620465ed34235ec9db2f84076.jar"
-        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/classes.jar"
+        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/support-annotations-20.0.0-bca9cd8c8082330ef7549e0398af852faae531fd.jar"
+        jar="/Applications/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
+        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
+    <item
+        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-6105dc5d84b0f944e24a932a7ff8610cdf779358.jar"
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
+    <item
+        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-0fa3e13a3ad36f0d8756f3db5229ace3695e3bdf.jar"
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="f21927d22fe31889ecce94dd697a2e75b137e0ef"/>
     <item
         dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/android-async-http-1.4.5-b4ef43b277f96d73df95d232b1085fc386df5249.jar"
         jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.loopj.android/android-async-http/1.4.5/77bf7cacf9cefe19dc105e5425d2eb1bb5285881/android-async-http-1.4.5.jar"
