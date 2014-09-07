@@ -1,21 +1,21 @@
 package android.shts.jp.nogifeed.fragment;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
+import android.shts.jp.nogifeed.activities.MainActivity;
 import android.shts.jp.nogifeed.adapters.AllFeedListAdapter;
 import android.shts.jp.nogifeed.api.AsyncRssClient;
 import android.shts.jp.nogifeed.listener.RssClientListener;
 import android.shts.jp.nogifeed.models.Entries;
+import android.shts.jp.nogifeed.models.Entry;
 import android.shts.jp.nogifeed.utils.UrlUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpClient;
 
 import org.apache.http.Header;
 
@@ -23,6 +23,7 @@ public class AllFeedListFragment extends android.support.v4.app.Fragment {
 
     private ListView mAllFeedList;
     private AllFeedListAdapter mAllFeedListAdapter;
+    private MainActivity mActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class AllFeedListFragment extends android.support.v4.app.Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        mActivity = (MainActivity) activity;
     }
 
     @Override
@@ -71,6 +73,23 @@ public class AllFeedListFragment extends android.support.v4.app.Fragment {
     private void setupAdapter(Entries entries) {
         mAllFeedListAdapter = new AllFeedListAdapter(getActivity(), entries);
         mAllFeedList.setAdapter(mAllFeedListAdapter);
+        mAllFeedList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Entry entry = (Entry) mAllFeedList.getItemAtPosition(position);
+                mActivity.changeFragment(createBlogFragment(entry));
+            }
+        });
+    }
+
+    private BlogFragment createBlogFragment(Entry entry) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Entry.KEY, entry);
+
+        BlogFragment blogFragment = new BlogFragment();
+        blogFragment.setArguments(bundle);
+
+        return blogFragment;
     }
 
 }

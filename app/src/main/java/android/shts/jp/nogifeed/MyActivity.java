@@ -1,13 +1,12 @@
 package android.shts.jp.nogifeed;
 
-import android.shts.jp.nogifeed.activities.AllFeedListActivity;
-import android.support.v7.app.ActionBarActivity;
+import android.shts.jp.nogifeed.activities.MainActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class MyActivity extends AllFeedListActivity {
+public class MyActivity extends MainActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
