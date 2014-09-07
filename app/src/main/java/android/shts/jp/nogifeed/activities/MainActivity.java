@@ -2,7 +2,7 @@ package android.shts.jp.nogifeed.activities;
 
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
-import android.shts.jp.nogifeed.fragment.AllFeedListFragment;
+import android.shts.jp.nogifeed.fragments.AllFeedListFragment;
 import android.support.v4.app.*;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
