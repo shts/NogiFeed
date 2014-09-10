@@ -1,20 +1,27 @@
 package android.shts.jp.nogifeed.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.activities.MainActivity;
 import android.shts.jp.nogifeed.models.Entry;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.webkit.WebViewFragment;
 
 /**
  * Created by saitoushouta on 2014/09/07.
  */
 public class BlogFragment extends Fragment {
+
+    private static final String TAG = BlogFragment.class.getSimpleName();
 
     private MainActivity mActivity;
     private Entry mEntry;
@@ -31,8 +38,26 @@ public class BlogFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_blog, null);
         mWebView = (WebView) view.findViewById(R.id.browser);
+        // TODO: cannot open web page inside BlogFragment.(issue)
+//        mWebView.getSettings().setJavaScriptEnabled(true);
+//        mWebView.setWebViewClient(new BrowserViewClient());
         mWebView.loadUrl(mEntry.link);
         return view;
+    }
+
+    private class BrowserViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (Uri.parse(url).getHost().equals("blog.nogizaka46.com")) {
+                Log.d(TAG, "shouldOverrideUrlLoading : " + true);
+//                view.loadUrl(url);
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+            Log.d(TAG, "shouldOverrideUrlLoading : " + false);
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(intent);
+            return true;
+        }
     }
 
     @Override

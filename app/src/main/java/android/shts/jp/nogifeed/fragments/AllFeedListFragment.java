@@ -2,7 +2,6 @@ package android.shts.jp.nogifeed.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.activities.MainActivity;
 import android.shts.jp.nogifeed.adapters.AllFeedListAdapter;
@@ -42,6 +41,8 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
         // SwipeRefreshLayoutの設定
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeColors(
+                R.color.purple_600, R.color.purple_600, R.color.purple_600, R.color.purple_600);
 
         return view;
     }
@@ -69,6 +70,9 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
             public void onSuccess(int statusCode, Header[] headers, Entries entries) {
                 // refresh feed list
                 setupAdapter(entries);
+                if (mSwipeRefreshLayout.isRefreshing()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
@@ -103,12 +107,14 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
 
     @Override
     public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        }, 3000);
+        getAllFeed();
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                // TODO: refresh feed list.
+//                mSwipeRefreshLayout.setRefreshing(false);
+//            }
+//        }, 3000);
     }
 
 }

@@ -1,9 +1,12 @@
 package android.shts.jp.nogifeed;
 
+import android.app.Activity;
 import android.shts.jp.nogifeed.activities.MainActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 
 public class MyActivity extends MainActivity {
