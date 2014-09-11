@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.webkit.WebViewFragment;
 
 /**
  * Created by saitoushouta on 2014/09/07.
@@ -22,16 +21,22 @@ import android.webkit.WebViewFragment;
 public class BlogFragment extends Fragment {
 
     private static final String TAG = BlogFragment.class.getSimpleName();
+    private static final String KEY_PAGE_URL = "key_page_url";
 
     private MainActivity mActivity;
     private Entry mEntry;
     private WebView mWebView;
+    private String mBeforeUrl;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle bundle = getArguments();
-        mEntry = bundle.getParcelable(Entry.KEY);
+        if (savedInstanceState == null) {
+            Bundle bundle = getArguments();
+            mEntry = bundle.getParcelable(Entry.KEY);
+        } else {
+            mBeforeUrl = savedInstanceState.getString(KEY_PAGE_URL);
+        }
     }
 
     @Override
@@ -39,9 +44,14 @@ public class BlogFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_blog, null);
         mWebView = (WebView) view.findViewById(R.id.browser);
         // TODO: cannot open web page inside BlogFragment.(issue)
-//        mWebView.getSettings().setJavaScriptEnabled(true);
-//        mWebView.setWebViewClient(new BrowserViewClient());
-        mWebView.loadUrl(mEntry.link);
+        mWebView.setWebViewClient(new BrowserViewClient());
+
+        if (mBeforeUrl == null) {
+            mWebView.loadUrl(mEntry.link);
+        } else {
+            mWebView.loadUrl(mBeforeUrl);
+            mBeforeUrl = null;
+        }
         return view;
     }
 
@@ -65,4 +75,19 @@ public class BlogFragment extends Fragment {
         super.onAttach(activity);
         mActivity = (MainActivity) activity;
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString(KEY_PAGE_URL, mWebView.getUrl());
+        super.onSaveInstanceState(outState);
+    }
+
+    public boolean goBack() {
+        if (mWebView.canGoBack()) {
+            mWebView.goBack();
+            return true;
+        }
+        return false;
+    }
+
 }
