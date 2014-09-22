@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- File created by the Android Action Bar Style Generator
+
+     Copyright (C) 2011 The Android Open Source Project
+     Copyright (C) 2012 readyState Software Ltd
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="Theme.NogiFeed" parent="@style/BaseNogiFeed">
+        <item name="actionBarItemBackground">@drawable/selectable_background_nogifeed</item>
+        <item name="popupMenuStyle">@style/PopupMenu.Nogifeed</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Nogifeed</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Nogifeed</item>
+        <item name="actionDropDownStyle">@style/DropDownNav.Nogifeed</item>
+        <item name="actionBarStyle">@style/ActionBar.Solid.Nogifeed</item>
+        <item name="actionModeBackground">@drawable/cab_background_top_nogifeed</item>
+        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_nogifeed</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Nogifeed</item>
+    </style>
+
+    <style name="ActionBar.Solid.Nogifeed" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="background">@drawable/ab_solid_nogifeed</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_nogifeed</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_nogifeed</item>
+        <item name="progressBarStyle">@style/ProgressBar.Nogifeed</item>
+    </style>
+
+    <style name="ActionBar.Transparent.Nogifeed" parent="@style/Widget.AppCompat.Light.ActionBar">
+        <item name="background">@drawable/ab_transparent_nogifeed</item>
+        <item name="progressBarStyle">@style/ProgressBar.Nogifeed</item>
+    </style>
+	
+    <style name="PopupMenu.Nogifeed" parent="@style/Widget.AppCompat.Light.PopupMenu">	
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_nogifeed</item>	
+    </style>
+	
+    <style name="DropDownListView.Nogifeed" parent="@style/Widget.AppCompat.Light.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_nogifeed</item>
+    </style>
+
+    <style name="ActionBarTabStyle.Nogifeed" parent="@style/Widget.AppCompat.Light.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_nogifeed</item>
+    </style>
+	
+    <style name="DropDownNav.Nogifeed" parent="@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_nogifeed</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_nogifeed</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_nogifeed</item>
+    </style>
+    
+    <style name="ProgressBar.Nogifeed" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_nogifeed</item>
+    </style>
+    
+    <style name="ActionButton.CloseMode.Nogifeed" parent="@style/Widget.AppCompat.Light.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_nogifeed</item>
+    </style>
+    
+    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
+    <style name="Theme.Nogifeed.Widget" parent="@style/Theme.AppCompat">
+        <item name="popupMenuStyle">@style/PopupMenu.Nogifeed</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Nogifeed</item>
+    </style>
+
+  <style name="EditTextNogifeed" parent="android:Widget.EditText">
+	  <item name="android:background">@drawable/nogifeed_edit_text_holo_light</item>
+	  <item name="android:textColor">#000000</item>
+  </style>
+
+  <style name="AutoCompleteTextViewNogifeed" parent="android:Widget.AutoCompleteTextView">
+      <item name="android:dropDownSelector">@drawable/nogifeed_list_selector_holo_light</item>
+	  <item name="android:background">@drawable/nogifeed_edit_text_holo_light</item>
+	  <item name="android:textColor">#000000</item>
+  </style>
+
+  <style name="CheckBoxNogifeed" parent="android:Widget.CompoundButton.CheckBox">
+      <item name="android:button">@drawable/nogifeed_btn_check_holo_light</item>
+  </style>
+
+  <style name="RadioButtonNogifeed" parent="android:Widget.CompoundButton.RadioButton">
+      <item name="android:button">@drawable/nogifeed_btn_radio_holo_light</item>
+  </style>
+
+  <style name="ButtonNogifeed" parent="android:Widget.Button">
+	  <item name="android:background">@drawable/nogifeed_btn_default_holo_light</item>
+	  <item name="android:minHeight">48dip</item>
+	  <item name="android:minWidth">64dip</item>
+	  <item name="android:textColor">#000000</item>
+  </style>
+
+  <style name="ImageButtonNogifeed" parent="android:Widget.ImageButton">
+	  <item name="android:background">@drawable/nogifeed_btn_default_holo_light</item>
+  </style>
+
+  <style name="SpinnerNogifeed" parent="android:Widget.Spinner">
+      <item name="android:background">@drawable/nogifeed_spinner_background_holo_light</item>
+      <item name="android:dropDownSelector">@drawable/nogifeed_list_selector_holo_light</item>
+  </style>
+
+  <style name="SpinnerDropDownItemNogifeed" parent="android:Widget.DropDownItem.Spinner">
+      <item name="android:checkMark">@drawable/nogifeed_btn_radio_holo_light</item>
+  </style>
+  <style name="TabNogifeed">
+      <item name="android:gravity">center_horizontal</item>
+      <item name="android:paddingLeft">16dip</item>
+      <item name="android:paddingRight">16dip</item>
+      <item name="android:background">@drawable/nogifeed_tab_indicator_holo</item>
+      <item name="android:layout_width">0dip</item>
+      <item name="android:layout_weight">1</item>
+      <item name="android:minWidth">80dip</item>
+  </style>
+
+  <style name="TabTextNogifeed">
+	  <item name="android:textColor">#000000</item>
+      <item name="android:textSize">12sp</item>
+      <item name="android:textStyle">bold</item>
+      <!-- v14 <item name="android:textAllCaps">true</item> -->
+      <item name="android:ellipsize">marquee</item>
+      <item name="android:maxLines">2</item>
+      <item name="android:maxWidth">180dip</item>
+  </style>
+
+  <style name="ProgressBarNogifeed" parent="android:Widget.ProgressBar.Horizontal">
+      <item name="android:progressDrawable">@drawable/nogifeed_progress_horizontal_holo_light</item>
+      <item name="android:indeterminateDrawable">@drawable/nogifeed_progress_indeterminate_horizontal_holo_light</item>
+      <item name="android:minHeight">16dip</item>
+      <item name="android:maxHeight">16dip</item>
+  </style>
+
+  <style name="SeekBarNogifeed" parent="android:Widget.SeekBar">
+      <item name="android:progressDrawable">@drawable/nogifeed_scrubber_progress_horizontal_holo_light</item>
+      <item name="android:indeterminateDrawable">@drawable/nogifeed_scrubber_progress_horizontal_holo_light</item>
+      <item name="android:minHeight">13dip</item>
+      <item name="android:maxHeight">13dip</item>
+      <item name="android:thumb">@drawable/nogifeed_scrubber_control_selector_holo_light</item>
+      <item name="android:thumbOffset">16dip</item>
+      <item name="android:paddingLeft">16dip</item>
+      <item name="android:paddingRight">16dip</item>
+  </style>
+
+  <style name="RatingBarNogifeed" parent="android:Widget.RatingBar">
+      <item name="android:progressDrawable">@drawable/nogifeed_ratingbar_full_holo_light</item>
+      <item name="android:indeterminateDrawable">@drawable/nogifeed_ratingbar_full_holo_light</item>
+  </style>
+
+  <style name="RatingBarBigNogifeed" parent="android:Widget.RatingBar">
+      <item name="android:progressDrawable">@drawable/nogifeed_ratingbar_holo_light</item>
+      <item name="android:indeterminateDrawable">@drawable/nogifeed_ratingbar_holo_light</item>
+      <item name="android:minHeight">35dip</item>
+      <item name="android:maxHeight">35dip</item>
+  </style>
+
+  <style name="RatingBarSmallNogifeed" parent="android:Widget.RatingBar">
+      <item name="android:progressDrawable">@drawable/nogifeed_ratingbar_small_holo_light</item>
+      <item name="android:indeterminateDrawable">@drawable/nogifeed_ratingbar_small_holo_light</item>
+      <item name="android:minHeight">16dip</item>
+      <item name="android:maxHeight">16dip</item>
+  </style>
+
+  <style name="ToggleNogifeed" parent="android:Widget.Button.Toggle">
+      <item name="android:background">@drawable/nogifeed_btn_toggle_holo_light</item>
+      <item name="android:minHeight">48dip</item>
+	  <item name="android:textColor">#000000</item>
+  </style>
+
+  <style name="ListViewNogifeed" parent="android:Widget.ListView">
+      <item name="android:listSelector">@drawable/nogifeed_list_selector_holo_light</item>
+  </style>
+
+  <style name="ListViewNogifeed.White" parent="android:Widget.ListView.White">
+      <item name="android:listSelector">@drawable/nogifeed_list_selector_holo_light</item>
+  </style>
+
+  <style name="SpinnerItemNogifeed" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+      <item name="android:textColor">#000000</item>
+  </style>
+
+</resources>

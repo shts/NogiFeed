@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="AutoCompleteTextViewNogifeed" parent="android:Widget.Holo.Light.AutoCompleteTextView">
+      <item name="android:dropDownSelector">@drawable/nogifeed_list_selector_holo_light</item>
+	    <item name="android:background">@drawable/nogifeed_edit_text_holo_light</item>
+  </style>
+
+  <style name="ButtonNogifeed" parent="android:Widget.Holo.Light.Button">
+	  <item name="android:background">@drawable/nogifeed_btn_default_holo_light</item>
+  </style>
+
+  <style name="ImageButtonNogifeed" parent="android:Widget.Holo.Light.ImageButton">
+	  <item name="android:background">@drawable/nogifeed_btn_default_holo_light</item>
+  </style>
+
+  <style name="SpinnerNogifeed" parent="android:Widget.Holo.Light.Spinner">
+      <item name="android:background">@drawable/nogifeed_spinner_background_holo_light</item>
+      <item name="android:dropDownSelector">@drawable/nogifeed_list_selector_holo_light</item>
+  </style>
+
+  <style name="ProgressBarNogifeed" parent="android:Widget.Holo.Light.ProgressBar.Horizontal">
+      <item name="android:progressDrawable">@drawable/nogifeed_progress_horizontal_holo_light</item>
+      <item name="android:indeterminateDrawable">@drawable/nogifeed_progress_indeterminate_horizontal_holo_light</item>
+  </style>
+
+  <style name="SeekBarNogifeed" parent="android:Widget.Holo.Light.SeekBar">
+      <item name="android:progressDrawable">@drawable/nogifeed_scrubber_progress_horizontal_holo_light</item>
+      <item name="android:indeterminateDrawable">@drawable/nogifeed_scrubber_progress_horizontal_holo_light</item>
+      <item name="android:thumb">@drawable/nogifeed_scrubber_control_selector_holo_light</item>
+  </style>
+
+  <style name="RatingBarNogifeed" parent="android:Widget.Holo.Light.RatingBar">
+      <item name="android:progressDrawable">@drawable/nogifeed_ratingbar_full_holo_light</item>
+      <item name="android:indeterminateDrawable">@drawable/nogifeed_ratingbar_full_holo_light</item>
+  </style>
+
+  <style name="RatingBarBigNogifeed" parent="android:Widget.Holo.Light.RatingBar.Indicator">
+      <item name="android:progressDrawable">@drawable/nogifeed_ratingbar_holo_light</item>
+      <item name="android:indeterminateDrawable">@drawable/nogifeed_ratingbar_holo_light</item>
+  </style>
+
+  <style name="RatingBarSmallNogifeed" parent="android:Widget.Holo.Light.RatingBar.Small">
+      <item name="android:progressDrawable">@drawable/nogifeed_ratingbar_small_holo_light</item>
+      <item name="android:indeterminateDrawable">@drawable/nogifeed_ratingbar_small_holo_light</item>
+  </style>
+
+  <style name="ToggleNogifeed" parent="android:Widget.Holo.Light.Button.Toggle">
+      <item name="android:background">@drawable/nogifeed_btn_toggle_holo_light</item>
+  </style>
+
+</resources>

@@ -42,7 +42,7 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(
-                R.color.purple_600, R.color.purple_600, R.color.purple_600, R.color.purple_600);
+                R.color.purple_900, R.color.purple_900, R.color.purple_900, R.color.purple_900);
 
         return view;
     }
@@ -108,13 +108,6 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
     @Override
     public void onRefresh() {
         getAllFeed();
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                // TODO: refresh feed list.
-//                mSwipeRefreshLayout.setRefreshing(false);
-//            }
-//        }, 3000);
     }
 
 }

@@ -15,9 +15,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-/**
- * Created by saitoushouta on 2014/09/07.
- */
+// TODO: How terrible code...
 public class BlogFragment extends Fragment {
 
     private static final String TAG = BlogFragment.class.getSimpleName();
@@ -31,6 +29,7 @@ public class BlogFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         if (savedInstanceState == null) {
             Bundle bundle = getArguments();
             mEntry = bundle.getParcelable(Entry.KEY);
@@ -43,7 +42,21 @@ public class BlogFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_blog, null);
         mWebView = (WebView) view.findViewById(R.id.browser);
-        // TODO: cannot open web page inside BlogFragment.(issue)
+        mWebView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                WebView webView = (WebView) view;
+                WebView.HitTestResult hr = webView.getHitTestResult();
+
+                if (WebView.HitTestResult.IMAGE_TYPE == hr.getType()) {
+                    // TODO: show download image confirm dialog.
+                    String url = hr.getExtra();
+
+                }
+                return false;
+            }
+        });
+
         mWebView.setWebViewClient(new BrowserViewClient());
 
         if (mBeforeUrl == null) {
@@ -60,7 +73,6 @@ public class BlogFragment extends Fragment {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             if (Uri.parse(url).getHost().equals("blog.nogizaka46.com")) {
                 Log.d(TAG, "shouldOverrideUrlLoading : " + true);
-//                view.loadUrl(url);
                 return super.shouldOverrideUrlLoading(view, url);
             }
             Log.d(TAG, "shouldOverrideUrlLoading : " + false);

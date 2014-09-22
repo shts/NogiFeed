@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="BaseNogiFeed" parent="@style/_Nogifeed"/>
+
+  <style name="_Nogifeed" parent="Theme.AppCompat.Light">
+      <!--  custom component-->
+      <item name="android:editTextStyle">@style/EditTextNogifeed</item>
+      <item name="android:textColorHighlight">#999933cc</item>
+      <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewNogifeed</item>
+      <item name="android:checkboxStyle">@style/CheckBoxNogifeed</item>
+      <item name="android:radioButtonStyle">@style/RadioButtonNogifeed</item>
+      <item name="android:buttonStyle">@style/ButtonNogifeed</item>
+      <item name="android:imageButtonStyle">@style/ImageButtonNogifeed</item>
+      <item name="android:spinnerStyle">@style/SpinnerNogifeed</item>
+      <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemNogifeed</item>
+      <item name="android:progressBarStyleHorizontal">@style/ProgressBarNogifeed</item>
+      <item name="android:seekBarStyle">@style/SeekBarNogifeed</item>
+      <item name="android:ratingBarStyle">@style/RatingBarNogifeed</item>
+      <item name="android:ratingBarStyleIndicator">@style/RatingBarBigNogifeed</item>
+      <item name="android:ratingBarStyleSmall">@style/RatingBarSmallNogifeed</item>
+      <item name="android:buttonStyleToggle">@style/ToggleNogifeed</item>
+      <item name="android:listViewStyle">@style/ListViewNogifeed</item>
+      <item name="android:listViewWhiteStyle">@style/ListViewNogifeed.White</item>
+      <item name="android:spinnerItemStyle">@style/SpinnerItemNogifeed</item>
+  </style>
+
+</resources>

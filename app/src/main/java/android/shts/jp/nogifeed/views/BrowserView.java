@@ -5,9 +5,6 @@ import android.graphics.Bitmap;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-/**
- * Created by saitoushouta on 2014/09/07.
- */
 public class BrowserView extends WebView {
 
     public BrowserView(Context context) {

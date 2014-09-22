@@ -44,16 +44,6 @@ public class MainActivity extends ActionBarActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
 
-//            AllFeedListFragment allFeedListFragment =
-//                    (AllFeedListFragment) getSupportFragmentManager().findFragmentByTag(
-//                            AllFeedListFragment.class.getSimpleName());
-//
-//            if (allFeedListFragment != null) {
-//                if (allFeedListFragment.isVisible()) {
-//                    return super.onKeyDown(keyCode, event);
-//                }
-//            }
-
             BlogFragment blogFragment =
                     (BlogFragment) getSupportFragmentManager().findFragmentByTag(
                             BlogFragment.class.getSimpleName());
