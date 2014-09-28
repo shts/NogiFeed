@@ -2,13 +2,16 @@ package android.shts.jp.nogifeed.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.shts.jp.nogifeed.MemberCreator;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.activities.MainActivity;
 import android.shts.jp.nogifeed.adapters.AllFeedListAdapter;
 import android.shts.jp.nogifeed.api.AsyncRssClient;
+import android.shts.jp.nogifeed.listener.MemberCreateListener;
 import android.shts.jp.nogifeed.listener.RssClientListener;
 import android.shts.jp.nogifeed.models.Entries;
 import android.shts.jp.nogifeed.models.Entry;
+import android.shts.jp.nogifeed.models.Member;
 import android.shts.jp.nogifeed.utils.UrlUtils;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -27,6 +30,7 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
     private AllFeedListAdapter mAllFeedListAdapter;
     private MainActivity mActivity;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private MemberCreator mMemberCreator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,6 +97,7 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
                 mActivity.changeFragment(createBlogFragment(entry));
             }
         });
+        // TODO: setup member profile image view
     }
 
     private BlogFragment createBlogFragment(Entry entry) {

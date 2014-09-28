@@ -4,28 +4,32 @@ import android.content.Context;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.models.Entry;
 import android.shts.jp.nogifeed.utils.DateUtils;
+import android.shts.jp.nogifeed.utils.PicassoHelper;
+import android.shts.jp.nogifeed.utils.UrlUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by saitoushouta on 2014/08/31.
- */
 public class AllFeedListAdapter extends ArrayAdapter<Entry> {
 
+    private static final String TAG = AllFeedListAdapter.class.getSimpleName();
 
     public class ViewHolder {
+        ImageView profileImageView;
         TextView titleTextView;
-        TextView authornameTextView;
+        TextView authorNameTextView;
         TextView updatedTextView;
 
         public ViewHolder(View view) {
+            profileImageView = (ImageView) view.findViewById(R.id.profile_image);
             titleTextView = (TextView) view.findViewById(R.id.title);
-            authornameTextView = (TextView) view.findViewById(R.id.authorname);
+            authorNameTextView = (TextView) view.findViewById(R.id.authorname);
             updatedTextView = (TextView) view.findViewById(R.id.updated);
         }
     }
@@ -55,11 +59,23 @@ public class AllFeedListAdapter extends ArrayAdapter<Entry> {
         return view;
     }
 
-    public void bindView(final Entry item, final int position, View view) {
+    public void bindView(Entry item, int position, View view) {
         final ViewHolder holder = (ViewHolder) view.getTag();
 
+        // TODO: need to profile image chache
+        if (item.profileImage == null) {
+            String profileImageUrl = UrlUtils.getMemberImageUrl(item.link);
+            Log.d(TAG, "profileImageUrl : " + profileImageUrl);
+            if (profileImageUrl == null) {
+                // kenkyusei
+            } else {
+                PicassoHelper.loadAndCircleTransform(getContext(), holder.profileImageView, profileImageUrl);
+            }
+        } else {
+            holder.profileImageView.setImageBitmap(item.profileImage);
+        }
         holder.titleTextView.setText(item.title);
-        holder.authornameTextView.setText(item.name);
+        holder.authorNameTextView.setText(item.name);
         holder.updatedTextView.setText(DateUtils.formatUpdated(item.updated));
     }
 }
