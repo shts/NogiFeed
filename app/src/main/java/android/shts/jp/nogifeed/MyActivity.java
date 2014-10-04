@@ -3,13 +3,15 @@ package android.shts.jp.nogifeed;
 import android.app.Activity;
 import android.shts.jp.nogifeed.activities.MainActivity;
 import android.os.Bundle;
+import android.shts.jp.nogifeed.activities.MemberDetailActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-
-public class MyActivity extends MainActivity {
+// TODO: debug
+//public class MyActivity extends MainActivity {
+public class MyActivity extends MemberDetailActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

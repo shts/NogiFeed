@@ -2,6 +2,12 @@
 <pre-dex-items>
 
     <item
+        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-6f9f872c4b971e8835c72d4f3a35593baf874902.jar"
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.github.manuelpeinado.fadingactionbar/fadingactionbar-abc/3.1.2/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="ada4f8fc2f9cf0fb3c66fbe36d86f5c370684ef7"/>
+    <item
         dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/internal_impl-20.0.0-e6961f17fda400e8211dc43d8d0cca3b7b39a7f0.jar"
         jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/libs/internal_impl-20.0.0.jar"
         jumboMode="false"
@@ -25,6 +31,12 @@
         jumboMode="false"
         revision="20.0.0"
         sha1="1262995965440e28ba5c4d480c9c9ab4ccce84cc"/>
+    <item
+        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-ddf152f9c3ade9721532d803584ca10cc14869a9.jar"
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.github.manuelpeinado.fadingactionbar/fadingactionbar/3.1.2/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="1db28e119b406a5fe367b63fb1be083d5dfe298a"/>
     <item
         dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-6105dc5d84b0f944e24a932a7ff8610cdf779358.jar"
         jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/classes.jar"

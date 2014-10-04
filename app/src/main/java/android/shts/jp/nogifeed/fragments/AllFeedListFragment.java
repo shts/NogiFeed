@@ -5,13 +5,11 @@ import android.os.Bundle;
 import android.shts.jp.nogifeed.MemberCreator;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.activities.MainActivity;
-import android.shts.jp.nogifeed.adapters.AllFeedListAdapter;
+import android.shts.jp.nogifeed.adapters.FeedListAdapter;
 import android.shts.jp.nogifeed.api.AsyncRssClient;
-import android.shts.jp.nogifeed.listener.MemberCreateListener;
 import android.shts.jp.nogifeed.listener.RssClientListener;
 import android.shts.jp.nogifeed.models.Entries;
 import android.shts.jp.nogifeed.models.Entry;
-import android.shts.jp.nogifeed.models.Member;
 import android.shts.jp.nogifeed.utils.UrlUtils;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -27,7 +25,7 @@ import org.apache.http.Header;
 public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private ListView mAllFeedList;
-    private AllFeedListAdapter mAllFeedListAdapter;
+    private FeedListAdapter mFeedListAdapter;
     private MainActivity mActivity;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private MemberCreator mMemberCreator;
@@ -88,8 +86,8 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
     }
 
     private void setupAdapter(Entries entries) {
-        mAllFeedListAdapter = new AllFeedListAdapter(getActivity(), entries);
-        mAllFeedList.setAdapter(mAllFeedListAdapter);
+        mFeedListAdapter = new FeedListAdapter(getActivity(), entries);
+        mAllFeedList.setAdapter(mFeedListAdapter);
         mAllFeedList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -97,7 +95,6 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
                 mActivity.changeFragment(createBlogFragment(entry));
             }
         });
-        // TODO: setup member profile image view
     }
 
     private BlogFragment createBlogFragment(Entry entry) {
@@ -109,6 +106,8 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
 
         return blogFragment;
     }
+
+//    private
 
     @Override
     public void onRefresh() {
