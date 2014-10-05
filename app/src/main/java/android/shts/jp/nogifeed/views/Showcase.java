@@ -30,10 +30,12 @@ public class Showcase extends FrameLayout {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPageIndicator = (ViewPageIndicator) findViewById(R.id.indicator);
         mImageUrls = imageUrls;
+
+        setupAdapter();
     }
 
-    public void setImageResources(int[] resIds) {
-        CustomPageAdapter adapter = new CustomPageAdapter(getContext(), resIds, mImageUrls);
+    private void setupAdapter() {
+        CustomPageAdapter adapter = new CustomPageAdapter(getContext(), mImageUrls);
         mViewPager.setAdapter(adapter);
 
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -48,18 +50,15 @@ public class Showcase extends FrameLayout {
     public class CustomPageAdapter extends PagerAdapter {
 
         Context mContext;
-        int[] mResIds;
         private final List<String> mImageUrls;
 
-        public CustomPageAdapter(Context context, int[] resIds, List<String> imageUrls) {
+        public CustomPageAdapter(Context context, List<String> imageUrls) {
             mContext = context;
-            mResIds = resIds;
             mImageUrls = imageUrls;
         }
 
         @Override
         public int getCount() {
-//            return mResIds.length;
             return mImageUrls.size();
         }
 
@@ -71,9 +70,7 @@ public class Showcase extends FrameLayout {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             ImageView iv = new ImageView(mContext);
-//            iv.setImageResource(mResIds[position]);
             iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            // get image from using Picasso
             PicassoHelper.load(mContext, iv, mImageUrls.get(position));
             container.addView(iv);
             return iv;

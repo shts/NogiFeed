@@ -18,7 +18,6 @@ public class Entry implements Parcelable {
     public String summary;
     public String name;
     public String content;
-    public Bitmap profileImage;
 
     public Entry() {}
 
@@ -35,11 +34,6 @@ public class Entry implements Parcelable {
         parcel.writeString(summary);
         parcel.writeString(name);
         parcel.writeString(content);
-        if (profileImage != null) {
-            profileImage.writeToParcel(parcel, 1);
-        } else {
-            Log.w(TAG, "profileImage is null");
-        }
     }
 
     private Entry(Parcel parcel) {
@@ -51,7 +45,6 @@ public class Entry implements Parcelable {
         summary = parcel.readString();
         name = parcel.readString();
         content = parcel.readString();
-        profileImage = Bitmap.CREATOR.createFromParcel(parcel);
     }
 
     public static final Creator<Entry> CREATOR = new Creator<Entry>() {

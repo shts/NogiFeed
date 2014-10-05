@@ -14,6 +14,15 @@ public class UrlUtils {
         return FEED_MEMBER_URL_SCHEME + member.firstName + member.lastName + FEED_MEMBER_URL_SUFFIX;
     }
 
+    public static String getMemberFeedUrl(String feedUrl) {
+
+        final String[] name = StringUtils.createFullNameFrom(feedUrl);
+        final String firstName = name[StringUtils.INDEX_FIRST_NAME];
+        final String lastName = name[StringUtils.INDEX_LAST_NAME];
+
+        return FEED_MEMBER_URL_SCHEME + firstName + "." + lastName + FEED_MEMBER_URL_SUFFIX;
+    }
+
     public static final String MEMBER_PROFILE_URL_SCHEME = "http://www.nogizaka46.com/";
     public static final String MEMBER_PROFILE_URL_PREFIX = "smph/member/detail/";
     public static final String MEMBER_PROFILE_URL_SUFFIX = ".php";

@@ -10,8 +10,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 // TODO: debug
-//public class MyActivity extends MainActivity {
-public class MyActivity extends MemberDetailActivity {
+public class MyActivity extends MainActivity {
+//public class MyActivity extends MemberDetailActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,7 +1,9 @@
 package android.shts.jp.nogifeed.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.shts.jp.nogifeed.R;
+import android.shts.jp.nogifeed.activities.MemberDetailActivity;
 import android.shts.jp.nogifeed.models.Entry;
 import android.shts.jp.nogifeed.utils.DateUtils;
 import android.shts.jp.nogifeed.utils.PicassoHelper;
@@ -44,29 +46,49 @@ public class FeedListAdapter extends BindableAdapter<Entry> {
         return view;
     }
 
-    public void bindView(Entry item, int position, View view) {
+    public void bindView(final Entry item, int position, View view) {
         final ViewHolder holder = (ViewHolder) view.getTag();
 
         // TODO: need to profile image chache
-        if (item.profileImage == null) {
-            String profileImageUrl = UrlUtils.getMemberImageUrl(item.link);
-            Log.d(TAG, "profileImageUrl : " + profileImageUrl);
-            if (profileImageUrl == null) {
-                // kenkyusei
-            } else {
-                PicassoHelper.loadAndCircleTransform(getContext(), holder.profileImageView, profileImageUrl);
-            }
+//        if (item.profileImage == null) {
+//            String profileImageUrl = UrlUtils.getMemberImageUrl(item.link);
+//            Log.d(TAG, "profileImageUrl : " + profileImageUrl);
+//            if (profileImageUrl == null) {
+//                // kenkyusei
+//            } else {
+//                PicassoHelper.loadAndCircleTransform(getContext(), holder.profileImageView, profileImageUrl);
+//            }
+//
+//            holder.profileImageView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//                }
+//            });
+//
+//        } else {
+//            holder.profileImageView.setImageBitmap(item.profileImage);
+//        }
+        final String profileImageUrl = UrlUtils.getMemberImageUrl(item.link);
+        Log.d(TAG, "profileImageUrl : " + profileImageUrl);
+        if (profileImageUrl == null) {
+            // kenkyusei
+            holder.profileImageView.setImageResource(R.drawable.kensyusei);
+            holder.profileImageView.setOnClickListener(null);
+
+        } else {
+            PicassoHelper.loadAndCircleTransform(getContext(), holder.profileImageView, profileImageUrl);
 
             holder.profileImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    Intent i = new Intent(getContext(), MemberDetailActivity.class);
+                    i.putExtra(Entry.KEY, item);
+                    getContext().startActivity(i);
                 }
             });
-
-        } else {
-            holder.profileImageView.setImageBitmap(item.profileImage);
         }
+
         holder.titleTextView.setText(item.title);
         holder.authorNameTextView.setText(item.name);
         holder.updatedTextView.setText(DateUtils.formatUpdated(item.updated));

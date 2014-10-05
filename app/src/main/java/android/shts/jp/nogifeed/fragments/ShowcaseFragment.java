@@ -1,25 +1,24 @@
 package android.shts.jp.nogifeed.fragments;
 
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.activities.MemberDetailActivity;
+import android.shts.jp.nogifeed.adapters.MemberFeedListAdapter;
+import android.shts.jp.nogifeed.api.AsyncRssClient;
+import android.shts.jp.nogifeed.listener.RssClientListener;
+import android.shts.jp.nogifeed.models.Entries;
+import android.shts.jp.nogifeed.models.Entry;
+import android.shts.jp.nogifeed.utils.UrlUtils;
 import android.shts.jp.nogifeed.views.Showcase;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import org.apache.http.Header;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,47 +27,18 @@ public class ShowcaseFragment extends ListFragment {
 
     private static final String TAG = ShowcaseFragment.class.getSimpleName();
 
-    final static int[] sImages = {};
-
-    final static String[] sTitle = {
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-            "ListItem",
-    };
-
     private Showcase mShowcase;
     private List<String> mImageUrls;
     private MemberDetailActivity mActivity;
+    private Entry mEntry;
+    private MemberFeedListAdapter mMemberFeedListAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle bundle = getArguments();
+        mEntry = bundle.getParcelable(Entry.KEY);
 
         mImageUrls = new ArrayList<String>();
         mImageUrls.add("http://img.nogizaka46.com/blog/rina.ikoma/img/2014/10/04/8645274/0000.jpeg");
@@ -132,14 +102,34 @@ public class ShowcaseFragment extends ListFragment {
         });
     }
 
+    private void setupMemberFeedList(String feedUrl) {
+        AsyncRssClient.read(UrlUtils.getMemberFeedUrl(feedUrl), new RssClientListener() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, Entries entries) {
+                setupAdapter(entries);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.w(TAG, "failed to get member feed. statusCode(" + statusCode + ")");
+            }
+        });
+    }
+
+    private void setupAdapter(Entries entries) {
+        mMemberFeedListAdapter = new MemberFeedListAdapter(getActivity(), entries);
+        setListAdapter(mMemberFeedListAdapter);
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mShowcase.setImageResources(sImages);
+//        mShowcase.setImageResources(sImages);
 
-        setListAdapter(new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, sTitle));
+//        setListAdapter(new ArrayAdapter<String>(getActivity(),
+//                android.R.layout.simple_list_item_1, sTitle));
+        setupMemberFeedList(mEntry.link);
     }
 
 }
