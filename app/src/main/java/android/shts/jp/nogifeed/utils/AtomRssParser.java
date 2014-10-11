@@ -39,22 +39,22 @@ public class AtomRssParser {
 				String tag = null;
 				switch (eventType) {
 				case XmlPullParser.START_DOCUMENT:
-					Log.v(TAG, "parse start");
+					LogUtils.log(TAG, "parse start");
 					break;
 
 				case XmlPullParser.START_TAG:
 					tag = parser.getName();
-					Log.v(TAG, "TAG: " + tag);
+                    LogUtils.log(TAG, "TAG: " + tag);
 
 					if (tag.equals(TAG_ENTRY)) {
 						entry = new Entry();
-						Log.d(TAG, "entry");
+                        LogUtils.log(TAG, "entry");
 
 					} else if (tag.equals(TAG_TITLE)) {
 						if (entry != null) {
 							String text = parser.nextText();
 							entry.title = text;
-							Log.d(TAG, "title " + text);
+                            LogUtils.log(TAG, "title " + text);
 						}
 
 					} else if (tag.equals(TAG_LINK)) {
@@ -63,7 +63,7 @@ public class AtomRssParser {
 							for (int i = 0; i < attrCount; i++) {
 								String text = parser.getAttributeValue(i);
                                 entry.link = text;
-								Log.d(TAG, "link " + text);
+                                LogUtils.log(TAG, "link " + text);
 							}
 						}
 
@@ -71,46 +71,46 @@ public class AtomRssParser {
 						if (entry != null) {
 							String text = parser.nextText();
 							entry.id = text;
-							Log.d(TAG, "id " + text);
+                            LogUtils.log(TAG, "id " + text);
 						}
 
 					} else if (tag.equals(TAG_PUBLISHED)) {
 						if (entry != null) {
 							String text = parser.nextText();
 							entry.published = text;
-							Log.d(TAG, "published " + text);
+                            LogUtils.log(TAG, "published " + text);
 						}
 
 					} else if (tag.equals(TAG_UPDATED)) {
 						if (entry != null) {
 							String text = parser.nextText();
 							entry.updated = text;
-							Log.d(TAG, "updated " + text);
+                            LogUtils.log(TAG, "updated " + text);
 						}
 
 					} else if (tag.equals(TAG_SUMMARY)) {
 						if (entry != null) {
 							String text = parser.nextText();
 							entry.summary = text;
-							Log.d(TAG, "summary " + text);
+                            LogUtils.log(TAG, "summary " + text);
 						}
 
 					} else if (tag.equals(TAG_NAME)) {
 						if (entry != null) {
 							String text = parser.nextText();
 							entry.name = text;
-							Log.d(TAG, "name " + text);
+                            LogUtils.log(TAG, "name " + text);
 						}
 
 					} else if (tag.equals(TAG_CONTENT)) {
 						if (entry != null) {
 							String text = parser.nextText();
 							entry.content = ignoreCdataTag(text); // without CDATA tag
-							Log.d(TAG, "content " + text);
+                            LogUtils.log(TAG, "content " + text);
 						}
 
 					} else {
-						Log.v(TAG, "cannot find tag: " + tag);
+                        LogUtils.log(TAG, "cannot find tag: " + tag);
 					}
 					break;
 
@@ -120,12 +120,12 @@ public class AtomRssParser {
 						entries.add(entry);
 						entry = null;
 					}
-					Log.v(TAG, "END_TAG : " + tag);
+                    LogUtils.log(TAG, "END_TAG : " + tag);
 					break;
 				}
 				eventType = parser.next();
 			}
-			Log.v(TAG, "parse finish");
+            LogUtils.log(TAG, "parse finish");
 
 		} catch (XmlPullParserException e) {
 			Log.e(TAG, "parse error ! : " + e);

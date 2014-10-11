@@ -49,26 +49,6 @@ public class FeedListAdapter extends BindableAdapter<Entry> {
     public void bindView(final Entry item, int position, View view) {
         final ViewHolder holder = (ViewHolder) view.getTag();
 
-        // TODO: need to profile image chache
-//        if (item.profileImage == null) {
-//            String profileImageUrl = UrlUtils.getMemberImageUrl(item.link);
-//            Log.d(TAG, "profileImageUrl : " + profileImageUrl);
-//            if (profileImageUrl == null) {
-//                // kenkyusei
-//            } else {
-//                PicassoHelper.loadAndCircleTransform(getContext(), holder.profileImageView, profileImageUrl);
-//            }
-//
-//            holder.profileImageView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//
-//                }
-//            });
-//
-//        } else {
-//            holder.profileImageView.setImageBitmap(item.profileImage);
-//        }
         final String profileImageUrl = UrlUtils.getMemberImageUrl(item.link);
         Log.d(TAG, "profileImageUrl : " + profileImageUrl);
         if (profileImageUrl == null) {
