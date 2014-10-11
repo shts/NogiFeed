@@ -82,7 +82,7 @@ public class StringUtils {
         Log.v(TAG, "ignoreDoubleQuotation : content (" + content + ")");
         // double quotation
         String ignored = content.replace("\"", "");
-        String ignrStyle = ignored.replace("style=\"max-width:100%;\"", "");
+        String ignrStyle = ignored.replace("style=max-width:100%;", "");
         String ignEndTag = ignrStyle.replace(">", "");
         Log.v(TAG, "ignoreDoubleQuotation : ignored (" + ignEndTag + ")");
         return ignEndTag;
