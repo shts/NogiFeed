@@ -71,21 +71,21 @@ public class StringUtils {
     }
 
     public static String ignoreImgTag(String content) {
-        String withoutImgStartTag = content.replace("<img src=", "");
-        String withoutImgEndTag = withoutImgStartTag.replace("/>", "");
+        Log.v(TAG, "ignoreImgTag : content (" + content + ")");
+
+        // ignore img tags
+        String ignored = content.replace("<img src=", "");
+        ignored = ignored.replace("/>", "");
+        ignored = ignored.replace(">", "");
 
         // ignore double quotation
-        return ignoreDoubleQuotation(withoutImgEndTag);
-    }
+        ignored = ignored.replace("\"", "");
 
-    private static String ignoreDoubleQuotation(String content) {
-        Log.v(TAG, "ignoreDoubleQuotation : content (" + content + ")");
-        // double quotation
-        String ignored = content.replace("\"", "");
-        String ignrStyle = ignored.replace("style=max-width:100%;", "");
-        String ignEndTag = ignrStyle.replace(">", "");
-        Log.v(TAG, "ignoreDoubleQuotation : ignored (" + ignEndTag + ")");
-        return ignEndTag;
+        // ignore style elements
+        ignored = ignored.replace("style=max-width:100%;", "");
+
+        Log.v(TAG, "ignoreImgTag : ignored (" + ignored + ")");
+        return ignored;
     }
 
     public static String ignoreCDataTag(String content) {
