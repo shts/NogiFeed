@@ -62,6 +62,7 @@ public class FeedListAdapter extends BindableAdapter<Entry> {
             holder.profileImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    // TODO: profile画像を押下中に色を変更するようにする
                     Intent i = new Intent(getContext(), MemberDetailActivity.class);
                     i.putExtra(Entry.KEY, item);
                     getContext().startActivity(i);
