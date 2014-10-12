@@ -7,6 +7,15 @@
         android:layout_height="match_parent"
     />
 
+    <CheckBox
+        android:id="@+id/favorite"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_gravity="right|bottom"
+        android:layout_marginBottom="24dp"
+        style="@style/FavoriteCheckbox"
+        />
+
     <android.shts.jp.nogifeed.views.ViewPageIndicator
         android:id="@+id/indicator"
         android:layout_width="match_parent"

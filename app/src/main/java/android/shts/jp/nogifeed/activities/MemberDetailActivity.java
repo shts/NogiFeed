@@ -39,7 +39,7 @@ public class MemberDetailActivity extends ActionBarActivity {
 
     private void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        // TODO: actionbar titile
+        // TODO: hide actionbar titile
 //        actionBar.setDisplayShowTitleEnabled(false);
 
         mActionBarDrawable = getResources().getDrawable(R.drawable.ab_solid_nogifeed);

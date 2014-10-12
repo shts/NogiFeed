@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -21,40 +23,32 @@ public class Showcase extends FrameLayout {
     private ViewPager mViewPager;
     private ViewPageIndicator mViewPageIndicator;
     private List<String> mImageUrls;
+    private CheckBox mFavoriteCheckbox;
+    private final FavoriteChangeListener mListener;
 
-    public Showcase(Context context, List<String> imageUrls) {
-        this(context, null, imageUrls);
+    public interface FavoriteChangeListener {
+        public void onCheckdChanged(CompoundButton compoundButton, boolean b);
     }
 
-    public Showcase(Context context, AttributeSet attrs, List<String> imageUrls) {
+    public Showcase(Context context, List<String> imageUrls, FavoriteChangeListener listener) {
+        this(context, null, imageUrls, listener);
+    }
+
+    public Showcase(Context context, AttributeSet attrs, List<String> imageUrls, FavoriteChangeListener listener) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.showcase, this);
+        mListener = listener;
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPageIndicator = (ViewPageIndicator) findViewById(R.id.indicator);
-        mImageUrls = imageUrls;
-        setupAdapter();
-    }
-
-    // TODO: for debug
-    public Showcase(Context context) {
-        super(context);
-        LayoutInflater.from(context).inflate(R.layout.showcase, this);
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPageIndicator = (ViewPageIndicator) findViewById(R.id.indicator);
-        //setupAdapter();
-    }
-
-    public void setupAdapter(List<String> imageUrls) {
-        CustomPageAdapter adapter = new CustomPageAdapter(getContext(), imageUrls);
-        mViewPager.setAdapter(adapter);
-
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        mFavoriteCheckbox = (CheckBox) findViewById(R.id.favorite);
+        mFavoriteCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onPageSelected(int position) {
-                mViewPageIndicator.setCurrentPosition(position);
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                mListener.onCheckdChanged(compoundButton, b);
             }
         });
-        mViewPageIndicator.setCount(adapter.getCount());
+        mImageUrls = imageUrls;
+        setupAdapter();
     }
 
     private void setupAdapter() {

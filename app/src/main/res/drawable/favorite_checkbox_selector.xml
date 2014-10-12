@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/favorite_normal_72"
+        android:state_pressed="false"
+        android:state_checked="true">
+    </item>
+    <item android:drawable="@drawable/favorite_normal_72"
+        android:state_pressed="true"
+        android:state_checked="true">
+    </item>
+    <item android:drawable="@drawable/unfavorite_normal_72"
+          android:state_pressed="false"
+          android:state_checked="false">
+    </item>
+    <item android:drawable="@drawable/unfavorite_touch_72"
+        android:state_pressed="true"
+        android:state_checked="false">
+    </item>
+</selector>

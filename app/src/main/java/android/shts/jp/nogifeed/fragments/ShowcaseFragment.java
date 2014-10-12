@@ -19,7 +19,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.apache.http.Header;
 
@@ -131,6 +134,12 @@ public class ShowcaseFragment extends ListFragment {
     private void setupAdapter(Entries entries) {
         mMemberFeedListAdapter = new MemberFeedListAdapter(getActivity(), entries);
         setListAdapter(mMemberFeedListAdapter);
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // TODO: ブログページへジャンプする
+            }
+        });
     }
 
     private void setupShowcase(Entries entries) {
@@ -146,8 +155,14 @@ public class ShowcaseFragment extends ListFragment {
 
         LogUtils.log(TAG, "setupShowcase : url(" + mImageUrls.toString() + ")");
 
-        int height = (int) (240 * getResources().getDisplayMetrics().density);
-        mShowcase = new Showcase(getActivity(), mImageUrls);
+        int height = (int) ( /*240*/ 300 * getResources().getDisplayMetrics().density);
+        mShowcase = new Showcase(getActivity(), mImageUrls, new Showcase.FavoriteChangeListener() {
+            @Override
+            public void onCheckdChanged(CompoundButton compoundButton, boolean b) {
+                // TODO: do something
+                Toast.makeText(getActivity(), "favorite : " + b, Toast.LENGTH_SHORT).show();
+            }
+        });
         mShowcase.setLayoutParams(new AbsListView.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, height
         ));

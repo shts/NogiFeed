@@ -56,7 +56,6 @@ public class StringUtils {
         Matcher matcher = pattern.matcher(contentWithoutCrLf);
 
         while (matcher.find()) {
-            // TODO: 拡張子がgifの場合絵文字の可能性があるので除外する
             String matchText = matcher.group();
             if (!isGifFile(matchText)) {
                 imageUrls.add(ignoreImgTag(matchText));
