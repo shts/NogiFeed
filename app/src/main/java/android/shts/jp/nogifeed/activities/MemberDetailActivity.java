@@ -39,7 +39,7 @@ public class MemberDetailActivity extends ActionBarActivity {
 
     private void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        // TODO: hide actionbar titile
+        // hide actionbar titile
         actionBar.setTitle("");
         //actionBar.setLogo(R.drawable.unfavorite_normal_72);
 

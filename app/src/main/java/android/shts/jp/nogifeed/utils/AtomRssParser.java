@@ -13,7 +13,7 @@ import android.util.Xml;
 
 public class AtomRssParser {
 
-	private static final String TAG = "RssParser";
+	private static final String TAG = AtomRssParser.class.getSimpleName();
 
 	private static final String TAG_ENTRY = "entry";
 	private static final String TAG_TITLE = "title";

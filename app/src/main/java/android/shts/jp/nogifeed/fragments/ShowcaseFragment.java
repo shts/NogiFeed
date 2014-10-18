@@ -46,21 +46,6 @@ public class ShowcaseFragment extends ListFragment {
 
         Bundle bundle = getArguments();
         mEntry = bundle.getParcelable(Entry.KEY);
-
-//        mImageUrls = new ArrayList<String>();
-//        mImageUrls.add("http://img.nogizaka46.com/blog/rina.ikoma/img/2014/10/04/8645274/0000.jpeg");
-//        mImageUrls.add("http://img.nogizaka46.com/blog/rina.ikoma/img/2014/10/02/5549652/0000.jpeg");
-//        mImageUrls.add("http://img.nogizaka46.com/blog/rina.ikoma/img/2014/09/28/0545386/0000.jpeg");
-//        mImageUrls.add("http://img.nogizaka46.com/blog/rina.ikoma/img/2014/09/28/0545386/0003.jpeg");
-//        mImageUrls.add("http://img.nogizaka46.com/blog/rina.ikoma/img/2014/09/28/0545386/0004.jpeg");
-//        mImageUrls.add("http://img.nogizaka46.com/blog/rina.ikoma/img/2014/09/28/0545386/0006.jpeg");
-//        mImageUrls.add("http://img.nogizaka46.com/blog/rina.ikoma/img/2014/09/26/1811651/0000.jpeg");
-//        mImageUrls.add("http://img.nogizaka46.com/blog/rina.ikoma/img/2014/09/27/7125362/0000.jpeg");
-//        mImageUrls.add("http://img.nogizaka46.com/blog/rina.ikoma/img/2014/09/27/7125362/0002.jpeg");
-//        mImageUrls.add("http://img.nogizaka46.com/blog/rina.ikoma/img/2014/09/23/7508027/0000.jpeg");
-//        mImageUrls.add("http://img.nogizaka46.com/blog/rina.ikoma/img/2014/09/23/9962712/0000.jpeg");
-//        mImageUrls.add("http://img.nogizaka46.com/blog/rina.ikoma/img/2014/09/20/0854676/0001.jpeg");
-
     }
 
     @Override
@@ -73,14 +58,7 @@ public class ShowcaseFragment extends ListFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        int height = (int) (240 * getResources().getDisplayMetrics().density);
-//        mShowcase = new Showcase(getActivity());
-//        mShowcase.setLayoutParams(new AbsListView.LayoutParams(
-//                ViewGroup.LayoutParams.MATCH_PARENT, height
-//        ));
-
         ListView listView = getListView();
-//        listView.addHeaderView(mShowcase, null, false);
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -166,7 +144,6 @@ public class ShowcaseFragment extends ListFragment {
         mShowcase.setLayoutParams(new AbsListView.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, height
         ));
-//        mShowcase.setupAdapter(mImageUrls);
         ListView listView = getListView();
         listView.addHeaderView(mShowcase, null, false);
     }
