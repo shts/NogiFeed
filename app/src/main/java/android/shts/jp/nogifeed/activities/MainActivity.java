@@ -1,11 +1,13 @@
 package android.shts.jp.nogifeed.activities;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.fragments.AllFeedListFragment;
 import android.shts.jp.nogifeed.fragments.BlogFragment;
 import android.shts.jp.nogifeed.fragments.ShowcaseFragment;
 import android.support.v4.app.*;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -22,6 +24,14 @@ public class MainActivity extends ActionBarActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, allFeedListFragment, AllFeedListFragment.class.getSimpleName());
         ft.commit();
+
+        setupActionBar();
+    }
+
+    private void setupActionBar() {
+        ActionBar actionbar = getSupportActionBar();
+        Drawable drawable = getResources().getDrawable(R.drawable.ab_solid_nogifeed);
+        actionbar.setBackgroundDrawable(drawable);
     }
 
     @Override

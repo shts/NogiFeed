@@ -37,6 +37,11 @@
         <item name="backgroundStacked">@drawable/ab_stacked_solid_nogifeed</item>
         <item name="backgroundSplit">@drawable/ab_bottom_solid_nogifeed</item>
         <item name="progressBarStyle">@style/ProgressBar.Nogifeed</item>
+        <item name="android:textStyle">@style/NogifeedActionbarTitleTextStyle</item>
+    </style>
+    
+    <style name="NogifeedActionbarTitleTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">#ffffff</item>
     </style>
 
     <style name="ActionBar.Transparent.Nogifeed" parent="@style/Widget.AppCompat.Light.ActionBar">
