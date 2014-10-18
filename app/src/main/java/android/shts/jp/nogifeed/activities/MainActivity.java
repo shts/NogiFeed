@@ -29,6 +29,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void setupActionBar() {
+        // TODO: actionbar change color with delete this function.
         ActionBar actionbar = getSupportActionBar();
         Drawable drawable = getResources().getDrawable(R.drawable.ab_solid_nogifeed);
         actionbar.setBackgroundDrawable(drawable);

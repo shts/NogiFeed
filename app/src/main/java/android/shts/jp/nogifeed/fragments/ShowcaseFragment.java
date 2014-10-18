@@ -159,8 +159,8 @@ public class ShowcaseFragment extends ListFragment {
         mShowcase = new Showcase(getActivity(), mImageUrls, new Showcase.FavoriteChangeListener() {
             @Override
             public void onCheckdChanged(CompoundButton compoundButton, boolean b) {
-                // TODO: do something
-                Toast.makeText(getActivity(), "favorite : " + b, Toast.LENGTH_SHORT).show();
+                // TODO: add favorite function.
+                // Toast.makeText(getActivity(), "favorite : " + b, Toast.LENGTH_SHORT).show();
             }
         });
         mShowcase.setLayoutParams(new AbsListView.LayoutParams(
