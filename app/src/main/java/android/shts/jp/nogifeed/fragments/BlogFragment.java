@@ -21,7 +21,7 @@ public class BlogFragment extends Fragment {
     private static final String TAG = BlogFragment.class.getSimpleName();
     private static final String KEY_PAGE_URL = "key_page_url";
 
-    private MainActivity mActivity;
+    //private MainActivity mActivity;
     private Entry mEntry;
     private WebView mWebView;
     private String mBeforeUrl;
@@ -85,7 +85,7 @@ public class BlogFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mActivity = (MainActivity) activity;
+        //mActivity = (MainActivity) activity;
     }
 
     @Override

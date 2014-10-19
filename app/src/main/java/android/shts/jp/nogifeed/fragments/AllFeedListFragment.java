@@ -107,8 +107,6 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
         return blogFragment;
     }
 
-//    private
-
     @Override
     public void onRefresh() {
         getAllFeed();

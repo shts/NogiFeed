@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 未使用
+ */
 public class MemberUtils {
 
     private static final String TAG = MemberUtils.class.getSimpleName();

@@ -13,9 +13,6 @@ import org.apache.http.Header;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-/**
- * Created by saitoushouta on 2014/08/24.
- */
 public class AsyncRssClient {
 
     private static final String TAG = "AsyncRssClient";

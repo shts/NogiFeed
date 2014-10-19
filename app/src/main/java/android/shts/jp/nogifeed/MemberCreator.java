@@ -10,6 +10,8 @@ import java.util.concurrent.Executors;
 
 /**
  * Created by saitoushouta on 2014/09/23.
+ *
+ * 未使用
  */
 public class MemberCreator {
 

@@ -3,9 +3,6 @@ package android.shts.jp.nogifeed.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by saitoushouta on 2014/09/23.
- */
 public class Details implements Parcelable {
 
     public static final String KEY = Details.class.getSimpleName();

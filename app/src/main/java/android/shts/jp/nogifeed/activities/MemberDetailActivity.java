@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
+import android.shts.jp.nogifeed.fragments.AllFeedListFragment;
+import android.shts.jp.nogifeed.fragments.BlogFragment;
 import android.shts.jp.nogifeed.fragments.ShowcaseFragment;
 import android.shts.jp.nogifeed.models.Entry;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.KeyEvent;
 import android.view.Window;
 
 public class MemberDetailActivity extends ActionBarActivity {
@@ -50,6 +54,36 @@ public class MemberDetailActivity extends ActionBarActivity {
     public void setActionBarDrawableAlpha(int alpha) {
         mActionBarDrawable.setAlpha(alpha);
         getSupportActionBar().setBackgroundDrawable(mActionBarDrawable);
+    }
+
+    public void changeFragment(Fragment fragment) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.container, fragment, BlogFragment.class.getSimpleName());
+        ft.addToBackStack(ShowcaseFragment.class.getSimpleName());
+        ft.commit();
+
+        // actionbar background color change
+        mActionBarDrawable.setAlpha(255);
+        getSupportActionBar().setBackgroundDrawable(mActionBarDrawable);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            BlogFragment blogFragment =
+                    (BlogFragment) getSupportFragmentManager().findFragmentByTag(
+                            BlogFragment.class.getSimpleName());
+
+            if (blogFragment != null) {
+                if (blogFragment.isVisible()) {
+                    if (blogFragment.goBack()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

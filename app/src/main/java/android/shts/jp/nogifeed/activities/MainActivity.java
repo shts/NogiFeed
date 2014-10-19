@@ -42,6 +42,8 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // TODO: go to settings
+        // TODO: go to about
         return super.onOptionsItemSelected(item);
     }
 

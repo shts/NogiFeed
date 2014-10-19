@@ -114,10 +114,22 @@ public class ShowcaseFragment extends ListFragment {
         setListAdapter(mMemberFeedListAdapter);
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 // TODO: ブログページへジャンプする
+                Entry entry = (Entry) getListView().getItemAtPosition(position);
+                mActivity.changeFragment(createBlogFragment(entry));
             }
         });
+    }
+
+    private BlogFragment createBlogFragment(Entry entry) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Entry.KEY, entry);
+
+        BlogFragment blogFragment = new BlogFragment();
+        blogFragment.setArguments(bundle);
+
+        return blogFragment;
     }
 
     private void setupShowcase(Entries entries) {
