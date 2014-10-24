@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="android.shts.jp.nogifeed" >
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -19,7 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.MemberDetailActivity">
+        <activity android:name=".activities.MemberDetailActivity" >
+        </activity>
+        <activity
+            android:name=".activities.SettingsActivity2"
+            android:label="@string/title_activity_settings_activity2" >
         </activity>
     </application>
 

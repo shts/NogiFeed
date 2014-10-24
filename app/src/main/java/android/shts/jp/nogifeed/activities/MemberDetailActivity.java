@@ -62,7 +62,8 @@ public class MemberDetailActivity extends ActionBarActivity {
         ft.addToBackStack(ShowcaseFragment.class.getSimpleName());
         ft.commit();
 
-        // actionbar background color change
+        // TODO: issue, actionbar change alpha at touch BlogFragment.
+        // actionbar background color change.
         mActionBarDrawable.setAlpha(255);
         getSupportActionBar().setBackgroundDrawable(mActionBarDrawable);
     }
