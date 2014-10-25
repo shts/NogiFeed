@@ -43,8 +43,8 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
         // SwipeRefreshLayoutの設定
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorSchemeColors(
-                R.color.purple_900, R.color.purple_900, R.color.purple_900, R.color.purple_900);
+        mSwipeRefreshLayout.setColorSchemeResources(
+                R.color.nogifeed_color, R.color.nogifeed_color, R.color.nogifeed_color, R.color.nogifeed_color);
 
         return view;
     }

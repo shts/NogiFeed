@@ -64,8 +64,8 @@ public class MemberDetailActivity extends ActionBarActivity {
 
         // TODO: issue, actionbar change alpha at touch BlogFragment.
         // actionbar background color change.
-        mActionBarDrawable.setAlpha(255);
-        getSupportActionBar().setBackgroundDrawable(mActionBarDrawable);
+        //mActionBarDrawable.setAlpha(255);
+        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.ab_solid_nogifeed));
     }
 
     @Override
