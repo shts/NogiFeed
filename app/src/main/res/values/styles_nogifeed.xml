@@ -38,6 +38,7 @@
         <item name="backgroundSplit">@drawable/ab_bottom_solid_nogifeed</item>
         <item name="progressBarStyle">@style/ProgressBar.Nogifeed</item>
         <item name="android:textStyle">@style/NogifeedActionbarTitleTextStyle</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
     
     <style name="NogifeedActionbarTitleTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
