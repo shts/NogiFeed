@@ -34,6 +34,7 @@ public class MainActivity extends ActionBarActivity {
         ActionBar actionbar = getSupportActionBar();
         Drawable drawable = getResources().getDrawable(R.drawable.ab_solid_nogifeed);
         actionbar.setBackgroundDrawable(drawable);
+        actionbar.setLogo(R.drawable.ic_launcher_white);
     }
 
     @Override

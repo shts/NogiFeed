@@ -49,6 +49,7 @@ public class MemberDetailActivity extends ActionBarActivity {
 
         mActionBarDrawable = getResources().getDrawable(R.drawable.ab_solid_nogifeed);
         actionBar.setBackgroundDrawable(mActionBarDrawable);
+        actionBar.setLogo(R.drawable.ic_launcher_white);
     }
 
     public void setActionBarDrawableAlpha(int alpha) {
