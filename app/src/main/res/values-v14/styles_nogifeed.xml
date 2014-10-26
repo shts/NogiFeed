@@ -19,7 +19,7 @@
 
 <resources>
 
-    <style name="Theme.Nogifeed" parent="@style/Theme.AppCompat.Light">
+    <style name="Theme.Nogifeed" parent="@style/BaseNogiFeed">
         <item name="android:actionBarItemBackground">@drawable/selectable_background_nogifeed</item>
         <item name="android:popupMenuStyle">@style/PopupMenu.Nogifeed</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Nogifeed</item>

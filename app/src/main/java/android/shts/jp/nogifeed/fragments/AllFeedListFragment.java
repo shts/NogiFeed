@@ -44,7 +44,7 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(
-                R.color.nogifeed_color, R.color.nogifeed_color, R.color.nogifeed_color, R.color.nogifeed_color);
+                R.color.nogifeed, R.color.nogifeed, R.color.nogifeed, R.color.nogifeed);
 
         return view;
     }

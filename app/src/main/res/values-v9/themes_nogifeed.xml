@@ -3,7 +3,7 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <style name="Nogifeed" parent="@style/_Nogifeed">
+  <style name="Nogifeed" parent="BaseNogiFeed">
 
     <item name="android:textSelectHandleLeft">@drawable/nogifeed_text_select_handle_left</item>
     <item name="android:textSelectHandleRight">@drawable/nogifeed_text_select_handle_right</item>

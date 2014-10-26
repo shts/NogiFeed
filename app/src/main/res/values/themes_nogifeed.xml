@@ -3,9 +3,11 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
+  <!--
   <style name="BaseNogiFeed" parent="@style/_Nogifeed"/>
+  -->
 
-  <style name="_Nogifeed" parent="Theme.AppCompat.Light">
+  <style name="BaseNogiFeed" parent="Theme.AppCompat.Light">
       <!--  custom component-->
       <item name="android:editTextStyle">@style/EditTextNogifeed</item>
       <item name="android:textColorHighlight">#999933cc</item>

@@ -3,9 +3,11 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
+  <!--
   <style name="Nogifeed" parent="@style/_Nogifeed"/>
+  -->
 
-  <style name="_Nogifeed" parent="Theme.AppCompat.Light">
+  <style name="BaseNogiFeed" parent="Theme.AppCompat.Light">
 
     <item name="android:editTextBackground">@drawable/nogifeed_edit_text_holo_light</item>
 
