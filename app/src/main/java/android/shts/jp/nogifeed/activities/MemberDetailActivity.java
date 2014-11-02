@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
-import android.shts.jp.nogifeed.fragments.AllFeedListFragment;
 import android.shts.jp.nogifeed.fragments.BlogFragment;
 import android.shts.jp.nogifeed.fragments.ShowcaseFragment;
 import android.shts.jp.nogifeed.models.Entry;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -24,7 +22,7 @@ public class MemberDetailActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         supportRequestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_feed_list);
 
         setupActionBar();
 

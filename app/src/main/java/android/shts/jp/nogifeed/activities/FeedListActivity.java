@@ -5,23 +5,18 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.fragments.AllFeedListFragment;
-import android.shts.jp.nogifeed.fragments.BlogFragment;
-import android.shts.jp.nogifeed.fragments.ShowcaseFragment;
-import android.shts.jp.nogifeed.models.Entry;
 import android.support.v4.app.*;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 
-public class MainActivity extends ActionBarActivity {
+public class FeedListActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_feed_list);
         AllFeedListFragment allFeedListFragment = new AllFeedListFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, allFeedListFragment, AllFeedListFragment.class.getSimpleName());

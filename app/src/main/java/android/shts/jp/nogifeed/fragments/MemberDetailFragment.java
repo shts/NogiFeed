@@ -2,7 +2,7 @@ package android.shts.jp.nogifeed.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.shts.jp.nogifeed.activities.MainActivity;
+import android.shts.jp.nogifeed.activities.FeedListActivity;
 import android.shts.jp.nogifeed.models.Entry;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,7 +14,7 @@ public class MemberDetailFragment extends Fragment {
 
     private static final String TAG = MemberDetailFragment.class.getSimpleName();
 
-    private MainActivity mActivity;
+    private FeedListActivity mActivity;
     private Entry mEntry;
 
     @Override
@@ -33,7 +33,7 @@ public class MemberDetailFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mActivity = (MainActivity) activity;
+        mActivity = (FeedListActivity) activity;
     }
 
     @Override

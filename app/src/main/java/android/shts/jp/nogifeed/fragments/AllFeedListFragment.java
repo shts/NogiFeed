@@ -2,9 +2,8 @@ package android.shts.jp.nogifeed.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.shts.jp.nogifeed.MemberCreator;
 import android.shts.jp.nogifeed.R;
-import android.shts.jp.nogifeed.activities.MainActivity;
+import android.shts.jp.nogifeed.activities.FeedListActivity;
 import android.shts.jp.nogifeed.adapters.FeedListAdapter;
 import android.shts.jp.nogifeed.api.AsyncRssClient;
 import android.shts.jp.nogifeed.listener.RssClientListener;
@@ -27,7 +26,7 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
 
     private ListView mAllFeedList;
     private FeedListAdapter mFeedListAdapter;
-    private MainActivity mActivity;
+    private FeedListActivity mActivity;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
@@ -52,7 +51,7 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mActivity = (MainActivity) activity;
+        mActivity = (FeedListActivity) activity;
     }
 
     @Override
