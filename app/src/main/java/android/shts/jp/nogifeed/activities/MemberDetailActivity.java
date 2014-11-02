@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.fragments.BlogFragment;
-import android.shts.jp.nogifeed.fragments.ShowcaseFragment;
+import android.shts.jp.nogifeed.fragments.MemberDetailFragment;
 import android.shts.jp.nogifeed.models.Entry;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -31,11 +31,11 @@ public class MemberDetailActivity extends ActionBarActivity {
         Bundle bundle = new Bundle();
         bundle.putParcelable(Entry.KEY, entry);
 
-        ShowcaseFragment showcaseFragment = new ShowcaseFragment();
-        showcaseFragment.setArguments(bundle);
+        MemberDetailFragment memberDetailFragment = new MemberDetailFragment();
+        memberDetailFragment.setArguments(bundle);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, showcaseFragment, ShowcaseFragment.class.getSimpleName());
+        ft.replace(R.id.container, memberDetailFragment, MemberDetailFragment.class.getSimpleName());
         ft.commit();
     }
 
