@@ -9,6 +9,7 @@ import android.shts.jp.nogifeed.listener.RssClientListener;
 import android.shts.jp.nogifeed.models.Entries;
 import android.shts.jp.nogifeed.models.Entry;
 import android.shts.jp.nogifeed.utils.ArrayUtils;
+import android.shts.jp.nogifeed.utils.IntentUtils;
 import android.shts.jp.nogifeed.utils.LogUtils;
 import android.shts.jp.nogifeed.utils.StringUtils;
 import android.shts.jp.nogifeed.utils.UrlUtils;
@@ -115,21 +116,10 @@ public class ShowcaseFragment extends ListFragment {
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                // TODO: ブログページへジャンプする
                 Entry entry = (Entry) getListView().getItemAtPosition(position);
-                mActivity.changeFragment(createBlogFragment(entry));
+                IntentUtils.startBlogActivity(mActivity, entry);
             }
         });
-    }
-
-    private BlogFragment createBlogFragment(Entry entry) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(Entry.KEY, entry);
-
-        BlogFragment blogFragment = new BlogFragment();
-        blogFragment.setArguments(bundle);
-
-        return blogFragment;
     }
 
     private void setupShowcase(Entries entries) {

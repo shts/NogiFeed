@@ -10,6 +10,7 @@ import android.shts.jp.nogifeed.api.AsyncRssClient;
 import android.shts.jp.nogifeed.listener.RssClientListener;
 import android.shts.jp.nogifeed.models.Entries;
 import android.shts.jp.nogifeed.models.Entry;
+import android.shts.jp.nogifeed.utils.IntentUtils;
 import android.shts.jp.nogifeed.utils.UrlUtils;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -28,7 +29,6 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
     private FeedListAdapter mFeedListAdapter;
     private MainActivity mActivity;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private MemberCreator mMemberCreator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,19 +92,9 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Entry entry = (Entry) mAllFeedList.getItemAtPosition(position);
-                mActivity.changeFragment(createBlogFragment(entry));
+                IntentUtils.startBlogActivity(mActivity, entry);
             }
         });
-    }
-
-    private BlogFragment createBlogFragment(Entry entry) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(Entry.KEY, entry);
-
-        BlogFragment blogFragment = new BlogFragment();
-        blogFragment.setArguments(bundle);
-
-        return blogFragment;
     }
 
     @Override

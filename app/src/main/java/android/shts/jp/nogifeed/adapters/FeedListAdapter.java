@@ -6,6 +6,7 @@ import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.activities.MemberDetailActivity;
 import android.shts.jp.nogifeed.models.Entry;
 import android.shts.jp.nogifeed.utils.DateUtils;
+import android.shts.jp.nogifeed.utils.IntentUtils;
 import android.shts.jp.nogifeed.utils.PicassoHelper;
 import android.shts.jp.nogifeed.utils.UrlUtils;
 import android.util.Log;
@@ -46,10 +47,10 @@ public class FeedListAdapter extends BindableAdapter<Entry> {
         return view;
     }
 
-    public void bindView(final Entry item, int position, View view) {
+    public void bindView(final Entry entry, int position, View view) {
         final ViewHolder holder = (ViewHolder) view.getTag();
 
-        final String profileImageUrl = UrlUtils.getMemberImageUrl(item.link);
+        final String profileImageUrl = UrlUtils.getMemberImageUrl(entry.link);
         Log.d(TAG, "profileImageUrl : " + profileImageUrl);
         if (profileImageUrl == null) {
             // kenkyusei
@@ -63,15 +64,13 @@ public class FeedListAdapter extends BindableAdapter<Entry> {
                 @Override
                 public void onClick(View view) {
                     // TODO: profile画像を押下中に色を変更するようにする
-                    Intent i = new Intent(getContext(), MemberDetailActivity.class);
-                    i.putExtra(Entry.KEY, item);
-                    getContext().startActivity(i);
+                    IntentUtils.startMemberDetailActivity(getContext(), entry);
                 }
             });
         }
 
-        holder.titleTextView.setText(item.title);
-        holder.authorNameTextView.setText(item.name);
-        holder.updatedTextView.setText(DateUtils.formatUpdated(item.updated));
+        holder.titleTextView.setText(entry.title);
+        holder.authorNameTextView.setText(entry.name);
+        holder.updatedTextView.setText(DateUtils.formatUpdated(entry.updated));
     }
 }

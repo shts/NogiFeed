@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="nogifeed_dark">#4d0b58</color>
-    <color name="nogifeed">#7e1083</color>
-    <color name="nogifeed_light">#bf87c1</color>
-    <color name="nogifeed_accent">#e2437a</color>
+    <color name="nogifeed_color">#9933cc</color>
 </resources>

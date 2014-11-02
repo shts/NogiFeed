@@ -57,18 +57,6 @@ public class MemberDetailActivity extends ActionBarActivity {
         getSupportActionBar().setBackgroundDrawable(mActionBarDrawable);
     }
 
-    public void changeFragment(Fragment fragment) {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.container, fragment, BlogFragment.class.getSimpleName());
-        ft.addToBackStack(ShowcaseFragment.class.getSimpleName());
-        ft.commit();
-
-        // TODO: issue, actionbar change alpha at touch BlogFragment.
-        // actionbar background color change.
-        //mActionBarDrawable.setAlpha(255);
-        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.ab_solid_nogifeed));
-    }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
