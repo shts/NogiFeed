@@ -29,6 +29,9 @@
             android:name=".activities.SettingsActivity2"
             android:label="@string/title_activity_settings_activity2">
         </activity>
+        <provider
+            android:authorities="android.shts.jp.nogifeed.providers.nogifeed"
+            android:name="android.shts.jp.nogifeed.providers.NogiFeedProvider"/>
     </application>
 
 </manifest>

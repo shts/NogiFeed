@@ -11,7 +11,7 @@ public class NogiFeedDatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_FAVORITE_TABLE_SQL = "CREATE TABLE "
     + NogiFeedContent.TABLE_FAVORITE + "("
     + NogiFeedContent.Favorite.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-    + NogiFeedContent.Favorite.KEY_LINK + " TEXT NOT NULL,"
+    + NogiFeedContent.Favorite.KEY_LINK + " TEXT NOT NULL"
     + ")";
         
     //@formatter:on
@@ -31,7 +31,7 @@ public class NogiFeedDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL(DROP_FAVORITE_TABLE_SQL);
+        //db.execSQL(DROP_FAVORITE_TABLE_SQL);
 
         // Create tables again
         onCreate(db);

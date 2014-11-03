@@ -51,6 +51,10 @@ public class Showcase extends FrameLayout {
         setupAdapter();
     }
 
+    public void setFavorite(boolean isChecked) {
+        mFavoriteCheckbox.setChecked(isChecked);
+    }
+
     private void setupAdapter() {
         CustomPageAdapter adapter = new CustomPageAdapter(getContext(), mImageUrls);
         mViewPager.setAdapter(adapter);

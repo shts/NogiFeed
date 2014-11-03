@@ -9,6 +9,7 @@ import android.shts.jp.nogifeed.listener.RssClientListener;
 import android.shts.jp.nogifeed.models.Entries;
 import android.shts.jp.nogifeed.models.Entry;
 import android.shts.jp.nogifeed.utils.ArrayUtils;
+import android.shts.jp.nogifeed.utils.DataStoreUtils;
 import android.shts.jp.nogifeed.utils.IntentUtils;
 import android.shts.jp.nogifeed.utils.LogUtils;
 import android.shts.jp.nogifeed.utils.StringUtils;
@@ -23,6 +24,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.apache.http.Header;
 
@@ -39,6 +41,7 @@ public class MemberDetailFragment extends ListFragment {
     private MemberDetailActivity mActivity;
     private Entry mEntry;
     private MemberFeedListAdapter mMemberFeedListAdapter;
+    private String mFeedUrl;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,7 +91,7 @@ public class MemberDetailFragment extends ListFragment {
     }
 
     private void setupMemberFeedList(String feedUrl) {
-        AsyncRssClient.read(UrlUtils.getMemberFeedUrl(feedUrl), new RssClientListener() {
+        AsyncRssClient.read(feedUrl, new RssClientListener() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Entries entries) {
                 setupShowcase(entries);
@@ -105,7 +108,8 @@ public class MemberDetailFragment extends ListFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setupMemberFeedList(mEntry.link);
+        mFeedUrl = UrlUtils.getMemberFeedUrl(mEntry.link);
+        setupMemberFeedList(mFeedUrl);
     }
 
 
@@ -137,14 +141,19 @@ public class MemberDetailFragment extends ListFragment {
         int height = (int) ( /*240*/ 300 * getResources().getDisplayMetrics().density);
         mShowcase = new Showcase(getActivity(), mImageUrls, new Showcase.FavoriteChangeListener() {
             @Override
-            public void onCheckdChanged(CompoundButton compoundButton, boolean b) {
-                // TODO: add favorite function.
-                // Toast.makeText(getActivity(), "favorite : " + b, Toast.LENGTH_SHORT).show();
+            public void onCheckdChanged(CompoundButton compoundButton, boolean isChecked) {
+                DataStoreUtils.favorite(getActivity(), mFeedUrl, isChecked);
+                String links = DataStoreUtils.getAllFavoriteLink(getActivity());
+                if (links != null) {
+                    Toast.makeText(getActivity(), links,
+                            Toast.LENGTH_LONG).show();
+                }
             }
         });
         mShowcase.setLayoutParams(new AbsListView.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, height
         ));
+        mShowcase.setFavorite(DataStoreUtils.alreadyExist(getActivity(), mFeedUrl));
         ListView listView = getListView();
         listView.addHeaderView(mShowcase, null, false);
     }
