@@ -15,7 +15,6 @@ import android.shts.jp.nogifeed.utils.LogUtils;
 import android.shts.jp.nogifeed.utils.StringUtils;
 import android.shts.jp.nogifeed.utils.UrlUtils;
 import android.shts.jp.nogifeed.views.Showcase;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
@@ -106,7 +105,7 @@ public class MemberDetailFragment extends ListFragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mFeedUrl = UrlUtils.getMemberFeedUrl(mEntry.link);
         setupMemberFeedList(mFeedUrl);
