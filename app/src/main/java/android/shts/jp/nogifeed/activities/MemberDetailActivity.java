@@ -8,6 +8,7 @@ import android.shts.jp.nogifeed.fragments.MemberDetailFragment;
 import android.shts.jp.nogifeed.models.Entry;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.WindowCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -23,8 +24,6 @@ public class MemberDetailActivity extends ActionBarActivity {
         supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_BAR_OVERLAY);
         setContentView(R.layout.activity_member_detail);
 
-        setupActionBar();
-
         Intent i = getIntent();
         Entry entry = i.getParcelableExtra(Entry.KEY);
         Bundle bundle = new Bundle();
@@ -36,12 +35,16 @@ public class MemberDetailActivity extends ActionBarActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, memberDetailFragment, MemberDetailFragment.class.getSimpleName());
         ft.commit();
+
+        setupActionBar(entry.name);
     }
 
-    private void setupActionBar() {
+    private void setupActionBar(String name) {
         mToolbar = (Toolbar) findViewById(R.id.tool_actionbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setElevation(0);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setElevation(0);
+        actionBar.setTitle(name);
 
         mActionBarDrawable = getResources().getDrawable(R.drawable.ab_solid_nogifeed);
         int sdk = android.os.Build.VERSION.SDK_INT;
