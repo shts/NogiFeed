@@ -2,7 +2,7 @@
 
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-
+<!--
   <style name="AutoCompleteTextViewNogifeed" parent="android:Widget.Holo.Light.AutoCompleteTextView">
       <item name="android:dropDownSelector">@drawable/nogifeed_list_selector_holo_light</item>
 	    <item name="android:background">@drawable/nogifeed_edit_text_holo_light</item>
@@ -50,5 +50,5 @@
   <style name="ToggleNogifeed" parent="android:Widget.Holo.Light.Button.Toggle">
       <item name="android:background">@drawable/nogifeed_btn_toggle_holo_light</item>
   </style>
-
+-->
 </resources>

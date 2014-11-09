@@ -9,6 +9,7 @@
 
   <style name="Theme.BaseNogiFeed" parent="Theme.AppCompat.Light">
       <!-- actionbar style -->
+      <!--
       <item name="actionBarItemBackground">@drawable/selectable_background_nogifeed</item>
       <item name="popupMenuStyle">@style/PopupMenu.Nogifeed</item>
       <item name="dropDownListViewStyle">@style/DropDownListView.Nogifeed</item>
@@ -18,6 +19,7 @@
       <item name="actionModeBackground">@drawable/cab_background_top_nogifeed</item>
       <item name="actionModeSplitBackground">@drawable/cab_background_bottom_nogifeed</item>
       <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Nogifeed</item>
+      -->
       <!--  custom component-->
       <item name="android:editTextStyle">@style/EditTextNogifeed</item>
       <item name="android:textColorHighlight">#999933cc</item>
