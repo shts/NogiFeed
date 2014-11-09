@@ -20,7 +20,7 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="Theme.NogiFeed" parent="@style/Theme.AppCompat.Light">
+    <style name="Theme.NogiFeed" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="actionBarItemBackground">@drawable/selectable_background_nogifeed</item>
         <item name="popupMenuStyle">@style/PopupMenu.Nogifeed</item>
         <item name="dropDownListViewStyle">@style/DropDownListView.Nogifeed</item>
@@ -30,6 +30,13 @@
         <item name="actionModeBackground">@drawable/cab_background_top_nogifeed</item>
         <item name="actionModeSplitBackground">@drawable/cab_background_bottom_nogifeed</item>
         <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Nogifeed</item>
+    </style>
+
+    <style name="NogiFeedToolbarStyle" parent="Theme.AppCompat">
+        <item name="android:textColorPrimary">@color/grey_50</item>
+        <!-- <item name="android:textColorPrimaryInverse">@color/abc_primary_text_material_light</item> -->
+        <item name="actionMenuTextColor">@color/abc_primary_text_material_light</item>
+        <item name="android:textColorSecondary">@color/abc_secondary_text_material_light</item>
     </style>
 
     <style name="ActionBar.Solid.Nogifeed" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">

@@ -4,26 +4,24 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
-import android.shts.jp.nogifeed.fragments.BlogFragment;
 import android.shts.jp.nogifeed.fragments.MemberDetailFragment;
 import android.shts.jp.nogifeed.models.Entry;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.WindowCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.KeyEvent;
-import android.view.Window;
+import android.support.v7.widget.Toolbar;
 
 public class MemberDetailActivity extends ActionBarActivity {
 
     private Drawable mActionBarDrawable;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_BAR_OVERLAY);
-        setContentView(R.layout.activity_feed_list);
+        setContentView(R.layout.activity_member_detail);
 
         setupActionBar();
 
@@ -41,38 +39,27 @@ public class MemberDetailActivity extends ActionBarActivity {
     }
 
     private void setupActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        // hide actionbar titile
-        actionBar.setTitle("");
-        //actionBar.setLogo(R.drawable.unfavorite_normal_72);
+        mToolbar = (Toolbar) findViewById(R.id.tool_actionbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setElevation(0);
 
         mActionBarDrawable = getResources().getDrawable(R.drawable.ab_solid_nogifeed);
-        actionBar.setBackgroundDrawable(mActionBarDrawable);
-        actionBar.setLogo(R.drawable.ic_launcher_white);
+        int sdk = android.os.Build.VERSION.SDK_INT;
+        if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            mToolbar.setBackgroundDrawable(mActionBarDrawable);
+        } else {
+            mToolbar.setBackground(mActionBarDrawable);
+        }
     }
 
     public void setActionBarDrawableAlpha(int alpha) {
         mActionBarDrawable.setAlpha(alpha);
-        getSupportActionBar().setBackgroundDrawable(mActionBarDrawable);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-
-            BlogFragment blogFragment =
-                    (BlogFragment) getSupportFragmentManager().findFragmentByTag(
-                            BlogFragment.class.getSimpleName());
-
-            if (blogFragment != null) {
-                if (blogFragment.isVisible()) {
-                    if (blogFragment.goBack()) {
-                        return true;
-                    }
-                }
-            }
+        int sdk = android.os.Build.VERSION.SDK_INT;
+        if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            mToolbar.setBackgroundDrawable(mActionBarDrawable);
+        } else {
+            mToolbar.setBackground(mActionBarDrawable);
         }
-        return super.onKeyDown(keyCode, event);
     }
 
 }

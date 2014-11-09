@@ -2,41 +2,59 @@
 <pre-dex-items>
 
     <item
+        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.0-1c28f9223850ecb5192ea602f8764f13368b0114.jar"
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/libs/internal_impl-21.0.0.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="1609e6d42d0480b0f4188e2c29f75388fa12a8f0"/>
+    <item
         dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/jsoup-1.7.3-20e2b679dfc76892edfd3d8e1dfee292f41d05d4.jar"
         jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.7.3/92568d7167ce1bf9eb1fd815b022d5a2c113547a/jsoup-1.7.3.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="92568d7167ce1bf9eb1fd815b022d5a2c113547a"/>
     <item
-        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-6105dc5d84b0f944e24a932a7ff8610cdf779358.jar"
-        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/classes.jar"
+        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.0-882d7cba3612883a3d0f0b5ff319b075b69b2ebe.jar"
+        jar="/Applications/Android Studio.app/Contents/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.0/support-annotations-21.0.0.jar"
         jumboMode="false"
-        revision="20.0.0"
-        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
+        revision="21.1.0"
+        sha1="1a578b9607b36266c63d43a4fa0ab5664dbe911e"/>
     <item
-        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-0fa3e13a3ad36f0d8756f3db5229ace3695e3bdf.jar"
-        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/classes.jar"
+        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/jsoup-1.7.3-20e2b679dfc76892edfd3d8e1dfee292f41d05d4.jar"
+        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.7.3/92568d7167ce1bf9eb1fd815b022d5a2c113547a/jsoup-1.7.3.jar"
         jumboMode="false"
-        revision="20.0.0"
-        sha1="f21927d22fe31889ecce94dd697a2e75b137e0ef"/>
-    <item
-        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/support-annotations-20.0.0-bca9cd8c8082330ef7549e0398af852faae531fd.jar"
-        jar="/Applications/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
-    <item
-        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/internal_impl-20.0.0-e6961f17fda400e8211dc43d8d0cca3b7b39a7f0.jar"
-        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/libs/internal_impl-20.0.0.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
+        revision="21.1.0"
+        sha1="92568d7167ce1bf9eb1fd815b022d5a2c113547a"/>
     <item
         dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/picasso-2.3.3-24fd63ae3e584d50a5376609c3006358a473cfdf.jar"
         jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.3.3/1262995965440e28ba5c4d480c9c9ab4ccce84cc/picasso-2.3.3.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="1262995965440e28ba5c4d480c9c9ab4ccce84cc"/>
+    <item
+        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-4828c78290a2545c7ee47f56921b45ac50b09c73.jar"
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="95fd37732ec852e99f07eeb516a3650172f1d136"/>
+    <item
+        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/picasso-2.3.3-24fd63ae3e584d50a5376609c3006358a473cfdf.jar"
+        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.3.3/1262995965440e28ba5c4d480c9c9ab4ccce84cc/picasso-2.3.3.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="1262995965440e28ba5c4d480c9c9ab4ccce84cc"/>
+    <item
+        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/android-async-http-1.4.5-b4ef43b277f96d73df95d232b1085fc386df5249.jar"
+        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.loopj.android/android-async-http/1.4.5/77bf7cacf9cefe19dc105e5425d2eb1bb5285881/android-async-http-1.4.5.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="77bf7cacf9cefe19dc105e5425d2eb1bb5285881"/>
+    <item
+        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-8ad229688c33f80e48e7d914b11061587a24f69d.jar"
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="686344a780033e4ba22b926cd225f8d4941247e6"/>
     <item
         dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/android-async-http-1.4.5-b4ef43b277f96d73df95d232b1085fc386df5249.jar"
         jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.loopj.android/android-async-http/1.4.5/77bf7cacf9cefe19dc105e5425d2eb1bb5285881/android-async-http-1.4.5.jar"

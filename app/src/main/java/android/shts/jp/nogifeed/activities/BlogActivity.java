@@ -8,6 +8,7 @@ import android.shts.jp.nogifeed.models.Entry;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 
 public class BlogActivity extends ActionBarActivity {
@@ -31,10 +32,13 @@ public class BlogActivity extends ActionBarActivity {
     }
 
     private void setupActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        Drawable drawable = getResources().getDrawable(R.drawable.ab_solid_nogifeed);
-        actionBar.setBackgroundDrawable(drawable);
-        actionBar.setLogo(R.drawable.ic_launcher_white);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_actionbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setElevation(0);
+//        ActionBar actionBar = getSupportActionBar();
+//        Drawable drawable = getResources().getDrawable(R.drawable.ab_solid_nogifeed);
+//        actionBar.setBackgroundDrawable(drawable);
+//        actionBar.setLogo(R.drawable.ic_launcher_white);
     }
 
     @Override
