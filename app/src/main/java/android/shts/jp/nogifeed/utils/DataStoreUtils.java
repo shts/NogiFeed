@@ -8,6 +8,9 @@ import android.database.Cursor;
 import android.shts.jp.nogifeed.providers.NogiFeedContent;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DataStoreUtils {
 
     private static final String TAG = DataStoreUtils.class.getSimpleName();
@@ -70,36 +73,55 @@ public class DataStoreUtils {
         return false;
     }
 
-    public static String getAllFavoriteLink(Context context) {
-        String[] links = null;
+    // for debug
+//    public static String getAllFavoriteLink(Context context) {
+//        String[] links = null;
+//        final ContentResolver cr = context.getContentResolver();
+//        Cursor c = cr.query(NogiFeedContent.Favorite.CONTENT_URI, NogiFeedContent.Favorite.sProjection,
+//                null, null, null);
+//        if (c.moveToFirst()) {
+//            int counter = 0;
+//            links = new String[c.getCount()];
+//            do {
+//                String link = c.getString(c.getColumnIndexOrThrow(NogiFeedContent.Favorite.KEY_LINK));
+//                links[counter] = link;
+//                counter++;
+//            } while (c.moveToNext());
+//            c.close();
+//        } else {
+//            Log.e(TAG, "failed to moveToFirst().");
+//            c.close();
+//        }
+//        return toString(links);
+//    }
+//
+//    private static String toString(String[] links) {
+//        if (links == null) return null;
+//
+//        String link = null;
+//        for (String s : links) {
+//            Log.i(TAG, "toString : link(" + s + ")");
+//            link += s + ", ";
+//        }
+//        return link;
+//    }
+
+    public static List<String> getAllFavoriteLink(Context context) {
+        List<String> links = new ArrayList<String>();
         final ContentResolver cr = context.getContentResolver();
         Cursor c = cr.query(NogiFeedContent.Favorite.CONTENT_URI, NogiFeedContent.Favorite.sProjection,
                 null, null, null);
         if (c.moveToFirst()) {
-            int counter = 0;
-            links = new String[c.getCount()];
             do {
                 String link = c.getString(c.getColumnIndexOrThrow(NogiFeedContent.Favorite.KEY_LINK));
-                links[counter] = link;
-                counter++;
+                links.add(link);
             } while (c.moveToNext());
             c.close();
         } else {
             Log.e(TAG, "failed to moveToFirst().");
             c.close();
         }
-        return toString(links);
-    }
-
-    private static String toString(String[] links) {
-        if (links == null) return null;
-
-        String link = null;
-        for (String s : links) {
-            Log.i(TAG, "toString : link(" + s + ")");
-            link += s + ", ";
-        }
-        return link;
+        return links;
     }
 
 }

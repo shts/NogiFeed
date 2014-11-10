@@ -25,6 +25,6 @@ dependencies {
     // You must install or update the Support Repository through the SDK manager to use this dependency.
     compile 'com.android.support:support-v4:21.0.+'
     compile 'com.loopj.android:android-async-http:1.4.5'
-    compile 'org.jsoup:jsoup:1.7.3'
     compile 'com.squareup.picasso:picasso:2.3.3'
+    compile 'com.jpardogo.materialtabstrip:library:1.0.0'
 }

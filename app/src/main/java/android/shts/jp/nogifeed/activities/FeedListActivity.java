@@ -1,12 +1,10 @@
 package android.shts.jp.nogifeed.activities;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.fragments.AllFeedListFragment;
-import android.support.v4.app.*;
-import android.support.v7.app.ActionBar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -18,6 +16,7 @@ public class FeedListActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_list);
+
         AllFeedListFragment allFeedListFragment = new AllFeedListFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, allFeedListFragment, AllFeedListFragment.class.getSimpleName());
@@ -30,11 +29,6 @@ public class FeedListActivity extends ActionBarActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_actionbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setElevation(0);
-//        // TODO: actionbar change color with delete this function.
-//        ActionBar actionbar = getSupportActionBar();
-//        Drawable drawable = getResources().getDrawable(R.drawable.ab_solid_nogifeed);
-//        actionbar.setBackgroundDrawable(drawable);
-//        actionbar.setLogo(R.drawable.ic_launcher_white);
     }
 
     @Override

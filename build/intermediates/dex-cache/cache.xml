@@ -2,29 +2,23 @@
 <pre-dex-items>
 
     <item
+        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-603a08475f452f20ea5d1285c494b363caa97b67.jar"
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.jpardogo.materialtabstrip/library/1.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="b08b36f7d576d624dd3be60f15c4bf12a4e313e2"/>
+    <item
         dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.0-1c28f9223850ecb5192ea602f8764f13368b0114.jar"
         jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/libs/internal_impl-21.0.0.jar"
         jumboMode="false"
         revision="21.1.0"
         sha1="1609e6d42d0480b0f4188e2c29f75388fa12a8f0"/>
     <item
-        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/jsoup-1.7.3-20e2b679dfc76892edfd3d8e1dfee292f41d05d4.jar"
-        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.7.3/92568d7167ce1bf9eb1fd815b022d5a2c113547a/jsoup-1.7.3.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="92568d7167ce1bf9eb1fd815b022d5a2c113547a"/>
-    <item
         dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.0-882d7cba3612883a3d0f0b5ff319b075b69b2ebe.jar"
         jar="/Applications/Android Studio.app/Contents/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.0/support-annotations-21.0.0.jar"
         jumboMode="false"
         revision="21.1.0"
         sha1="1a578b9607b36266c63d43a4fa0ab5664dbe911e"/>
-    <item
-        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/jsoup-1.7.3-20e2b679dfc76892edfd3d8e1dfee292f41d05d4.jar"
-        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.7.3/92568d7167ce1bf9eb1fd815b022d5a2c113547a/jsoup-1.7.3.jar"
-        jumboMode="false"
-        revision="21.1.0"
-        sha1="92568d7167ce1bf9eb1fd815b022d5a2c113547a"/>
     <item
         dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/picasso-2.3.3-24fd63ae3e584d50a5376609c3006358a473cfdf.jar"
         jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.3.3/1262995965440e28ba5c4d480c9c9ab4ccce84cc/picasso-2.3.3.jar"

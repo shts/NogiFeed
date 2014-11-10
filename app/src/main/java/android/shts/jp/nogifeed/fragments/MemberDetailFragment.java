@@ -142,11 +142,11 @@ public class MemberDetailFragment extends ListFragment {
             @Override
             public void onCheckdChanged(CompoundButton compoundButton, boolean isChecked) {
                 DataStoreUtils.favorite(getActivity(), mFeedUrl, isChecked);
-                String links = DataStoreUtils.getAllFavoriteLink(getActivity());
-                if (links != null) {
-                    Toast.makeText(getActivity(), links,
-                            Toast.LENGTH_LONG).show();
-                }
+//                String links = DataStoreUtils.getAllFavoriteLink(getActivity());
+//                if (links != null) {
+//                    Toast.makeText(getActivity(), links,
+//                            Toast.LENGTH_LONG).show();
+//                }
             }
         });
         mShowcase.setLayoutParams(new AbsListView.LayoutParams(
