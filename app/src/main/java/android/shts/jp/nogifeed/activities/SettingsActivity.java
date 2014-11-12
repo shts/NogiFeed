@@ -1,41 +1,30 @@
 package android.shts.jp.nogifeed.activities;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
+import android.shts.jp.nogifeed.R;
+import android.shts.jp.nogifeed.fragments.AllFeedListFragment;
+import android.shts.jp.nogifeed.fragments.SettingsFragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 
-// TODO: SettingsActivity2 を参考にページを作成すること
-public class SettingsActivity extends PreferenceActivity implements
-        SharedPreferences.OnSharedPreferenceChangeListener {
-
-
+public class SettingsActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //addPreferencesFromResource(R.xml.pref);
+        setContentView(R.layout.activity_settings);
+
+        SettingsFragment settingsFragment = new SettingsFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.container, settingsFragment, AllFeedListFragment.class.getSimpleName());
+        ft.commit();
+
+        setupActionBar();
     }
 
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        refreshSummary();
-    }
-
-    private void refreshSummary() {
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getPreferenceScreen().getSharedPreferences()
-                .registerOnSharedPreferenceChangeListener(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        getPreferenceScreen().getSharedPreferences()
-                .unregisterOnSharedPreferenceChangeListener(this);
+    private void setupActionBar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_actionbar);
+        setSupportActionBar(toolbar);
     }
 }

@@ -27,4 +27,5 @@ dependencies {
     compile 'com.loopj.android:android-async-http:1.4.5'
     compile 'com.squareup.picasso:picasso:2.3.3'
     compile 'com.jpardogo.materialtabstrip:library:1.0.0'
+    compile 'com.github.machinarius:preferencefragment:0.1.1'
 }

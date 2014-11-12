@@ -40,7 +40,7 @@ public class FeedListActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO: go to settings
         // TODO: go to about
-        Intent i = new Intent(this, SettingsActivity2.class);
+        Intent i = new Intent(this, SettingsActivity.class);
         startActivity(i);
         return super.onOptionsItemSelected(item);
     }

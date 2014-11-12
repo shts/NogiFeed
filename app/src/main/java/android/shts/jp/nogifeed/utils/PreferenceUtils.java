@@ -11,28 +11,11 @@ public class PreferenceUtils implements IPreferences {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    public static boolean isFirstBoot(Context context) {
-        return getDefaultPref(context).getBoolean(Key.FIRST_BOOT, false);
+    public static void setBoolean(Context context, String key, boolean value) {
+        getDefaultPref(context).edit().putBoolean(key, value).commit();
     }
 
-    public static void setFirstBoot(Context context, boolean isFirstBoot) {
-        getDefaultPref(context).edit().putBoolean(Key.FIRST_BOOT, isFirstBoot).commit();
+    public static boolean getBoolean(Context context, String key, boolean defVal) {
+        return getDefaultPref(context).getBoolean(key, defVal);
     }
-
-    public static boolean useFavorite(Context context) {
-        return getDefaultPref(context).getBoolean(Key.FAVORITE, false);
-    }
-
-    public static void useFavorite(Context context, boolean use) {
-        getDefaultPref(context).edit().putBoolean(Key.FAVORITE, use).commit();
-    }
-
-    public static boolean useNotification(Context context) {
-        return getDefaultPref(context).getBoolean(Key.NOTIFICATION, false);
-    }
-
-    public static void useNotification(Context context, boolean use) {
-        getDefaultPref(context).edit().putBoolean(Key.NOTIFICATION, use).commit();
-    }
-
 }
