@@ -83,6 +83,9 @@ public class StringUtils {
         // ignore style elements
         ignored = ignored.replace("style=max-width:100%;", "");
 
+        // ignore style elements with space
+        ignored = ignored.replace("style=max-width: 100%;", "");
+
         Log.v(TAG, "ignoreImgTag : ignored (" + ignored + ")");
         return ignored;
     }
