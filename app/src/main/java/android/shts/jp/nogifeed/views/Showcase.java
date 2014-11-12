@@ -40,13 +40,13 @@ public class Showcase extends FrameLayout {
         mListener = listener;
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPageIndicator = (ViewPageIndicator) findViewById(R.id.indicator);
-        mFavoriteCheckbox = (CheckBox) findViewById(R.id.favorite);
-        mFavoriteCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                mListener.onCheckdChanged(compoundButton, b);
-            }
-        });
+//        mFavoriteCheckbox = (CheckBox) findViewById(R.id.favorite);
+//        mFavoriteCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                mListener.onCheckdChanged(compoundButton, b);
+//            }
+//        });
         mImageUrls = imageUrls;
         setupAdapter();
     }
