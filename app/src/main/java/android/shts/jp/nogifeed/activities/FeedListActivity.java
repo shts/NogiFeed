@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 public class FeedListActivity extends ActionBarActivity {
@@ -33,6 +34,7 @@ public class FeedListActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        new MenuInflater(this).inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -40,7 +42,7 @@ public class FeedListActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO: go to settings
         // TODO: go to about
-        Intent i = new Intent(this, SettingsActivity.class);
+        Intent i = new Intent(this, AboutActivity.class);
         startActivity(i);
         return super.onOptionsItemSelected(item);
     }

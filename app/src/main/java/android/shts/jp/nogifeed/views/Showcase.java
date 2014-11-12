@@ -52,7 +52,7 @@ public class Showcase extends FrameLayout {
     }
 
     public void setFavorite(boolean isChecked) {
-        mFavoriteCheckbox.setChecked(isChecked);
+//        mFavoriteCheckbox.setChecked(isChecked);
     }
 
     private void setupAdapter() {
