@@ -83,6 +83,7 @@ public class StringUtils {
         // ignore style elements
         ignored = ignored.replace("style=max-width:100%;", "");
 
+        // TODO: ignore any space
         // ignore style elements with space
         ignored = ignored.replace("style=max-width: 100%;", "");
 

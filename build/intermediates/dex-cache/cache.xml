@@ -14,6 +14,12 @@
         revision="21.1.0"
         sha1="1609e6d42d0480b0f4188e2c29f75388fa12a8f0"/>
     <item
+        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-1967dbff3c65dc19fbd47f0cc6ea7f8be55e3ea5.jar"
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.github.machinarius/preferencefragment/0.1.1/classes.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="648463e00c6883d01b6c11a6781776203334b6fc"/>
+    <item
         dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.0-882d7cba3612883a3d0f0b5ff319b075b69b2ebe.jar"
         jar="/Applications/Android Studio.app/Contents/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.0/support-annotations-21.0.0.jar"
         jumboMode="false"
@@ -55,11 +61,5 @@
         jumboMode="false"
         revision="20.0.0"
         sha1="77bf7cacf9cefe19dc105e5425d2eb1bb5285881"/>
-    <item
-        dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-1967dbff3c65dc19fbd47f0cc6ea7f8be55e3ea5.jar"
-        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.github.machinarius/preferencefragment/0.1.1/classes.jar"
-        jumboMode="false"
-        revision="21.1.0"
-        sha1="648463e00c6883d01b6c11a6781776203334b6fc"/>
 
 </pre-dex-items>
