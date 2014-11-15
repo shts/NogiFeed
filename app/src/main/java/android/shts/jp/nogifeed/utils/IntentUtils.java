@@ -12,7 +12,7 @@ import org.apache.http.protocol.HTTP;
 public class IntentUtils {
 
     private static final String URL_TWITTER = "https://twitter.com/";
-    private static final String PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=android.shts.jp.nogifeed&hl=ja";
+    private static final String PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=shts.jp.android.nogifeed&hl=ja";
     private static final String RECOMEND_TEXT = "乃木坂46公式ブログは NogiFeed で読みましょう！";
 
     public static void showDeveloper(Context context) {
