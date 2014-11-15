@@ -30,20 +30,20 @@ public class AboutFragment extends Fragment {
     }
 
     private void setupAboutListAdapter() {
-        List<AboutLocalItem> abouts = new ArrayList<AboutLocalItem>();
-        abouts.add(new AboutLocalItem("友達に教える", R.drawable.ic_social_share, new OnClickListener() {
+        List<AboutItem> abouts = new ArrayList<AboutItem>();
+        abouts.add(new AboutItem("友達に教える", R.drawable.ic_social_share, new OnClickListener() {
             @Override
             public void onClick() {
                 IntentUtils.recomendApp(getActivity());
             }
         }));
-        abouts.add(new AboutLocalItem("このアプリを評価する", R.drawable.ic_action_thumb_up, new OnClickListener() {
+        abouts.add(new AboutItem("このアプリを評価する", R.drawable.ic_action_thumb_up, new OnClickListener() {
             @Override
             public void onClick() {
                 IntentUtils.rateApp(getActivity());
             }
         }));
-        abouts.add(new AboutLocalItem("アプリについて問い合わせる", R.drawable.ic_communication_messenger, new OnClickListener() {
+        abouts.add(new AboutItem("アプリについて問い合わせる", R.drawable.ic_communication_messenger, new OnClickListener() {
             @Override
             public void onClick() {
                 IntentUtils.inquiryApp(getActivity());
@@ -75,10 +75,10 @@ public class AboutFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 ListView listView = (ListView) adapterView;
-                AboutLocalItem aboutLocalItem = (AboutLocalItem) listView.getItemAtPosition(i);
+                AboutItem aboutItem = (AboutItem) listView.getItemAtPosition(i);
 
-                if (aboutLocalItem != null && aboutLocalItem.listener != null) {
-                    aboutLocalItem.listener.onClick();
+                if (aboutItem != null && aboutItem.listener != null) {
+                    aboutItem.listener.onClick();
                 }
             }
         });
@@ -87,11 +87,11 @@ public class AboutFragment extends Fragment {
         return view;
     }
 
-    class AboutLocalItem {
+    class AboutItem {
         public final String title;
         public final int iconRes;
         public final OnClickListener listener;
-        AboutLocalItem(String title, int iconRes, OnClickListener listener) {
+        AboutItem(String title, int iconRes, OnClickListener listener) {
             this.title = title;
             this.iconRes = iconRes;
             this.listener = listener;
@@ -112,7 +112,7 @@ public class AboutFragment extends Fragment {
             }
         }
 
-        public AboutListAdapter(Context context, List<AboutLocalItem> list) {
+        public AboutListAdapter(Context context, List<AboutItem> list) {
             super(context, list);
         }
 
@@ -127,7 +127,7 @@ public class AboutFragment extends Fragment {
         @Override
         public void bindView(Object item, int position, View view) {
             final ViewHolder holder = (ViewHolder) view.getTag();
-            AboutLocalItem aboutLocalItem = (AboutLocalItem) item;
+            AboutItem aboutLocalItem = (AboutItem) item;
             holder.imageView.setImageResource(aboutLocalItem.iconRes);
             holder.textView.setText(aboutLocalItem.title);
         }
