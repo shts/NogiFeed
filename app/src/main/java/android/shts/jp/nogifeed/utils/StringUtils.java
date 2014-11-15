@@ -21,9 +21,9 @@ public class StringUtils {
     public static String[] createFullNameFrom(String memberFeedUrl) {
         final String[] fullName = memberFeedUrl.split("/");
         final String[] fullNameArray = fullName[3].split("\\.");
-        for (int i = 0; i < fullNameArray.length; i++) {
-            Log.i(TAG, "index : " + i + " name : " + fullNameArray[i]);
-        }
+//        for (int i = 0; i < fullNameArray.length; i++) {
+//            Log.i(TAG, "index : " + i + " name : " + fullNameArray[i]);
+//        }
         return fullNameArray;
     }
 
@@ -87,7 +87,7 @@ public class StringUtils {
         // ignore style elements with space
         ignored = ignored.replace("style=max-width: 100%;", "");
 
-        Log.v(TAG, "ignoreImgTag : ignored (" + ignored + ")");
+        //Log.v(TAG, "ignoreImgTag : ignored (" + ignored + ")");
         return ignored;
     }
 

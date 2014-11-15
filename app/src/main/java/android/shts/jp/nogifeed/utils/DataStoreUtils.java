@@ -16,7 +16,7 @@ public class DataStoreUtils {
     private static final String TAG = DataStoreUtils.class.getSimpleName();
 
     public static void favorite(Context context, String link, boolean favorite) {
-        Log.v(TAG, "req fav : link(" + link + ") favorite(" + favorite + ")");
+        //Log.v(TAG, "req fav : link(" + link + ") favorite(" + favorite + ")");
         if (favorite) {
             favorite(context, link);
         } else {
@@ -26,7 +26,7 @@ public class DataStoreUtils {
 
     private static void favorite(Context context, String link) {
         if (alreadyExist(context, link)) {
-            Log.w(TAG, "link already exist. link(" + link + ")");
+            //Log.w(TAG, "link already exist. link(" + link + ")");
             return;
         }
         final ContentResolver cr = context.getContentResolver();
@@ -42,7 +42,7 @@ public class DataStoreUtils {
         int result = cr.delete(NogiFeedContent.Favorite.CONTENT_URI, selection, selectionArgs);
 
         if (result <= 0)  {
-            Log.e(TAG, "failed to delete link. link(" + link + ")");
+            //Log.e(TAG, "failed to delete link. link(" + link + ")");
         }
     }
 
@@ -54,7 +54,7 @@ public class DataStoreUtils {
         Cursor c = cr.query(NogiFeedContent.Favorite.CONTENT_URI, NogiFeedContent.Favorite.sProjection,
                 selection, selectionArgs, null);
         if (c == null) {
-            Log.d(TAG, "cursor is null. because of use favorite function first time");
+            //Log.d(TAG, "cursor is null. because of use favorite function first time");
             return false;
         }
         if (c.moveToFirst()) {
@@ -66,7 +66,7 @@ public class DataStoreUtils {
             } while (c.moveToNext());
             c.close();
         } else {
-            Log.e(TAG, "alreadyExist : failed to moveToFirst().");
+            //Log.e(TAG, "alreadyExist : failed to moveToFirst().");
             c.close();
             return false;
         }
@@ -118,7 +118,7 @@ public class DataStoreUtils {
             } while (c.moveToNext());
             c.close();
         } else {
-            Log.e(TAG, "failed to moveToFirst().");
+            //Log.e(TAG, "failed to moveToFirst().");
             c.close();
         }
         return links;

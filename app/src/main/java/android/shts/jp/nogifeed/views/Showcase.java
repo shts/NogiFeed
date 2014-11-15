@@ -94,7 +94,7 @@ public class Showcase extends FrameLayout {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            Log.d(TAG, "instantiateItem called : position(" + position + ")");
+            //Log.d(TAG, "instantiateItem called : position(" + position + ")");
             ImageView iv = new ImageView(mContext);
             iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
             PicassoHelper.load(mContext, iv, mImageUrls.get(position));
