@@ -40,7 +40,7 @@ public class StringUtils {
         return lastName;
     }
 
-    public static List<String> getThumnailImage(String content, int maxSize) {
+    public static List<String> getThumnailImageUrls(String content, int maxSize) {
 
         if (TextUtils.isEmpty(content)) {
             Log.e(TAG, "failed to getThumnailImage() : content is null");
@@ -86,8 +86,8 @@ public class StringUtils {
         // TODO: ignore any space
         // ignore style elements with space
         ignored = ignored.replace("style=max-width: 100%;", "");
-
-        //Log.v(TAG, "ignoreImgTag : ignored (" + ignored + ")");
+        ignored = ignored.replace("style=\"max-width:100%;\"", "");
+        Log.v(TAG, "ignoreImgTag : ignored (" + ignored + ")");
         return ignored;
     }
 

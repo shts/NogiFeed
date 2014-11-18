@@ -127,7 +127,7 @@ public class MemberDetailFragment extends ListFragment {
     private void setupShowcase(Entries entries) {
         for (int i = 0; i < entries.size(); i++) {
             Entry e = entries.get(i);
-            List<String> images = StringUtils.getThumnailImage(
+            List<String> images = StringUtils.getThumnailImageUrls(
                     e.content, IMAGE_MAX_SIZE - mImageUrls.size());
             ArrayUtils.concatenation(images, mImageUrls);
             if (mImageUrls.size() >= IMAGE_MAX_SIZE) {

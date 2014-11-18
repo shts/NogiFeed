@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.fragments.AllFeedListFragment;
+import android.shts.jp.nogifeed.fragments.FavoriteMemberFeedListFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,9 +19,12 @@ public class FeedListActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_list);
 
-        AllFeedListFragment allFeedListFragment = new AllFeedListFragment();
+//        AllFeedListFragment allFeedListFragment = new AllFeedListFragment();
+        FavoriteMemberFeedListFragment favoriteMemberFeedListFragment
+                = new FavoriteMemberFeedListFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, allFeedListFragment, AllFeedListFragment.class.getSimpleName());
+//        ft.replace(R.id.container, allFeedListFragment, AllFeedListFragment.class.getSimpleName());
+        ft.replace(R.id.container, favoriteMemberFeedListFragment, FavoriteMemberFeedListFragment.class.getSimpleName());
         ft.commit();
 
         setupActionBar();
