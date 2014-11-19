@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.shts.jp.nogifeed.activities.FeedListActivity;
 import android.os.Bundle;
+import android.shts.jp.nogifeed.activities.MemberDetailActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;

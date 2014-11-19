@@ -8,6 +8,7 @@ import android.shts.jp.nogifeed.api.AsyncRssClient;
 import android.shts.jp.nogifeed.listener.RssClientListener;
 import android.shts.jp.nogifeed.models.Entries;
 import android.shts.jp.nogifeed.models.Entry;
+import android.shts.jp.nogifeed.models.Member;
 import android.shts.jp.nogifeed.utils.ArrayUtils;
 import android.shts.jp.nogifeed.utils.DataStoreUtils;
 import android.shts.jp.nogifeed.utils.IntentUtils;
@@ -41,6 +42,7 @@ public class MemberDetailFragment extends ListFragment {
     private Entry mEntry;
     private MemberFeedListAdapter mMemberFeedListAdapter;
     private String mFeedUrl;
+    private Member mMember;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,9 @@ public class MemberDetailFragment extends ListFragment {
 
         Bundle bundle = getArguments();
         mEntry = bundle.getParcelable(Entry.KEY);
+        if (mEntry == null) {
+            mMember = bundle.getParcelable(Member.KEY);
+        }
     }
 
     @Override
@@ -107,7 +112,12 @@ public class MemberDetailFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mFeedUrl = UrlUtils.getMemberFeedUrl(mEntry.link);
+        if (mEntry != null) {
+            mFeedUrl = UrlUtils.getMemberFeedUrl(mEntry.link);
+        } else {
+            // TODO: 個人ページから feed url を取得できない throws exception.
+            mFeedUrl = UrlUtils.getMemberFeedUrl(mMember.blogUrl);
+        }
         setupMemberFeedList(mFeedUrl);
     }
 
@@ -142,11 +152,6 @@ public class MemberDetailFragment extends ListFragment {
             @Override
             public void onCheckdChanged(CompoundButton compoundButton, boolean isChecked) {
                 DataStoreUtils.favorite(getActivity(), mFeedUrl, isChecked);
-//                String links = DataStoreUtils.getAllFavoriteLink(getActivity());
-//                if (links != null) {
-//                    Toast.makeText(getActivity(), links,
-//                            Toast.LENGTH_LONG).show();
-//                }
             }
         });
         mShowcase.setLayoutParams(new AbsListView.LayoutParams(

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.shts.jp.nogifeed.activities.BlogActivity;
 import android.shts.jp.nogifeed.activities.MemberDetailActivity;
 import android.shts.jp.nogifeed.models.Entry;
+import android.shts.jp.nogifeed.models.Member;
 
 import org.apache.http.protocol.HTTP;
 
@@ -51,6 +52,12 @@ public class IntentUtils {
     public static void startBlogActivity(Context context, Entry entry) {
         Intent i = new Intent(context, BlogActivity.class);
         i.putExtra(Entry.KEY, entry);
+        context.startActivity(i);
+    }
+
+    public static void startMemberDetailActivity(Context context, Member member) {
+        Intent i = new Intent(context, MemberDetailActivity.class);
+        i.putExtra(Member.KEY, member);
         context.startActivity(i);
     }
 }

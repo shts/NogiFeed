@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.fragments.MemberDetailFragment;
 import android.shts.jp.nogifeed.models.Entry;
+import android.shts.jp.nogifeed.models.Member;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.WindowCompat;
 import android.support.v7.app.ActionBar;
@@ -25,9 +26,18 @@ public class MemberDetailActivity extends ActionBarActivity {
         setContentView(R.layout.activity_member_detail);
 
         Intent i = getIntent();
-        Entry entry = i.getParcelableExtra(Entry.KEY);
         Bundle bundle = new Bundle();
-        bundle.putParcelable(Entry.KEY, entry);
+        Entry entry = i.getParcelableExtra(Entry.KEY);
+        if (entry != null) {
+            // intent from AllFeedListFragment
+            bundle.putParcelable(Entry.KEY, entry);
+            setupActionBar(entry.name);
+        } else {
+            // intent from MemberGridListFragment
+            Member member = i.getParcelableExtra(Member.KEY);
+            bundle.putParcelable(Member.KEY, member);
+            setupActionBar(member.fullName);
+        }
 
         MemberDetailFragment memberDetailFragment = new MemberDetailFragment();
         memberDetailFragment.setArguments(bundle);
@@ -36,7 +46,11 @@ public class MemberDetailActivity extends ActionBarActivity {
         ft.replace(R.id.container, memberDetailFragment, MemberDetailFragment.class.getSimpleName());
         ft.commit();
 
-        setupActionBar(entry.name);
+//        if (entry != null) {
+//            setupActionBar(entry.name);
+//        } else {
+//            setupActionBar(m);
+//        }
     }
 
     private void setupActionBar(String name) {

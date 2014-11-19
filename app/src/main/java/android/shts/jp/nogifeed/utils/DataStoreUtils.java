@@ -73,7 +73,6 @@ public class DataStoreUtils {
         return false;
     }
 
-    // for debug
 //    public static String getAllFavoriteLink(Context context) {
 //        String[] links = null;
 //        final ContentResolver cr = context.getContentResolver();

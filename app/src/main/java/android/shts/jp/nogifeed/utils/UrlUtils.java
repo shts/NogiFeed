@@ -9,10 +9,10 @@ public class UrlUtils {
     public static final String FEED_MEMBER_URL_SCHEME = "http://blog.nogizaka46.com/";
     public static final String FEED_MEMBER_URL_SUFFIX = "/atom.xml";
 
-    public static String getMemberFeedUrl(Member member) {
-        // http://blog.nogizaka46.com/rina.ikoma/atom.xml
-        return FEED_MEMBER_URL_SCHEME + member.firstName + member.lastName + FEED_MEMBER_URL_SUFFIX;
-    }
+//    public static String getMemberFeedUrl(Member member) {
+//        // http://blog.nogizaka46.com/rina.ikoma/atom.xml
+//        return FEED_MEMBER_URL_SCHEME + member.firstName + member.lastName + FEED_MEMBER_URL_SUFFIX;
+//    }
 
     public static String getMemberFeedUrl(String feedUrl) {
 
@@ -27,11 +27,11 @@ public class UrlUtils {
     public static final String MEMBER_PROFILE_URL_PREFIX = "smph/member/detail/";
     public static final String MEMBER_PROFILE_URL_SUFFIX = ".php";
 
-    public static String getMemberProfileUrl(Member member) {
-        // http://www.nogizaka46.com/smph/member/detail/ikomarina.php
-        return MEMBER_PROFILE_URL_SCHEME + MEMBER_PROFILE_URL_PREFIX +
-                member.lastName + member.firstName + MEMBER_PROFILE_URL_SUFFIX;
-    }
+//    public static String getMemberProfileUrl(Member member) {
+//        // http://www.nogizaka46.com/smph/member/detail/ikomarina.php
+//        return MEMBER_PROFILE_URL_SCHEME + MEMBER_PROFILE_URL_PREFIX +
+//                member.lastName + member.firstName + MEMBER_PROFILE_URL_SUFFIX;
+//    }
 
     public static String getMemberProfileUrl(String firstName, String lastName) {
         // http://www.nogizaka46.com/smph/member/detail/ikomarina.php
