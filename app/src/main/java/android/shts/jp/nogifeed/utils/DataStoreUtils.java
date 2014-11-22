@@ -50,11 +50,12 @@ public class DataStoreUtils {
         final ContentResolver cr = context.getContentResolver();
         String selection = NogiFeedContent.Favorite.KEY_LINK + "=?";
         String[] selectionArgs = { link };
+        Log.d(TAG, "alreadyExist : link " + link);
 
         Cursor c = cr.query(NogiFeedContent.Favorite.CONTENT_URI, NogiFeedContent.Favorite.sProjection,
                 selection, selectionArgs, null);
         if (c == null) {
-            //Log.d(TAG, "cursor is null. because of use favorite function first time");
+            Log.d(TAG, "cursor is null. because of use favorite function first time");
             return false;
         }
         if (c.moveToFirst()) {
@@ -66,7 +67,7 @@ public class DataStoreUtils {
             } while (c.moveToNext());
             c.close();
         } else {
-            //Log.e(TAG, "alreadyExist : failed to moveToFirst().");
+            Log.e(TAG, "alreadyExist : failed to moveToFirst().");
             c.close();
             return false;
         }

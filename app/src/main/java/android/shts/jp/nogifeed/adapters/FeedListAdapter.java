@@ -1,14 +1,14 @@
 package android.shts.jp.nogifeed.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.shts.jp.nogifeed.R;
-import android.shts.jp.nogifeed.activities.MemberDetailActivity;
 import android.shts.jp.nogifeed.models.Entry;
+import android.shts.jp.nogifeed.utils.DataStoreUtils;
 import android.shts.jp.nogifeed.utils.DateUtils;
 import android.shts.jp.nogifeed.utils.IntentUtils;
 import android.shts.jp.nogifeed.utils.PicassoHelper;
 import android.shts.jp.nogifeed.utils.UrlUtils;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,12 +24,14 @@ public class FeedListAdapter extends BindableAdapter<Entry> {
 
     public class ViewHolder {
         ImageView profileImageView;
+        ImageView favoriteImageView;
         TextView titleTextView;
         TextView authorNameTextView;
         TextView updatedTextView;
 
         public ViewHolder(View view) {
             profileImageView = (ImageView) view.findViewById(R.id.profile_image);
+            favoriteImageView = (ImageView) view.findViewById(R.id.favorite_icon);
             titleTextView = (TextView) view.findViewById(R.id.title);
             authorNameTextView = (TextView) view.findViewById(R.id.authorname);
             updatedTextView = (TextView) view.findViewById(R.id.updated);
@@ -72,5 +74,8 @@ public class FeedListAdapter extends BindableAdapter<Entry> {
         holder.titleTextView.setText(entry.title);
         holder.authorNameTextView.setText(entry.name);
         holder.updatedTextView.setText(DateUtils.formatUpdated(entry.updated));
+        boolean isFavorite = TextUtils.isEmpty(profileImageUrl) ? false :
+                DataStoreUtils.alreadyExist(getContext(), UrlUtils.getMemberFeedUrl(entry.link));
+        holder.favoriteImageView.setVisibility(isFavorite ? View.VISIBLE : View.GONE);
     }
 }

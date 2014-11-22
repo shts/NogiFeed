@@ -5,6 +5,10 @@
     android:paddingRight="16dp"
     android:orientation="horizontal">
 
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
     <ImageView
         android:id="@+id/profile_image"
         android:layout_gravity="center_vertical"
@@ -13,6 +17,13 @@
         android:layout_height="72dp"
         android:src="@drawable/kensyusei"
         />
+    <ImageView
+        android:id="@+id/favorite_icon"
+        android:layout_gravity="right|bottom"
+        android:src="@drawable/favorite_normal_72"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
+    </FrameLayout>
 
     <LinearLayout
         android:orientation="vertical"
