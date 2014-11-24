@@ -1,9 +1,12 @@
 package android.shts.jp.nogifeed.models;
 
-import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.shts.jp.nogifeed.utils.DateUtils;
 import android.util.Log;
+
+import java.text.ParseException;
+import java.util.Date;
 
 public class Entry implements Parcelable {
 
@@ -20,6 +23,33 @@ public class Entry implements Parcelable {
     public String content;
 
     public Entry() {}
+
+    public String toString() {
+        String s = "Entry : title("
+                + title + ") link(" + link
+                + ") id(" + id + ") published(" + published
+                + ") summary(" + summary + ") name(" + name
+                + ") content(" + "content"/*content*/ + ")";
+        return s;
+    }
+
+    public long getPublishedDateLong() {
+        try {
+            return DateUtils.formatUpdatedLong(this.published);
+        } catch (ParseException e) {
+            Log.e(TAG, "failed to parse date");
+        }
+        return -1;
+    }
+
+    public Date getPublishedDate() {
+        try {
+            return DateUtils.formatUpdatedDate(this.published);
+        } catch (ParseException e) {
+            Log.e(TAG, "failed to parse date");
+        }
+        return null;
+    }
 
     public int describeContents() {
         return 0;

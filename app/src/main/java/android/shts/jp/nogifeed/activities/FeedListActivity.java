@@ -51,5 +51,4 @@ public class FeedListActivity extends ActionBarActivity {
         startActivity(i);
         return super.onOptionsItemSelected(item);
     }
-
 }

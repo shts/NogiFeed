@@ -2,17 +2,18 @@
 <resources>
 
     <string name="app_name">NogiFeed</string>
-    <string name="action_about">"このアプリについて"</string>
+    <string name="action_about">About this app</string>
     <string name="action_settings">Settings</string>
 
     <!-- activity about -->
-    <string name="about_header_app_summary">"乃木坂46の公式ブログを読むアプリです。アプリに関しての質問や機能リクエストは下記フォームから @nogifeed までお問い合わせください。"</string>
-    <string name="about_header_developer_title">"アプリ開発者"</string>
+    <string name="about_header_app_summary">"This application is for read Nogizaka46's blog. (this app is 'un'offical.) Inquiry to me (Twitter @nogifeed), If you have question or feature request about this application."</string>
+    <string name="about_header_developer_title">This application developer</string>
     <string name="about_header_developer_name">\@shts_dev</string>
 
-    <string name="about_item_share">"友達に教える"</string>
-    <string name="about_item_rate">"このアプリを評価する"</string>
-    <string name="about_item_mention">"アプリについて問い合わせる"</string>
+    <string name="about_item_share">Recommend this app</string>
+    <string name="about_item_rate">Rate this app</string>
+    <string name="about_item_mention">Inquiry this app</string>
 
+    <string name="feed_failure">Failed to get feed. Check your network state.</string>
 
 </resources>

@@ -1,20 +1,38 @@
 package android.shts.jp.nogifeed.models;
 
+import android.shts.jp.nogifeed.utils.ArrayUtils;
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 
 public class Entries extends ArrayList<Entry> {
+
     public Entries() {}
 
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Entries : [");
+        for (Entry e : this) {
+            sb.append(e.toString()).append("\n");
+        }
+        sb.append("]");
+        return sb.toString();
+    }
 
-    public static synchronized void sort() {
+    public synchronized Entries cat(Entries entries) {
+        ArrayUtils.concatenation(entries, this);
+        return this;
+    }
 
+    public synchronized Entries sort() {
+        Collections.sort(this, new DateComparator(DateComparator.DESC));
+        return this;
     }
 
     private static class DateComparator implements Comparator {
 
-//        public static final String ASC = "ASC";
-//        public static final String DESC = "DESC";
         public static final int ASC = 1;    //昇順
         public static final int DESC = -1;    //降順
         private int sort = ASC;    //デフォルトは昇順
@@ -25,21 +43,10 @@ public class Entries extends ArrayList<Entry> {
 
         @Override
         public int compare(Object arg0, Object arg1) {
+            Entry entry0 = (Entry) arg0;
+            Entry entry1 = (Entry) arg1;
 
-            if (!(arg0 instanceof Comparable) || !(arg1 instanceof Comparable)) {
-                throw new IllegalArgumentException(
-                        "arg0 & arg1 must implements interface of java.lang.Comparable.");
-            }
-
-            if (arg0 == null && arg1 == null) {
-                return 0;   // arg0 = arg1
-            } else if (arg0 == null) {
-                return 1 * sort;   // arg1 > arg2
-            } else if (arg1 == null) {
-                return -1 * sort;  // arg1 < arg2
-            }
-
-            return ((Comparable)arg0).compareTo((Comparable)arg1) * sort;
+            return entry0.getPublishedDate().compareTo(entry1.getPublishedDate()) * sort;
         }
     }
 

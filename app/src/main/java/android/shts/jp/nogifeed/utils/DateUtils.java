@@ -24,4 +24,18 @@ public class DateUtils {
         }
         return updated;
     }
+
+    public static synchronized long formatUpdatedLong(String source) throws ParseException {
+        Date date = FORMATTER.parse(formatUpdated(source));
+        String dateTime = "year(" + date.getYear() + ") month(" + date.getMonth()
+                + ") day(" + date.getDay() + ") hour(" + date.getHours()
+                + ") minute(" + date.getMinutes() + ") seconds(" + date.getSeconds()
+                + ") ";
+        Log.i(TAG, "formatUpdatedLong : dateTime" + dateTime + ") dateLong(" + date.getTime() + ")");
+        return date.getTime();
+    }
+
+    public static synchronized Date formatUpdatedDate(String source) throws ParseException {
+        return FORMATTER.parse(formatUpdated(source));
+    }
 }

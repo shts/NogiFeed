@@ -13,6 +13,7 @@ import android.shts.jp.nogifeed.utils.IntentUtils;
 import android.shts.jp.nogifeed.utils.UrlUtils;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,6 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
 
     private ListView mAllFeedList;
     private FeedListAdapter mFeedListAdapter;
-    private FeedListActivity mActivity;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
@@ -49,12 +49,6 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActivity = (FeedListActivity) activity;
-    }
-
-    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getAllFeed();
@@ -69,6 +63,7 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
         AsyncRssClient.read(UrlUtils.FEED_ALL_URL, new RssClientListener() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Entries entries) {
+                Log.i("getAllFeed()", "get all member feed : size(" + entries.size() + ")");
                 // refresh feed list
                 setupAdapter(entries);
                 if (mSwipeRefreshLayout.isRefreshing()) {
@@ -91,7 +86,7 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Entry entry = (Entry) mAllFeedList.getItemAtPosition(position);
-                IntentUtils.startBlogActivity(mActivity, entry);
+                IntentUtils.startBlogActivity(getActivity(), entry);
             }
         });
     }

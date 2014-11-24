@@ -31,19 +31,22 @@ public class AboutFragment extends Fragment {
 
     private void setupAboutListAdapter() {
         List<AboutItem> abouts = new ArrayList<AboutItem>();
-        abouts.add(new AboutItem("友達に教える", R.drawable.ic_social_share, new OnClickListener() {
+        abouts.add(new AboutItem(getResources().getString(R.string.about_item_share),
+                R.drawable.ic_social_share, new OnClickListener() {
             @Override
             public void onClick() {
                 IntentUtils.recomendApp(getActivity());
             }
         }));
-        abouts.add(new AboutItem("このアプリを評価する", R.drawable.ic_action_thumb_up, new OnClickListener() {
+        abouts.add(new AboutItem(getResources().getString(R.string.about_item_rate),
+                R.drawable.ic_action_thumb_up, new OnClickListener() {
             @Override
             public void onClick() {
                 IntentUtils.rateApp(getActivity());
             }
         }));
-        abouts.add(new AboutItem("アプリについて問い合わせる", R.drawable.ic_communication_messenger, new OnClickListener() {
+        abouts.add(new AboutItem(getResources().getString(R.string.about_item_mention),
+                R.drawable.ic_communication_messenger, new OnClickListener() {
             @Override
             public void onClick() {
                 IntentUtils.inquiryApp(getActivity());

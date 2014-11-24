@@ -3,6 +3,7 @@ package android.shts.jp.nogifeed.adapters;
 import android.content.Context;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.models.Entry;
+import android.shts.jp.nogifeed.utils.DateUtils;
 import android.shts.jp.nogifeed.utils.PicassoHelper;
 import android.shts.jp.nogifeed.utils.StringUtils;
 import android.shts.jp.nogifeed.utils.UrlUtils;
@@ -48,7 +49,7 @@ public class CardListAdapter extends RecyclableAdapter<Entry> {
         ViewHolder holder = (ViewHolder) viewHolder;
         Entry entry = (Entry) object;
         holder.titleTextView.setText(entry.title);
-        holder.autherTextView.setText(entry.name);
+        holder.autherTextView.setText(entry.name + " " + DateUtils.formatUpdated(entry.published));
         final List<String> urls = StringUtils.getThumnailImageUrls(entry.content, 1);
         if (urls != null && !urls.isEmpty()) {
             PicassoHelper.load(
