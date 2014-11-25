@@ -58,7 +58,9 @@ public class AllMemberGridListFragment extends Fragment {
 
             @Override
             public void onFailed() {
-                Toast.makeText(getActivity(), "データを取得できませんでした", Toast.LENGTH_SHORT).show();
+                // Show error toast
+                Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
+                        Toast.LENGTH_SHORT).show();
             }
         });
 

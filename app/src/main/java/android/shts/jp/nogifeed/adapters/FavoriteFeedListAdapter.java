@@ -18,12 +18,12 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class CardListAdapter extends RecyclableAdapter<Entry> {
+public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
 
-    private static final String TAG = CardListAdapter.class.getSimpleName();
+    private static final String TAG = FavoriteFeedListAdapter.class.getSimpleName();
     private final Context mContext;
 
-    public CardListAdapter(Context context, List list) {
+    public FavoriteFeedListAdapter(Context context, List list) {
         super(context, list);
         mContext = context;
     }
@@ -34,6 +34,7 @@ public class CardListAdapter extends RecyclableAdapter<Entry> {
         ImageView profileImageView;
         TextView titleTextView;
         TextView autherTextView;
+        TextView updatedTextView;
 
         public ViewHolder(View view) {
             super(view);
@@ -41,6 +42,7 @@ public class CardListAdapter extends RecyclableAdapter<Entry> {
             autherTextView = (TextView) view.findViewById(R.id.authorname);
             backgroudImageView = (ImageView) view.findViewById(R.id.card_background);
             profileImageView = (ImageView) view.findViewById(R.id.profile_image);
+            updatedTextView = (TextView) view.findViewById(R.id.updated);
         }
     }
 
@@ -49,7 +51,8 @@ public class CardListAdapter extends RecyclableAdapter<Entry> {
         ViewHolder holder = (ViewHolder) viewHolder;
         Entry entry = (Entry) object;
         holder.titleTextView.setText(entry.title);
-        holder.autherTextView.setText(entry.name + " " + DateUtils.formatUpdated(entry.published));
+        holder.autherTextView.setText(entry.name);
+        holder.updatedTextView.setText(DateUtils.formatUpdated(entry.published));
         final List<String> urls = StringUtils.getThumnailImageUrls(entry.content, 1);
         if (urls != null && !urls.isEmpty()) {
             PicassoHelper.load(

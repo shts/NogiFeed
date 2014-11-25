@@ -14,5 +14,6 @@
     <string name="about_item_rate">"このアプリを評価する"</string>
     <string name="about_item_mention">"アプリについて問い合わせる"</string>
 
+    <string name="feed_failure">"フィードの取得に失敗しました。端末の通信状態を確認してください。"</string>
 
 </resources>

@@ -73,8 +73,9 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                // Show error dialog
-                Toast.makeText(getActivity(), "フィードの取得に失敗しました", Toast.LENGTH_SHORT).show();
+                // Show error toast
+                Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

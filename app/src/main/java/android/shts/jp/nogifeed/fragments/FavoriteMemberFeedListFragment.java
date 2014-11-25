@@ -2,7 +2,7 @@ package android.shts.jp.nogifeed.fragments;
 
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
-import android.shts.jp.nogifeed.adapters.CardListAdapter;
+import android.shts.jp.nogifeed.adapters.FavoriteFeedListAdapter;
 import android.shts.jp.nogifeed.api.AsyncRssClient;
 import android.shts.jp.nogifeed.listener.RssClientListener;
 import android.shts.jp.nogifeed.models.Entries;
@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,8 +60,8 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
     private void setupFavoriteMemberFeed() {
         mFavoriteUrls = DataStoreUtils.getAllFavoriteLink(getActivity());
         for (String s : mFavoriteUrls) {
-            Log.v("setupFavoriteMemberFeed()", "setupFavoriteMemberFeed() : favorite url("
-                + s + ")");
+//            Log.v("setupFavoriteMemberFeed()", "setupFavoriteMemberFeed() : favorite url("
+//                + s + ")");
             getAllFeed(s);
         }
     }
@@ -91,8 +90,9 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                // Show error dialog
-                Toast.makeText(getActivity(), "フィードの取得に失敗しました", Toast.LENGTH_SHORT).show();
+                // Show error toast
+                Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
+                        Toast.LENGTH_SHORT).show();
 
                 synchronized (LOCK_OBJECT) {
                     mRequestCounter++;
@@ -109,9 +109,9 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
     }
 
     private void setupAdapter(Entries entries) {
-        Log.i("setupAdapter()", "setupAdapter() : size( " + entries.size() + ") entry("
-            + entries.toString() + ")");
-        mRecyclerView.setAdapter(new CardListAdapter(getActivity(), entries));
+//        Log.i("setupAdapter()", "setupAdapter() : size( " + entries.size() + ") entry("
+//            + entries.toString() + ")");
+        mRecyclerView.setAdapter(new FavoriteFeedListAdapter(getActivity(), entries));
     }
 
     @Override
