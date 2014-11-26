@@ -2,6 +2,7 @@ package android.shts.jp.nogifeed.fragments;
 
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
+import android.shts.jp.nogifeed.adapters.EmptyFeedListAdapter;
 import android.shts.jp.nogifeed.adapters.FavoriteFeedListAdapter;
 import android.shts.jp.nogifeed.api.AsyncRssClient;
 import android.shts.jp.nogifeed.listener.RssClientListener;
@@ -11,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +20,15 @@ import android.widget.Toast;
 
 import org.apache.http.Header;
 
+import java.util.ArrayList;
 import java.util.List;
 
+// TODO: お気に入りメンバーがいないときは EmptyView を表示する
+// TODO: インストール後に何度か起動された時、アプリ評価を誘導する View を表示する
+// TODO: View にお気に入り機能と共有機能を追加する
 public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+
+    private static final String TAG = FavoriteMemberFeedListFragment.class.getSimpleName();
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private List<String> mFavoriteUrls;
@@ -60,22 +68,25 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
     private void setupFavoriteMemberFeed() {
         mFavoriteUrls = DataStoreUtils.getAllFavoriteLink(getActivity());
         for (String s : mFavoriteUrls) {
-//            Log.v("setupFavoriteMemberFeed()", "setupFavoriteMemberFeed() : favorite url("
-//                + s + ")");
+            Log.v(TAG , "setupFavoriteMemberFeed() : favorite url(" + s + ")");
             getAllFeed(s);
         }
     }
 
     private void getAllFeed(String url) {
+        // clear feed list before add new feed.
+        mEntries.clear();
+
         AsyncRssClient.read(url, new RssClientListener() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Entries entries) {
 
                 synchronized (LOCK_OBJECT) {
+                    Log.v(TAG, "getAllFeed() : mRequestCounter("
+                            + mRequestCounter + ") favorite url size("
+                            + mFavoriteUrls.size() + ")");
+
                     mRequestCounter++;
-//                    Log.i("getAllFeed()", "getAllFeed() : mRequestCounter("
-//                        + mRequestCounter + ") favorite url size("
-//                        + mFavoriteUrls.size() + ")");
                     mEntries.cat(entries);
                     if (mRequestCounter >= mFavoriteUrls.size()) {
                         mRequestCounter = 0;
@@ -109,8 +120,8 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
     }
 
     private void setupAdapter(Entries entries) {
-//        Log.i("setupAdapter()", "setupAdapter() : size( " + entries.size() + ") entry("
-//            + entries.toString() + ")");
+        Log.v("setupAdapter()", "setupAdapter() : size( " + entries.size() + ") entry("
+                + entries.toString() + ")");
         mRecyclerView.setAdapter(new FavoriteFeedListAdapter(getActivity(), entries));
     }
 

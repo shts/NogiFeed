@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+// TODO: お気に入りメンバーがいないときは EmptyView を表示する
 public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
 
     private static final String TAG = FavoriteFeedListAdapter.class.getSimpleName();

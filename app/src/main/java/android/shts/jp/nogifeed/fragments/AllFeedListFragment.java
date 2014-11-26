@@ -23,6 +23,9 @@ import android.widget.Toast;
 
 import org.apache.http.Header;
 
+// TODO: 通信ができない場合、エラー表示を行う
+// 現在は Exception が発生する
+// http://www.google.com/design/spec/whats-new/whats-new.html
 public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private ListView mAllFeedList;
