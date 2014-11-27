@@ -1,6 +1,7 @@
 package android.shts.jp.nogifeed.adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.models.Entry;
 import android.shts.jp.nogifeed.utils.DateUtils;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -73,6 +75,18 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(LayoutInflater inflater, ViewGroup viewGroup) {
         View view = inflater.inflate(R.layout.list_item_card, viewGroup, false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // ClassCastException
+//            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)view.getLayoutParams();
+//            params.setMargins(5, 5, 5, 5);
+//            view.setLayoutParams(params);
+            if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+                ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+                p.setMargins(8, 8, 8, 8);
+                view.requestLayout();
+            }
+
+        }
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }

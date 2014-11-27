@@ -1,5 +1,5 @@
 <resources>
-
+    <!-- TODO: delete not need style property -->
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.NogiFeed">
         <!-- Customize your theme here. -->
