@@ -30,7 +30,7 @@ public class EmptyFeedListAdapter extends RecyclableAdapter<Object> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(LayoutInflater inflater, ViewGroup viewGroup) {
-        View view = inflater.inflate(R.layout.list_item_empty_fav, viewGroup, false);
+        View view = inflater.inflate(R.layout.fragment_empty_favorite, viewGroup, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }

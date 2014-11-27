@@ -16,7 +16,7 @@ public class EmptySupportMemberView extends LinearLayout {
     public EmptySupportMemberView(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.list_item_empty_fav, null);
+        View view = inflater.inflate(R.layout.fragment_empty_favorite, null);
 
     }
 

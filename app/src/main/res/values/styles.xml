@@ -3,6 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.NogiFeed">
         <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/nogifeed_color</item>
+        <item name="colorPrimaryDark">@color/nogifeed_dark</item>
+        <item name="colorAccent">@color/nogifeed_accent</item>
     </style>
     <style name="Widget" />
 

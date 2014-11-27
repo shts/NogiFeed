@@ -18,18 +18,23 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
+// TODO: status bar の色を変更する
+// TODO: toolbar のエレベーションをあげる(標準のアプリには影がある)
 public class MainActivity extends ActionBarActivity {
 
     private PagerSlidingTabStrip mPagerSlidingTabStrip;
     private ViewPager mViewPager;
-    //private SystemBarTintManager mTintManager;
+    private SystemBarTintManager mTintManager;
+    private NogiBasePageAdapter mPageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupActionBar();
+        setupStatusBar();
         setupViewPager();
     }
 
@@ -39,11 +44,22 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setElevation(0);
     }
 
+    private void setupStatusBar() {
+        // create our manager instance after the content view is set
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        // enable status bar tint
+        tintManager.setStatusBarTintEnabled(true);
+        // enable navigation bar tint
+        tintManager.setNavigationBarTintEnabled(true);
+        // set a custom navigation bar resource
+        tintManager.setNavigationBarTintResource(R.color.nogifeed_dark);
+    }
+
     private void setupViewPager() {
         mPagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         mViewPager = (ViewPager) findViewById(R.id.pager);
-        NogiBasePageAdapter adapter = new NogiBasePageAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(adapter);
+        mPageAdapter = new NogiBasePageAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mPageAdapter);
         mPagerSlidingTabStrip.setViewPager(mViewPager);
         final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
                 .getDisplayMetrics());
@@ -90,6 +106,7 @@ public class MainActivity extends ActionBarActivity {
         public int getCount() {
             return PAGES.length;
         }
+
     }
 
 

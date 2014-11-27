@@ -2,7 +2,6 @@ package android.shts.jp.nogifeed.fragments;
 
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
-import android.shts.jp.nogifeed.adapters.EmptyFeedListAdapter;
 import android.shts.jp.nogifeed.adapters.FavoriteFeedListAdapter;
 import android.shts.jp.nogifeed.api.AsyncRssClient;
 import android.shts.jp.nogifeed.listener.RssClientListener;
@@ -20,12 +19,12 @@ import android.widget.Toast;
 
 import org.apache.http.Header;
 
-import java.util.ArrayList;
 import java.util.List;
 
 // TODO: お気に入りメンバーがいないときは EmptyView を表示する
 // TODO: インストール後に何度か起動された時、アプリ評価を誘導する View を表示する
 // TODO: View にお気に入り機能と共有機能を追加する
+// TODO: Lolipop だとリストアイテムがパディングされない
 public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = FavoriteMemberFeedListFragment.class.getSimpleName();
