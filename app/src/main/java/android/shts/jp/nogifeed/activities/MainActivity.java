@@ -20,8 +20,8 @@ import android.view.MenuItem;
 import com.astuetz.PagerSlidingTabStrip;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-// TODO: status bar の色を変更する
 // TODO: toolbar のエレベーションをあげる(標準のアプリには影がある)
+// TODO: 2.3.7 の端末で NoSuchMethodError が発生する
 public class MainActivity extends ActionBarActivity {
 
     private PagerSlidingTabStrip mPagerSlidingTabStrip;
