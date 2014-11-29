@@ -19,10 +19,11 @@ public class StringUtils {
     private static final String MATCHER_PATTERN = "<img src=\\s*(?:[\\\"'])?([^ \\\"']*)[^>]*>";
 
     public static String[] createFullNameFrom(String memberFeedUrl) {
+        Log.v(TAG, "createFullNameFrom : memberFeedUrl("  + memberFeedUrl + ")");
         final String[] fullName = memberFeedUrl.split("/");
         final String[] fullNameArray = fullName[3].split("\\.");
 //        for (int i = 0; i < fullNameArray.length; i++) {
-//            Log.i(TAG, "index : " + i + " name : " + fullNameArray[i]);
+//            Log.d(TAG, "index : " + i + " name : " + fullNameArray[i]);
 //        }
         return fullNameArray;
     }

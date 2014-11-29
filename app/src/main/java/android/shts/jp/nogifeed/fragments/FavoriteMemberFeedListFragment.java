@@ -24,7 +24,6 @@ import java.util.List;
 // TODO: お気に入りメンバーがいないときは EmptyView を表示する
 // TODO: インストール後に何度か起動された時、アプリ評価を誘導する View を表示する
 // TODO: View にお気に入り機能と共有機能を追加する
-// TODO: Lolipop だとリストアイテムがパディングされない
 public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = FavoriteMemberFeedListFragment.class.getSimpleName();

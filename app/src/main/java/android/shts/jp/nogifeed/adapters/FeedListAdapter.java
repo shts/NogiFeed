@@ -57,19 +57,26 @@ public class FeedListAdapter extends BindableAdapter<Entry> {
         if (profileImageUrl == null) {
             // kenkyusei
             holder.profileImageView.setImageResource(R.drawable.kensyusei);
-            holder.profileImageView.setOnClickListener(null);
+            //holder.profileImageView.setOnClickListener(null);
 
         } else {
             PicassoHelper.loadAndCircleTransform(getContext(), holder.profileImageView, profileImageUrl);
 
-            holder.profileImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // TODO: profile画像を押下中に色を変更するようにする
-                    IntentUtils.startMemberDetailActivity(getContext(), entry);
-                }
-            });
+//            holder.profileImageView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    // TODO: profile画像を押下中に色を変更するようにする
+//                    IntentUtils.startMemberDetailActivity(getContext(), entry);
+//                }
+//            });
         }
+        holder.profileImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: profile画像を押下中に色を変更するようにする
+                IntentUtils.startMemberDetailActivity(getContext(), entry);
+            }
+        });
 
         holder.titleTextView.setText(entry.title);
         holder.authorNameTextView.setText(entry.name);

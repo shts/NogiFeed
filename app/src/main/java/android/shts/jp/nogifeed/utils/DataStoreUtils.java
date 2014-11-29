@@ -16,7 +16,7 @@ public class DataStoreUtils {
     private static final String TAG = DataStoreUtils.class.getSimpleName();
 
     public static void favorite(Context context, String link, boolean favorite) {
-        //Log.v(TAG, "req fav : link(" + link + ") favorite(" + favorite + ")");
+        Log.v(TAG, "req fav : link(" + link + ") favorite(" + favorite + ")");
         if (favorite) {
             favorite(context, link);
         } else {
@@ -26,7 +26,7 @@ public class DataStoreUtils {
 
     private static void favorite(Context context, String link) {
         if (alreadyExist(context, link)) {
-            //Log.w(TAG, "link already exist. link(" + link + ")");
+            Log.w(TAG, "link already exist. link(" + link + ")");
             return;
         }
         final ContentResolver cr = context.getContentResolver();
@@ -39,10 +39,10 @@ public class DataStoreUtils {
         final ContentResolver cr = context.getContentResolver();
         String selection = NogiFeedContent.Favorite.KEY_LINK + "=?";
         String[] selectionArgs = { link };
-        int result = cr.delete(NogiFeedContent.Favorite.CONTENT_URI, selection, selectionArgs);
 
+        int result = cr.delete(NogiFeedContent.Favorite.CONTENT_URI, selection, selectionArgs);
         if (result <= 0)  {
-            //Log.e(TAG, "failed to delete link. link(" + link + ")");
+            Log.w(TAG, "failed to delete link. link(" + link + ")");
         }
     }
 
@@ -67,7 +67,7 @@ public class DataStoreUtils {
             } while (c.moveToNext());
             c.close();
         } else {
-            Log.e(TAG, "alreadyExist : failed to moveToFirst().");
+            Log.w(TAG, "alreadyExist : failed to moveToFirst().");
             c.close();
             return false;
         }
@@ -118,7 +118,7 @@ public class DataStoreUtils {
             } while (c.moveToNext());
             c.close();
         } else {
-            //Log.e(TAG, "failed to moveToFirst().");
+            Log.w(TAG, "getAllFavoriteLink() : failed to moveToFirst().");
             c.close();
         }
         return links;

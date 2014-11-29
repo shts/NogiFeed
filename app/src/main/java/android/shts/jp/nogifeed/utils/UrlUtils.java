@@ -15,11 +15,12 @@ public class UrlUtils {
 //    }
 
     public static String getMemberFeedUrl(String feedUrl) {
-
         final String[] name = StringUtils.createFullNameFrom(feedUrl);
         final String firstName = name[StringUtils.INDEX_FIRST_NAME];
+        if (name.length == 1) { // kensyusei or unnei
+            return FEED_MEMBER_URL_SCHEME + firstName + FEED_MEMBER_URL_SUFFIX;
+        }
         final String lastName = name[StringUtils.INDEX_LAST_NAME];
-
         return FEED_MEMBER_URL_SCHEME + firstName + "." + lastName + FEED_MEMBER_URL_SUFFIX;
     }
 

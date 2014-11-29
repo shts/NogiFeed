@@ -5,6 +5,7 @@ import android.os.Build;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.models.Entry;
 import android.shts.jp.nogifeed.utils.DateUtils;
+import android.shts.jp.nogifeed.utils.IntentUtils;
 import android.shts.jp.nogifeed.utils.PicassoHelper;
 import android.shts.jp.nogifeed.utils.StringUtils;
 import android.shts.jp.nogifeed.utils.UrlUtils;
@@ -50,8 +51,8 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, Object object) {
-        ViewHolder holder = (ViewHolder) viewHolder;
-        Entry entry = (Entry) object;
+        final ViewHolder holder = (ViewHolder) viewHolder;
+        final Entry entry = (Entry) object;
         holder.titleTextView.setText(entry.title);
         holder.autherTextView.setText(entry.name);
         holder.updatedTextView.setText(DateUtils.formatUpdated(entry.published));
@@ -60,11 +61,23 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
             PicassoHelper.load(
                     mContext, holder.backgroudImageView, urls.get(0));
         }
+        holder.backgroudImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IntentUtils.startBlogActivity(mContext, entry);
+            }
+        });
         final String profileImageUrl = UrlUtils.getMemberImageUrl(entry.link);
         Log.d(TAG, "profileImageUrl : " + profileImageUrl);
         if (!TextUtils.isEmpty(profileImageUrl)) {
             PicassoHelper.loadAndCircleTransform(
                     mContext, holder.profileImageView, profileImageUrl);
+            holder.profileImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    IntentUtils.startMemberDetailActivity(mContext, entry);
+                }
+            });
         } else {
             Log.w(TAG, "profileImageUrl is empty");
             holder.profileImageView.setImageResource(R.drawable.kensyusei);
@@ -80,7 +93,6 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
                 p.setMargins(8, 8, 8, 8);
                 view.requestLayout();
             }
-
         }
         ViewHolder holder = new ViewHolder(view);
         return holder;
