@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -62,7 +61,7 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
                     mContext, holder.backgroudImageView, urls.get(0));
         }
         final String profileImageUrl = UrlUtils.getMemberImageUrl(entry.link);
-        //Log.d(TAG, "profileImageUrl : " + profileImageUrl);
+        Log.d(TAG, "profileImageUrl : " + profileImageUrl);
         if (!TextUtils.isEmpty(profileImageUrl)) {
             PicassoHelper.loadAndCircleTransform(
                     mContext, holder.profileImageView, profileImageUrl);
@@ -76,10 +75,6 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
     public RecyclerView.ViewHolder onCreateViewHolder(LayoutInflater inflater, ViewGroup viewGroup) {
         View view = inflater.inflate(R.layout.list_item_card, viewGroup, false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // ClassCastException
-//            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)view.getLayoutParams();
-//            params.setMargins(5, 5, 5, 5);
-//            view.setLayoutParams(params);
             if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
                 ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
                 p.setMargins(8, 8, 8, 8);
