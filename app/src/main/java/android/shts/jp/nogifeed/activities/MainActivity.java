@@ -109,7 +109,6 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         new MenuInflater(this).inflate(R.menu.main, menu);
@@ -124,5 +123,4 @@ public class MainActivity extends ActionBarActivity {
         startActivity(i);
         return super.onOptionsItemSelected(item);
     }
-
 }

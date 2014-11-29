@@ -78,5 +78,4 @@ public class MemberDetailActivity extends ActionBarActivity {
             mToolbar.setBackground(mActionBarDrawable);
         }
     }
-
 }
