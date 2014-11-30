@@ -1,5 +1,9 @@
 package android.shts.jp.nogifeed.api;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.provider.Settings;
 import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.listener.RssClientListener;
 import android.shts.jp.nogifeed.models.Entries;
@@ -17,17 +21,23 @@ public class AsyncRssClient {
 
     private static final String TAG = "AsyncRssClient";
 
-    public static void read(String url, final RssClientListener listener) {
+    public static void read(Context context, String url, final RssClientListener listener) {
 
-        // TODO: Check network enable.
+        if (!isConnected(context) || isAirplaneModeOn(context)) {
+            Logger.e(TAG, "cannot execute because of network disconnected.");
+            listener.onFailure(0, null, null, null);
+            return;
+        }
 
         if (listener == null) {
             Logger.e(TAG, "cannot execute because of RssClientListener is null.");
+            listener.onFailure(0, null, null, null);
             return;
         }
 
         if (TextUtils.isEmpty(url)) {
             Logger.e(TAG, "cannot execute because of url is null or length 0.");
+            listener.onFailure(0, null, null, null);
             return;
         }
 
@@ -47,6 +57,28 @@ public class AsyncRssClient {
                 listener.onFailure(statusCode, headers, responseBody, error);
             }
         });
+    }
+
+    public static boolean isConnected(Context context){
+        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        if( ni != null ){
+            return cm.getActiveNetworkInfo().isConnected();
+        }
+        return false;
+    }
+
+    /**
+     * Gets the state of Airplane Mode.
+     *
+     * @param context
+     * @return true if enabled.
+     */
+    private static boolean isAirplaneModeOn(Context context) {
+
+        return Settings.System.getInt(context.getContentResolver(),
+                Settings.System.AIRPLANE_MODE_ON, 0) != 0;
+
     }
 
 }

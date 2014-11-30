@@ -83,7 +83,7 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
         // clear feed list before add new feed.
         mEntries.clear();
 
-        AsyncRssClient.read(url, new RssClientListener() {
+        AsyncRssClient.read(getActivity().getApplicationContext(), url, new RssClientListener() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Entries entries) {
 

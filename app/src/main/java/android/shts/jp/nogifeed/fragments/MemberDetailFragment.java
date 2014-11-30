@@ -94,7 +94,7 @@ public class MemberDetailFragment extends ListFragment {
     }
 
     private void setupMemberFeedList(String feedUrl) {
-        AsyncRssClient.read(feedUrl, new RssClientListener() {
+        AsyncRssClient.read(mActivity.getApplicationContext(), feedUrl, new RssClientListener() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Entries entries) {
                 setupShowcase(entries);

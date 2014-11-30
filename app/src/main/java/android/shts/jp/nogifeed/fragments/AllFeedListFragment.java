@@ -61,7 +61,7 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
     }
 
     private void getAllFeed() {
-        AsyncRssClient.read(UrlUtils.FEED_ALL_URL, new RssClientListener() {
+        AsyncRssClient.read(getActivity().getApplicationContext(), UrlUtils.FEED_ALL_URL, new RssClientListener() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Entries entries) {
                 Logger.i("getAllFeed()", "get all member feed : size(" + entries.size() + ")");
