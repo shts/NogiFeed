@@ -65,6 +65,13 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
 
     private void setupFavoriteMemberFeed() {
         mFavoriteUrls = DataStoreUtils.getAllFavoriteLink(getActivity());
+        if (mFavoriteUrls == null || mFavoriteUrls.isEmpty()) {
+            if (mSwipeRefreshLayout.isRefreshing()) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+            Log.d(TAG, "setupFavoriteMemberFeed() : no favorite feed.");
+            return;
+        }
         for (String s : mFavoriteUrls) {
             Log.v(TAG , "setupFavoriteMemberFeed() : favorite url(" + s + ")");
             getAllFeed(s);

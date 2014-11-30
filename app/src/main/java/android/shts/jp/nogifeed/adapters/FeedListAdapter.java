@@ -71,7 +71,7 @@ public class FeedListAdapter extends BindableAdapter<Entry> {
         holder.titleTextView.setText(entry.title);
         holder.authorNameTextView.setText(entry.name);
         holder.updatedTextView.setText(DateUtils.formatUpdated(entry.updated));
-        boolean isFavorite = TextUtils.isEmpty(profileImageUrl) ? false :
+        boolean isFavorite =
                 DataStoreUtils.alreadyExist(getContext(), UrlUtils.getMemberFeedUrl(entry.link));
         holder.favoriteImageView.setVisibility(isFavorite ? View.VISIBLE : View.GONE);
     }

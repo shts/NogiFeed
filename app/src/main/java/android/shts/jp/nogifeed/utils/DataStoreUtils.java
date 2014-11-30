@@ -25,6 +25,7 @@ public class DataStoreUtils {
     }
 
     private static void favorite(Context context, String link) {
+        Log.v(TAG, "favorite : link(" + link + ")");
         if (alreadyExist(context, link)) {
             Log.w(TAG, "link already exist. link(" + link + ")");
             return;
@@ -36,6 +37,7 @@ public class DataStoreUtils {
     }
 
     private static void unFavoriteLink(Context context, String link) {
+        Log.v(TAG, "unFavoriteLink : link(" + link + ")");
         final ContentResolver cr = context.getContentResolver();
         String selection = NogiFeedContent.Favorite.KEY_LINK + "=?";
         String[] selectionArgs = { link };
