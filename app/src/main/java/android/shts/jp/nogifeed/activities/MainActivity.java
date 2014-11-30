@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.fragments.AllFeedListFragment;
 import android.shts.jp.nogifeed.fragments.FavoriteMemberFeedListFragment;
+import android.shts.jp.nogifeed.views.PagerSlidingTabStrip;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -17,11 +18,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.astuetz.PagerSlidingTabStrip;
+/**
+ * 2.3.7 の端末で NoSuchMethodError が発生してアプリがクラッシュする
+ * 下記Viewを参照して独自実装
+ */
+//import com.astuetz.PagerSlidingTabStrip;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 // TODO: toolbar のエレベーションをあげる(標準のアプリには影がある)
-// TODO: 2.3.7 の端末で NoSuchMethodError が発生する
 public class MainActivity extends ActionBarActivity {
 
     private PagerSlidingTabStrip mPagerSlidingTabStrip;
@@ -118,7 +122,6 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO: go to settings
-        // TODO: go to about
         Intent i = new Intent(this, AboutActivity.class);
         startActivity(i);
         return super.onOptionsItemSelected(item);
