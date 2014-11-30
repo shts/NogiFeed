@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.shts.jp.nogifeed.activities.MemberDetailActivity;
 import android.shts.jp.nogifeed.adapters.MemberFeedListAdapter;
 import android.shts.jp.nogifeed.api.AsyncRssClient;
+import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.listener.RssClientListener;
 import android.shts.jp.nogifeed.models.Entries;
 import android.shts.jp.nogifeed.models.Entry;
@@ -12,7 +13,6 @@ import android.shts.jp.nogifeed.models.Member;
 import android.shts.jp.nogifeed.utils.ArrayUtils;
 import android.shts.jp.nogifeed.utils.DataStoreUtils;
 import android.shts.jp.nogifeed.utils.IntentUtils;
-import android.shts.jp.nogifeed.utils.LogUtils;
 import android.shts.jp.nogifeed.utils.StringUtils;
 import android.shts.jp.nogifeed.utils.UrlUtils;
 import android.shts.jp.nogifeed.views.Showcase;
@@ -24,7 +24,6 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.apache.http.Header;
 
@@ -74,20 +73,20 @@ public class MemberDetailFragment extends ListFragment {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem,
                                  int visibleItemCount, int totalItemCount) {
-                LogUtils.log(TAG, "firstVisibleItem : " + firstVisibleItem);
+                Logger.v(TAG, "firstVisibleItem : " + firstVisibleItem);
                 if (firstVisibleItem >= 1) {
                     mActivity.setActionBarDrawableAlpha(255);
-                    LogUtils.log(TAG, "firstVisibleItem >= 1");
+                    Logger.v(TAG, "firstVisibleItem >= 1");
                 } else {
                     View header = view.getChildAt(0);
                     int height = header == null ? 0 : header.getHeight();
-                    LogUtils.log(TAG, "height : " + height);
+                    Logger.v(TAG, "height : " + height);
                     if (height <= 0) {
                         mActivity.setActionBarDrawableAlpha(0);
                     } else {
                         int alpha = Math.abs(255 * header.getTop() / height);
                         mActivity.setActionBarDrawableAlpha(alpha);
-                        LogUtils.log(TAG, "onScroll : " + alpha);
+                        Logger.v(TAG, "onScroll : " + alpha);
                     }
                 }
             }
@@ -145,7 +144,7 @@ public class MemberDetailFragment extends ListFragment {
             }
         }
 
-        LogUtils.log(TAG, "setupShowcase : url(" + mImageUrls.toString() + ")");
+        Logger.v(TAG, "setupShowcase : url(" + mImageUrls.toString() + ")");
 
         int height = (int) ( /*240*/ 300 * getResources().getDisplayMetrics().density);
         mShowcase = new Showcase(getActivity(), mImageUrls, new Showcase.FavoriteChangeListener() {

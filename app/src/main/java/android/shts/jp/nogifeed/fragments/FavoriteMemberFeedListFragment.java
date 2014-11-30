@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.adapters.FavoriteFeedListAdapter;
 import android.shts.jp.nogifeed.api.AsyncRssClient;
+import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.listener.RssClientListener;
 import android.shts.jp.nogifeed.models.Entries;
 import android.shts.jp.nogifeed.utils.DataStoreUtils;
@@ -11,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,11 +69,12 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
             if (mSwipeRefreshLayout.isRefreshing()) {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
-            Log.d(TAG, "setupFavoriteMemberFeed() : no favorite feed.");
+            Logger.d(TAG, "setupFavoriteMemberFeed() : no favorite feed.");
+            Toast.makeText(getActivity(), R.string.empty_favorite, Toast.LENGTH_LONG).show();
             return;
         }
         for (String s : mFavoriteUrls) {
-            Log.v(TAG , "setupFavoriteMemberFeed() : favorite url(" + s + ")");
+            Logger.v(TAG , "setupFavoriteMemberFeed() : favorite url(" + s + ")");
             getAllFeed(s);
         }
     }
@@ -87,7 +88,7 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
             public void onSuccess(int statusCode, Header[] headers, Entries entries) {
 
                 synchronized (LOCK_OBJECT) {
-                    Log.v(TAG, "getAllFeed() : mRequestCounter("
+                    Logger.v(TAG, "getAllFeed() : mRequestCounter("
                             + mRequestCounter + ") favorite url size("
                             + mFavoriteUrls.size() + ")");
 
@@ -125,7 +126,7 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
     }
 
     private void setupAdapter(Entries entries) {
-        Log.v("setupAdapter()", "setupAdapter() : size( " + entries.size() + ") entry("
+        Logger.v("setupAdapter()", "setupAdapter() : size( " + entries.size() + ") entry("
                 + entries.toString() + ")");
         mRecyclerView.setAdapter(new FavoriteFeedListAdapter(getActivity(), entries));
     }

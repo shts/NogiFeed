@@ -1,10 +1,10 @@
 package android.shts.jp.nogifeed.api;
 
+import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.listener.RssClientListener;
 import android.shts.jp.nogifeed.models.Entries;
 import android.shts.jp.nogifeed.utils.AtomRssParser;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.loopj.android.http.*;
 
@@ -22,12 +22,12 @@ public class AsyncRssClient {
         // TODO: Check network enable.
 
         if (listener == null) {
-            Log.e(TAG, "cannot execute because of RssClientListener is null.");
+            Logger.e(TAG, "cannot execute because of RssClientListener is null.");
             return;
         }
 
         if (TextUtils.isEmpty(url)) {
-            Log.e(TAG, "cannot execute because of url is null or length 0.");
+            Logger.e(TAG, "cannot execute because of url is null or length 0.");
             return;
         }
 

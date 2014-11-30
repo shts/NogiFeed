@@ -1,11 +1,10 @@
 package android.shts.jp.nogifeed.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
-import android.shts.jp.nogifeed.activities.FeedListActivity;
 import android.shts.jp.nogifeed.adapters.FeedListAdapter;
 import android.shts.jp.nogifeed.api.AsyncRssClient;
+import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.listener.RssClientListener;
 import android.shts.jp.nogifeed.models.Entries;
 import android.shts.jp.nogifeed.models.Entry;
@@ -13,7 +12,6 @@ import android.shts.jp.nogifeed.utils.IntentUtils;
 import android.shts.jp.nogifeed.utils.UrlUtils;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +64,7 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
         AsyncRssClient.read(UrlUtils.FEED_ALL_URL, new RssClientListener() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Entries entries) {
-                Log.i("getAllFeed()", "get all member feed : size(" + entries.size() + ")");
+                Logger.i("getAllFeed()", "get all member feed : size(" + entries.size() + ")");
                 // refresh feed list
                 setupAdapter(entries);
                 if (mSwipeRefreshLayout.isRefreshing()) {
@@ -79,6 +77,9 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
                 // Show error toast
                 Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
                         Toast.LENGTH_SHORT).show();
+                if (mSwipeRefreshLayout.isRefreshing()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
     }

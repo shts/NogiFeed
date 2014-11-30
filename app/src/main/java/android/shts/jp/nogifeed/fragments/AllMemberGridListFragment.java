@@ -4,13 +4,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.adapters.BindableAdapter;
+import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.models.Member;
 import android.shts.jp.nogifeed.utils.IntentUtils;
 import android.shts.jp.nogifeed.utils.JsoupUtils;
 import android.shts.jp.nogifeed.utils.PicassoHelper;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,7 +100,7 @@ public class AllMemberGridListFragment extends Fragment {
         public void bindView(Object item, int position, View view) {
             final ViewHolder holder = (ViewHolder) view.getTag();
             final Member member = (Member) item;
-            Log.i(TAG, member.toString());
+            Logger.i(TAG, member.toString());
 
             holder.titleTextView.setText(member.fullName);
             holder.favoriteImageView.setVisibility(

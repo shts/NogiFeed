@@ -1,7 +1,7 @@
 package android.shts.jp.nogifeed.utils;
 
+import android.shts.jp.nogifeed.common.Logger;
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class StringUtils {
     private static final String MATCHER_PATTERN = "<img src=\\s*(?:[\\\"'])?([^ \\\"']*)[^>]*>";
 
     public static String[] createFullNameFrom(String memberFeedUrl) {
-        Log.v(TAG, "createFullNameFrom : memberFeedUrl("  + memberFeedUrl + ")");
+        Logger.v(TAG, "createFullNameFrom : memberFeedUrl(" + memberFeedUrl + ")");
         final String[] fullName = memberFeedUrl.split("/");
         final String[] fullNameArray = fullName[3].split("\\.");
 //        for (int i = 0; i < fullNameArray.length; i++) {
@@ -44,7 +44,7 @@ public class StringUtils {
     public static List<String> getThumnailImageUrls(String content, int maxSize) {
 
         if (TextUtils.isEmpty(content)) {
-            Log.e(TAG, "failed to getThumnailImage() : content is null");
+            Logger.e(TAG, "failed to getThumnailImage() : content is null");
             return null;
         }
 
@@ -71,7 +71,7 @@ public class StringUtils {
     }
 
     public static String ignoreImgTag(String content) {
-        Log.v(TAG, "ignoreImgTag : content (" + content + ")");
+        Logger.v(TAG, "ignoreImgTag : content (" + content + ")");
 
         // ignore img tags
         String ignored = content.replace("<img src=", "");
@@ -88,7 +88,7 @@ public class StringUtils {
         // ignore style elements with space
         ignored = ignored.replace("style=max-width: 100%;", "");
         ignored = ignored.replace("style=\"max-width:100%;\"", "");
-        Log.v(TAG, "ignoreImgTag : ignored (" + ignored + ")");
+        Logger.v(TAG, "ignoreImgTag : ignored (" + ignored + ")");
         return ignored;
     }
 
@@ -96,6 +96,14 @@ public class StringUtils {
         String deleteCDataStartTag = content.replace("![CDATA[", "");
         String deleteCDataEndTag = deleteCDataStartTag.replace("]]>", "");
         return deleteCDataEndTag;
+    }
+
+    public static String ignoreCdataTagWithCrlf(String target) {
+        // delete cdata tag
+        String ignoreCdataStartTag = target.replace("<![CDATA[", "");
+        String ignoreCdataEndTag = ignoreCdataStartTag.replace("]]>", "");
+        String ignoreCrLf = ignoreCdataEndTag.replace("\n", "");
+        return ignoreCrLf;
     }
 
     public static String ignoreLinefeed(String content) {

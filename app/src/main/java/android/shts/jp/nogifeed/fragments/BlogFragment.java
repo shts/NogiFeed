@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
+import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.models.Entry;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,10 +71,10 @@ public class BlogFragment extends Fragment {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             if (Uri.parse(url).getHost().equals("blog.nogizaka46.com")) {
-                Log.d(TAG, "shouldOverrideUrlLoading : " + true);
+                Logger.d(TAG, "shouldOverrideUrlLoading : " + true);
                 return super.shouldOverrideUrlLoading(view, url);
             }
-            Log.d(TAG, "shouldOverrideUrlLoading : " + false);
+            Logger.d(TAG, "shouldOverrideUrlLoading : " + false);
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
             return true;

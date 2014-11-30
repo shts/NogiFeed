@@ -2,8 +2,8 @@ package android.shts.jp.nogifeed.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.utils.DateUtils;
-import android.util.Log;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -37,7 +37,7 @@ public class Entry implements Parcelable {
         try {
             return DateUtils.formatUpdatedLong(this.published);
         } catch (ParseException e) {
-            Log.e(TAG, "failed to parse date");
+            Logger.e(TAG, "failed to parse date");
         }
         return -1;
     }
@@ -46,7 +46,7 @@ public class Entry implements Parcelable {
         try {
             return DateUtils.formatUpdatedDate(this.published);
         } catch (ParseException e) {
-            Log.e(TAG, "failed to parse date");
+            Logger.e(TAG, "failed to parse date");
         }
         return null;
     }

@@ -16,4 +16,5 @@
 
     <string name="feed_failure">Failed to get feed. Check your network state.</string>
 
+    <string name="empty_favorite">You have not favorite member. you check favorite at member detail page</string>
 </resources>

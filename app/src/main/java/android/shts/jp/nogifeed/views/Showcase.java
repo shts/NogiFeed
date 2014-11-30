@@ -2,11 +2,11 @@ package android.shts.jp.nogifeed.views;
 
 import android.content.Context;
 import android.shts.jp.nogifeed.R;
+import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.utils.PicassoHelper;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +78,7 @@ public class Showcase extends FrameLayout {
             mImageUrls = imageUrls;
 
             for (String s : mImageUrls) {
-                Log.d(TAG, "url : " + s);
+                Logger.d(TAG, "url : " + s);
             }
         }
 

@@ -3,10 +3,8 @@ package android.shts.jp.nogifeed.models;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.utils.DataStoreUtils;
-import android.util.Log;
-
-import java.util.List;
 
 public class Member implements Parcelable {
 
@@ -18,7 +16,7 @@ public class Member implements Parcelable {
     public String fullName; /* kanji */
 
     public Member(String feedUrl, String profileImageUrl, String fullName) {
-        Log.v(TAG, "create Member object. " + toString());
+        Logger.v(TAG, "create Member object. " + toString());
         this.blogUrl = feedUrl;
         this.profileImageUrl = profileImageUrl;
         this.fullName = fullName;

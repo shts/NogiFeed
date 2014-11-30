@@ -3,6 +3,7 @@ package android.shts.jp.nogifeed.adapters;
 import android.content.Context;
 import android.os.Build;
 import android.shts.jp.nogifeed.R;
+import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.models.Entry;
 import android.shts.jp.nogifeed.utils.DateUtils;
 import android.shts.jp.nogifeed.utils.IntentUtils;
@@ -68,7 +69,7 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
             }
         });
         final String profileImageUrl = UrlUtils.getMemberImageUrl(entry.link);
-        Log.d(TAG, "profileImageUrl : " + profileImageUrl);
+        Logger.d(TAG, "profileImageUrl : " + profileImageUrl);
         if (!TextUtils.isEmpty(profileImageUrl)) {
             PicassoHelper.loadAndCircleTransform(
                     mContext, holder.profileImageView, profileImageUrl);
@@ -79,7 +80,7 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
                 }
             });
         } else {
-            Log.w(TAG, "profileImageUrl is empty");
+            Logger.w(TAG, "profileImageUrl is empty");
             holder.profileImageView.setImageResource(R.drawable.kensyusei);
         }
     }

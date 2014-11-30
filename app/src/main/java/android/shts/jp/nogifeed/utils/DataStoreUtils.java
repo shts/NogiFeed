@@ -5,8 +5,8 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.providers.NogiFeedContent;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ public class DataStoreUtils {
     private static final String TAG = DataStoreUtils.class.getSimpleName();
 
     public static void favorite(Context context, String link, boolean favorite) {
-        Log.v(TAG, "req fav : link(" + link + ") favorite(" + favorite + ")");
+        Logger.v(TAG, "req fav : link(" + link + ") favorite(" + favorite + ")");
         if (favorite) {
             favorite(context, link);
         } else {
@@ -25,9 +25,9 @@ public class DataStoreUtils {
     }
 
     private static void favorite(Context context, String link) {
-        Log.v(TAG, "favorite : link(" + link + ")");
+        Logger.v(TAG, "favorite : link(" + link + ")");
         if (alreadyExist(context, link)) {
-            Log.w(TAG, "link already exist. link(" + link + ")");
+            Logger.w(TAG, "link already exist. link(" + link + ")");
             return;
         }
         final ContentResolver cr = context.getContentResolver();
@@ -37,14 +37,14 @@ public class DataStoreUtils {
     }
 
     private static void unFavoriteLink(Context context, String link) {
-        Log.v(TAG, "unFavoriteLink : link(" + link + ")");
+        Logger.v(TAG, "unFavoriteLink : link(" + link + ")");
         final ContentResolver cr = context.getContentResolver();
         String selection = NogiFeedContent.Favorite.KEY_LINK + "=?";
         String[] selectionArgs = { link };
 
         int result = cr.delete(NogiFeedContent.Favorite.CONTENT_URI, selection, selectionArgs);
         if (result <= 0)  {
-            Log.w(TAG, "failed to delete link. link(" + link + ")");
+            Logger.w(TAG, "failed to delete link. link(" + link + ")");
         }
     }
 
@@ -52,12 +52,12 @@ public class DataStoreUtils {
         final ContentResolver cr = context.getContentResolver();
         String selection = NogiFeedContent.Favorite.KEY_LINK + "=?";
         String[] selectionArgs = { link };
-        Log.d(TAG, "alreadyExist : link " + link);
+        Logger.d(TAG, "alreadyExist : link " + link);
 
         Cursor c = cr.query(NogiFeedContent.Favorite.CONTENT_URI, NogiFeedContent.Favorite.sProjection,
                 selection, selectionArgs, null);
         if (c == null) {
-            Log.d(TAG, "cursor is null. because of use favorite function first time");
+            Logger.d(TAG, "cursor is null. because of use favorite function first time");
             return false;
         }
         if (c.moveToFirst()) {
@@ -69,7 +69,7 @@ public class DataStoreUtils {
             } while (c.moveToNext());
             c.close();
         } else {
-            Log.w(TAG, "alreadyExist : failed to moveToFirst().");
+            Logger.w(TAG, "alreadyExist : failed to moveToFirst().");
             c.close();
             return false;
         }
@@ -120,7 +120,7 @@ public class DataStoreUtils {
             } while (c.moveToNext());
             c.close();
         } else {
-            Log.w(TAG, "getAllFavoriteLink() : failed to moveToFirst().");
+            Logger.w(TAG, "getAllFavoriteLink() : failed to moveToFirst().");
             c.close();
         }
         return links;

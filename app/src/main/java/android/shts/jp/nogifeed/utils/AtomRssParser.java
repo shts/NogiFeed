@@ -6,6 +6,7 @@ import java.io.InputStream;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.models.Entries;
 import android.shts.jp.nogifeed.models.Entry;
 import android.util.Log;
@@ -39,22 +40,22 @@ public class AtomRssParser {
 				String tag = null;
 				switch (eventType) {
 				case XmlPullParser.START_DOCUMENT:
-					LogUtils.log(TAG, "parse start");
+                    Logger.v(TAG, "parse start");
 					break;
 
 				case XmlPullParser.START_TAG:
 					tag = parser.getName();
-                    LogUtils.log(TAG, "TAG: " + tag);
+                    Logger.v(TAG, "TAG: " + tag);
 
 					if (tag.equals(TAG_ENTRY)) {
 						entry = new Entry();
-                        LogUtils.log(TAG, "entry");
+                        Logger.v(TAG, "entry");
 
 					} else if (tag.equals(TAG_TITLE)) {
 						if (entry != null) {
 							String text = parser.nextText();
 							entry.title = text;
-                            LogUtils.log(TAG, "title " + text);
+                            Logger.v(TAG, "title " + text);
 						}
 
 					} else if (tag.equals(TAG_LINK)) {
@@ -63,7 +64,7 @@ public class AtomRssParser {
 							for (int i = 0; i < attrCount; i++) {
 								String text = parser.getAttributeValue(i);
                                 entry.link = text;
-                                LogUtils.log(TAG, "link " + text);
+                                Logger.v(TAG, "link " + text);
 							}
 						}
 
@@ -71,46 +72,46 @@ public class AtomRssParser {
 						if (entry != null) {
 							String text = parser.nextText();
 							entry.id = text;
-                            LogUtils.log(TAG, "id " + text);
+                            Logger.v(TAG, "id " + text);
 						}
 
 					} else if (tag.equals(TAG_PUBLISHED)) {
 						if (entry != null) {
 							String text = parser.nextText();
 							entry.published = text;
-                            LogUtils.log(TAG, "published " + text);
+                            Logger.v(TAG, "published " + text);
 						}
 
 					} else if (tag.equals(TAG_UPDATED)) {
 						if (entry != null) {
 							String text = parser.nextText();
 							entry.updated = text;
-                            LogUtils.log(TAG, "updated " + text);
+                            Logger.v(TAG, "updated " + text);
 						}
 
 					} else if (tag.equals(TAG_SUMMARY)) {
 						if (entry != null) {
 							String text = parser.nextText();
 							entry.summary = text;
-                            LogUtils.log(TAG, "summary " + text);
+                            Logger.v(TAG, "summary " + text);
 						}
 
 					} else if (tag.equals(TAG_NAME)) {
 						if (entry != null) {
 							String text = parser.nextText();
 							entry.name = text;
-                            LogUtils.log(TAG, "name " + text);
+                            Logger.v(TAG, "name " + text);
 						}
 
 					} else if (tag.equals(TAG_CONTENT)) {
 						if (entry != null) {
 							String text = parser.nextText();
-							entry.content = ignoreCdataTag(text); // without CDATA tag
-                            LogUtils.log(TAG, "content " + text);
+							entry.content = StringUtils.ignoreCdataTagWithCrlf(text); // without CDATA tag
+                            Logger.v(TAG, "content " + text);
 						}
 
 					} else {
-                        LogUtils.log(TAG, "cannot find tag: " + tag);
+                        Logger.v(TAG, "cannot find tag: " + tag);
 					}
 					break;
 
@@ -120,12 +121,12 @@ public class AtomRssParser {
 						entries.add(entry);
 						entry = null;
 					}
-                    LogUtils.log(TAG, "END_TAG : " + tag);
+                    Logger.v(TAG, "END_TAG : " + tag);
 					break;
 				}
 				eventType = parser.next();
 			}
-            LogUtils.log(TAG, "parse finish");
+            Logger.v(TAG, "parse finish");
 
 		} catch (XmlPullParserException e) {
 			Log.e(TAG, "parse error ! : " + e);
@@ -136,13 +137,5 @@ public class AtomRssParser {
 		}
 		return entries;
 	}
-
-    private static String ignoreCdataTag(String target) {
-        // delete cdata tag
-        String ignoreCdataStartTag = target.replace("<![CDATA[", "");
-        String ignoreCdataEndTag = ignoreCdataStartTag.replace("]]>", "");
-        String ignoreCrLf = ignoreCdataEndTag.replace("\n", "");
-        return ignoreCrLf;
-    }
 
 }

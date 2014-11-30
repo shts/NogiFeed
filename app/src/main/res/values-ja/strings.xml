@@ -16,4 +16,5 @@
 
     <string name="feed_failure">"フィードの取得に失敗しました。端末の通信状態を確認してください。"</string>
 
+    <string name="empty_favorite">"押しメンが登録されていません。個人ページから登録してください。"</string>
 </resources>

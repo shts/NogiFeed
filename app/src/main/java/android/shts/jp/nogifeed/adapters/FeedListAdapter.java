@@ -2,14 +2,13 @@ package android.shts.jp.nogifeed.adapters;
 
 import android.content.Context;
 import android.shts.jp.nogifeed.R;
+import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.models.Entry;
 import android.shts.jp.nogifeed.utils.DataStoreUtils;
 import android.shts.jp.nogifeed.utils.DateUtils;
 import android.shts.jp.nogifeed.utils.IntentUtils;
 import android.shts.jp.nogifeed.utils.PicassoHelper;
 import android.shts.jp.nogifeed.utils.UrlUtils;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +52,7 @@ public class FeedListAdapter extends BindableAdapter<Entry> {
         final ViewHolder holder = (ViewHolder) view.getTag();
 
         final String profileImageUrl = UrlUtils.getMemberImageUrl(entry.link);
-        Log.d(TAG, "profileImageUrl : " + profileImageUrl);
+        Logger.d(TAG, "profileImageUrl : " + profileImageUrl);
         if (profileImageUrl == null) {
             // kenkyusei
             holder.profileImageView.setImageResource(R.drawable.kensyusei);

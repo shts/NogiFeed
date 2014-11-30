@@ -2,9 +2,9 @@ package android.shts.jp.nogifeed.fragments;
 
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
+import android.shts.jp.nogifeed.common.Logger;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +35,6 @@ public class EmptyFavoriteMemberFragment extends Fragment implements SwipeRefres
 
     @Override
     public void onRefresh() {
-        Log.d(TAG, "onRefresh");
+        Logger.d(TAG, "onRefresh");
     }
 }

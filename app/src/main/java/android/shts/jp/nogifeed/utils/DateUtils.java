@@ -1,6 +1,6 @@
 package android.shts.jp.nogifeed.utils;
 
-import android.util.Log;
+import android.shts.jp.nogifeed.common.Logger;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,7 +19,7 @@ public class DateUtils {
             updated = FORMATTER.format(date);
 
         } catch (ParseException e) {
-            Log.e(TAG, "failed to parse");
+            Logger.e(TAG, "failed to parse");
             return null;
         }
         return updated;
@@ -31,7 +31,7 @@ public class DateUtils {
                 + ") day(" + date.getDay() + ") hour(" + date.getHours()
                 + ") minute(" + date.getMinutes() + ") seconds(" + date.getSeconds()
                 + ") ";
-        Log.i(TAG, "formatUpdatedLong : dateTime" + dateTime + ") dateLong(" + date.getTime() + ")");
+        Logger.i(TAG, "formatUpdatedLong : dateTime" + dateTime + ") dateLong(" + date.getTime() + ")");
         return date.getTime();
     }
 

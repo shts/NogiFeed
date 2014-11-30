@@ -2,8 +2,8 @@ package android.shts.jp.nogifeed.utils;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.models.Member;
-import android.util.Log;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -70,7 +70,7 @@ public class JsoupUtils {
                 memberList.add(new Member(feedUrl, profileImageUrl, name));
             }
         } catch (IOException e) {
-            Log.e(TAG, "failed to get all member urls");
+            Logger.e(TAG, "failed to get all member urls");
         }
         return memberList;
     }
