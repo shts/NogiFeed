@@ -15,3 +15,12 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+# strip logging
+-assumenosideeffects class android.util.Log {
+    <methods>;
+}
+
+-assumenosideeffects class android.shts.jp.nogifeed.common.Logger {
+    <methods>;
+}

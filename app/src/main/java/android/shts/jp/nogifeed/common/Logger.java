@@ -7,6 +7,7 @@ import android.util.Log;
  */
 public class Logger {
 
+    private static final boolean DEBUG = false;
     private static final String TAG = Logger.class.getSimpleName();
     private static final String EMPTY = "";
 
@@ -18,6 +19,7 @@ public class Logger {
      * @return
      */
     public static int v(String tag, String format, Object... args) {
+        if (!DEBUG) return 0;
         return Log.v(tag, format(format, args));
     }
 
@@ -29,6 +31,7 @@ public class Logger {
      * @return
      */
     public static int v(String tag, String msg, Throwable e) {
+        if (!DEBUG) return 0;
         return Log.v(tag, msg, e);
     }
 
@@ -41,6 +44,7 @@ public class Logger {
      * @return
      */
     public static int v(String tag, String format, Throwable e, Object... args) {
+        if (!DEBUG) return 0;
         return Log.v(tag, format(format, args), e);
     }
 
@@ -52,6 +56,7 @@ public class Logger {
      * @return
      */
     public static int d(String tag, String format, Object... args) {
+        if (!DEBUG) return 0;
         return Log.d(tag, format(format, args));
     }
 
@@ -63,6 +68,7 @@ public class Logger {
      * @return
      */
     public static int d(String tag, String msg, Throwable e) {
+        if (!DEBUG) return 0;
         return Log.d(tag, msg, e);
     }
 
@@ -75,6 +81,7 @@ public class Logger {
      * @return
      */
     public static int d(String tag, String format, Throwable e, Object... args) {
+        if (!DEBUG) return 0;
         return Log.d(tag, format(format, args), e);
     }
 
@@ -86,6 +93,7 @@ public class Logger {
      * @return
      */
     public static int w(String tag, String format, Object... args) {
+        if (!DEBUG) return 0;
         return Log.w(tag, format(format, args));
     }
 
@@ -97,6 +105,7 @@ public class Logger {
      * @return
      */
     public static int w(String tag, String msg, Throwable e) {
+        if (!DEBUG) return 0;
         return Log.w(tag, msg, e);
     }
 
@@ -109,6 +118,7 @@ public class Logger {
      * @return
      */
     public static int w(String tag, String format, Throwable e, Object... args) {
+        if (!DEBUG) return 0;
         return Log.w(tag, format(format, args), e);
     }
 
@@ -120,6 +130,7 @@ public class Logger {
      * @return
      */
     public static int i(String tag, String format, Object... args) {
+        if (!DEBUG) return 0;
         return Log.i(tag, format(format, args));
     }
 
@@ -131,6 +142,7 @@ public class Logger {
      * @return
      */
     public static int i(String tag, String msg, Throwable e) {
+        if (!DEBUG) return 0;
         return Log.i(tag, msg, e);
     }
 
@@ -143,6 +155,7 @@ public class Logger {
      * @return
      */
     public static int i(String tag, String format, Throwable e, Object... args) {
+        if (!DEBUG) return 0;
         return Log.i(tag, format(format, args), e);
     }
 
@@ -154,6 +167,7 @@ public class Logger {
      * @return
      */
     public static int e(String tag, String format, Object... args) {
+        if (!DEBUG) return 0;
         return Log.e(tag, format(format, args));
     }
 
@@ -165,6 +179,7 @@ public class Logger {
      * @return
      */
     public static int e(String tag, String msg, Throwable e) {
+        if (!DEBUG) return 0;
         return Log.e(tag, msg, e);
     }
 
@@ -177,6 +192,7 @@ public class Logger {
      * @return
      */
     public static int e(String tag, String format, Throwable e, Object... args) {
+        if (!DEBUG) return 0;
         return Log.e(tag, format(format, args), e);
     }
 
