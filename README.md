@@ -8,10 +8,7 @@ Screenshot
 
 ### Current Version (0.9.0)
 
-<img src="./images/screenshot1.png" style="width:150px">
-<img src="./images/screenshot2.png" style="width:150px">
-<img src="./images/screenshot3.png" style="width:150px">
-<img src="./images/screenshot4.png" style="width:150px">
+<img src="./images/screenshot.png">
 
 License
 ------
