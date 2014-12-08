@@ -50,7 +50,7 @@ public class AllMemberGridListFragment extends Fragment {
 
     private void setupAdapter() {
 
-        JsoupUtils.getAllMembers(new JsoupUtils.JsoupListener() {
+        boolean ret = JsoupUtils.getAllMembers(getActivity(), new JsoupUtils.JsoupListener() {
             @Override
             public void onSuccess(List<Member> memberList) {
                 mMemberList.setAdapter(new GridAdapter(getActivity(), memberList));
@@ -63,6 +63,12 @@ public class AllMemberGridListFragment extends Fragment {
                         Toast.LENGTH_SHORT).show();
             }
         });
+
+        if (!ret) {
+            // Show error toast
+            Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
+                    Toast.LENGTH_SHORT).show();
+        }
 
     }
 

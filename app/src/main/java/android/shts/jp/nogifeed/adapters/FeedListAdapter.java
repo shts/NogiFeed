@@ -51,7 +51,7 @@ public class FeedListAdapter extends BindableAdapter<Entry> {
     public void bindView(final Entry entry, int position, View view) {
         final ViewHolder holder = (ViewHolder) view.getTag();
 
-        final String profileImageUrl = UrlUtils.getMemberImageUrl(entry.link);
+        final String profileImageUrl = UrlUtils.getMemberImageUrlFromFeedUrl(entry.link);
         Logger.d(TAG, "profileImageUrl : " + profileImageUrl);
         if (profileImageUrl == null) {
             // kenkyusei

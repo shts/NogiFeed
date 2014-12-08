@@ -1,13 +1,16 @@
 package android.shts.jp.nogifeed.utils;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.models.Member;
+import android.text.TextUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +20,6 @@ public class JsoupUtils {
 
     private static final String TAG = JsoupUtils.class.getSimpleName();
     private static final String URL_ALL_MEMBER = "http://www.nogizaka46.com/smph/member";
-    private static final String MEMBER_PROFILE_URL_SCHEME = "http://www.nogizaka46.com";
 
     public interface JsoupListener {
         public void onSuccess(List<Member> memberList);
@@ -26,7 +28,17 @@ public class JsoupUtils {
 
     private static Handler HANDLER = new Handler(Looper.getMainLooper());
 
-    public static void getAllMembers(final JsoupListener listener) {
+    /**
+     * Get all member's objects from 'http://www.nogizaka46.com/smph/member'.
+     * @param listener callbacks when get all member's objects.
+     */
+    public static boolean getAllMembers(Context context, final JsoupListener listener) {
+
+        if (!NetworkUtils.isConnected(context)
+                || NetworkUtils.isAirplaneModeOn(context)) {
+            return false;
+        }
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -35,43 +47,57 @@ public class JsoupUtils {
                     HANDLER.post(new Runnable() {
                         @Override
                         public void run() {
-                            listener.onSuccess(members);
+                            if (listener != null) {
+                                listener.onSuccess(members);
+                            }
                         }
                     });
                 } else {
                     HANDLER.post(new Runnable() {
                         @Override
                         public void run() {
-                            listener.onFailed();
+                            if (listener != null) {
+                                listener.onFailed();
+                            }
                         }
                     });
                 }
             }
         }).start();
+
+        return true;
     }
 
-    private synchronized static List<Member> getAllMembers() {
-
-        List<Member> memberList = new ArrayList<Member>();
+    private static List<Member> getAllMembers() {
+        List<Member> members = new ArrayList<Member>();
 
         try {
             Document document = Jsoup.connect(URL_ALL_MEMBER).get();
             Element body = document.body();
-            Element members = body.getElementsByClass("clearfix").get(2);
+            Element memberTags = body.getElementsByClass("clearfix").get(1);
 
-            for (Element child : members.children()) {
-                // ./detail/wadamaaya.php
-                String feedUrl = URL_ALL_MEMBER
-                        + child.getElementsByAttribute("href").first().attr("href").substring(1/* ignore dot */);
-                String profileImageUrl = MEMBER_PROFILE_URL_SCHEME
-                        + child.getElementsByAttribute("src").first().attr("src");
-                String name = child.getElementsByAttribute("alt").first().attr("alt");
-
-                memberList.add(new Member(feedUrl, profileImageUrl, name));
+            for (Element child : memberTags.children()) {
+                // http://blog.nogizaka46.com/manatsu.akimoto/smph/
+                Elements values = child.getElementsByAttribute("value");
+                String url = null;
+                for (Element value : values) {
+                    url = value.getElementsByAttribute("value").first().attr("value").toString();
+                    if (TextUtils.isEmpty(url)
+                            || "http://blog.nogizaka46.com/smph/".equals(url)) {
+                        Logger.w(TAG, "ignore value : url(" + url + ")");
+                    } else if (url.startsWith("http://blog.nogizaka46.com/")) {
+                        Logger.v(TAG, "valid value : url(" + url + ")");
+                        // Convert 'member blog' url to 'feed url'
+                        String feedUrl = UrlUtils.getMemberFeedUrl(url);
+                        Logger.v(TAG, "Convert 'member blog' url to 'feed url' : Blog url(" + url
+                                + ") feed url(" + feedUrl + ")");
+                        members.add(new Member(feedUrl));
+                    }
+                }
             }
         } catch (IOException e) {
             Logger.e(TAG, "failed to get all member urls");
         }
-        return memberList;
+        return members;
     }
 }

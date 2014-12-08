@@ -41,7 +41,6 @@ public class MemberDetailFragment extends ListFragment {
     private Entry mEntry;
     private MemberFeedListAdapter mMemberFeedListAdapter;
     private String mFeedUrl;
-    private Member mMember;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,9 +48,6 @@ public class MemberDetailFragment extends ListFragment {
 
         Bundle bundle = getArguments();
         mEntry = bundle.getParcelable(Entry.KEY);
-        if (mEntry == null) {
-            mMember = bundle.getParcelable(Member.KEY);
-        }
     }
 
     @Override
@@ -113,11 +109,8 @@ public class MemberDetailFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         if (mEntry != null) {
             mFeedUrl = UrlUtils.getMemberFeedUrl(mEntry.link);
-        } else {
-            // TODO: 個人ページから feed url を取得できない throws exception.
-            mFeedUrl = UrlUtils.getMemberFeedUrl(mMember.blogUrl);
+            setupMemberFeedList(mFeedUrl);
         }
-        setupMemberFeedList(mFeedUrl);
     }
 
 

@@ -12,7 +12,6 @@ import android.shts.jp.nogifeed.utils.StringUtils;
 import android.shts.jp.nogifeed.utils.UrlUtils;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +67,7 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
                 IntentUtils.startBlogActivity(mContext, entry);
             }
         });
-        final String profileImageUrl = UrlUtils.getMemberImageUrl(entry.link);
+        final String profileImageUrl = UrlUtils.getMemberImageUrlFromFeedUrl(entry.link);
         Logger.d(TAG, "profileImageUrl : " + profileImageUrl);
         if (!TextUtils.isEmpty(profileImageUrl)) {
             PicassoHelper.loadAndCircleTransform(

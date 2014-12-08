@@ -83,7 +83,8 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
         // clear feed list before add new feed.
         mEntries.clear();
 
-        AsyncRssClient.read(getActivity().getApplicationContext(), url, new RssClientListener() {
+        boolean ret = AsyncRssClient.read(getActivity().getApplicationContext(),
+                url, new RssClientListener() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Entries entries) {
 
@@ -123,6 +124,15 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
                 }
             }
         });
+
+        if (!ret) {
+            // Show error toast
+            Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
+                    Toast.LENGTH_SHORT).show();
+            if (mSwipeRefreshLayout.isRefreshing()) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        }
     }
 
     private void setupAdapter(Entries entries) {

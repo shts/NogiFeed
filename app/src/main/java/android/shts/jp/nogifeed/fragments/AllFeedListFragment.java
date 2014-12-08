@@ -61,7 +61,8 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
     }
 
     private void getAllFeed() {
-        AsyncRssClient.read(getActivity().getApplicationContext(), UrlUtils.FEED_ALL_URL, new RssClientListener() {
+        boolean ret = AsyncRssClient.read(getActivity().getApplicationContext(),
+                UrlUtils.FEED_ALL_URL, new RssClientListener() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Entries entries) {
                 Logger.i("getAllFeed()", "get all member feed : size(" + entries.size() + ")");
@@ -82,6 +83,15 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
                 }
             }
         });
+
+        if (!ret) {
+            // Show error toast
+            Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
+                    Toast.LENGTH_SHORT).show();
+            if (mSwipeRefreshLayout.isRefreshing()) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        }
     }
 
     private void setupAdapter(Entries entries) {

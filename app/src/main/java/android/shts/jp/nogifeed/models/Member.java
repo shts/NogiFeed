@@ -5,32 +5,36 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.utils.DataStoreUtils;
+import android.shts.jp.nogifeed.utils.StringUtils;
+import android.shts.jp.nogifeed.utils.UrlUtils;
 
 public class Member implements Parcelable {
 
     public static final String KEY = Member.class.getSimpleName();
     private static final String TAG = Member.class.getSimpleName();
 
-    public String blogUrl; // http://www.nogizaka46.com/smph/member/detail/kitanohinako.php
-    public String profileImageUrl;
+    //public String blogUrl; // http://www.nogizaka46.com/smph/member/detail/kitanohinako.php
+    public String allArticleUrl; // http://blog.nogizaka46.com/manatsu.akimoto/smph/
+    public final String feedUrl;
+    public final String profileImageUrl; // http://img.nogizaka46.com/www/smph/member/img/akimotomanatsu_prof.jpg
     public String fullName; /* kanji */
 
-    public Member(String feedUrl, String profileImageUrl, String fullName) {
+    public Member(String allArticleUrl) {
+        this.allArticleUrl = allArticleUrl;
+        this.feedUrl = UrlUtils.getMemberFeedUrl(allArticleUrl);
+        this.profileImageUrl = UrlUtils.getImageUrlFromArticleUrl(allArticleUrl);
         Logger.v(TAG, "create Member object. " + toString());
-        this.blogUrl = feedUrl;
-        this.profileImageUrl = profileImageUrl;
-        this.fullName = fullName;
     }
 
     public String toString() {
-        return " blogUrl("
-                + blogUrl + ") profileImageUrl("
-                + profileImageUrl + ") fullName("
-                + fullName + ")";
+        return " feedUrl("
+                + feedUrl + ") profileImageUrl("
+                + profileImageUrl + ") allArticleUrl("
+                + allArticleUrl + ")";
     }
 
     private Member(Parcel parcel) {
-        blogUrl = parcel.readString();
+        feedUrl = parcel.readString();
         profileImageUrl = parcel.readString();
         fullName = parcel.readString();
     }
@@ -40,7 +44,7 @@ public class Member implements Parcelable {
     }
 
     public void writeToParcel(Parcel parcel, int flag) {
-        parcel.writeString(blogUrl);
+        parcel.writeString(feedUrl);
         parcel.writeString(profileImageUrl);
         parcel.writeString(fullName);
     }
@@ -58,7 +62,7 @@ public class Member implements Parcelable {
     };
 
     public boolean isFavorite(Context context) {
-        return DataStoreUtils.alreadyExist(context, blogUrl);
+        return DataStoreUtils.alreadyExist(context, feedUrl);
     }
 
 }
