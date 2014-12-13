@@ -49,6 +49,11 @@
             android:label="@string/action_about"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".activities.MemberListActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+        </activity>
         <provider
             android:authorities="android.shts.jp.nogifeed.providers.nogifeed"
             android:name="android.shts.jp.nogifeed.providers.NogiFeedProvider"/>

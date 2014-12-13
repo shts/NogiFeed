@@ -23,6 +23,7 @@ import android.widget.Toast;
 import java.util.List;
 
 // TODO: クリック時の動作を追加する。レイアウトを調整する。お気に入り機能を追加する。
+// TODO: 中央揃えにする！ 2014/12/09
 public class AllMemberGridListFragment extends Fragment {
 
     private static final String TAG = AllMemberGridListFragment.class.getSimpleName();
