@@ -1,1 +1,18 @@
+# Android Studio files
 /build
+
+*/build
+*.iml
+*.iws
+*.ipr
+.idea/
+.gradle/
+local.properties
+# Secret property
+gradle.properties
+
+# Mac OS .DS_Store file
+.DS_Store
+
+#Google Analytics Settings
+src/main/res/xml/global_tracker.xml

@@ -3,9 +3,11 @@ package android.shts.jp.nogifeed.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
+import android.shts.jp.nogifeed.activities.BaseActivity;
 import android.shts.jp.nogifeed.adapters.BindableAdapter;
 import android.shts.jp.nogifeed.utils.IntentUtils;
 import android.shts.jp.nogifeed.utils.PicassoHelper;
+import android.shts.jp.nogifeed.utils.TrackerUtils;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import java.util.List;
 
 public class AboutFragment extends Fragment {
 
+    private static final String TAG = AboutFragment.class.getSimpleName();
     private static final String URL_ICON = "https://avatars1.githubusercontent.com/u/7928836?v=3&s=460";
     private ListView mAboutList;
 
@@ -63,6 +66,7 @@ public class AboutFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 IntentUtils.showDeveloper(getActivity());
+                TrackerUtils.sendTrack(getActivity(), TAG, "OnClicked", "developerIcon");
             }
         });
         PicassoHelper.loadAndCircleTransform(getActivity(), developerIcon, URL_ICON);
@@ -82,6 +86,7 @@ public class AboutFragment extends Fragment {
 
                 if (aboutItem != null && aboutItem.listener != null) {
                     aboutItem.listener.onClick();
+                    TrackerUtils.sendTrack(getActivity(), TAG, "OnClicked", aboutItem.title);
                 }
             }
         });

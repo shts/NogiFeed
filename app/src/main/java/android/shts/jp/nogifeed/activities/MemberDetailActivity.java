@@ -1,5 +1,6 @@
 package android.shts.jp.nogifeed.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -13,7 +14,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 
-public class MemberDetailActivity extends ActionBarActivity {
+public class MemberDetailActivity extends BaseActivity {
 
     private Drawable mActionBarDrawable;
     private Toolbar mToolbar;
@@ -51,6 +52,11 @@ public class MemberDetailActivity extends ActionBarActivity {
 //        } else {
 //            setupActionBar(m);
 //        }
+    }
+
+    @Override
+    public Activity getTrackerActivity() {
+        return MemberDetailActivity.this;
     }
 
     private void setupActionBar(String name) {

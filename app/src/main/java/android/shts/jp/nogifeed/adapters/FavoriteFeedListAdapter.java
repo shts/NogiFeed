@@ -9,6 +9,7 @@ import android.shts.jp.nogifeed.utils.DateUtils;
 import android.shts.jp.nogifeed.utils.IntentUtils;
 import android.shts.jp.nogifeed.utils.PicassoHelper;
 import android.shts.jp.nogifeed.utils.StringUtils;
+import android.shts.jp.nogifeed.utils.TrackerUtils;
 import android.shts.jp.nogifeed.utils.UrlUtils;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -17,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.List;
 
@@ -65,6 +68,8 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
             @Override
             public void onClick(View view) {
                 IntentUtils.startBlogActivity(mContext, entry);
+                TrackerUtils.sendTrack(mContext, TAG,
+                        "OnClicked", "-> Blog : " + "entry(" + entry.toString() + ")");
             }
         });
         final String profileImageUrl = UrlUtils.getMemberImageUrlFromFeedUrl(entry.link);
@@ -76,6 +81,8 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
                 @Override
                 public void onClick(View view) {
                     IntentUtils.startMemberDetailActivity(mContext, entry);
+                    TrackerUtils.sendTrack(mContext, TAG,
+                            "OnClicked", "-> Detail : " + "entry(" + entry.toString() + ")");
                 }
             });
         } else {

@@ -1,5 +1,6 @@
 package android.shts.jp.nogifeed.activities;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.fragments.BlogFragment;
@@ -10,7 +11,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 
-public class BlogActivity extends ActionBarActivity {
+public class BlogActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,11 @@ public class BlogActivity extends ActionBarActivity {
         ft.commit();
 
         setupActionBar();
+    }
+
+    @Override
+    public Activity getTrackerActivity() {
+        return BlogActivity.this;
     }
 
     private void setupActionBar() {

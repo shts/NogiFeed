@@ -1,5 +1,6 @@
 package android.shts.jp.nogifeed.activities;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.fragments.AllFeedListFragment;
@@ -8,7 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 
-public class MemberListActivity extends ActionBarActivity {
+public class MemberListActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,11 @@ public class MemberListActivity extends ActionBarActivity {
         ft.commit();
 
         setupActionBar();
+    }
+
+    @Override
+    public Activity getTrackerActivity() {
+        return MemberListActivity.this;
     }
 
     private void setupActionBar() {

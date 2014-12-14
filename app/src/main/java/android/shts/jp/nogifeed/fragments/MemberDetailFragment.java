@@ -14,6 +14,7 @@ import android.shts.jp.nogifeed.utils.ArrayUtils;
 import android.shts.jp.nogifeed.utils.DataStoreUtils;
 import android.shts.jp.nogifeed.utils.IntentUtils;
 import android.shts.jp.nogifeed.utils.StringUtils;
+import android.shts.jp.nogifeed.utils.TrackerUtils;
 import android.shts.jp.nogifeed.utils.UrlUtils;
 import android.shts.jp.nogifeed.views.Showcase;
 import android.support.v4.app.ListFragment;
@@ -122,6 +123,8 @@ public class MemberDetailFragment extends ListFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Entry entry = (Entry) getListView().getItemAtPosition(position);
                 IntentUtils.startBlogActivity(mActivity, entry);
+                TrackerUtils.sendTrack(getActivity(), TAG,
+                        "OnClicked", "-> Blog : " + "entry(" + entry.toString() + ")");
             }
         });
     }

@@ -1,5 +1,6 @@
 package android.shts.jp.nogifeed.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -27,7 +28,7 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 //import com.astuetz.PagerSlidingTabStrip;
 
 // TODO: toolbar のエレベーションをあげる(標準のアプリには影がある)
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends BaseActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -43,6 +44,11 @@ public class MainActivity extends ActionBarActivity {
         setupActionBar();
         setupStatusBar();
         setupViewPager();
+    }
+
+    @Override
+    public Activity getTrackerActivity() {
+        return MainActivity.this;
     }
 
     private void setupActionBar() {

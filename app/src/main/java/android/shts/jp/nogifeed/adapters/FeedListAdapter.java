@@ -8,6 +8,7 @@ import android.shts.jp.nogifeed.utils.DataStoreUtils;
 import android.shts.jp.nogifeed.utils.DateUtils;
 import android.shts.jp.nogifeed.utils.IntentUtils;
 import android.shts.jp.nogifeed.utils.PicassoHelper;
+import android.shts.jp.nogifeed.utils.TrackerUtils;
 import android.shts.jp.nogifeed.utils.UrlUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,6 +65,8 @@ public class FeedListAdapter extends BindableAdapter<Entry> {
             public void onClick(View view) {
                 // TODO: profile画像を押下中に色を変更するようにする
                 IntentUtils.startMemberDetailActivity(getContext(), entry);
+                TrackerUtils.sendTrack(getContext(), TAG,
+                        "OnClicked", "-> Detail : " + "entry(" + entry.toString() + ")");
             }
         });
 

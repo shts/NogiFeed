@@ -1,5 +1,6 @@
 package android.shts.jp.nogifeed.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
@@ -13,7 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-public class FeedListActivity extends ActionBarActivity {
+public class FeedListActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,11 @@ public class FeedListActivity extends ActionBarActivity {
         ft.commit();
 
         setupActionBar();
+    }
+
+    @Override
+    public Activity getTrackerActivity() {
+        return FeedListActivity.this;
     }
 
     private void setupActionBar() {

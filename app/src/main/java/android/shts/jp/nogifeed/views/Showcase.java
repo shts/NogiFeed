@@ -4,6 +4,7 @@ import android.content.Context;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.utils.PicassoHelper;
+import android.shts.jp.nogifeed.utils.TrackerUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -45,6 +46,8 @@ public class Showcase extends FrameLayout {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 mListener.onCheckdChanged(compoundButton, b);
+                TrackerUtils.sendTrack(getContext(), TAG,
+                        "OnClicked", "-> Favorite : " + "isFavorite(" + b + ")");
             }
         });
         mImageUrls = imageUrls;

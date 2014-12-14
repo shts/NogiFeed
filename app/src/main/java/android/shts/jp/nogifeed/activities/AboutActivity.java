@@ -1,14 +1,19 @@
 package android.shts.jp.nogifeed.activities;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.shts.jp.nogifeed.NogiFeedApplication;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.fragments.AboutFragment;
 import android.shts.jp.nogifeed.fragments.AllFeedListFragment;
+import android.shts.jp.nogifeed.utils.TrackerUtils;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 
-public class AboutActivity extends ActionBarActivity {
+import com.google.android.gms.analytics.GoogleAnalytics;
+
+public class AboutActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,4 +34,8 @@ public class AboutActivity extends ActionBarActivity {
         getSupportActionBar().setElevation(0);
     }
 
+    @Override
+    public Activity getTrackerActivity() {
+        return AboutActivity.this;
+    }
 }
