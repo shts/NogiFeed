@@ -66,10 +66,21 @@ public class StringUtils {
         return lastName;
     }
 
-    public static List<String> getThumnailImageUrls(String content, int maxSize) {
+    /**
+     * Get thumbnail image urls from blog content. Extract url from HTML tag <img src...>.
+     * @param content blog content.
+     * @param maxSize numbers of url extracted. if 0 then unlimited.
+     * @return thumbnail image urls
+     */
+    public static List<String> getThumbnailImageUrls(String content, int maxSize) {
 
         if (TextUtils.isEmpty(content)) {
-            Logger.e(TAG, "failed to getThumnailImage() : content is null");
+            Logger.e(TAG, "failed to getThumbnailImageUrls() : content is null");
+            return null;
+        }
+
+        if (maxSize < 0) {
+            Logger.e(TAG, "failed to getThumbnailImageUrls() : maxSize(" + maxSize + ")");
             return null;
         }
 
@@ -84,9 +95,44 @@ public class StringUtils {
         while (matcher.find()) {
             String matchText = matcher.group();
             if (!isGifFile(matchText)) {
-                imageUrls.add(ignoreImgTag(matchText));
+                imageUrls.add(ignoreHtmlTags(matchText));
             }
-            if (maxSize < imageUrls.size()) break;
+            if (maxSize != 0) {
+                if (maxSize < imageUrls.size()) break;
+            }
+        }
+        return imageUrls;
+    }
+
+    public static List<String> getRawImagePageUrls(String content, int maxSize) {
+
+        if (TextUtils.isEmpty(content)) {
+            Logger.e(TAG, "failed to getRawImagePageUrls() : content is null");
+            return null;
+        }
+
+        if (maxSize < 0) {
+            Logger.e(TAG, "failed to getRawImagePageUrls() : maxSize(" + maxSize + ")");
+            return null;
+        }
+
+        List<String> imageUrls = new ArrayList<String>();
+
+        String contentWithoutCDataTag = ignoreCDataTag(content);
+        String contentWithoutCrLf = ignoreLinefeed(contentWithoutCDataTag);
+
+        Pattern pattern = Pattern.compile(MATCHER_PATTERN_RAW_IMAGE, Pattern.MULTILINE);
+        Matcher matcher = pattern.matcher(contentWithoutCrLf);
+
+        while (matcher.find()) {
+            String matchText = matcher.group();
+            Logger.i(TAG, "getRawImagePageUrls() : url(" + matchText + ")");
+            if (isValidDomain(matchText)) {
+                imageUrls.add(ignoreHtmlTags(matchText));
+            }
+            if (maxSize != 0) {
+                if (maxSize < imageUrls.size()) break;
+            }
         }
         return imageUrls;
     }
@@ -95,11 +141,18 @@ public class StringUtils {
         return matchText.contains(".gif");
     }
 
-    public static String ignoreImgTag(String content) {
-        Logger.v(TAG, "ignoreImgTag : content (" + content + ")");
+    public static boolean isValidDomain(String matchText) {
+        return matchText.contains("http://dcimg.awalker.jp");
+    }
+
+    public static String ignoreHtmlTags(String content) {
+        Logger.v(TAG, "ignoreHtmlTags : content (" + content + ")");
 
         // ignore img tags
         String ignored = content.replace("<img src=", "");
+        // ignore img tags
+        ignored = ignored.replace("<a href=", "");
+
         ignored = ignored.replace("/>", "");
         ignored = ignored.replace(">", "");
 
@@ -108,12 +161,14 @@ public class StringUtils {
 
         // ignore style elements
         ignored = ignored.replace("style=max-width:100%;", "");
+        ignored = ignored.replace("width=\"98%\"", "");
+        ignored = ignored.replace("width=98%", "");
 
         // TODO: ignore any space
         // ignore style elements with space
         ignored = ignored.replace("style=max-width: 100%;", "");
         ignored = ignored.replace("style=\"max-width:100%;\"", "");
-        Logger.v(TAG, "ignoreImgTag : ignored (" + ignored + ")");
+        Logger.v(TAG, "ignoreHtmlTags : ignored (" + ignored + ")");
         return ignored;
     }
 

@@ -9,6 +9,17 @@ public class NetworkUtils {
 
     private NetworkUtils() {}
 
+    /**
+     * Check network enable.
+     * @param context application context.
+     * @return if true network enabled.
+     */
+    public static boolean enableNetwork(Context context) {
+        if (NetworkUtils.isAirplaneModeOn(context)) {
+            return false;
+        }
+        return NetworkUtils.isConnected(context);
+    }
 
     /**
      * Whether be able to network.

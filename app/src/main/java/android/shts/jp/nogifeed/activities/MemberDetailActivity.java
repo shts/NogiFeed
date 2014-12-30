@@ -5,14 +5,27 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
+import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.fragments.MemberDetailFragment;
 import android.shts.jp.nogifeed.models.Entry;
 import android.shts.jp.nogifeed.models.Member;
+import android.shts.jp.nogifeed.services.Downloader;
+import android.shts.jp.nogifeed.services.ImageDownloader;
+import android.shts.jp.nogifeed.utils.JsoupUtils;
+import android.shts.jp.nogifeed.utils.StringUtils;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.WindowCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+
+import org.apache.http.Header;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MemberDetailActivity extends BaseActivity {
 
@@ -46,12 +59,6 @@ public class MemberDetailActivity extends BaseActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, memberDetailFragment, MemberDetailFragment.class.getSimpleName());
         ft.commit();
-
-//        if (entry != null) {
-//            setupActionBar(entry.name);
-//        } else {
-//            setupActionBar(m);
-//        }
     }
 
     @Override

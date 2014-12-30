@@ -19,8 +19,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.analytics.Tracker;
-
 import java.util.List;
 
 // TODO: お気に入りメンバーがいないときは EmptyView を表示する
@@ -59,7 +57,7 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
         holder.titleTextView.setText(entry.title);
         holder.autherTextView.setText(entry.name);
         holder.updatedTextView.setText(DateUtils.formatUpdated(entry.published));
-        final List<String> urls = StringUtils.getThumnailImageUrls(entry.content, 1);
+        final List<String> urls = StringUtils.getThumbnailImageUrls(entry.content, 1);
         if (urls != null && !urls.isEmpty()) {
             PicassoHelper.load(
                     mContext, holder.backgroudImageView, urls.get(0));

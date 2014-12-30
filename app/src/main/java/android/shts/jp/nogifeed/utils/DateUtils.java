@@ -10,6 +10,21 @@ public class DateUtils {
 
     private static final String TAG = DateUtils.class.getSimpleName();
     private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy'/'MM'/'dd HH:mm:ss");
+    private static final SimpleDateFormat FORMATTER_FILE = new SimpleDateFormat("yyyyMMddHHmmss");
+
+    public static synchronized String formatFileName(String source) {
+        String updated = null;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            Date date = sdf.parse(source);
+            updated = FORMATTER_FILE.format(date);
+
+        } catch (ParseException e) {
+            Logger.e(TAG, "failed to parse");
+            return null;
+        }
+        return updated;
+    }
 
     public static synchronized String formatUpdated(String source) {
         String updated = null;

@@ -51,7 +51,7 @@ public class AllMemberGridListFragment extends Fragment {
 
     private void setupAdapter() {
 
-        boolean ret = JsoupUtils.getAllMembers(getActivity(), new JsoupUtils.JsoupListener() {
+        boolean ret = JsoupUtils.getAllMembers(getActivity(), new JsoupUtils.GetMemberListener() {
             @Override
             public void onSuccess(List<Member> memberList) {
                 mMemberList.setAdapter(new GridAdapter(getActivity(), memberList));
