@@ -2,6 +2,7 @@ package android.shts.jp.nogifeed.api;
 
 import android.content.Context;
 import android.shts.jp.nogifeed.common.Logger;
+import android.shts.jp.nogifeed.listener.DownloadCountHandler;
 import android.shts.jp.nogifeed.models.Entry;
 import android.shts.jp.nogifeed.utils.JsoupUtils;
 import android.shts.jp.nogifeed.utils.NetworkUtils;
@@ -29,7 +30,8 @@ public class RawImageDownloadClient {
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
-    public static boolean get(final Context context, final List<String> imageUrls, final Entry entry) {
+    public static boolean get(final Context context, final List<String> imageUrls,
+                              final Entry entry, final DownloadCountHandler handler) {
 
         if (!NetworkUtils.enableNetwork(context)) {
             Logger.w(TAG, "cannot download because of network disconnected.");
@@ -46,6 +48,11 @@ public class RawImageDownloadClient {
             return false;
         }
 
+        if (handler == null) {
+            Logger.w(TAG, "cannot download handler is null.");
+            return false;
+        }
+
         for (int i = 0; i < imageUrls.size(); i++) {
 
             String imageUrl = imageUrls.get(i);
@@ -56,7 +63,7 @@ public class RawImageDownloadClient {
 
             final File file = new File(SdCardUtils.getDownloadFilePath(entry, i, "r"));
 
-            download(context, imageUrl, file);
+            download(context, imageUrl, file, handler);
         }
         return true;
     }
@@ -75,7 +82,8 @@ public class RawImageDownloadClient {
      * @param file download target file.
      * @return true if execute.
      */
-    private static boolean download(final Context context, final String imageUrl, final File file) {
+    private static boolean download(final Context context, final String imageUrl,
+                                    final File file, final DownloadCountHandler handler) {
 
         // RawImageの存在確認
         client.get(imageUrl, new AsyncHttpResponseHandler() {
@@ -114,6 +122,11 @@ public class RawImageDownloadClient {
                             Logger.w(TAG, "failed to check raw image exist. statusCode(" + statusCode + ") throwable(" + throwable + ")");
                             // TODO: notify download failure
                         }
+
+                        @Override
+                        public void onFinish() {
+                            super.onFinish();
+                        }
                     });
                 } catch (UnsupportedEncodingException e) {
                     Logger.e(TAG, "failed to parse responseBody. 'byte' -> 'String'");
@@ -123,6 +136,12 @@ public class RawImageDownloadClient {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 Logger.w(TAG, "failed to check raw image exist. error : " + error);
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                handler.onFinish();
             }
         });
 

@@ -2,6 +2,7 @@ package android.shts.jp.nogifeed.api;
 
 import android.content.Context;
 import android.shts.jp.nogifeed.common.Logger;
+import android.shts.jp.nogifeed.listener.DownloadCountHandler;
 import android.shts.jp.nogifeed.models.Entry;
 import android.shts.jp.nogifeed.utils.NetworkUtils;
 import android.shts.jp.nogifeed.utils.SdCardUtils;
@@ -22,7 +23,8 @@ public class ThumbnailDownloadClient {
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
-    public static boolean get(final Context context, final List<String> imageUrls, final Entry entry) {
+    public static boolean get(final Context context, final List<String> imageUrls,
+                              final Entry entry, final DownloadCountHandler handler) {
 
         if (!NetworkUtils.enableNetwork(context)) {
             Logger.w(TAG, "cannot download because of network disconnected.");
@@ -36,6 +38,11 @@ public class ThumbnailDownloadClient {
 
         if (entry == null) {
             Logger.w(TAG, "cannot download because of entry is null.");
+            return false;
+        }
+
+        if (handler == null) {
+            Logger.w(TAG, "cannot download handler is null.");
             return false;
         }
 
@@ -54,6 +61,12 @@ public class ThumbnailDownloadClient {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, File file) {
                     SdCardUtils.scanFile(context, file);
+                }
+
+                @Override
+                public void onFinish() {
+                    super.onFinish();
+                    handler.onFinish();
                 }
             });
         }

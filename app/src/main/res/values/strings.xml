@@ -7,6 +7,8 @@
 
     <!-- activity blog -->
     <string name="action_download">Download all image</string>
+    <string name="toast_start_download">Start download images</string>
+    <string name="toast_finish_download">Finish download images</string>
 
     <!-- activity about -->
     <string name="about_header_app_summary">"This application is for read Nogizaka46's blog. (this app is 'un'offical.) Inquiry to me (Twitter @nogifeed), If you have question or feature request about this application."</string>

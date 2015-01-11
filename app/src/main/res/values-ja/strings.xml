@@ -7,6 +7,8 @@
 
     <!-- activity blog -->
     <string name="action_download">"画像ダウンロード"</string>
+    <string name="toast_start_download">"ダウンロード開始"</string>
+    <string name="toast_finish_download">"ダウンロード終了"</string>
 
     <!-- activity about -->
     <string name="about_header_app_summary">"乃木坂46の公式ブログを読むアプリです。アプリに関しての質問や機能リクエストは下記フォームから @nogifeed までお問い合わせください。"</string>
