@@ -192,4 +192,26 @@ public class JsoupUtils {
         return null;
     }
 
+    public static String getEnableRawImageUrlHtml(String html) {
+        try {
+            //Document document = Jsoup.connect(imageUrl).get();
+            Document document = Jsoup.parse(html);
+            Element body = document.body();
+            Element contents = body.getElementById("contents");
+            Element imgTags = contents.getElementsByTag("img").get(0);
+            String url = StringUtils.ignoreHtmlTags(imgTags.toString());
+            Logger.i(TAG, "raw image url(" + url + ")");
+
+            if (!TextUtils.isEmpty(url)
+                    && StringUtils.isValidDomain(url)) {
+                return url;
+            }
+            return null;
+
+        } catch (Exception e) {
+            Logger.e(TAG, "failed to get enable raw image url : e(" + e + ")");
+        }
+        return null;
+    }
+
 }

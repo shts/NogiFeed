@@ -164,6 +164,9 @@ public class StringUtils {
         ignored = ignored.replace("width=\"98%\"", "");
         ignored = ignored.replace("width=98%", "");
 
+        // ignore space
+        ignored = ignored.replace(" ", "");
+
         // TODO: ignore any space
         // ignore style elements with space
         ignored = ignored.replace("style=max-width: 100%;", "");

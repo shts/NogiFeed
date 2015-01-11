@@ -7,6 +7,7 @@ import android.shts.jp.nogifeed.fragments.BlogFragment;
 import android.shts.jp.nogifeed.models.Entry;
 import android.shts.jp.nogifeed.models.Member;
 import android.shts.jp.nogifeed.services.ImageDownloader;
+import android.shts.jp.nogifeed.utils.PicassoHelper;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,12 +15,15 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import org.apache.http.Header;
 
 import java.io.File;
 
 public class BlogActivity extends BaseActivity {
+
+    private Entry mEntry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,29 +44,16 @@ public class BlogActivity extends BaseActivity {
 
         mEntry = entry;
     }
-    private Entry mEntry;
-    // TODO: for debug
-    // TODO: thumnail と raw image の url を取得する処理を追加する
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        new MenuInflater(this).inflate(R.menu.main, menu);
+        new MenuInflater(this).inflate(R.menu.main, menu); // TODO: change menu name
         return super.onCreateOptionsMenu(menu);
     }
 
-    // TODO: for debug
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        ImageDownloader.download(getApplicationContext(), mEntry, new ImageDownloader.ImageDownloadListener() {
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
-
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, File file) {
-
-            }
-        });
+        ImageDownloader.download(getApplicationContext(), mEntry);
         return super.onOptionsItemSelected(item);
     }
 
