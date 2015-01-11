@@ -5,6 +5,9 @@
     <string name="action_about">About this app</string>
     <string name="action_settings">Settings</string>
 
+    <!-- activity blog -->
+    <string name="action_download">Download all image</string>
+
     <!-- activity about -->
     <string name="about_header_app_summary">"This application is for read Nogizaka46's blog. (this app is 'un'offical.) Inquiry to me (Twitter @nogifeed), If you have question or feature request about this application."</string>
     <string name="about_header_developer_title">This application developer</string>

@@ -5,6 +5,9 @@
     <string name="action_about">"このアプリについて"</string>
     <string name="action_settings">Settings</string>
 
+    <!-- activity blog -->
+    <string name="action_download">"画像ダウンロード"</string>
+
     <!-- activity about -->
     <string name="about_header_app_summary">"乃木坂46の公式ブログを読むアプリです。アプリに関しての質問や機能リクエストは下記フォームから @nogifeed までお問い合わせください。"</string>
     <string name="about_header_developer_title">"アプリ開発者"</string>

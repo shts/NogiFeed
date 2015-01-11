@@ -5,21 +5,13 @@ import android.os.Bundle;
 import android.shts.jp.nogifeed.R;
 import android.shts.jp.nogifeed.fragments.BlogFragment;
 import android.shts.jp.nogifeed.models.Entry;
-import android.shts.jp.nogifeed.models.Member;
 import android.shts.jp.nogifeed.services.ImageDownloader;
-import android.shts.jp.nogifeed.utils.PicassoHelper;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ImageView;
-
-import org.apache.http.Header;
-
-import java.io.File;
 
 public class BlogActivity extends BaseActivity {
 
@@ -47,7 +39,7 @@ public class BlogActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        new MenuInflater(this).inflate(R.menu.main, menu); // TODO: change menu name
+        new MenuInflater(this).inflate(R.menu.activity_blog, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

@@ -5,9 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.models.Member;
-import android.shts.jp.nogifeed.models.RawImage;
 import android.text.TextUtils;
-import android.util.Log;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -106,95 +104,13 @@ public class JsoupUtils {
         return members;
     }
 
-    public interface GetImageUrlsListener {
-        public void onSuccess(List<RawImage> enableUrls);
-        public void onFailed();
-    }
-
     /**
-     * Get raw image urls from 'http://dcimg.awalker.jp/img2.php?*'.
-     * @param context application context.
-     * @param imageUrls raw image page urls.
-     * @param listener callbacks when get raw image url.
-     * @return did execute.
+     * Get enable raw image url from blog article.
+     * @param html blog article html.
+     * @return enable raw image url if url enable.
      */
-    public static boolean getEnableRawImageUrls(
-            Context context, final List<String> imageUrls, final GetImageUrlsListener listener) {
-
-        if (listener == null) {
-            Logger.w(TAG, "listener is null.");
-            return false;
-        }
-
-        if (imageUrls == null || imageUrls.isEmpty()) {
-            Logger.w(TAG, "imageUrls is invalided.");
-            return false;
-        }
-
-        if (!NetworkUtils.enableNetwork(context)) {
-            Logger.w(TAG, "cannot connection because of network disconnected.");
-            return false;
-        }
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final List<RawImage> rawImages = getEnableRawImageUrls(imageUrls);
-                if (rawImages != null && !rawImages.isEmpty()) {
-                    HANDLER.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            listener.onSuccess(rawImages);
-                        }
-                    });
-                } else {
-                    HANDLER.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            listener.onFailed();
-                        }
-                    });
-                }
-            }
-        }).start();
-
-        return true;
-    }
-
-    private static List<RawImage> getEnableRawImageUrls(List<String> imageUrls) {
-        List<RawImage> rawImages = new ArrayList<RawImage>();
-
-        for (String url : imageUrls) {
-            String enableUrl = getEnableRawImageUrl(url);
-            if (!TextUtils.isEmpty(enableUrl)
-                    && StringUtils.isValidDomain(enableUrl)) {
-                rawImages.add(new RawImage(url, enableUrl));
-            }
-        }
-
-        return rawImages;
-    }
-
-    private static String getEnableRawImageUrl(String imageUrl) {
+    public static String getEnableRawImageUrl(String html) {
         try {
-
-            Document document = Jsoup.connect(imageUrl).get();
-            Element body = document.body();
-            Element contents = body.getElementById("contents");
-            Element imgTags = contents.getElementsByTag("img").get(0);
-            String url = StringUtils.ignoreHtmlTags(imgTags.toString());
-            Logger.i(TAG, "raw image url(" + url + ")");
-            return url;
-
-        } catch (IOException e) {
-            Logger.e(TAG, "failed to get enable raw image url : e(" + e + ")");
-        }
-        return null;
-    }
-
-    public static String getEnableRawImageUrlHtml(String html) {
-        try {
-            //Document document = Jsoup.connect(imageUrl).get();
             Document document = Jsoup.parse(html);
             Element body = document.body();
             Element contents = body.getElementById("contents");

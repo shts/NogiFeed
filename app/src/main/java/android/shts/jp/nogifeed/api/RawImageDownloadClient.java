@@ -69,7 +69,7 @@ public class RawImageDownloadClient {
     セッションIDをクリアする。
      */
     /**
-     *
+     * download raw images.
      * @param context application context.
      * @param imageUrl raw image 'page' url.
      * @param file download target file.
@@ -83,8 +83,9 @@ public class RawImageDownloadClient {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
+                    // TODO: this is ui thread. should worker thread.
                     // get enable raw image url from html.
-                    String url = JsoupUtils.getEnableRawImageUrlHtml(new String(responseBody, "UTF-8"));
+                    String url = JsoupUtils.getEnableRawImageUrl(new String(responseBody, "UTF-8"));
                     if (TextUtils.isEmpty(url)) {
                         Logger.w(TAG, "failed to get enable url from HTML.");
                         return;
@@ -105,6 +106,7 @@ public class RawImageDownloadClient {
 
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, File file) {
+                            // TODO: this is ui thread. should worker thread.
                             SdCardUtils.scanFile(context, file);
                         }
                         @Override
