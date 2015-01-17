@@ -28,8 +28,6 @@ public class RawImageDownloadClient {
 
     private RawImageDownloadClient() {}
 
-    private static AsyncHttpClient client = new AsyncHttpClient();
-
     public static boolean get(final Context context, final List<String> imageUrls,
                               final Entry entry, final DownloadCountHandler handler) {
 
@@ -86,7 +84,8 @@ public class RawImageDownloadClient {
                                     final File file, final DownloadCountHandler handler) {
 
         // RawImageの存在確認
-        client.get(imageUrl, new AsyncHttpResponseHandler() {
+        // TODO : 連続でダウンロードするとクッキーがダウンロード時のものとあわなくなるときがあるので都度newする
+        new AsyncHttpClient().get(imageUrl, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -152,6 +151,7 @@ public class RawImageDownloadClient {
         for (Header header : headers) {
 
             String name = header.getName();
+            Logger.i(TAG, "header name : name(" + name + ")");
             if (TextUtils.isEmpty(name)) {
                 continue;
             }

@@ -9,6 +9,19 @@
     <string name="action_download">"画像ダウンロード"</string>
     <string name="toast_start_download">"ダウンロード開始"</string>
     <string name="toast_finish_download">"ダウンロード終了"</string>
+    <string name="toast_failed_download">"ダウンロード失敗"</string>
+
+    <string name="notify_start_download_ticker">"ダウンロードを開始します"</string>
+    <string name="notify_start_download_title">"ダウンロード中"</string>
+    <string name="notify_start_download_text">"ダウンロード中"</string>
+
+    <string name="notify_failed_download_ticker">"ダウンロードに失敗しました"</string>
+    <string name="notify_failed_download_title">"ダウンロードに失敗しました"</string>
+    <string name="notify_failed_download_text">"ダウンロードに失敗しました"</string>
+
+    <string name="notify_finish_download_ticker">"ダウンロードが完了しました"</string>
+    <string name="notify_finish_download_title">"ダウンロードが完了しました"</string>
+    <string name="notify_finish_download_text">"ダウンロードが完了しました"</string>
 
     <!-- activity about -->
     <string name="about_header_app_summary">"乃木坂46の公式ブログを読むアプリです。アプリに関しての質問や機能リクエストは下記フォームから @nogifeed までお問い合わせください。"</string>

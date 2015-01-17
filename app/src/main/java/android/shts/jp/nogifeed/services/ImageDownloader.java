@@ -7,8 +7,9 @@ import android.shts.jp.nogifeed.api.ThumbnailDownloadClient;
 import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.listener.DownloadCountHandler;
 import android.shts.jp.nogifeed.models.Entry;
+import android.shts.jp.nogifeed.utils.JsoupUtils;
 import android.shts.jp.nogifeed.utils.NetworkUtils;
-import android.shts.jp.nogifeed.utils.StringUtils;
+import android.shts.jp.nogifeed.views.DownloadNotification;
 import android.widget.Toast;
 
 import java.util.List;
@@ -41,11 +42,22 @@ public class ImageDownloader {
 
         showToast(context, R.string.toast_start_download);
 
+        sCounter.initialize(context);
+
         // get thumbnail image urls from blog HTML.
         final List<String> thumbnailImageUrls
-                = StringUtils.getThumbnailImageUrls(entry.content, 0);
-
+                = JsoupUtils.getThumbnailImageUrls(entry.content, 0);
         sCounter.setThumbnailSize(thumbnailImageUrls.size());
+
+        // get raw image urls from blog HTML.
+        final List<String> rawImagePageUrls
+                = JsoupUtils.getRawImagePageUrls(entry.content, 0);
+        sCounter.setRawImageSize(rawImagePageUrls.size());
+
+        if (!sCounter.isEnableCounter()) {
+            showToast(context, R.string.toast_failed_download);
+            return false;
+        }
 
         // download thumbnail image.
         ThumbnailDownloadClient.get(context, thumbnailImageUrls, entry, new DownloadCountHandler() {
@@ -58,12 +70,6 @@ public class ImageDownloader {
                 }
             }
         });
-
-        // get raw image urls from blog HTML.
-        final List<String> rawImagePageUrls
-                = StringUtils.getRawImagePageUrls(entry.content, 0);
-
-        sCounter.setRawImageSize(rawImagePageUrls.size());
 
         // download raw image.
         RawImageDownloadClient.get(context, rawImagePageUrls, entry, new DownloadCountHandler() {
@@ -98,12 +104,28 @@ public class ImageDownloader {
         // raw image download counter
         private int mRawImagePagesCounter = 0;
 
+        private DownloadNotification mNotification;
+
+        public void initialize(final Context context) {
+            mNotification = new DownloadNotification(context);
+            mNotification.startProgress();
+        }
+
+        public boolean isEnableCounter() {
+            if (mThumbnailSize + mRawImageSize <= 0) {
+                mNotification.failedProgress();
+                return false;
+            }
+            return true;
+        }
+
         /**
          * Set thumbnail max size.
          * @param size max size.
          */
         public void setThumbnailSize(int size) {
             mThumbnailSize = size;
+            mNotification.addMaxSize(size);
         }
 
         /**
@@ -112,6 +134,7 @@ public class ImageDownloader {
          */
         public boolean addThumbnailCounter() {
             mThumbnailCounter++;
+            mNotification.updateProgress();
             if (isCompleteThumbnail()) {
                 if (isCompleteRawImages()) {
                     allComplete();
@@ -131,6 +154,7 @@ public class ImageDownloader {
          */
         public void setRawImageSize(int size) {
             mRawImageSize = size;
+            mNotification.addMaxSize(size);
         }
 
         /**
@@ -139,6 +163,7 @@ public class ImageDownloader {
          */
         public boolean addRawImagePagesCounter() {
             mRawImagePagesCounter++;
+            mNotification.updateProgress();
             if (isCompleteRawImages()) {
                 if (isCompleteThumbnail()) {
                     allComplete();

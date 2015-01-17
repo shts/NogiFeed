@@ -9,6 +9,19 @@
     <string name="action_download">Download all image</string>
     <string name="toast_start_download">Start download images</string>
     <string name="toast_finish_download">Finish download images</string>
+    <string name="toast_failed_download">Failed to download images</string>
+
+    <string name="notify_start_download_ticker">Start download images</string>
+    <string name="notify_start_download_title">Downloading</string>
+    <string name="notify_start_download_text">Downloading</string>
+
+    <string name="notify_failed_download_ticker">Failed to download</string>
+    <string name="notify_failed_download_title">Failed to download</string>
+    <string name="notify_failed_download_text">Failed to download</string>
+
+    <string name="notify_finish_download_ticker">Complete download images</string>
+    <string name="notify_finish_download_title">Complete download images</string>
+    <string name="notify_finish_download_text">Complete download images</string>
 
     <!-- activity about -->
     <string name="about_header_app_summary">"This application is for read Nogizaka46's blog. (this app is 'un'offical.) Inquiry to me (Twitter @nogifeed), If you have question or feature request about this application."</string>

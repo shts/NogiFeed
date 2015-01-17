@@ -84,7 +84,7 @@ public class JsoupUtils {
                 Elements values = child.getElementsByAttribute("value");
                 String url = null;
                 for (Element value : values) {
-                    url = value.getElementsByAttribute("value").first().attr("value").toString();
+                    url = value.getElementsByAttribute("value").first().attr("value");
                     if (TextUtils.isEmpty(url)
                             || "http://blog.nogizaka46.com/smph/".equals(url)) {
                         Logger.w(TAG, "ignore value : url(" + url + ")");
@@ -110,24 +110,93 @@ public class JsoupUtils {
      * @return enable raw image url if url enable.
      */
     public static String getEnableRawImageUrl(String html) {
-        try {
-            Document document = Jsoup.parse(html);
-            Element body = document.body();
-            Element contents = body.getElementById("contents");
-            Element imgTags = contents.getElementsByTag("img").get(0);
-            String url = StringUtils.ignoreHtmlTags(imgTags.toString());
-            Logger.i(TAG, "raw image url(" + url + ")");
+        Document document = Jsoup.parse(html);
+        Element body = document.body();
+        Element contents = body.getElementById("contents");
+        Element imgTags = contents.getElementsByTag("img").get(0);
+        String url = imgTags.attr("src");
+        Logger.i(TAG, "raw image url(" + url + ")");
 
-            if (!TextUtils.isEmpty(url)
-                    && StringUtils.isValidDomain(url)) {
-                return url;
-            }
-            return null;
-
-        } catch (Exception e) {
-            Logger.e(TAG, "failed to get enable raw image url : e(" + e + ")");
+        if (!TextUtils.isEmpty(url) && isValidDomain(url)) {
+            return url;
         }
         return null;
+    }
+
+    /**
+     * Get thumbnail image urls from blog content. Extract url from HTML tag <img src...>.
+     * @param content blog content.
+     * @param maxSize numbers of url extracted. if 0 then unlimited.
+     * @return thumbnail image urls
+     */
+    public static List<String> getThumbnailImageUrls(String content, int maxSize) {
+
+        if (TextUtils.isEmpty(content)) {
+            Logger.e(TAG, "failed to getThumbnailImageUrls() : content is null");
+            return null;
+        }
+
+        if (maxSize < 0) {
+            Logger.e(TAG, "failed to getThumbnailImageUrls() : maxSize(" + maxSize + ")");
+            return null;
+        }
+
+        List<String> thumbnailUrls = new ArrayList<String>();
+
+        Document document = Jsoup.parse(content);
+        Element body = document.body();
+        Elements imgTags = body.getElementsByTag("img");
+
+        for (Element e : imgTags) {
+            if (maxSize != 0) {
+                if (thumbnailUrls.size() >= maxSize) break;
+            }
+            String url = e.attr("src");
+            if (!TextUtils.isEmpty(url) && !url.contains(".gif")) {
+                thumbnailUrls.add(url);
+            }
+        }
+        return thumbnailUrls;
+    }
+
+    /**
+     * Get raw image urls from blog content. Extract url from HTML tag <a href...>.
+     * @param content blog content.
+     * @param maxSize numbers of url extracted. if 0 then unlimited.
+     * @return raw image urls
+     */
+    public static List<String> getRawImagePageUrls(String content, int maxSize) {
+
+        if (TextUtils.isEmpty(content)) {
+            Logger.e(TAG, "failed to getRawImagePageUrls() : content is null");
+            return null;
+        }
+
+        if (maxSize < 0) {
+            Logger.e(TAG, "failed to getRawImagePageUrls() : maxSize(" + maxSize + ")");
+            return null;
+        }
+
+        List<String> imagePageUrls = new ArrayList<String>();
+
+        Document document = Jsoup.parse(content);
+        Element body = document.body();
+        Elements imgTags = body.getElementsByTag("a");
+
+        for (Element e : imgTags) {
+            if (maxSize != 0) {
+                if (imagePageUrls.size() >= maxSize) break;
+            }
+            String url = e.attr("href");
+            if (!TextUtils.isEmpty(url) && isValidDomain(url)) {
+                imagePageUrls.add(url);
+            }
+        }
+        return imagePageUrls;
+    }
+
+    private static boolean isValidDomain(String url) {
+        return url.contains("http://dcimg.awalker.jp");
     }
 
 }

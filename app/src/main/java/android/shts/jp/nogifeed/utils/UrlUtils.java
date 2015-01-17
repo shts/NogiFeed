@@ -17,7 +17,6 @@ public class UrlUtils {
      * @return member's feed url. -> http://blog.nogizaka46.com/kana.nakada/atom.xml
      */
     public static String getMemberFeedUrl(String articleUrl) {
-//        final String[] name = StringUtils.getFullNameFromAllArticleUrl(articleUrl);
         final String[] name = StringUtils.getFullNameFromArticleUrl(articleUrl);
         final String firstName = name[StringUtils.INDEX_FIRST_NAME];
         if (name.length == 1) { // kensyusei or unnei

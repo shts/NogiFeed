@@ -7,6 +7,7 @@ import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.models.Entry;
 import android.shts.jp.nogifeed.utils.DateUtils;
 import android.shts.jp.nogifeed.utils.IntentUtils;
+import android.shts.jp.nogifeed.utils.JsoupUtils;
 import android.shts.jp.nogifeed.utils.PicassoHelper;
 import android.shts.jp.nogifeed.utils.StringUtils;
 import android.shts.jp.nogifeed.utils.TrackerUtils;
@@ -57,7 +58,7 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
         holder.titleTextView.setText(entry.title);
         holder.autherTextView.setText(entry.name);
         holder.updatedTextView.setText(DateUtils.formatUpdated(entry.published));
-        final List<String> urls = StringUtils.getThumbnailImageUrls(entry.content, 1);
+        final List<String> urls = JsoupUtils.getThumbnailImageUrls(entry.content, 1);
         if (urls != null && !urls.isEmpty()) {
             PicassoHelper.load(
                     mContext, holder.backgroudImageView, urls.get(0));

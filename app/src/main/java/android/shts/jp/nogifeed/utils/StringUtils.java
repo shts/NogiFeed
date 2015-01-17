@@ -15,10 +15,6 @@ public class StringUtils {
     public static final int INDEX_FIRST_NAME = 0;
     public static final int INDEX_LAST_NAME = 1;
 
-//    private static final String MATCHER_PATTERN = "<img.+?src=\\s*(?:[\\\"'])?([^ \\\"']*)[^>]*>";
-    private static final String MATCHER_PATTERN = "<img src=\\s*(?:[\\\"'])?([^ \\\"']*)[^>]*>";
-    private static final String MATCHER_PATTERN_RAW_IMAGE = "<a href=\\s*(?:[\\\"'])?([^ \\\"']*)[^>]*>";
-
     /**
      * Get [member's a article url] from [member's full name].
      * [member's full name] -> String[nakada, kana].
@@ -66,131 +62,12 @@ public class StringUtils {
         return lastName;
     }
 
-    /**
-     * Get thumbnail image urls from blog content. Extract url from HTML tag <img src...>.
-     * @param content blog content.
-     * @param maxSize numbers of url extracted. if 0 then unlimited.
-     * @return thumbnail image urls
-     */
-    public static List<String> getThumbnailImageUrls(String content, int maxSize) {
-
-        if (TextUtils.isEmpty(content)) {
-            Logger.e(TAG, "failed to getThumbnailImageUrls() : content is null");
-            return null;
-        }
-
-        if (maxSize < 0) {
-            Logger.e(TAG, "failed to getThumbnailImageUrls() : maxSize(" + maxSize + ")");
-            return null;
-        }
-
-        List<String> imageUrls = new ArrayList<String>();
-
-        String contentWithoutCDataTag = ignoreCDataTag(content);
-        String contentWithoutCrLf = ignoreLinefeed(contentWithoutCDataTag);
-
-        Pattern pattern = Pattern.compile(MATCHER_PATTERN, Pattern.MULTILINE);
-        Matcher matcher = pattern.matcher(contentWithoutCrLf);
-
-        while (matcher.find()) {
-            String matchText = matcher.group();
-            if (!isGifFile(matchText)) {
-                imageUrls.add(ignoreHtmlTags(matchText));
-            }
-            if (maxSize != 0) {
-                if (maxSize < imageUrls.size()) break;
-            }
-        }
-        return imageUrls;
-    }
-
-    public static List<String> getRawImagePageUrls(String content, int maxSize) {
-
-        if (TextUtils.isEmpty(content)) {
-            Logger.e(TAG, "failed to getRawImagePageUrls() : content is null");
-            return null;
-        }
-
-        if (maxSize < 0) {
-            Logger.e(TAG, "failed to getRawImagePageUrls() : maxSize(" + maxSize + ")");
-            return null;
-        }
-
-        List<String> imageUrls = new ArrayList<String>();
-
-        String contentWithoutCDataTag = ignoreCDataTag(content);
-        String contentWithoutCrLf = ignoreLinefeed(contentWithoutCDataTag);
-
-        Pattern pattern = Pattern.compile(MATCHER_PATTERN_RAW_IMAGE, Pattern.MULTILINE);
-        Matcher matcher = pattern.matcher(contentWithoutCrLf);
-
-        while (matcher.find()) {
-            String matchText = matcher.group();
-            Logger.i(TAG, "getRawImagePageUrls() : url(" + matchText + ")");
-            if (isValidDomain(matchText)) {
-                imageUrls.add(ignoreHtmlTags(matchText));
-            }
-            if (maxSize != 0) {
-                if (maxSize < imageUrls.size()) break;
-            }
-        }
-        return imageUrls;
-    }
-
-    private static boolean isGifFile(String matchText) {
-        return matchText.contains(".gif");
-    }
-
-    public static boolean isValidDomain(String matchText) {
-        return matchText.contains("http://dcimg.awalker.jp");
-    }
-
-    public static String ignoreHtmlTags(String content) {
-        Logger.v(TAG, "ignoreHtmlTags : content (" + content + ")");
-
-        // ignore img tags
-        String ignored = content.replace("<img src=", "");
-        // ignore img tags
-        ignored = ignored.replace("<a href=", "");
-
-        ignored = ignored.replace("/>", "");
-        ignored = ignored.replace(">", "");
-
-        // ignore double quotation
-        ignored = ignored.replace("\"", "");
-
-        // ignore style elements
-        ignored = ignored.replace("style=max-width:100%;", "");
-        ignored = ignored.replace("width=\"98%\"", "");
-        ignored = ignored.replace("width=98%", "");
-
-        // ignore space
-        ignored = ignored.replace(" ", "");
-
-        // TODO: ignore any space
-        // ignore style elements with space
-        ignored = ignored.replace("style=max-width: 100%;", "");
-        ignored = ignored.replace("style=\"max-width:100%;\"", "");
-        Logger.v(TAG, "ignoreHtmlTags : ignored (" + ignored + ")");
-        return ignored;
-    }
-
-    public static String ignoreCDataTag(String content) {
-        String deleteCDataStartTag = content.replace("![CDATA[", "");
-        String deleteCDataEndTag = deleteCDataStartTag.replace("]]>", "");
-        return deleteCDataEndTag;
-    }
-
     public static String ignoreCdataTagWithCrlf(String target) {
         // delete cdata tag
         String ignoreCdataStartTag = target.replace("<![CDATA[", "");
         String ignoreCdataEndTag = ignoreCdataStartTag.replace("]]>", "");
         String ignoreCrLf = ignoreCdataEndTag.replace("\n", "");
         return ignoreCrLf;
-    }
-
-    public static String ignoreLinefeed(String content) {
-        return content.replace("\n", "");
     }
 
 }

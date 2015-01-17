@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.utils.DateUtils;
+import android.shts.jp.nogifeed.utils.JsoupUtils;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -25,6 +26,22 @@ public class Entry implements Parcelable {
     public Entry() {}
 
     public String toString() {
+        /*
+        StringBuilder sb = new StringBuilder();
+        sb.append("Entry").append("\n");
+        sb.append("--------------------------------------").append("\n");
+        sb.append("title(").append(title).append(")").append("\n");
+        sb.append("link(").append(link).append(")").append("\n");
+        sb.append("id(").append(id).append(")").append("\n");
+        sb.append("published(").append(published).append(")").append("\n");
+        sb.append("summary(").append(summary).append(")").append("\n");
+        sb.append("name(").append(name).append(")").append("\n");
+        //sb.append("content(").append(content).append(")").append("\n");
+        sb.append("thumbnail(").append(JsoupUtils.getThumbnailImageUrls(content, 0)).append(")").append("\n");
+        sb.append("rawimage(").append(JsoupUtils.getRawImagePageUrls(content, 0).toString()).append(")").append("\n");
+        sb.append("--------------------------------------").append("\n");
+        return sb.toString();
+        */
         String s = "Entry : title("
                 + title + ") link(" + link
                 + ") id(" + id + ") published(" + published
