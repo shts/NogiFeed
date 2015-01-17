@@ -24,7 +24,7 @@ public class Showcase extends FrameLayout {
     private ViewPager mViewPager;
     private ViewPageIndicator mViewPageIndicator;
     private List<String> mImageUrls;
-    private CheckBox mFavoriteCheckbox;
+    private FavoriteView mFavoriteCheckbox;
     private final FavoriteChangeListener mListener;
 
     public interface FavoriteChangeListener {
@@ -41,7 +41,7 @@ public class Showcase extends FrameLayout {
         mListener = listener;
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPageIndicator = (ViewPageIndicator) findViewById(R.id.indicator);
-        mFavoriteCheckbox = (CheckBox) findViewById(R.id.favorite);
+        mFavoriteCheckbox = (FavoriteView) findViewById(R.id.favorite);
         mFavoriteCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

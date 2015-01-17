@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
     />
 
-    <CheckBox
+    <android.shts.jp.nogifeed.views.FavoriteView
         android:id="@+id/favorite"
         android:layout_width="72dp"
         android:layout_height="72dp"
