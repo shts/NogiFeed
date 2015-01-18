@@ -24,6 +24,9 @@ import java.util.List;
 
 // TODO: クリック時の動作を追加する。レイアウトを調整する。お気に入り機能を追加する。
 // TODO: 中央揃えにする！ 2014/12/09
+/**
+ * For add favorite member.
+ */
 public class AllMemberGridListFragment extends Fragment {
 
     private static final String TAG = AllMemberGridListFragment.class.getSimpleName();
@@ -97,7 +100,7 @@ public class AllMemberGridListFragment extends Fragment {
 
         @Override
         public View newView(LayoutInflater inflater, int position, ViewGroup container) {
-            View view = inflater.inflate(R.layout.list_item_member, null);
+            View view = inflater.inflate(R.layout.list_item_card, null);
             final ViewHolder holder = new ViewHolder(view);
             view.setTag(holder);
             return view;
@@ -109,7 +112,7 @@ public class AllMemberGridListFragment extends Fragment {
             final Member member = (Member) item;
             Logger.i(TAG, member.toString());
 
-            holder.titleTextView.setText(member.fullName);
+            holder.titleTextView.setText(member.name);
             holder.favoriteImageView.setVisibility(
                     member.isFavorite(mContext) ? View.VISIBLE : View.GONE/*View.VISIBLE*/);
 

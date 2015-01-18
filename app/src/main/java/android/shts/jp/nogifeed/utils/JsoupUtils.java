@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.shts.jp.nogifeed.common.Logger;
 import android.shts.jp.nogifeed.models.Member;
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -78,24 +79,21 @@ public class JsoupUtils {
             Document document = Jsoup.connect(URL_ALL_MEMBER).get();
             Element body = document.body();
             Element memberTags = body.getElementsByClass("clearfix").get(1);
+            Elements options = memberTags.getElementsByTag("option");
 
-            for (Element child : memberTags.children()) {
-                // http://blog.nogizaka46.com/manatsu.akimoto/smph/
-                Elements values = child.getElementsByAttribute("value");
-                String url = null;
-                for (Element value : values) {
-                    url = value.getElementsByAttribute("value").first().attr("value");
-                    if (TextUtils.isEmpty(url)
-                            || "http://blog.nogizaka46.com/smph/".equals(url)) {
-                        Logger.w(TAG, "ignore value : url(" + url + ")");
-                    } else if (url.startsWith("http://blog.nogizaka46.com/")) {
-                        Logger.v(TAG, "valid value : url(" + url + ")");
-                        // Convert 'member blog' url to 'feed url'
-                        String feedUrl = UrlUtils.getMemberFeedUrl(url);
-                        Logger.v(TAG, "Convert 'member blog' url to 'feed url' : Blog url(" + url
-                                + ") feed url(" + feedUrl + ")");
-                        members.add(new Member(feedUrl));
-                    }
+            for (Element option : options) {
+                String url = option.attr("value");
+                String name = option.text();
+                Log.i(TAG, "elements : url(" + url + ") name(" + name + ")");
+
+                if (TextUtils.isEmpty(url)
+                        || "http://blog.nogizaka46.com/smph/".equals(url)) {
+                    Logger.w(TAG, "ignore value : url(" + url + ")");
+
+                } else if (url.startsWith("http://blog.nogizaka46.com/")) {
+                    Logger.v(TAG, "valid value : url(" + url
+                            + ") name(" + name + ")");
+                    members.add(new Member(url, name));
                 }
             }
         } catch (IOException e) {

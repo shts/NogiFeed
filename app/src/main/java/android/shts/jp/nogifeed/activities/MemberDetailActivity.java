@@ -36,7 +36,7 @@ public class MemberDetailActivity extends BaseActivity {
             // intent from MemberGridListFragment
             Member member = i.getParcelableExtra(Member.KEY);
             bundle.putParcelable(Member.KEY, member);
-            setupActionBar(member.fullName);
+            setupActionBar(member.name);
         }
 
         MemberDetailFragment memberDetailFragment = new MemberDetailFragment();

@@ -8,6 +8,10 @@ import android.widget.ArrayAdapter;
 
 import java.util.List;
 
+/**
+ * Abstract adapter for ListView or GridView.
+ * @param <T>
+ */
 public abstract class BindableAdapter<T> extends ArrayAdapter<T> {
     private LayoutInflater inflater;
 

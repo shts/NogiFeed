@@ -5,6 +5,9 @@
     <string name="action_about">About this app</string>
     <string name="action_settings">Settings</string>
 
+    <!-- activity all members -->
+    <string name="failed_get_all_members">Failed to get all members. Check your network state.</string>
+
     <!-- activity blog -->
     <string name="action_download">Download all image</string>
     <string name="toast_start_download">Start download images</string>
