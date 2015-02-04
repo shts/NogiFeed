@@ -57,6 +57,7 @@ public class BlogFragment extends Fragment {
         });
 
         mWebView.setWebViewClient(new BrowserViewClient());
+        mWebView.getSettings().setJavaScriptEnabled(true);
 
         if (mBeforeUrl == null) {
             mWebView.loadUrl(mEntry.link);
