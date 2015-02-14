@@ -1,12 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="android.shts.jp.nogifeed" >
+    <!-- android.shts.jp.nogifeed -->
+    <!-- TODO: maybe need to change pakagename to shts.jp.android.nogifeed (written in app.gradle) -->
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
+    <!-- for parse push service -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <!--
+      IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
+      to match your app's package name + ".permission.C2D_MESSAGE".
+      shts.jp.android.nogifeed
+    -->
+    <permission android:protectionLevel="signature"
+        android:name="android.shts.jp.nogifeed.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.shts.jp.nogifeed.permission.C2D_MESSAGE" />
+    <!--
+    <permission android:name="shts.jp.android.nogifeed.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="shts.jp.android.nogifeed.permission.C2D_MESSAGE" />
+    -->
+    <!--
+    <permission android:protectionLevel="signature"
+        android:name="shts.jp.nogifeed.permission.C2D_MESSAGE" />
+    <uses-permission android:name="shts.jp.nogifeed.permission.C2D_MESSAGE" />
+    -->
     <application
         android:name=".NogiFeedApplication"
         android:allowBackup="true"
@@ -62,6 +88,45 @@
         <provider
             android:authorities="android.shts.jp.nogifeed.providers.nogifeed"
             android:name="android.shts.jp.nogifeed.providers.NogiFeedProvider"/>
+
+        <!-- for parse push service -->
+        <service android:name="com.parse.PushService" />
+        <receiver android:name="com.parse.ParseBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.parse.ParsePushBroadcastReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.parse.push.intent.RECEIVE" />
+                <action android:name="com.parse.push.intent.DELETE" />
+                <action android:name="com.parse.push.intent.OPEN" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.parse.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <!--
+                  IMPORTANT: Change "com.parse.starter" to match your app's package name.
+                -->
+                <!--
+                <category android:name="shts.jp.android.nogifeed" />
+                -->
+                <category android:name="android.shts.jp.nogifeed" />
+            </intent-filter>
+        </receiver>
+
+        <!-- for receive parse push -->
+        <receiver android:name="android.shts.jp.nogifeed.receivers.FromParseReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="android.shts.jp.nogifeed.UPDATE_STATUS"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
