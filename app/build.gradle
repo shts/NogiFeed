@@ -12,7 +12,13 @@ android {
         versionName "0.9.3"
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "PARSE_API_ID", "\"${project.property("parseApiId")}\""
+            buildConfigField "String", "PARSE_API_KEY", "\"${project.property("parseApiKey")}\""
+        }
         release {
+            buildConfigField "String", "PARSE_API_ID", "\"${project.property("parseApiId")}\""
+            buildConfigField "String", "PARSE_API_KEY", "\"${project.property("parseApiKey")}\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

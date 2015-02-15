@@ -21,6 +21,6 @@
     <methods>;
 }
 
--assumenosideeffects class android.shts.jp.nogifeed.common.Logger {
+-assumenosideeffects class shts.jp.android.nogifeed.common.Logger {
     <methods>;
 }

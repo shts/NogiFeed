@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
     />
 
-    <android.shts.jp.nogifeed.views.FavoriteView
+    <shts.jp.android.nogifeed.views.FavoriteView
         android:id="@+id/favorite"
         android:layout_width="72dp"
         android:layout_height="72dp"
@@ -15,7 +15,7 @@
         android:layout_marginBottom="24dp"
         style="@style/FavoriteCheckbox"
         />
-    <android.shts.jp.nogifeed.views.ViewPageIndicator
+    <shts.jp.android.nogifeed.views.ViewPageIndicator
         android:id="@+id/indicator"
         android:layout_width="match_parent"
         android:layout_height="48dp"

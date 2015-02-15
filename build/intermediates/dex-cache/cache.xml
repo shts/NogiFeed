@@ -51,11 +51,11 @@
         <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/Parse-1.8.2-d666e9ebc2d943dfd81b0db452884477da3db86d.jar" />
     </item>
     <item
-        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.11/classes.jar"
         jumboMode="false"
         revision="21.1.0"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-2c6800023c56ad9d7f429950e257afd4595ad3dd.jar" />
+        sha1="0f700f6802ba1a1f1fa7ac26d5db0666a89d75a6">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-6c130010f3e815e96634b3dc957293b113b997be.jar" />
     </item>
     <item
         jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.3/classes.jar"
@@ -65,11 +65,11 @@
         <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-cb28ff9e608b3087b0964b1ada5869088e4f5bc6.jar" />
     </item>
     <item
-        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.11/classes.jar"
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
         jumboMode="false"
         revision="21.1.0"
-        sha1="0f700f6802ba1a1f1fa7ac26d5db0666a89d75a6">
-        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-6c130010f3e815e96634b3dc957293b113b997be.jar" />
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-2c6800023c56ad9d7f429950e257afd4595ad3dd.jar" />
     </item>
     <item
         jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.readystatesoftware.systembartint/systembartint/1.0.3/de4f7404e2f58d8f6e83cb1e85d0c2d6c2987287/systembartint-1.0.3.jar"
