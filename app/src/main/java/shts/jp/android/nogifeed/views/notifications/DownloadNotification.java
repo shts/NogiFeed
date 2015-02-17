@@ -1,4 +1,4 @@
-package shts.jp.android.nogifeed.views;
+package shts.jp.android.nogifeed.views.notifications;
 
 import android.app.Notification;
 import android.app.NotificationManager;
