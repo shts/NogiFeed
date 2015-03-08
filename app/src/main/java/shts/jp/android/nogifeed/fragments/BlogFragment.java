@@ -10,10 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.api.ThumbnailDownloadClient;
 import shts.jp.android.nogifeed.common.Logger;
+import shts.jp.android.nogifeed.listener.DownloadCountHandler;
 import shts.jp.android.nogifeed.models.Entry;
+import shts.jp.android.nogifeed.views.dialogs.DownloadConfirmDialog;
 import shts.jp.android.nogifeed.views.notifications.BlogUpdateNotification;
 
 // TODO: How terrible code...
@@ -54,9 +58,25 @@ public class BlogFragment extends Fragment {
                 WebView.HitTestResult hr = webView.getHitTestResult();
 
                 if (WebView.HitTestResult.IMAGE_TYPE == hr.getType()) {
-                    // TODO: show download image confirm dialog.
-                    String url = hr.getExtra();
-
+                    final String url = hr.getExtra();
+                    DownloadConfirmDialog confirmDialog = new DownloadConfirmDialog();
+                    confirmDialog.setCallbacks(new DownloadConfirmDialog.Callbakcs() {
+                        @Override
+                        public void onClickPositiveButton() {
+                            ThumbnailDownloadClient.get(
+                                    getActivity(), url, mEntry, new DownloadCountHandler() {
+                                @Override
+                                public void onFinish() {
+                                    Toast.makeText(getActivity(), R.string.toast_download_complete, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        @Override
+                        public void onClickNegativeButton() {
+                            // do nothing
+                        }
+                    });
+                    confirmDialog.show(getFragmentManager(), TAG);
                 }
                 return false;
             }
