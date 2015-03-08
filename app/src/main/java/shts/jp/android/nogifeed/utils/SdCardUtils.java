@@ -1,9 +1,12 @@
 package shts.jp.android.nogifeed.utils;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 
 import java.io.File;
 
@@ -84,7 +87,7 @@ public class SdCardUtils {
 
     /**
      * Get android default 'download' dir path
-     * @return download die path.
+     * @return download dir path.
      */
     private static String getDownloadFilePath() {
         File pathExternalPublicDir =

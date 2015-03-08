@@ -5,7 +5,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v4.app.NotificationCompat;
 
@@ -79,7 +78,6 @@ public class DownloadNotification {
         mNotification.setProgress(0, 0, false);
         mNotification.setOngoing(false);
         mNotification.setAutoCancel(true);
-        mNotification.setContentIntent(getPendingIntent());
         mNotificationManager.notify(NOTIFICATION_ID, mNotification.build());
     }
 
@@ -93,44 +91,22 @@ public class DownloadNotification {
         mNotification.setProgress(0, 0, false);
         mNotification.setOngoing(false);
         mNotification.setAutoCancel(true);
-        mNotification.setContentIntent(getPendingIntent());
         mNotificationManager.notify(NOTIFICATION_ID, mNotification.build());
     }
 
-    private PendingIntent getPendingIntent() {
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        // TODO: intent to gallery
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pi = PendingIntent.getActivity(mContext,
-                0, i, PendingIntent.FLAG_CANCEL_CURRENT);
-        return pi;
-    }
-
     public static void show(final Context context, final PendingIntent pi) {
-        // Intent の作成
-//      Intent intent = new Intent(MainActivity.this, MainActivity.class);
-//      PendingIntent contentIntent = PendingIntent.getActivity(
-//              MainActivity.this, REQUEST_CODE_MAIN_ACTIVITY, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        // LargeIcon の Bitmap を生成
-        //Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_large);
 
         // NotificationBuilderを作成
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setContentIntent(pi);
         // ステータスバーに表示されるテキスト
         builder.setTicker("Ticker");
-        // アイコン
-        //builder.setSmallIcon(R.drawable.ic_small);
 
         // Notificationを開いたときに表示されるタイトル
         builder.setContentTitle("ContentTitle");
         // Notificationを開いたときに表示されるサブタイトル
         builder.setContentText("ContentText");
 
-        // Notificationを開いたときに表示されるアイコン
-        //builder.setLargeIcon(largeIcon);
         // 通知するタイミング
         builder.setWhen(System.currentTimeMillis());
         // 通知時の音・バイブ・ライト
@@ -143,7 +119,6 @@ public class DownloadNotification {
         builder.setOngoing(true);
 
         builder.setProgress(0 ,0, false);
-
 
         // NotificationManagerを取得
         NotificationManager manager = (NotificationManager) context.getSystemService(Service.NOTIFICATION_SERVICE);
