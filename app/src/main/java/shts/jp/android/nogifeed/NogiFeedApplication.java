@@ -14,6 +14,10 @@ public class NogiFeedApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        parseInstllation();
+    }
+
+    public void parseInstllation() {
         Parse.initialize(this, BuildConfig.PARSE_API_ID, BuildConfig.PARSE_API_KEY);
         ParseInstallation.getCurrentInstallation().saveInBackground();
     }

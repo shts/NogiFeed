@@ -14,6 +14,7 @@ import android.webkit.WebViewClient;
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.models.Entry;
+import shts.jp.android.nogifeed.views.notifications.BlogUpdateNotification;
 
 // TODO: How terrible code...
 public class BlogFragment extends Fragment {
@@ -22,6 +23,7 @@ public class BlogFragment extends Fragment {
     private static final String KEY_PAGE_URL = "key_page_url";
 
     //private MainActivity mActivity;
+    private String mBlogUrl;
     private Entry mEntry;
     private WebView mWebView;
     private String mBeforeUrl;
@@ -33,6 +35,9 @@ public class BlogFragment extends Fragment {
         if (savedInstanceState == null) {
             Bundle bundle = getArguments();
             mEntry = bundle.getParcelable(Entry.KEY);
+            if (mEntry == null) {
+                mBlogUrl = bundle.getString(BlogUpdateNotification.KEY);
+            }
         } else {
             mBeforeUrl = savedInstanceState.getString(KEY_PAGE_URL);
         }
@@ -59,6 +64,11 @@ public class BlogFragment extends Fragment {
 
         mWebView.setWebViewClient(new BrowserViewClient());
         mWebView.getSettings().setJavaScriptEnabled(true);
+
+        if (mEntry == null) {
+            mWebView.loadUrl(mBlogUrl);
+            return view;
+        }
 
         if (mBeforeUrl == null) {
             mWebView.loadUrl(mEntry.link);

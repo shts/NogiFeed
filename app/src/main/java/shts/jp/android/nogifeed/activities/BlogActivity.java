@@ -1,6 +1,7 @@
 package shts.jp.android.nogifeed.activities;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.views.notifications.BlogUpdateNotification;
 
 public class BlogActivity extends shts.jp.android.nogifeed.activities.BaseActivity {
 
@@ -22,7 +24,12 @@ public class BlogActivity extends shts.jp.android.nogifeed.activities.BaseActivi
 
         Bundle bundle = new Bundle();
         shts.jp.android.nogifeed.models.Entry entry = getIntent().getParcelableExtra(shts.jp.android.nogifeed.models.Entry.KEY);
-        bundle.putParcelable(shts.jp.android.nogifeed.models.Entry.KEY, entry);
+        if (entry != null) {
+            bundle.putParcelable(shts.jp.android.nogifeed.models.Entry.KEY, entry);
+        } else {
+            String blogUrl = getIntent().getStringExtra(BlogUpdateNotification.KEY);
+            bundle.putString(BlogUpdateNotification.KEY, blogUrl);
+        }
 
         shts.jp.android.nogifeed.fragments.BlogFragment blogFragment = new shts.jp.android.nogifeed.fragments.BlogFragment();
         blogFragment.setArguments(bundle);

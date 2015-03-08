@@ -16,6 +16,7 @@ import android.view.MenuItem;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
+import shts.jp.android.nogifeed.NogiFeedApplication;
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.fragments.AllFeedListFragment;
 import shts.jp.android.nogifeed.fragments.FavoriteMemberFeedListFragment;
@@ -34,7 +35,6 @@ public class MainActivity extends BaseActivity {
 
     private shts.jp.android.nogifeed.views.PagerSlidingTabStrip mPagerSlidingTabStrip;
     private ViewPager mViewPager;
-    private SystemBarTintManager mTintManager;
     private NogiBasePageAdapter mPageAdapter;
 
     @Override

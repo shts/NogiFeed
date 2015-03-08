@@ -6,6 +6,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.views.notifications.DownloadNotification;
 
 public class ImageDownloader {
 
@@ -97,10 +98,10 @@ public class ImageDownloader {
         // raw image download counter
         private int mRawImagePagesCounter = 0;
 
-        private shts.jp.android.nogifeed.views.DownloadNotification mNotification;
+        private DownloadNotification mNotification;
 
         public void initialize(final Context context) {
-            mNotification = new shts.jp.android.nogifeed.views.DownloadNotification(context);
+            mNotification = new DownloadNotification(context);
             mNotification.startProgress();
         }
 
