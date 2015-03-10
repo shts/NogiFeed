@@ -39,7 +39,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:21.0.+'
     compile 'org.jsoup:jsoup:1.7.2'
     compile 'com.jpardogo.materialtabstrip:library:1.0.5'
-    compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
 
     compile 'com.parse.bolts:bolts-android:1.+'
     compile fileTree(dir: 'libs', include: 'Parse-*.jar')

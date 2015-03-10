@@ -14,9 +14,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
-
-import shts.jp.android.nogifeed.NogiFeedApplication;
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.fragments.AllFeedListFragment;
 import shts.jp.android.nogifeed.fragments.FavoriteMemberFeedListFragment;
@@ -42,7 +39,6 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupActionBar();
-        setupStatusBar();
         setupViewPager();
     }
 
@@ -55,17 +51,6 @@ public class MainActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_actionbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setElevation(0);
-    }
-
-    private void setupStatusBar() {
-        // create our manager instance after the content view is set
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        // enable status bar tint
-        tintManager.setStatusBarTintEnabled(true);
-        // enable navigation bar tint
-        tintManager.setNavigationBarTintEnabled(true);
-        // set a custom navigation bar resource
-        tintManager.setNavigationBarTintResource(R.color.nogifeed_dark);
     }
 
     private void setupViewPager() {
