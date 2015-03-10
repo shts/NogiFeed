@@ -1,22 +1,14 @@
 package shts.jp.android.nogifeed.api;
 
 import android.content.Context;
-import android.text.TextUtils;
 
-import com.loopj.android.http.*;
+import com.loopj.android.http.AsyncHttpClient;
 
-import org.apache.http.Header;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.listener.RssClientFinishListener;
-import shts.jp.android.nogifeed.listener.RssClientListener;
-import shts.jp.android.nogifeed.models.Entries;
-import shts.jp.android.nogifeed.utils.AtomRssParser;
 import shts.jp.android.nogifeed.utils.NetworkUtils;
 
 public class AsyncRssClient {
