@@ -197,4 +197,30 @@ public class JsoupUtils {
         return url.contains("http://dcimg.awalker.jp");
     }
 
+    /**
+     * get thumbnail index at blog
+     * need replace.
+     * [get url] -> 'http://blog.nogizaka46.com/'
+     * [target url] -> 'http://img.nogizaka46.com/blog/'
+     * @param content html
+     * @param targetUrl download target url
+     * @return index of target url at blog entry
+     */
+    public static int getThumbnailIndex(String content, String targetUrl) {
+        List<String> urls = getThumbnailImageUrls(content, 0);
+        if (urls == null || urls.isEmpty()) {
+            Logger.d(TAG, "getThumbnailIndex urls is null or empty");
+            return -1;
+        }
+
+        targetUrl = targetUrl.replace("http://img.nogizaka46.com/blog/", "http://blog.nogizaka46.com/");
+        for (int i = 0; i < urls.size(); i++) {
+            String url = urls.get(i);
+            if (url.equals(targetUrl)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 }

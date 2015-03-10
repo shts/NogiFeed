@@ -55,29 +55,7 @@ public class BlogFragment extends Fragment {
             @Override
             public boolean onLongClick(View view) {
                 WebView webView = (WebView) view;
-                WebView.HitTestResult hr = webView.getHitTestResult();
-
-                if (WebView.HitTestResult.IMAGE_TYPE == hr.getType()) {
-                    final String url = hr.getExtra();
-                    DownloadConfirmDialog confirmDialog = new DownloadConfirmDialog();
-                    confirmDialog.setCallbacks(new DownloadConfirmDialog.Callbakcs() {
-                        @Override
-                        public void onClickPositiveButton() {
-                            ThumbnailDownloadClient.get(
-                                    getActivity(), url, mEntry, new DownloadCountHandler() {
-                                @Override
-                                public void onFinish() {
-                                    Toast.makeText(getActivity(), R.string.toast_download_complete, Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                        @Override
-                        public void onClickNegativeButton() {
-                            // do nothing
-                        }
-                    });
-                    confirmDialog.show(getFragmentManager(), TAG);
-                }
+                showDownloadConfirmDialog(webView);
                 return false;
             }
         });
@@ -97,6 +75,32 @@ public class BlogFragment extends Fragment {
             mBeforeUrl = null;
         }
         return view;
+    }
+
+    private void showDownloadConfirmDialog(WebView webView) {
+        WebView.HitTestResult hr = webView.getHitTestResult();
+
+        if (WebView.HitTestResult.IMAGE_TYPE == hr.getType()) {
+            final String url = hr.getExtra();
+            DownloadConfirmDialog confirmDialog = new DownloadConfirmDialog();
+            confirmDialog.setCallbacks(new DownloadConfirmDialog.Callbakcs() {
+                @Override
+                public void onClickPositiveButton() {
+                    ThumbnailDownloadClient.get(
+                            getActivity(), url, mEntry, new DownloadCountHandler() {
+                                @Override
+                                public void onFinish() {
+                                    Toast.makeText(getActivity(), R.string.toast_download_complete, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
+                @Override
+                public void onClickNegativeButton() {
+                    // do nothing
+                }
+            });
+            confirmDialog.show(getFragmentManager(), TAG);
+        }
     }
 
     private class BrowserViewClient extends WebViewClient {

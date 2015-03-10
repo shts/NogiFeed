@@ -27,9 +27,9 @@
     <string name="notify_finish_download_text">"ダウンロードが完了しました"</string>
 
     <string name="dialog_confirm_download_title">画像ダウンロード</string>
-    <string name="dialog_confirm_download_message">画像をダウンロードしますか？</string>
-    <string name="dialog_confirm_download_positive_btn">OK</string>
-    <string name="dialog_confirm_download_negative_btn">CANCEL</string>
+    <string name="dialog_confirm_download_message">画像をダウンロードしますか？\nMENU BUTTONからすべての画像をダウンロードできます。よろしければそちらもご利用ください。</string>
+    <string name="dialog_confirm_download_positive_btn">はい</string>
+    <string name="dialog_confirm_download_negative_btn">いいえ</string>
 
     <string name="toast_download_complete">ダウンロードが完了しました</string>
 

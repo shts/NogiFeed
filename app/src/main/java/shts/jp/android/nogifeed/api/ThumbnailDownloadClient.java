@@ -14,6 +14,7 @@ import java.util.List;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.listener.DownloadCountHandler;
 import shts.jp.android.nogifeed.models.Entry;
+import shts.jp.android.nogifeed.utils.JsoupUtils;
 import shts.jp.android.nogifeed.utils.NetworkUtils;
 import shts.jp.android.nogifeed.utils.SdCardUtils;
 
@@ -94,7 +95,8 @@ public class ThumbnailDownloadClient {
             return false;
         }
 
-        final File file = new File(SdCardUtils.getDownloadFilePath(entry, 0, "t"));
+        final int thumbnailIndex = JsoupUtils.getThumbnailIndex(entry.content, imageUrl);
+        final File file = new File(SdCardUtils.getDownloadFilePath(entry, thumbnailIndex, "t"));
 
         client.get(imageUrl, new FileAsyncHttpResponseHandler(file) {
 
