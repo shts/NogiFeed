@@ -56,9 +56,9 @@ public abstract class RssClientFinishListener extends AsyncHttpResponseHandler {
     }
 
     private synchronized void addCounter(Entries entries) {
-        Logger.d(TAG, "addCounter() : size(" + entries == null ? "null" : entries.size() + ")");
         mCounter++;
         if (entries != null) {
+            Logger.d(TAG, "addCounter() : size(" + entries.size() + ")");
             mEntries.addAll(entries);
         }
         if (mCounterSize <= mCounter) {
