@@ -22,6 +22,7 @@ import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.adapters.RecyclableAdapter;
 import shts.jp.android.nogifeed.api.AsyncRssClient;
 import shts.jp.android.nogifeed.common.Logger;
+import shts.jp.android.nogifeed.listener.RssClientFinishListener;
 import shts.jp.android.nogifeed.listener.RssClientListener;
 import shts.jp.android.nogifeed.models.Entries;
 import shts.jp.android.nogifeed.models.Member;
@@ -64,30 +65,36 @@ public class AllGridFeedListFragment extends Fragment implements SwipeRefreshLay
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getAllFeed();
+        getAllFeeds();
     }
 
-    private void getAllFeed() {
+    private void getAllFeeds() {
         boolean ret = AsyncRssClient.read(getActivity().getApplicationContext(),
-                UrlUtils.FEED_ALL_URL, new RssClientListener() {
+                UrlUtils.FEED_ALL_URL, new RssClientFinishListener() {
                     @Override
-                    public void onSuccess(int statusCode, Header[] headers, Entries entries) {
-                        Logger.i("getAllFeed()", "get all member feed : size(" + entries.size() + ")");
+                    public void onSuccessWrapper(int statusCode, Header[] headers, Entries entries) {
+                    }
+
+                    @Override
+                    public void onFailureWrapper(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    }
+
+                    @Override
+                    public void onFinish(Entries entries) {
+                        if (entries == null || entries.isEmpty()) {
+                            // Show error toast
+                            Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            // refresh feed list
+                            setupAdapter(entries);
+                        }
                         // refresh feed list
                         setupAdapter(entries);
                         if (mSwipeRefreshLayout.isRefreshing()) {
                             mSwipeRefreshLayout.setRefreshing(false);
                         }
-                    }
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                        // Show error toast
-                        Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
-                                Toast.LENGTH_SHORT).show();
-                        if (mSwipeRefreshLayout.isRefreshing()) {
-                            mSwipeRefreshLayout.setRefreshing(false);
-                        }
                     }
                 });
 
@@ -107,7 +114,7 @@ public class AllGridFeedListFragment extends Fragment implements SwipeRefreshLay
 
     @Override
     public void onRefresh() {
-        getAllFeed();
+        getAllFeeds();
     }
 
 

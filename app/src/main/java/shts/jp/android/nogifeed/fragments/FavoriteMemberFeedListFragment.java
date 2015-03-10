@@ -15,6 +15,10 @@ import org.apache.http.Header;
 import java.util.List;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.api.AsyncRssClient;
+import shts.jp.android.nogifeed.common.Logger;
+import shts.jp.android.nogifeed.listener.RssClientFinishListener;
+import shts.jp.android.nogifeed.models.Entries;
 
 // TODO: お気に入りメンバーがいないときは EmptyView を表示する
 // TODO: インストール後に何度か起動された時、アプリ評価を誘導する View を表示する
@@ -27,8 +31,6 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
     private List<String> mFavoriteUrls;
     private RecyclerView mRecyclerView;
     private final shts.jp.android.nogifeed.models.Entries mEntries = new shts.jp.android.nogifeed.models.Entries();
-    private int mRequestCounter = 0;
-    private static final Object LOCK_OBJECT = new Object();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,57 +70,38 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
             Toast.makeText(getActivity(), R.string.empty_favorite, Toast.LENGTH_LONG).show();
             return;
         }
-        for (String s : mFavoriteUrls) {
-            shts.jp.android.nogifeed.common.Logger.v(TAG, "setupFavoriteMemberFeed() : favorite url(" + s + ")");
-            getAllFeed(s);
-        }
+
+        getAllFeeds(mFavoriteUrls);
     }
 
-    private void getAllFeed(String url) {
+    private void getAllFeeds(List<String> favoriteUrls) {
         // clear feed list before add new feed.
         mEntries.clear();
 
-        boolean ret = shts.jp.android.nogifeed.api.AsyncRssClient.read(getActivity().getApplicationContext(),
-                url, new shts.jp.android.nogifeed.listener.RssClientListener() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, shts.jp.android.nogifeed.models.Entries entries) {
+        boolean ret = AsyncRssClient.read(getActivity().getApplicationContext(), favoriteUrls, new RssClientFinishListener() {
+            @Override
+            public void onSuccessWrapper(int statusCode, Header[] headers, Entries entries) {
+                Logger.v(TAG, "");
+            }
 
-                        synchronized (LOCK_OBJECT) {
-                            shts.jp.android.nogifeed.common.Logger.v(TAG, "getAllFeed() : mRequestCounter("
-                                    + mRequestCounter + ") favorite url size("
-                                    + mFavoriteUrls.size() + ")");
+            @Override
+            public void onFailureWrapper(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+            }
 
-                            mRequestCounter++;
-                            mEntries.cat(entries);
-                            if (mRequestCounter >= mFavoriteUrls.size()) {
-                                mRequestCounter = 0;
-                                setupAdapter(mEntries.sort());
-                            }
-                        }
-
-                        if (mSwipeRefreshLayout.isRefreshing()) {
-                            mSwipeRefreshLayout.setRefreshing(false);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                        // Show error toast
-                        Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
-                                Toast.LENGTH_SHORT).show();
-
-                        synchronized (LOCK_OBJECT) {
-                            mRequestCounter++;
-                            if (mRequestCounter >= mFavoriteUrls.size()) {
-                                mRequestCounter = 0;
-                                setupAdapter(mEntries.sort());
-                            }
-                        }
-                        if (mSwipeRefreshLayout.isRefreshing()) {
-                            mSwipeRefreshLayout.setRefreshing(false);
-                        }
-                    }
-                });
+            @Override
+            public void onFinish(Entries entries) {
+                if (entries == null || entries.isEmpty()) {
+                    // Show error toast
+                    Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    setupAdapter(entries.sort());
+                }
+                if (mSwipeRefreshLayout.isRefreshing()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
+            }
+        });
 
         if (!ret) {
             // Show error toast

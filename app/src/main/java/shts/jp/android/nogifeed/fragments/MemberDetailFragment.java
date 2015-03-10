@@ -18,6 +18,10 @@ import java.util.List;
 
 import shts.jp.android.nogifeed.activities.MemberDetailActivity;
 import shts.jp.android.nogifeed.adapters.MemberFeedListAdapter;
+import shts.jp.android.nogifeed.api.AsyncRssClient;
+import shts.jp.android.nogifeed.common.Logger;
+import shts.jp.android.nogifeed.listener.RssClientFinishListener;
+import shts.jp.android.nogifeed.models.Entries;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.views.Showcase;
 
@@ -81,16 +85,26 @@ public class MemberDetailFragment extends ListFragment {
     }
 
     private void setupMemberFeedList(String feedUrl) {
-        shts.jp.android.nogifeed.api.AsyncRssClient.read(mActivity.getApplicationContext(), feedUrl, new shts.jp.android.nogifeed.listener.RssClientListener() {
+
+        AsyncRssClient.read(mActivity.getApplicationContext(), feedUrl, new RssClientFinishListener() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, shts.jp.android.nogifeed.models.Entries entries) {
-                setupShowcase(entries);
-                setupAdapter(entries);
+            public void onSuccessWrapper(int statusCode, Header[] headers, Entries entries) {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Log.w(TAG, "failed to get member feed. statusCode(" + statusCode + ")");
+            public void onFailureWrapper(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Logger.w(TAG, "failed to get member feed. statusCode(" + statusCode + ")");
+            }
+
+            @Override
+            public void onFinish(Entries entries) {
+                if (entries == null || entries.isEmpty()) {
+                    Logger.w(TAG, "failed to get member feed");
+
+                } else {
+                    setupShowcase(entries);
+                    setupAdapter(entries);
+                }
             }
         });
     }

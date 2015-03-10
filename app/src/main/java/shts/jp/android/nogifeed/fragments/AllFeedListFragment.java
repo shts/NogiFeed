@@ -14,7 +14,11 @@ import org.apache.http.Header;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.adapters.FeedListAdapter;
+import shts.jp.android.nogifeed.api.AsyncRssClient;
+import shts.jp.android.nogifeed.listener.RssClientFinishListener;
+import shts.jp.android.nogifeed.models.Entries;
 import shts.jp.android.nogifeed.models.Entry;
+import shts.jp.android.nogifeed.utils.UrlUtils;
 
 // TODO: 通信ができない場合、エラー表示を行う
 // 現在は Exception が発生する
@@ -47,7 +51,7 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getAllFeed();
+        getAllFeeds();
     }
 
     @Override
@@ -55,29 +59,36 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
         super.onDestroyView();
     }
 
-    private void getAllFeed() {
-        boolean ret = shts.jp.android.nogifeed.api.AsyncRssClient.read(getActivity().getApplicationContext(),
-                shts.jp.android.nogifeed.utils.UrlUtils.FEED_ALL_URL, new shts.jp.android.nogifeed.listener.RssClientListener() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, shts.jp.android.nogifeed.models.Entries entries) {
-                        shts.jp.android.nogifeed.common.Logger.i("getAllFeed()", "get all member feed : size(" + entries.size() + ")");
-                        // refresh feed list
-                        setupAdapter(entries);
-                        if (mSwipeRefreshLayout.isRefreshing()) {
-                            mSwipeRefreshLayout.setRefreshing(false);
-                        }
-                    }
+    private void getAllFeeds() {
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                        // Show error toast
-                        Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
-                                Toast.LENGTH_SHORT).show();
-                        if (mSwipeRefreshLayout.isRefreshing()) {
-                            mSwipeRefreshLayout.setRefreshing(false);
-                        }
-                    }
-                });
+        boolean ret = AsyncRssClient.read(getActivity().getApplicationContext(), UrlUtils.FEED_ALL_URL, new RssClientFinishListener() {
+            @Override
+            public void onSuccessWrapper(int statusCode, Header[] headers, Entries entries) {
+                // do nothing. set up feed at onFinish()
+            }
+
+            @Override
+            public void onFailureWrapper(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                // do nothing. set up feed at onFinish()
+            }
+
+            @Override
+            public void onFinish(Entries entries) {
+                shts.jp.android.nogifeed.common.Logger.i("getAllFeed()", "get all member feed : size(" + entries.size() + ")");
+                if (entries == null || entries.isEmpty()) {
+                    // Show error toast
+                    Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    // refresh feed list
+                    setupAdapter(entries);
+                }
+
+                if (mSwipeRefreshLayout.isRefreshing()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
+            }
+        });
 
         if (!ret) {
             // Show error toast
@@ -103,7 +114,7 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
 
     @Override
     public void onRefresh() {
-        getAllFeed();
+        getAllFeeds();
     }
 
 }
