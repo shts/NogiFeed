@@ -17,6 +17,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import shts.jp.android.nogifeed.common.Logger;
+import shts.jp.android.nogifeed.listener.DownloadFinishListener;
+import shts.jp.android.nogifeed.models.Entry;
+import shts.jp.android.nogifeed.utils.JsoupUtils;
+import shts.jp.android.nogifeed.utils.NetworkUtils;
 import shts.jp.android.nogifeed.utils.SdCardUtils;
 
 public class RawImageDownloadClient {
@@ -26,24 +30,24 @@ public class RawImageDownloadClient {
     private RawImageDownloadClient() {}
 
     public static boolean get(final Context context, final List<String> imageUrls,
-                              final shts.jp.android.nogifeed.models.Entry entry, final shts.jp.android.nogifeed.listener.DownloadCountHandler handler) {
+                              final Entry entry, final DownloadFinishListener listener) {
 
-        if (!shts.jp.android.nogifeed.utils.NetworkUtils.enableNetwork(context)) {
-            shts.jp.android.nogifeed.common.Logger.w(TAG, "cannot download because of network disconnected.");
+        if (!NetworkUtils.enableNetwork(context)) {
+            Logger.w(TAG, "cannot download because of network disconnected.");
             return false;
         }
 
         if (imageUrls == null || imageUrls.isEmpty()) {
-            shts.jp.android.nogifeed.common.Logger.w(TAG, "cannot download because of rawImages is null.");
+            Logger.w(TAG, "cannot download because of rawImages is null.");
             return false;
         }
 
         if (entry == null) {
-            shts.jp.android.nogifeed.common.Logger.w(TAG, "cannot download because of entry is null.");
+            Logger.w(TAG, "cannot download because of entry is null.");
             return false;
         }
 
-        if (handler == null) {
+        if (listener == null) {
             Logger.w(TAG, "cannot download handler is null.");
             return false;
         }
@@ -58,7 +62,7 @@ public class RawImageDownloadClient {
 
             final File file = new File(SdCardUtils.getDownloadFilePath(entry, i, "r"));
 
-            download(context, imageUrl, file, handler);
+            download(context, imageUrl, file, listener);
         }
         return true;
     }
@@ -78,7 +82,7 @@ public class RawImageDownloadClient {
      * @return true if execute.
      */
     private static boolean download(final Context context, final String imageUrl,
-                                    final File file, final shts.jp.android.nogifeed.listener.DownloadCountHandler handler) {
+                                    final File file, final DownloadFinishListener listener) {
 
         // RawImageの存在確認
         // TODO : 連続でダウンロードするとクッキーがダウンロード時のものとあわなくなるときがあるので都度newする
@@ -89,9 +93,10 @@ public class RawImageDownloadClient {
                 try {
                     // TODO: this is ui thread. should worker thread.
                     // get enable raw image url from html.
-                    String url = shts.jp.android.nogifeed.utils.JsoupUtils.getEnableRawImageUrl(new String(responseBody, "UTF-8"));
+                    String url = JsoupUtils.getEnableRawImageUrl(new String(responseBody, "UTF-8"));
                     if (TextUtils.isEmpty(url)) {
-                        shts.jp.android.nogifeed.common.Logger.w(TAG, "failed to get enable url from HTML.");
+                        Logger.w(TAG, "failed to get enable url from HTML.");
+                        listener.onFailure();
                         return;
                     }
 
@@ -99,6 +104,7 @@ public class RawImageDownloadClient {
                     PersistentCookieStore cookieStore = getCoockieStore(context, headers);
                     if (cookieStore == null) {
                         Logger.w(TAG, "failed to set session id at cookie");
+                        listener.onFailure();
                         return;
                     }
                     // TODO: download should static
@@ -111,17 +117,13 @@ public class RawImageDownloadClient {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, File file) {
                             // TODO: this is ui thread. should worker thread.
-                            SdCardUtils.scanFile(context, file);
+                            listener.onSuccess(context, file);
                         }
                         @Override
                         public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
                             Logger.w(TAG, "failed to check raw image exist. statusCode(" + statusCode + ") throwable(" + throwable + ")");
                             // TODO: notify download failure
-                        }
-
-                        @Override
-                        public void onFinish() {
-                            super.onFinish();
+                            listener.onFailure();
                         }
                     });
                 } catch (UnsupportedEncodingException e) {
@@ -132,12 +134,7 @@ public class RawImageDownloadClient {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 Logger.w(TAG, "failed to check raw image exist. error : " + error);
-            }
-
-            @Override
-            public void onFinish() {
-                super.onFinish();
-                handler.onFinish();
+                listener.onFailure();
             }
         });
 

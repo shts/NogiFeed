@@ -47,6 +47,12 @@ public class SdCardUtils {
                 });
     }
 
+    public static void scanFile(Context context, File file,
+                                MediaScannerConnection.OnScanCompletedListener listener ) {
+        MediaScannerConnection.scanFile(
+                context, new String[] { file.getAbsolutePath() }, MIMETYPE, listener);
+    }
+
     /**
      * Get file absolute path.
      * @param entry entry object.

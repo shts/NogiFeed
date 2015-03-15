@@ -10,12 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.api.ThumbnailDownloadClient;
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.listener.DownloadCountHandler;
+import shts.jp.android.nogifeed.listener.DownloadFinishListener;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.views.dialogs.DownloadConfirmDialog;
 import shts.jp.android.nogifeed.views.notifications.BlogUpdateNotification;
@@ -87,13 +86,10 @@ public class BlogFragment extends Fragment {
                 @Override
                 public void onClickPositiveButton() {
                     ThumbnailDownloadClient.get(
-                            getActivity(), url, mEntry, new DownloadCountHandler() {
-                                @Override
-                                public void onFinish() {
-                                    Toast.makeText(getActivity(), R.string.toast_download_complete, Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                            getActivity(), url, mEntry, new DownloadFinishListener(getActivity(), 1));
+                    // Toast.makeText(getActivity(), R.string.toast_download_complete, Toast.LENGTH_SHORT).show();
                 }
+
                 @Override
                 public void onClickNegativeButton() {
                     // do nothing

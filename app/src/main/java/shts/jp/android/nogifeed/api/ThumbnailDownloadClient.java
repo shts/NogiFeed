@@ -2,6 +2,7 @@ package shts.jp.android.nogifeed.api;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
@@ -11,8 +12,9 @@ import org.apache.http.Header;
 import java.io.File;
 import java.util.List;
 
+import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.listener.DownloadCountHandler;
+import shts.jp.android.nogifeed.listener.DownloadFinishListener;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.utils.JsoupUtils;
 import shts.jp.android.nogifeed.utils.NetworkUtils;
@@ -27,7 +29,7 @@ public class ThumbnailDownloadClient {
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     public static boolean get(final Context context, final List<String> imageUrls,
-                              final Entry entry, final DownloadCountHandler handler) {
+                              final Entry entry, final DownloadFinishListener listener) {
 
         if (!NetworkUtils.enableNetwork(context)) {
             Logger.w(TAG, "cannot download because of network disconnected.");
@@ -44,8 +46,8 @@ public class ThumbnailDownloadClient {
             return false;
         }
 
-        if (handler == null) {
-            Logger.w(TAG, "cannot download handler is null.");
+        if (listener == null) {
+            Logger.w(TAG, "cannot download listener is null.");
             return false;
         }
 
@@ -58,19 +60,15 @@ public class ThumbnailDownloadClient {
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
-                    shts.jp.android.nogifeed.common.Logger.e(TAG, "failed to download. url(" + imageUrl + ")");
+                    Logger.e(TAG, "failed to download. url(" + imageUrl + ")");
+                    listener.onFailure();
                 }
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, File file) {
-                    shts.jp.android.nogifeed.utils.SdCardUtils.scanFile(context, file);
+                    listener.onSuccess(context, file);
                 }
 
-                @Override
-                public void onFinish() {
-                    super.onFinish();
-                    handler.onFinish();
-                }
             });
         }
 
@@ -78,7 +76,7 @@ public class ThumbnailDownloadClient {
     }
 
     public static boolean get(final Context context, final String imageUrl,
-                              final Entry entry, final DownloadCountHandler handler) {
+                              final Entry entry, final DownloadFinishListener listener) {
 
         if (!NetworkUtils.enableNetwork(context)) {
             Logger.w(TAG, "cannot download because of network disconnected.");
@@ -90,7 +88,7 @@ public class ThumbnailDownloadClient {
             return false;
         }
 
-        if (handler == null) {
+        if (listener == null) {
             Logger.w(TAG, "cannot download handler is null.");
             return false;
         }
@@ -102,18 +100,15 @@ public class ThumbnailDownloadClient {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
-                shts.jp.android.nogifeed.common.Logger.e(TAG, "failed to download. url(" + imageUrl + ")");
+                Logger.e(TAG, "failed to download. url(" + imageUrl + ")");
+                listener.onFailure();
+                Toast.makeText(context, R.string.toast_failed_download, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, File file) {
-                shts.jp.android.nogifeed.utils.SdCardUtils.scanFile(context, file);
-            }
-
-            @Override
-            public void onFinish() {
-                super.onFinish();
-                handler.onFinish();
+                listener.onSuccess(context, file);
+                Toast.makeText(context, R.string.toast_download_complete, Toast.LENGTH_SHORT).show();
             }
         });
 
