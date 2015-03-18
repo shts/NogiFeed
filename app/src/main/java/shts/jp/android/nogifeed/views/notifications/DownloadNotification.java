@@ -14,7 +14,7 @@ public class DownloadNotification {
 
     private static final String TAG = DownloadNotification.class.getSimpleName();
 
-    private static final int NOTIFICATION_ID = 1000;
+    private static final int NOTIFICATION_ID = 1;
 
     private final Context mContext;
 
