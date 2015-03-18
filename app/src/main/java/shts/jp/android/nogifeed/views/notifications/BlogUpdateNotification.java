@@ -23,7 +23,7 @@ public class BlogUpdateNotification {
     private static final String TAG = BlogUpdateNotification.class.getSimpleName();
     public static final String KEY = BlogUpdateNotification.class.getSimpleName();
 
-    private static final String NOTIFICATION_ID_KEY = "pref_key_notification_id";
+    private static final String NOTIFICATION_ID_KEY = "pref_key_blog_update_notification_id";
     private static final int DEFAULT_NOTIFICATION_ID = 1000;
 
     public static synchronized void show(final Context context, final String url,
@@ -65,7 +65,7 @@ public class BlogUpdateNotification {
     }
 
     private static void notified(Context context, int id) {
-        if (++id >= Integer.MAX_VALUE) {
+        if (++id >= 1999) {
             id = DEFAULT_NOTIFICATION_ID;
         }
         PreferencesUtils.setInt(context, NOTIFICATION_ID_KEY, id);

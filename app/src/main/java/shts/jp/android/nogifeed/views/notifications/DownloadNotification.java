@@ -9,12 +9,14 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.utils.PreferencesUtils;
 
 public class DownloadNotification {
 
     private static final String TAG = DownloadNotification.class.getSimpleName();
 
-    private static final int NOTIFICATION_ID = 1;
+    private static final int DEFAULT_NOTIFICATION_ID = 2000;
+    private static final String NOTIFICATION_ID_KEY = "pref_key_download_notification_id";
 
     private final Context mContext;
 
@@ -23,6 +25,7 @@ public class DownloadNotification {
 
     private int mCounter = 0;
     private int mMaxCounter = 0;
+    private final int mNotificationId;
 
     public DownloadNotification(Context context, int targetSize) {
         this(context);
@@ -30,6 +33,7 @@ public class DownloadNotification {
     }
 
     public DownloadNotification(Context context) {
+        mNotificationId = getNotificationId(context);
         mContext = context;
         mNotificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
@@ -48,7 +52,7 @@ public class DownloadNotification {
         // クリック時に消去させない
         mNotification.setOngoing(true);
 
-        mNotificationManager.notify(NOTIFICATION_ID, mNotification.build());
+        mNotificationManager.notify(mNotificationId, mNotification.build());
     }
 
     /**
@@ -57,7 +61,7 @@ public class DownloadNotification {
     public void updateProgress(String path) {
         mNotification.setProgress(mMaxCounter, mCounter++, false);
         mNotification.setOngoing(true);
-        mNotificationManager.notify(NOTIFICATION_ID, mNotification.build());
+        mNotificationManager.notify(mNotificationId, mNotification.build());
 
         if (mMaxCounter <= mCounter) {
             finishProgress(path);
@@ -75,7 +79,8 @@ public class DownloadNotification {
         mNotification.setProgress(0, 0, false);
         mNotification.setOngoing(false);
         mNotification.setAutoCancel(true);
-        mNotificationManager.notify(NOTIFICATION_ID, mNotification.build());
+        mNotificationManager.notify(mNotificationId, mNotification.build());
+        notified(mContext, mNotificationId);
     }
 
     private PendingIntent getPendingIntentFrom(String path) {
@@ -84,6 +89,17 @@ public class DownloadNotification {
         intent.setType("image/*");
         intent.setData(Uri.parse(path));
         return PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+    }
+
+    private static int getNotificationId(Context context) {
+        return PreferencesUtils.getInt(context, NOTIFICATION_ID_KEY, DEFAULT_NOTIFICATION_ID);
+    }
+
+    private static void notified(Context context, int id) {
+        if (++id >= 2999) {
+            id = DEFAULT_NOTIFICATION_ID;
+        }
+        PreferencesUtils.setInt(context, NOTIFICATION_ID_KEY, id);
     }
 
 }
