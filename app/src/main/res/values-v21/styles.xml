@@ -6,4 +6,9 @@
         <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
     </style>
+
+    <!-- blog update notification style -->
+    <style name="NotificationText" parent="android:TextAppearance.Material.Notification"></style>
+    <style name="NotificationTitle" parent="android:TextAppearance.Material.Notification.Title"></style>
+
 </resources>

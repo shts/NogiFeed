@@ -15,5 +15,8 @@
         <item name="android:width">72dp</item>
         <item name="android:height">72dp</item>
     </style>
+    <!-- blog update notification style -->
+    <style name="NotificationText" parent="android:TextAppearance.StatusBar.EventContent" />
+    <style name="NotificationTitle" parent="android:TextAppearance.StatusBar.EventContent.Title" />
 
 </resources>
