@@ -7,13 +7,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.squareup.picasso.Picasso;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.BlogActivity;
+import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.utils.PreferencesUtils;
 import shts.jp.android.nogifeed.utils.UrlUtils;
 import shts.jp.android.nogifeed.views.transformations.CircleTransformation;
@@ -28,7 +28,7 @@ public class BlogUpdateNotification {
 
     public static synchronized void show(final Context context, final String url,
                             final String title, final String author) {
-        Log.d(TAG, "url(" + url + ") title(" + title
+        Logger.d(TAG, "url(" + url + ") title(" + title
                 + ") author(" + author + ")");
 
         Intent intent = new Intent(context, BlogActivity.class);
