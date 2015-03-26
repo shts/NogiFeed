@@ -145,7 +145,7 @@ public class MemberDetailFragment extends ListFragment {
 
         shts.jp.android.nogifeed.common.Logger.v(TAG, "setupShowcase : url(" + mImageUrls.toString() + ")");
 
-        int height = (int) ( /*240*/ 300 * getResources().getDisplayMetrics().density);
+        int height = (int) ( /*240*/ 300 * mActivity.getResources().getDisplayMetrics().density);
         mShowcase = new shts.jp.android.nogifeed.views.Showcase(getActivity(), mImageUrls, new shts.jp.android.nogifeed.views.Showcase.FavoriteChangeListener() {
             @Override
             public void onCheckdChanged(CompoundButton compoundButton, boolean isChecked) {
