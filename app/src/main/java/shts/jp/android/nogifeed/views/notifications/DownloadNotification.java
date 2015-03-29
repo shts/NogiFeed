@@ -58,24 +58,24 @@ public class DownloadNotification {
     /**
      * update notification progress.
      */
-    public void updateProgress(String path) {
+    public void updateProgress(Uri uri) {
         mNotification.setProgress(mMaxCounter, mCounter++, false);
         mNotification.setOngoing(true);
         mNotificationManager.notify(mNotificationId, mNotification.build());
 
         if (mMaxCounter <= mCounter) {
-            finishProgress(path);
+            finishProgress(uri);
         }
     }
 
-    private void finishProgress(String path) {
+    private void finishProgress(Uri uri) {
         mCounter = 0;
         mNotification.setSmallIcon(R.drawable.ic_notification);
         Resources res = mContext.getResources();
         mNotification.setTicker(res.getString(R.string.notify_finish_download_ticker));
         mNotification.setContentTitle(res.getString(R.string.notify_finish_download_title));
         mNotification.setContentText(res.getString(R.string.notify_finish_download_text));
-        mNotification.setContentIntent(getPendingIntentFrom(path));
+        mNotification.setContentIntent(getPendingIntentFrom(uri));
         mNotification.setProgress(0, 0, false);
         mNotification.setOngoing(false);
         mNotification.setAutoCancel(true);
@@ -83,11 +83,10 @@ public class DownloadNotification {
         notified(mContext, mNotificationId);
     }
 
-    private PendingIntent getPendingIntentFrom(String path) {
+    private PendingIntent getPendingIntentFrom(Uri uri) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
-        intent.setType("image/*");
-        intent.setData(Uri.parse(path));
+        intent.setDataAndType(uri, "image/jpeg");
         return PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
     }
 

@@ -25,7 +25,7 @@ public class DownloadFinishListener {
             public void onScanCompleted(String path, Uri uri) {
                 Logger.d("MediaScannerConnection", "Scanned " + path + ":");
                 Logger.d("MediaScannerConnection", "-> uri=" + uri);
-                mNotification.updateProgress(path);
+                mNotification.updateProgress(uri);
             }
         });
     }
