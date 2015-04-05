@@ -15,22 +15,25 @@ import org.apache.http.Header;
 import java.util.List;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.adapters.FavoriteFeedListAdapter;
 import shts.jp.android.nogifeed.api.AsyncRssClient;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.listener.RssClientFinishListener;
 import shts.jp.android.nogifeed.models.Entries;
+import shts.jp.android.nogifeed.utils.DataStoreUtils;
+import shts.jp.android.nogifeed.views.MultiSwipeRefreshLayout;
 
-// TODO: お気に入りメンバーがいないときは EmptyView を表示する
 // TODO: インストール後に何度か起動された時、アプリ評価を誘導する View を表示する
 // TODO: View にお気に入り機能と共有機能を追加する
 public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = FavoriteMemberFeedListFragment.class.getSimpleName();
 
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private MultiSwipeRefreshLayout mMultiSwipeRefreshLayout;
     private List<String> mFavoriteUrls;
     private RecyclerView mRecyclerView;
-    private final shts.jp.android.nogifeed.models.Entries mEntries = new shts.jp.android.nogifeed.models.Entries();
+    private View mEmptyView;
+    private final Entries mEntries = new Entries();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,14 +44,17 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorite_feed_list, null);
 
+        mEmptyView = view.findViewById(R.id.empty_view);
+
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setHasFixedSize(true); // アイテムは固定サイズ
 
         // SwipeRefreshLayoutの設定
-        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorSchemeResources(
+        mMultiSwipeRefreshLayout = (MultiSwipeRefreshLayout) view.findViewById(R.id.refresh);
+        mMultiSwipeRefreshLayout.setOnRefreshListener(this);
+        mMultiSwipeRefreshLayout.setSwipeableChildren(R.id.refresh, R.id.empty_view);
+        mMultiSwipeRefreshLayout.setColorSchemeResources(
                 R.color.nogifeed, R.color.nogifeed, R.color.nogifeed, R.color.nogifeed);
 
         return view;
@@ -61,12 +67,13 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
     }
 
     private void setupFavoriteMemberFeed() {
-        mFavoriteUrls = shts.jp.android.nogifeed.utils.DataStoreUtils.getAllFavoriteLink(getActivity());
+        mFavoriteUrls = DataStoreUtils.getAllFavoriteLink(getActivity());
         if (mFavoriteUrls == null || mFavoriteUrls.isEmpty()) {
-            if (mSwipeRefreshLayout.isRefreshing()) {
-                mSwipeRefreshLayout.setRefreshing(false);
+            if (mMultiSwipeRefreshLayout.isRefreshing()) {
+                mMultiSwipeRefreshLayout.setRefreshing(false);
             }
-            shts.jp.android.nogifeed.common.Logger.d(TAG, "setupFavoriteMemberFeed() : no favorite feed.");
+            Logger.d(TAG, "setupFavoriteMemberFeed() : no favorite feed.");
+            setVisibilityEmptyView(true);
             Toast.makeText(getActivity(), R.string.empty_favorite, Toast.LENGTH_LONG).show();
             return;
         }
@@ -81,7 +88,6 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
         boolean ret = AsyncRssClient.read(getActivity().getApplicationContext(), favoriteUrls, new RssClientFinishListener() {
             @Override
             public void onSuccessWrapper(int statusCode, Header[] headers, Entries entries) {
-                Logger.v(TAG, "");
             }
 
             @Override
@@ -94,11 +100,14 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
                     // Show error toast
                     Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
                             Toast.LENGTH_SHORT).show();
+                    setVisibilityEmptyView(true);
                 } else {
+                    setVisibilityEmptyView(false);
                     setupAdapter(entries.sort());
                 }
-                if (mSwipeRefreshLayout.isRefreshing()) {
-                    mSwipeRefreshLayout.setRefreshing(false);
+
+                if (mMultiSwipeRefreshLayout.isRefreshing()) {
+                    mMultiSwipeRefreshLayout.setRefreshing(false);
                 }
             }
         });
@@ -107,21 +116,32 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
             // Show error toast
             Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
                     Toast.LENGTH_SHORT).show();
-            if (mSwipeRefreshLayout.isRefreshing()) {
-                mSwipeRefreshLayout.setRefreshing(false);
+            if (mMultiSwipeRefreshLayout.isRefreshing()) {
+                mMultiSwipeRefreshLayout.setRefreshing(false);
             }
         }
     }
 
-    private void setupAdapter(shts.jp.android.nogifeed.models.Entries entries) {
-        shts.jp.android.nogifeed.common.Logger.v("setupAdapter()", "setupAdapter() : size( " + entries.size() + ") entry("
-                + entries.toString() + ")");
-        mRecyclerView.setAdapter(new shts.jp.android.nogifeed.adapters.FavoriteFeedListAdapter(getActivity(), entries));
+    private void setupAdapter(Entries entries) {
+        Logger.v("setupAdapter()", "setupAdapter() : size( " + entries.size() + ") entry(" + entries.toString() + ")");
+        setVisibilityEmptyView(false);
+        mRecyclerView.setAdapter(new FavoriteFeedListAdapter(getActivity(), entries));
     }
 
     @Override
     public void onRefresh() {
         setupFavoriteMemberFeed();
+    }
+
+    private void setVisibilityEmptyView(boolean isVisible) {
+        if (isVisible) {
+            // mRecyclerView を setVisiblity(View.GONE) で表示にするとプログレスが表示されない
+            mEntries.clear();
+            mRecyclerView.setAdapter(null);
+            mEmptyView.setVisibility(View.VISIBLE);
+        } else {
+            mEmptyView.setVisibility(View.GONE);
+        }
     }
 
 }
