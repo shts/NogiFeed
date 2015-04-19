@@ -22,6 +22,7 @@ import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.listener.RssClientFinishListener;
 import shts.jp.android.nogifeed.models.Entries;
 import shts.jp.android.nogifeed.models.Entry;
+import shts.jp.android.nogifeed.models.Member;
 import shts.jp.android.nogifeed.views.Showcase;
 
 public class MemberDetailFragment extends ListFragment {
@@ -35,6 +36,7 @@ public class MemberDetailFragment extends ListFragment {
     private Entry mEntry;
     private MemberFeedListAdapter mMemberFeedListAdapter;
     private String mFeedUrl;
+    private Member mMember;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class MemberDetailFragment extends ListFragment {
 
         Bundle bundle = getArguments();
         mEntry = bundle.getParcelable(Entry.KEY);
+        mMember = bundle.getParcelable(Member.KEY);
     }
 
     @Override
@@ -113,6 +116,10 @@ public class MemberDetailFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         if (mEntry != null) {
             mFeedUrl = shts.jp.android.nogifeed.utils.UrlUtils.getMemberFeedUrl(mEntry.link);
+            setupMemberFeedList(mFeedUrl);
+        }
+        if (mMember != null) {
+            mFeedUrl = mMember.feedUrl;
             setupMemberFeedList(mFeedUrl);
         }
     }

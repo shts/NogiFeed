@@ -80,6 +80,9 @@
             android:name=".activities.MemberListActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
         </activity>
         <!-- authorities do not change -->
         <provider
@@ -122,6 +125,23 @@
             <intent-filter>
                 <action android:name="android.shts.jp.nogifeed.UPDATE_STATUS"/>
             </intent-filter>
+        </receiver>
+
+        <receiver android:name="shts.jp.android.nogifeed.widget.ProfileWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/profile_widget" />
+        </receiver>
+        <receiver android:name=".widget.ProfileWidgetIntentReceiver">
+            <intent-filter>
+                <action android:name="shts.jp.android.nogifeed.widget.ProfileWidgetProvider.CLICK" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/profile_widget" />
         </receiver>
     </application>
 

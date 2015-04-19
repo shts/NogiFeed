@@ -15,23 +15,25 @@ import android.util.Log;
 public class NogiFeedProvider extends ContentProvider {
 
 	private static final int FAVORITE = 1;
+    private static final int PROFILE_WIDGET = 2;
 
 	private static final UriMatcher URI_MATCHER;
 	static {
 		URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
-		URI_MATCHER.addURI(shts.jp.android.nogifeed.providers.NogiFeedContent.AUTHORITY, "favorite", FAVORITE);
+		URI_MATCHER.addURI(NogiFeedContent.AUTHORITY, NogiFeedContent.TABLE_FAVORITE, FAVORITE);
+        URI_MATCHER.addURI(NogiFeedContent.AUTHORITY, NogiFeedContent.TABLE_PROFILE_WIDGET, PROFILE_WIDGET);
 	}
-	private shts.jp.android.nogifeed.providers.NogiFeedDatabaseHelper mDBHelper;
+	private NogiFeedDatabaseHelper mDBHelper;
 
 	@Override
 	public boolean onCreate() {
-		mDBHelper = new shts.jp.android.nogifeed.providers.NogiFeedDatabaseHelper(getContext());
+		mDBHelper = new NogiFeedDatabaseHelper(getContext());
 		return true;
 	}
 
 	@Override
 	public Uri insert(Uri uri, ContentValues initialValues) {
-		if (URI_MATCHER.match(uri) != FAVORITE) {
+		if (URI_MATCHER.match(uri) != FAVORITE && URI_MATCHER.match(uri) != PROFILE_WIDGET) {
 			throw new IllegalArgumentException("Unknown URL *** " + uri);
 		}
 
@@ -47,15 +49,23 @@ public class NogiFeedProvider extends ContentProvider {
 		long rowID;
 		switch (URI_MATCHER.match(uri)) {
 		case FAVORITE:
-			rowID = db.replace(shts.jp.android.nogifeed.providers.NogiFeedContent.TABLE_FAVORITE, "NULL", values);
+			rowID = db.replace(NogiFeedContent.TABLE_FAVORITE, "NULL", values);
 
 			if (rowID > 0) {
-				Uri newUri = ContentUris.withAppendedId(
-						shts.jp.android.nogifeed.providers.NogiFeedContent.Favorite.CONTENT_URI, rowID);
+				Uri newUri = ContentUris.withAppendedId(NogiFeedContent.Favorite.CONTENT_URI, rowID);
 				getContext().getContentResolver().notifyChange(newUri, null);
 				return newUri;
 			}
 			break;
+        case PROFILE_WIDGET:
+            rowID = db.replace(NogiFeedContent.TABLE_PROFILE_WIDGET, "NULL", values);
+
+            if (rowID > 0) {
+                Uri newUri = ContentUris.withAppendedId(NogiFeedContent.ProfileWidget.CONTENT_URI, rowID);
+                getContext().getContentResolver().notifyChange(newUri, null);
+                return newUri;
+            }
+            break;
 		}
 		throw new SQLException("Failed to insert row into " + uri);
 	}
@@ -68,13 +78,20 @@ public class NogiFeedProvider extends ContentProvider {
 		switch (URI_MATCHER.match(uri)) {
 		case FAVORITE:
 			if (whereClause != null || whereArgs != null) {
-				count = db.delete(shts.jp.android.nogifeed.providers.NogiFeedContent.TABLE_FAVORITE, whereClause,
-						whereArgs);
+				count = db.delete(NogiFeedContent.TABLE_FAVORITE, whereClause, whereArgs);
 			} else {
-				count = db.delete(shts.jp.android.nogifeed.providers.NogiFeedContent.TABLE_FAVORITE, " "
-						+ shts.jp.android.nogifeed.providers.NogiFeedContent.Favorite.KEY_ID + " like '%'", null);
+				count = db.delete(NogiFeedContent.TABLE_FAVORITE, " "
+						+ NogiFeedContent.Favorite.KEY_ID + " like '%'", null);
 			}
 			break;
+        case PROFILE_WIDGET:
+            if (whereClause != null || whereArgs != null) {
+                count = db.delete(NogiFeedContent.TABLE_PROFILE_WIDGET, whereClause, whereArgs);
+            } else {
+                count = db.delete(NogiFeedContent.TABLE_PROFILE_WIDGET, " "
+                        + NogiFeedContent.ProfileWidget.KEY_ID + " like '%'", null);
+            }
+            break;
 		default:
 			throw new IllegalArgumentException("Unknown URL " + uri);
 		}
@@ -90,9 +107,11 @@ public class NogiFeedProvider extends ContentProvider {
 		int count;
 		switch (URI_MATCHER.match(uri)) {
 		case FAVORITE:
-			count = db.update(shts.jp.android.nogifeed.providers.NogiFeedContent.TABLE_FAVORITE, values, where,
-					whereArgs);
+			count = db.update(NogiFeedContent.TABLE_FAVORITE, values, where, whereArgs);
 			break;
+        case PROFILE_WIDGET:
+            count = db.update(NogiFeedContent.TABLE_PROFILE_WIDGET, values, where, whereArgs);
+            break;
 		default:
 			throw new IllegalArgumentException("Unknown URL " + uri);
 		}
@@ -106,18 +125,26 @@ public class NogiFeedProvider extends ContentProvider {
 			String[] selectionArgs, String sortOrder) {
 
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-		qb.setTables(shts.jp.android.nogifeed.providers.NogiFeedContent.TABLE_FAVORITE);
 
 		Log.d("query", uri.toString());
 		String orderBy;
 		switch (URI_MATCHER.match(uri)) {
 		case FAVORITE:
+            qb.setTables(NogiFeedContent.TABLE_FAVORITE);
 			if (TextUtils.isEmpty(sortOrder)) {
-				orderBy = shts.jp.android.nogifeed.providers.NogiFeedContent.Favorite.KEY_ID + " DESC";
+				orderBy = NogiFeedContent.Favorite.KEY_ID + " DESC";
 			} else {
 				orderBy = sortOrder;
 			}
 			break;
+        case PROFILE_WIDGET:
+            qb.setTables(NogiFeedContent.TABLE_PROFILE_WIDGET);
+            if (TextUtils.isEmpty(sortOrder)) {
+                orderBy = NogiFeedContent.ProfileWidget.KEY_ID + " DESC";
+            } else {
+                orderBy = sortOrder;
+            }
+            break;
 		default:
 			throw new IllegalArgumentException("Unknown URL " + uri);
 		}
@@ -133,7 +160,9 @@ public class NogiFeedProvider extends ContentProvider {
 	public String getType(Uri uri) {
 		switch (URI_MATCHER.match(uri)) {
 		case FAVORITE:
-			return shts.jp.android.nogifeed.providers.NogiFeedContent.Favorite.CONTENT_TYPE;
+			return NogiFeedContent.Favorite.CONTENT_TYPE;
+        case PROFILE_WIDGET:
+            return NogiFeedContent.ProfileWidget.CONTENT_TYPE;
 		default:
 			throw new IllegalArgumentException("Unknown URL " + uri);
 		}

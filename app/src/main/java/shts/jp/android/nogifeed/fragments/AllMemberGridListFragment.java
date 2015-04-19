@@ -1,8 +1,13 @@
 package shts.jp.android.nogifeed.fragments;
 
+import android.app.Activity;
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,14 +21,12 @@ import android.widget.Toast;
 import java.util.List;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.activities.ConfigureActivity;
 import shts.jp.android.nogifeed.adapters.BindableAdapter;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.models.Member;
 import shts.jp.android.nogifeed.utils.JsoupUtils;
 import shts.jp.android.nogifeed.utils.PicassoHelper;
-
-// TODO: クリック時の動作を追加する。レイアウトを調整する。お気に入り機能を追加する。
-// TODO: 中央揃えにする！ 2014/12/09
 
 /**
  * For add favorite member.
@@ -45,17 +48,24 @@ public class AllMemberGridListFragment extends Fragment {
         mMemberList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                shts.jp.android.nogifeed.models.Member member = (shts.jp.android.nogifeed.models.Member) mMemberList.getItemAtPosition(i);
-                shts.jp.android.nogifeed.utils.IntentUtils.startMemberDetailActivity(getActivity(), member);
+                Member member = (Member) mMemberList.getItemAtPosition(i);
+                ConfigureActivity activity = (ConfigureActivity) getActivity();
+                activity.setConfigure(member);
             }
         });
-        setupAdapter();
+//        setupAdapter();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setupAdapter();
+            }
+        }, 300);
         return view;
     }
 
     private void setupAdapter() {
 
-        boolean ret = shts.jp.android.nogifeed.utils.JsoupUtils.getAllMembers(getActivity(), new JsoupUtils.GetMemberListener() {
+        boolean ret = JsoupUtils.getAllMembers(getActivity(), new JsoupUtils.GetMemberListener() {
             @Override
             public void onSuccess(List<Member> memberList) {
                 mMemberList.setAdapter(new GridAdapter(getActivity(), memberList));
@@ -80,12 +90,10 @@ public class AllMemberGridListFragment extends Fragment {
     class GridAdapter extends BindableAdapter {
 
         private final Context mContext;
-        private final List<Member> mMembers;
 
         GridAdapter(Context context, List<Member> members) {
             super(context, members);
             mContext = context;
-            mMembers = members;
         }
 
         class ViewHolder {
@@ -101,7 +109,7 @@ public class AllMemberGridListFragment extends Fragment {
 
         @Override
         public View newView(LayoutInflater inflater, int position, ViewGroup container) {
-            View view = inflater.inflate(R.layout.list_item_card, null);
+            View view = inflater.inflate(R.layout.list_item_member, null);
             final ViewHolder holder = new ViewHolder(view);
             view.setTag(holder);
             return view;

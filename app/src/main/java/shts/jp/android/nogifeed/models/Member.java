@@ -1,9 +1,15 @@
 package shts.jp.android.nogifeed.models;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+
+import shts.jp.android.nogifeed.providers.NogiFeedContent;
+import shts.jp.android.nogifeed.utils.DataStoreUtils;
+import shts.jp.android.nogifeed.utils.UrlUtils;
 
 public class Member implements Parcelable {
 
@@ -12,12 +18,11 @@ public class Member implements Parcelable {
 
     //public String blogUrl; // http://www.nogizaka46.com/smph/member/detail/kitanohinako.php
     public final String allArticleUrl; // http://blog.nogizaka46.com/manatsu.akimoto/smph/
-    public final String feedUrl;
+    public final String feedUrl; // http://blog.nogizaka46.com/manatsu.akimoto/atom.xml
     public final String profileImageUrl; // http://img.nogizaka46.com/www/smph/member/img/akimotomanatsu_prof.jpg
     public final String name; /* kanji */
 
     public Member(String allArticleUrl, String name) {
-
         if (!TextUtils.isEmpty(allArticleUrl)
                 && allArticleUrl.contains(".xml")) {
             // all member feed
@@ -28,9 +33,16 @@ public class Member implements Parcelable {
         } else {
             this.name = name;
             this.allArticleUrl = allArticleUrl;
-            this.feedUrl = shts.jp.android.nogifeed.utils.UrlUtils.getMemberFeedUrl(allArticleUrl);
-            this.profileImageUrl = shts.jp.android.nogifeed.utils.UrlUtils.getImageUrlFromArticleUrl(allArticleUrl);
+            this.feedUrl = UrlUtils.getMemberFeedUrl(allArticleUrl);
+            this.profileImageUrl = UrlUtils.getImageUrlFromArticleUrl(allArticleUrl);
         }
+    }
+
+    public Member(Cursor c) {
+        this.name = c.getString(c.getColumnIndexOrThrow(NogiFeedContent.ProfileWidget.KEY_NAME));
+        this.allArticleUrl = c.getString(c.getColumnIndexOrThrow(NogiFeedContent.ProfileWidget.KEY_ARTICLE_URL));
+        this.feedUrl = c.getString(c.getColumnIndexOrThrow(NogiFeedContent.ProfileWidget.KEY_FEED_URL));
+        this.profileImageUrl = c.getString(c.getColumnIndexOrThrow(NogiFeedContent.ProfileWidget.KEY_IMAGE_URL));
     }
 
     public String toString() {
@@ -71,7 +83,16 @@ public class Member implements Parcelable {
     };
 
     public boolean isFavorite(Context context) {
-        return shts.jp.android.nogifeed.utils.DataStoreUtils.alreadyExist(context, feedUrl);
+        return DataStoreUtils.alreadyExist(context, feedUrl);
+    }
+
+    public ContentValues toContentValues() {
+        ContentValues cv = new ContentValues();
+        cv.put(NogiFeedContent.ProfileWidget.KEY_NAME, name);
+        cv.put(NogiFeedContent.ProfileWidget.KEY_IMAGE_URL, profileImageUrl);
+        cv.put(NogiFeedContent.ProfileWidget.KEY_ARTICLE_URL, allArticleUrl);
+        cv.put(NogiFeedContent.ProfileWidget.KEY_FEED_URL, feedUrl);
+        return cv;
     }
 
 }

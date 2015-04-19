@@ -13,6 +13,7 @@
         android:layout_height="match_parent">
         <ImageView
             android:padding="8dp"
+            android:layout_marginLeft="16dp"
             android:src="@drawable/kensyusei"
             android:id="@+id/profile_image"
             android:layout_width="72dp"
@@ -23,6 +24,7 @@
             android:layout_alignBottom="@id/profile_image"
             android:layout_alignRight="@id/profile_image"
             android:src="@drawable/favorite_normal_72"
+            android:layout_marginLeft="56dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView

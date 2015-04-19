@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/kensyusei"
+        android:layout_gravity="center_horizontal"
+        />
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="profile"
+        android:textColor="@color/grey_50"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        />
+
+</LinearLayout>

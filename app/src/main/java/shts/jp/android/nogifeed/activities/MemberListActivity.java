@@ -9,7 +9,7 @@ import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.fragments.AllFeedListFragment;
 import shts.jp.android.nogifeed.fragments.AllMemberGridListFragment;
 
-public class MemberListActivity extends BaseActivity {
+public class MemberListActivity extends ConfigureActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class MemberListActivity extends BaseActivity {
                 = new AllMemberGridListFragment();
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, allMemberGridListFragment, AllFeedListFragment.class.getSimpleName());
+        ft.replace(R.id.container, allMemberGridListFragment, AllMemberGridListFragment.class.getSimpleName());
         ft.commit();
 
         setupActionBar();
