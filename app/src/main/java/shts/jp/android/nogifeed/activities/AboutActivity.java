@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.fragments.AboutFragment;
 
 public class AboutActivity extends shts.jp.android.nogifeed.activities.BaseActivity {
 
@@ -14,9 +15,9 @@ public class AboutActivity extends shts.jp.android.nogifeed.activities.BaseActiv
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        shts.jp.android.nogifeed.fragments.AboutFragment aboutFragment = new shts.jp.android.nogifeed.fragments.AboutFragment();
+        AboutFragment aboutFragment = new AboutFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, aboutFragment, shts.jp.android.nogifeed.fragments.AllFeedListFragment.class.getSimpleName());
+        ft.replace(R.id.container, aboutFragment, AboutFragment.class.getSimpleName());
         ft.commit();
 
         setupActionBar();

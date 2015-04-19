@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Entries extends ArrayList<shts.jp.android.nogifeed.models.Entry> {
+import shts.jp.android.nogifeed.utils.ArrayUtils;
+
+public class Entries extends ArrayList<Entry> {
 
     public Entries() {}
 
@@ -19,7 +21,7 @@ public class Entries extends ArrayList<shts.jp.android.nogifeed.models.Entry> {
     }
 
     public synchronized Entries cat(Entries entries) {
-        shts.jp.android.nogifeed.utils.ArrayUtils.concatenation(entries, this);
+        ArrayUtils.concatenation(entries, this);
         return this;
     }
 

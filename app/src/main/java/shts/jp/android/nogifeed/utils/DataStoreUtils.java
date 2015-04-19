@@ -45,9 +45,9 @@ public class DataStoreUtils {
         String selection = NogiFeedContent.Favorite.KEY_LINK + "=?";
         String[] selectionArgs = { link };
 
-        int result = cr.delete(shts.jp.android.nogifeed.providers.NogiFeedContent.Favorite.CONTENT_URI, selection, selectionArgs);
+        int result = cr.delete(NogiFeedContent.Favorite.CONTENT_URI, selection, selectionArgs);
         if (result <= 0)  {
-            shts.jp.android.nogifeed.common.Logger.w(TAG, "failed to delete link. link(" + link + ")");
+            Logger.w(TAG, "failed to delete link. link(" + link + ")");
         }
     }
 
@@ -55,24 +55,24 @@ public class DataStoreUtils {
         final ContentResolver cr = context.getContentResolver();
         String selection = shts.jp.android.nogifeed.providers.NogiFeedContent.Favorite.KEY_LINK + "=?";
         String[] selectionArgs = { link };
-        shts.jp.android.nogifeed.common.Logger.d(TAG, "alreadyExist : link " + link);
+        Logger.d(TAG, "alreadyExist : link " + link);
 
-        Cursor c = cr.query(shts.jp.android.nogifeed.providers.NogiFeedContent.Favorite.CONTENT_URI, shts.jp.android.nogifeed.providers.NogiFeedContent.Favorite.sProjection,
+        Cursor c = cr.query(NogiFeedContent.Favorite.CONTENT_URI, NogiFeedContent.Favorite.sProjection,
                 selection, selectionArgs, null);
         if (c == null) {
-            shts.jp.android.nogifeed.common.Logger.d(TAG, "cursor is null. because of use favorite function first time");
+            Logger.d(TAG, "cursor is null. because of use favorite function first time");
             return false;
         }
         if (c.moveToFirst()) {
             do {
-                String alreadyLink = c.getString(c.getColumnIndexOrThrow(shts.jp.android.nogifeed.providers.NogiFeedContent.Favorite.KEY_LINK));
+                String alreadyLink = c.getString(c.getColumnIndexOrThrow(NogiFeedContent.Favorite.KEY_LINK));
                 if (link.equals(alreadyLink)) {
                     return true;
                 }
             } while (c.moveToNext());
             c.close();
         } else {
-            shts.jp.android.nogifeed.common.Logger.w(TAG, "alreadyExist : failed to moveToFirst().");
+            Logger.w(TAG, "alreadyExist : failed to moveToFirst().");
             c.close();
             return false;
         }
@@ -114,16 +114,16 @@ public class DataStoreUtils {
     public static List<String> getAllFavoriteLink(Context context) {
         List<String> links = new ArrayList<String>();
         final ContentResolver cr = context.getContentResolver();
-        Cursor c = cr.query(shts.jp.android.nogifeed.providers.NogiFeedContent.Favorite.CONTENT_URI, shts.jp.android.nogifeed.providers.NogiFeedContent.Favorite.sProjection,
+        Cursor c = cr.query(NogiFeedContent.Favorite.CONTENT_URI, NogiFeedContent.Favorite.sProjection,
                 null, null, null);
         if (c.moveToFirst()) {
             do {
-                String link = c.getString(c.getColumnIndexOrThrow(shts.jp.android.nogifeed.providers.NogiFeedContent.Favorite.KEY_LINK));
+                String link = c.getString(c.getColumnIndexOrThrow(NogiFeedContent.Favorite.KEY_LINK));
                 links.add(link);
             } while (c.moveToNext());
             c.close();
         } else {
-            shts.jp.android.nogifeed.common.Logger.w(TAG, "getAllFavoriteLink() : failed to moveToFirst().");
+            Logger.w(TAG, "getAllFavoriteLink() : failed to moveToFirst().");
             c.close();
         }
         return links;

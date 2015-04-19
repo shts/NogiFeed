@@ -30,8 +30,8 @@ public class AtomRssParser {
 	private static final String CHARSET_NAME = "UTF-8";
 
 	public static Entries parse(InputStream data) {
-		shts.jp.android.nogifeed.models.Entries entries = new shts.jp.android.nogifeed.models.Entries();
-		shts.jp.android.nogifeed.models.Entry entry = null;
+		Entries entries = new Entries();
+		Entry entry = null;
 		XmlPullParser parser = Xml.newPullParser();
 
 		try {
@@ -41,12 +41,12 @@ public class AtomRssParser {
 				String tag = null;
 				switch (eventType) {
 				case XmlPullParser.START_DOCUMENT:
-                    shts.jp.android.nogifeed.common.Logger.v(TAG, "parse start");
+                    Logger.v(TAG, "parse start");
 					break;
 
 				case XmlPullParser.START_TAG:
 					tag = parser.getName();
-                    shts.jp.android.nogifeed.common.Logger.v(TAG, "TAG: " + tag);
+                    Logger.v(TAG, "TAG: " + tag);
 
 					if (tag.equals(TAG_ENTRY)) {
 						entry = new Entry();

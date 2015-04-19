@@ -10,12 +10,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.fragments.BlogFragment;
+import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.services.ImageDownloader;
 import shts.jp.android.nogifeed.views.notifications.BlogUpdateNotification;
 
-public class BlogActivity extends shts.jp.android.nogifeed.activities.BaseActivity {
+public class BlogActivity extends BaseActivity {
 
-    private shts.jp.android.nogifeed.models.Entry mEntry;
+    private Entry mEntry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,18 +25,18 @@ public class BlogActivity extends shts.jp.android.nogifeed.activities.BaseActivi
         setContentView(R.layout.activity_blog);
 
         Bundle bundle = new Bundle();
-        shts.jp.android.nogifeed.models.Entry entry = getIntent().getParcelableExtra(shts.jp.android.nogifeed.models.Entry.KEY);
+        Entry entry = getIntent().getParcelableExtra(Entry.KEY);
         if (entry != null) {
-            bundle.putParcelable(shts.jp.android.nogifeed.models.Entry.KEY, entry);
+            bundle.putParcelable(Entry.KEY, entry);
         } else {
             String blogUrl = getIntent().getStringExtra(BlogUpdateNotification.KEY);
             bundle.putString(BlogUpdateNotification.KEY, blogUrl);
         }
 
-        shts.jp.android.nogifeed.fragments.BlogFragment blogFragment = new shts.jp.android.nogifeed.fragments.BlogFragment();
+        BlogFragment blogFragment = new BlogFragment();
         blogFragment.setArguments(bundle);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, blogFragment, shts.jp.android.nogifeed.fragments.BlogFragment.class.getSimpleName());
+        ft.replace(R.id.container, blogFragment, BlogFragment.class.getSimpleName());
         ft.commit();
 
         setupActionBar();
@@ -69,9 +71,9 @@ public class BlogActivity extends shts.jp.android.nogifeed.activities.BaseActivi
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
 
-            shts.jp.android.nogifeed.fragments.BlogFragment blogFragment =
-                    (shts.jp.android.nogifeed.fragments.BlogFragment) getSupportFragmentManager().findFragmentByTag(
-                            shts.jp.android.nogifeed.fragments.BlogFragment.class.getSimpleName());
+            BlogFragment blogFragment =
+                    (BlogFragment) getSupportFragmentManager().findFragmentByTag(
+                            BlogFragment.class.getSimpleName());
 
             if (blogFragment != null) {
                 if (blogFragment.isVisible()) {

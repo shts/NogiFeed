@@ -23,6 +23,12 @@ import shts.jp.android.nogifeed.listener.RssClientFinishListener;
 import shts.jp.android.nogifeed.models.Entries;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.Member;
+import shts.jp.android.nogifeed.utils.ArrayUtils;
+import shts.jp.android.nogifeed.utils.DataStoreUtils;
+import shts.jp.android.nogifeed.utils.IntentUtils;
+import shts.jp.android.nogifeed.utils.JsoupUtils;
+import shts.jp.android.nogifeed.utils.TrackerUtils;
+import shts.jp.android.nogifeed.utils.UrlUtils;
 import shts.jp.android.nogifeed.views.Showcase;
 
 public class MemberDetailFragment extends ListFragment {
@@ -66,20 +72,20 @@ public class MemberDetailFragment extends ListFragment {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem,
                                  int visibleItemCount, int totalItemCount) {
-                shts.jp.android.nogifeed.common.Logger.v(TAG, "firstVisibleItem : " + firstVisibleItem);
+                Logger.v(TAG, "firstVisibleItem : " + firstVisibleItem);
                 if (firstVisibleItem >= 1) {
                     mActivity.setActionBarDrawableAlpha(255);
-                    shts.jp.android.nogifeed.common.Logger.v(TAG, "firstVisibleItem >= 1");
+                    Logger.v(TAG, "firstVisibleItem >= 1");
                 } else {
                     View header = view.getChildAt(0);
                     int height = header == null ? 0 : header.getHeight();
-                    shts.jp.android.nogifeed.common.Logger.v(TAG, "height : " + height);
+                    Logger.v(TAG, "height : " + height);
                     if (height <= 0) {
                         mActivity.setActionBarDrawableAlpha(0);
                     } else {
                         int alpha = Math.abs(255 * header.getTop() / height);
                         mActivity.setActionBarDrawableAlpha(alpha);
-                        shts.jp.android.nogifeed.common.Logger.v(TAG, "onScroll : " + alpha);
+                        Logger.v(TAG, "onScroll : " + alpha);
                     }
                 }
             }
@@ -115,7 +121,7 @@ public class MemberDetailFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (mEntry != null) {
-            mFeedUrl = shts.jp.android.nogifeed.utils.UrlUtils.getMemberFeedUrl(mEntry.link);
+            mFeedUrl = UrlUtils.getMemberFeedUrl(mEntry.link);
             setupMemberFeedList(mFeedUrl);
         }
         if (mMember != null) {
@@ -125,44 +131,43 @@ public class MemberDetailFragment extends ListFragment {
     }
 
 
-    private void setupAdapter(shts.jp.android.nogifeed.models.Entries entries) {
-        mMemberFeedListAdapter = new shts.jp.android.nogifeed.adapters.MemberFeedListAdapter(getActivity(), entries);
+    private void setupAdapter(Entries entries) {
+        mMemberFeedListAdapter = new MemberFeedListAdapter(getActivity(), entries);
         setListAdapter(mMemberFeedListAdapter);
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                shts.jp.android.nogifeed.models.Entry entry = (shts.jp.android.nogifeed.models.Entry) getListView().getItemAtPosition(position);
-                shts.jp.android.nogifeed.utils.IntentUtils.startBlogActivity(mActivity, entry);
-                shts.jp.android.nogifeed.utils.TrackerUtils.sendTrack(getActivity(), TAG,
+                Entry entry = (Entry) getListView().getItemAtPosition(position);
+                IntentUtils.startBlogActivity(mActivity, entry);
+                TrackerUtils.sendTrack(getActivity(), TAG,
                         "OnClicked", "-> Blog : " + "entry(" + entry.toString() + ")");
             }
         });
     }
 
-    private void setupShowcase(shts.jp.android.nogifeed.models.Entries entries) {
+    private void setupShowcase(Entries entries) {
         for (int i = 0; i < entries.size(); i++) {
-            shts.jp.android.nogifeed.models.Entry e = entries.get(i);
-            List<String> images = shts.jp.android.nogifeed.utils.JsoupUtils.getThumbnailImageUrls(
+            Entry e = entries.get(i);
+            List<String> images = JsoupUtils.getThumbnailImageUrls(
                     e.content, IMAGE_MAX_SIZE - mImageUrls.size());
-            shts.jp.android.nogifeed.utils.ArrayUtils.concatenation(images, mImageUrls);
+            ArrayUtils.concatenation(images, mImageUrls);
             if (mImageUrls.size() >= IMAGE_MAX_SIZE) {
                 break;
             }
         }
 
-        shts.jp.android.nogifeed.common.Logger.v(TAG, "setupShowcase : url(" + mImageUrls.toString() + ")");
+        Logger.v(TAG, "setupShowcase : url(" + mImageUrls.toString() + ")");
 
         int height = (int) ( /*240*/ 300 * mActivity.getResources().getDisplayMetrics().density);
-        mShowcase = new shts.jp.android.nogifeed.views.Showcase(getActivity(), mImageUrls, new shts.jp.android.nogifeed.views.Showcase.FavoriteChangeListener() {
+        mShowcase = new Showcase(getActivity(), mImageUrls, new shts.jp.android.nogifeed.views.Showcase.FavoriteChangeListener() {
             @Override
             public void onCheckdChanged(CompoundButton compoundButton, boolean isChecked) {
-                shts.jp.android.nogifeed.utils.DataStoreUtils.favorite(getActivity(), mFeedUrl, isChecked);
+                DataStoreUtils.favorite(getActivity(), mFeedUrl, isChecked);
             }
         });
         mShowcase.setLayoutParams(new AbsListView.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, height
-        ));
-        mShowcase.setFavorite(shts.jp.android.nogifeed.utils.DataStoreUtils.alreadyExist(getActivity(), mFeedUrl));
+                ViewGroup.LayoutParams.MATCH_PARENT, height));
+        mShowcase.setFavorite(DataStoreUtils.alreadyExist(getActivity(), mFeedUrl));
         ListView listView = getListView();
         listView.addHeaderView(mShowcase, null, false);
     }

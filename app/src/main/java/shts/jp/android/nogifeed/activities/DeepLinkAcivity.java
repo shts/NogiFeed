@@ -7,7 +7,7 @@ import android.os.Bundle;
 /**
  * Activity for deep link from browser application.
  */
-public class DeepLinkAcivity extends shts.jp.android.nogifeed.activities.BaseActivity {
+public class DeepLinkAcivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import java.util.List;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.utils.PicassoHelper;
 
 public class Showcase extends FrameLayout {
     private static final String TAG = Showcase.class.getSimpleName();
@@ -37,8 +38,8 @@ public class Showcase extends FrameLayout {
         LayoutInflater.from(context).inflate(R.layout.showcase, this);
         mListener = listener;
         mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPageIndicator = (shts.jp.android.nogifeed.views.ViewPageIndicator) findViewById(R.id.indicator);
-        mFavoriteCheckbox = (shts.jp.android.nogifeed.views.FavoriteView) findViewById(R.id.favorite);
+        mViewPageIndicator = (ViewPageIndicator) findViewById(R.id.indicator);
+        mFavoriteCheckbox = (FavoriteView) findViewById(R.id.favorite);
         mFavoriteCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -97,7 +98,7 @@ public class Showcase extends FrameLayout {
             //Log.d(TAG, "instantiateItem called : position(" + position + ")");
             ImageView iv = new ImageView(mContext);
             iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            shts.jp.android.nogifeed.utils.PicassoHelper.load(mContext, iv, mImageUrls.get(position));
+            PicassoHelper.load(mContext, iv, mImageUrls.get(position));
             container.addView(iv);
             return iv;
         }

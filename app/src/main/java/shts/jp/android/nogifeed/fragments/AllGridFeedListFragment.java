@@ -29,7 +29,7 @@ import shts.jp.android.nogifeed.utils.PicassoHelper;
 import shts.jp.android.nogifeed.utils.UrlUtils;
 
 /**
- * For tablet layout.
+ * All feed for tablet layout.
  */
 public class AllGridFeedListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 

@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 
 import java.io.File;
 
+import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.models.Entry;
 
 /**
@@ -41,8 +42,8 @@ public class SdCardUtils {
                     new MediaScannerConnection.OnScanCompletedListener() {
                     @Override
                     public void onScanCompleted(String path, Uri uri) {
-                        shts.jp.android.nogifeed.common.Logger.d("MediaScannerConnection", "Scanned " + path + ":");
-                        shts.jp.android.nogifeed.common.Logger.d("MediaScannerConnection", "-> uri=" + uri);
+                        Logger.d("MediaScannerConnection", "Scanned " + path + ":");
+                        Logger.d("MediaScannerConnection", "-> uri=" + uri);
                     }
                 });
     }

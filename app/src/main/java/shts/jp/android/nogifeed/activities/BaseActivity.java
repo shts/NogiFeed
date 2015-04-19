@@ -7,6 +7,8 @@ import android.support.v7.app.ActionBarActivity;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
+import shts.jp.android.nogifeed.utils.TrackerUtils;
+
 public abstract class BaseActivity extends ActionBarActivity {
 
     @Override
@@ -31,6 +33,6 @@ public abstract class BaseActivity extends ActionBarActivity {
     public abstract Activity getTrackerActivity();
 
     public Tracker getTracker() {
-        return shts.jp.android.nogifeed.utils.TrackerUtils.getTracker(getApplicationContext());
+        return TrackerUtils.getTracker(getApplicationContext());
     }
 }

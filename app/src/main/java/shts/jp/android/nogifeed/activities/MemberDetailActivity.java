@@ -10,8 +10,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.fragments.MemberDetailFragment;
+import shts.jp.android.nogifeed.models.Entry;
+import shts.jp.android.nogifeed.models.Member;
 
-public class MemberDetailActivity extends shts.jp.android.nogifeed.activities.BaseActivity {
+public class MemberDetailActivity extends BaseActivity {
 
     private Drawable mActionBarDrawable;
     private Toolbar mToolbar;
@@ -25,23 +28,23 @@ public class MemberDetailActivity extends shts.jp.android.nogifeed.activities.Ba
 
         Intent i = getIntent();
         Bundle bundle = new Bundle();
-        shts.jp.android.nogifeed.models.Entry entry = i.getParcelableExtra(shts.jp.android.nogifeed.models.Entry.KEY);
+        Entry entry = i.getParcelableExtra(Entry.KEY);
         if (entry != null) {
             // intent from AllFeedListFragment
-            bundle.putParcelable(shts.jp.android.nogifeed.models.Entry.KEY, entry);
+            bundle.putParcelable(Entry.KEY, entry);
             setupActionBar(entry.name);
         } else {
             // intent from MemberGridListFragment
-            shts.jp.android.nogifeed.models.Member member = i.getParcelableExtra(shts.jp.android.nogifeed.models.Member.KEY);
-            bundle.putParcelable(shts.jp.android.nogifeed.models.Member.KEY, member);
+            Member member = i.getParcelableExtra(Member.KEY);
+            bundle.putParcelable(Member.KEY, member);
             setupActionBar(member.name);
         }
 
-        shts.jp.android.nogifeed.fragments.MemberDetailFragment memberDetailFragment = new shts.jp.android.nogifeed.fragments.MemberDetailFragment();
+        MemberDetailFragment memberDetailFragment = new MemberDetailFragment();
         memberDetailFragment.setArguments(bundle);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, memberDetailFragment, shts.jp.android.nogifeed.fragments.MemberDetailFragment.class.getSimpleName());
+        ft.replace(R.id.container, memberDetailFragment, MemberDetailFragment.class.getSimpleName());
         ft.commit();
     }
 

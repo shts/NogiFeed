@@ -6,6 +6,9 @@ import android.os.Parcelable;
 import java.text.ParseException;
 import java.util.Date;
 
+import shts.jp.android.nogifeed.common.Logger;
+import shts.jp.android.nogifeed.utils.DateUtils;
+
 public class Entry implements Parcelable {
 
     public static final String KEY = Entry.class.getSimpleName();
@@ -49,18 +52,18 @@ public class Entry implements Parcelable {
 
     public long getPublishedDateLong() {
         try {
-            return shts.jp.android.nogifeed.utils.DateUtils.formatUpdatedLong(this.published);
+            return DateUtils.formatUpdatedLong(this.published);
         } catch (ParseException e) {
-            shts.jp.android.nogifeed.common.Logger.e(TAG, "failed to parse date");
+            Logger.e(TAG, "failed to parse date");
         }
         return -1;
     }
 
     public Date getPublishedDate() {
         try {
-            return shts.jp.android.nogifeed.utils.DateUtils.formatUpdatedDate(this.published);
+            return DateUtils.formatUpdatedDate(this.published);
         } catch (ParseException e) {
-            shts.jp.android.nogifeed.common.Logger.e(TAG, "failed to parse date");
+            Logger.e(TAG, "failed to parse date");
         }
         return null;
     }

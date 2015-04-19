@@ -7,6 +7,10 @@ import android.provider.BaseColumns;
 public class NogiFeedContent {
     public static final String AUTHORITY = "android.shts.jp.nogifeed.providers.nogifeed";
     public static final String DATABASE_NAME = "nogifeed.db";
+    /**
+     * Version 1. add TABLE_FAVORITE
+     * Version 2. add TABLE_PROFILE_WIDGET
+     */
     public static final int DATABASE_VERSION = 2;
 
     public static final String TABLE_FAVORITE = "favorite";

@@ -21,7 +21,7 @@ public class StringUtils {
         final String[] fullName = articleUrl.split("/");
         final String[] fullNameArray = fullName[3].split("\\.");
         for (int i = 0; i < fullNameArray.length; i++) {
-            shts.jp.android.nogifeed.common.Logger.d(TAG, "index : " + i + " name : " + fullNameArray[i]);
+            Logger.d(TAG, "index : " + i + " name : " + fullNameArray[i]);
         }
         return fullNameArray;
     }
@@ -38,7 +38,7 @@ public class StringUtils {
         final String[] fullName = allArticleUrl.split("/");
         final String[] fullNameArray = fullName[3].split("\\.");
         for (int i = 0; i < fullNameArray.length; i++) {
-            shts.jp.android.nogifeed.common.Logger.d(TAG, "index : " + i + " name : " + fullNameArray[i]);
+            Logger.d(TAG, "index : " + i + " name : " + fullNameArray[i]);
         }
         return fullNameArray;
     }

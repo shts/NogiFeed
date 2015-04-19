@@ -30,7 +30,7 @@ public class MainActivity extends BaseActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private shts.jp.android.nogifeed.views.PagerSlidingTabStrip mPagerSlidingTabStrip;
+    private PagerSlidingTabStrip mPagerSlidingTabStrip;
     private ViewPager mViewPager;
     private NogiBasePageAdapter mPageAdapter;
 
@@ -59,8 +59,8 @@ public class MainActivity extends BaseActivity {
         mPageAdapter = new NogiBasePageAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mPageAdapter);
         mPagerSlidingTabStrip.setViewPager(mViewPager);
-        final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
-                .getDisplayMetrics());
+        final int pageMargin = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
         mViewPager.setPageMargin(pageMargin);
 
         mPagerSlidingTabStrip.setTextColor(Color.WHITE);

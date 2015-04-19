@@ -15,9 +15,11 @@ import org.apache.http.Header;
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.adapters.FeedListAdapter;
 import shts.jp.android.nogifeed.api.AsyncRssClient;
+import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.listener.RssClientFinishListener;
 import shts.jp.android.nogifeed.models.Entries;
 import shts.jp.android.nogifeed.models.Entry;
+import shts.jp.android.nogifeed.utils.IntentUtils;
 import shts.jp.android.nogifeed.utils.UrlUtils;
 
 // TODO: 通信ができない場合、エラー表示を行う
@@ -61,7 +63,8 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
 
     private void getAllFeeds() {
 
-        boolean ret = AsyncRssClient.read(getActivity().getApplicationContext(), UrlUtils.FEED_ALL_URL, new RssClientFinishListener() {
+        boolean ret = AsyncRssClient.read(getActivity().getApplicationContext(),
+                UrlUtils.FEED_ALL_URL, new RssClientFinishListener() {
             @Override
             public void onSuccessWrapper(int statusCode, Header[] headers, Entries entries) {
                 // do nothing. set up feed at onFinish()
@@ -74,7 +77,7 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
 
             @Override
             public void onFinish(Entries entries) {
-                shts.jp.android.nogifeed.common.Logger.i("getAllFeed()", "get all member feed : size(" + entries.size() + ")");
+                Logger.v("getAllFeed()", "get all member feed : size(" + entries.size() + ")");
                 if (entries == null || entries.isEmpty()) {
                     // Show error toast
                     Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
@@ -100,14 +103,14 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
         }
     }
 
-    private void setupAdapter(shts.jp.android.nogifeed.models.Entries entries) {
-        mFeedListAdapter = new shts.jp.android.nogifeed.adapters.FeedListAdapter(getActivity(), entries);
+    private void setupAdapter(Entries entries) {
+        mFeedListAdapter = new FeedListAdapter(getActivity(), entries);
         mAllFeedList.setAdapter(mFeedListAdapter);
         mAllFeedList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Entry entry = (Entry) mAllFeedList.getItemAtPosition(position);
-                shts.jp.android.nogifeed.utils.IntentUtils.startBlogActivity(getActivity(), entry);
+                IntentUtils.startBlogActivity(getActivity(), entry);
             }
         });
     }
