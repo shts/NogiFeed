@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.fragments.BlogFragment;
@@ -46,6 +47,7 @@ public class BlogActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // TODO: mEntryがnullの場合ブログURLからEntryオブジェクトを生成する必要がある
         new MenuInflater(this).inflate(R.menu.activity_blog, menu);
         return super.onCreateOptionsMenu(menu);
     }
