@@ -1,5 +1,6 @@
 package shts.jp.android.nogifeed.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -26,6 +27,8 @@ import shts.jp.android.nogifeed.utils.UrlUtils;
 // 現在は Exception が発生する
 // http://www.google.com/design/spec/whats-new/whats-new.html
 public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+
+    private static final String TAG = AllFeedListFragment.class.getSimpleName();
 
     private ListView mAllFeedList;
     private FeedListAdapter mFeedListAdapter;
@@ -77,10 +80,18 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
 
             @Override
             public void onFinish(Entries entries) {
-                Logger.v("getAllFeed()", "get all member feed : size(" + entries.size() + ")");
+                Logger.v("getAllFeed()", "get all member feed : size(" +
+                        (entries == null ? "null" : entries.size()) + ")");
+
+                // check Activity life cycle
+                final Activity activity = getActivity();
+                if (activity == null) {
+                    Logger.w(TAG, "activity already finished");
+                    return;
+                }
                 if (entries == null || entries.isEmpty()) {
                     // Show error toast
-                    Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
+                    Toast.makeText(activity, R.string.feed_failure,
                             Toast.LENGTH_SHORT).show();
                 } else {
                     // refresh feed list
