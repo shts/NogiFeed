@@ -88,6 +88,11 @@ public class ThumbnailDownloadClient {
             return false;
         }
 
+        if (entry == null) {
+            Logger.w(TAG, "cannot download because of entry is null.");
+            return false;
+        }
+
         if (listener == null) {
             Logger.w(TAG, "cannot download handler is null.");
             return false;
