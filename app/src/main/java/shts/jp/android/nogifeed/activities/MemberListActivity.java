@@ -20,7 +20,7 @@ public class MemberListActivity extends ConfigureActivity {
                 = new AllMemberGridListFragment();
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, allMemberGridListFragment, AllMemberGridListFragment.class.getSimpleName());
+        ft.replace(R.id.container, allMemberGridListFragment, MemberListActivity.class.getSimpleName());
         ft.commit();
 
         setupActionBar();

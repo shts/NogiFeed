@@ -10,11 +10,13 @@ public class NogiFeedContent {
     /**
      * Version 1. add TABLE_FAVORITE
      * Version 2. add TABLE_PROFILE_WIDGET
+     *            add TABLE_UNREAD
      */
     public static final int DATABASE_VERSION = 2;
 
     public static final String TABLE_FAVORITE = "favorite";
     public static final String TABLE_PROFILE_WIDGET = "profile_widget";
+    public static final String TABLE_UNREAD = "unread";
 
     public static final class Favorite implements BaseColumns {
     	
@@ -44,7 +46,7 @@ public class NogiFeedContent {
 
         // Place Table Columns names
         public static final String KEY_ID = "_id";
-        public static final String KEY_WIDGET_ID = "_id";
+        public static final String KEY_WIDGET_ID = "widget_id";
         public static final String KEY_NAME = "name";
         public static final String KEY_IMAGE_URL = "image_url";
         public static final String KEY_ARTICLE_URL = "article_image";
@@ -52,10 +54,31 @@ public class NogiFeedContent {
 
         public static final String[] sProjection = {
                 ProfileWidget.KEY_ID,
+                ProfileWidget.KEY_WIDGET_ID,
                 ProfileWidget.KEY_NAME,
                 ProfileWidget.KEY_IMAGE_URL,
                 ProfileWidget.KEY_ARTICLE_URL,
                 ProfileWidget.KEY_FEED_URL,
+        };
+    }
+
+    public static final class UnRead implements BaseColumns {
+
+        public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/unread");
+        public static final Uri CONTENT_FILTER_URI = Uri.parse("content://" + AUTHORITY + "/unread/filter");
+
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.nogifeed.unread";
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.nogifeed.unread";
+
+        // Place Table Columns names
+        public static final String KEY_ID = "_id";
+        public static final String KEY_ARTICLE_URL = "article_url";
+        public static final String KEY_FEED_URL = "feed_url";
+
+        public static final String[] sProjection = {
+                UnRead.KEY_ID,
+                UnRead.KEY_ARTICLE_URL,
+                UnRead.KEY_FEED_URL,
         };
     }
 }

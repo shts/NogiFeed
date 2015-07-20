@@ -21,6 +21,7 @@ import shts.jp.android.nogifeed.activities.ConfigureActivity;
 import shts.jp.android.nogifeed.adapters.BindableAdapter;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.models.Member;
+import shts.jp.android.nogifeed.utils.DataStoreUtils;
 import shts.jp.android.nogifeed.utils.JsoupUtils;
 import shts.jp.android.nogifeed.utils.PicassoHelper;
 
@@ -45,6 +46,12 @@ public class AllMemberGridListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Member member = (Member) mMemberList.getItemAtPosition(i);
+                if (DataStoreUtils.hasAlreadyWidget(
+                        getActivity().getApplicationContext(), member.feedUrl)) {
+                    Toast.makeText(getActivity(), "already set same widget", Toast.LENGTH_SHORT).show();
+                    Logger.w(TAG, "has already set widget feedUrl(" + member.feedUrl + ")");
+                    return;
+                }
                 ConfigureActivity activity = (ConfigureActivity) getActivity();
                 activity.setConfigure(member);
             }

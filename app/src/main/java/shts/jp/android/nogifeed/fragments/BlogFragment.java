@@ -16,6 +16,7 @@ import shts.jp.android.nogifeed.api.ThumbnailDownloadClient;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.listener.DownloadFinishListener;
 import shts.jp.android.nogifeed.models.Entry;
+import shts.jp.android.nogifeed.utils.DataStoreUtils;
 import shts.jp.android.nogifeed.views.dialogs.DownloadConfirmDialog;
 import shts.jp.android.nogifeed.views.notifications.BlogUpdateNotification;
 
@@ -100,8 +101,10 @@ public class BlogFragment extends Fragment {
     }
 
     private class BrowserViewClient extends WebViewClient {
+
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            Logger.d(TAG, "shouldOverrideUrlLoading(WebView, String) in : url(" + url + ")");
             if (Uri.parse(url).getHost().equals("blog.nogizaka46.com")) {
                 Logger.d(TAG, "shouldOverrideUrlLoading : " + true);
                 return super.shouldOverrideUrlLoading(view, url);
@@ -109,7 +112,18 @@ public class BlogFragment extends Fragment {
             Logger.d(TAG, "shouldOverrideUrlLoading : " + false);
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
+
             return true;
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            if (url.contains("smph")) {
+                url = url.replace("smph/", "");
+            }
+            DataStoreUtils.readArticle(
+                    getActivity().getApplicationContext(), url);
+            super.onPageFinished(view, url);
         }
     }
 

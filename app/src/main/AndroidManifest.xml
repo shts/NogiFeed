@@ -127,6 +127,7 @@
             </intent-filter>
         </receiver>
 
+        <!-- for Widget -->
         <receiver android:name="shts.jp.android.nogifeed.widget.ProfileWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

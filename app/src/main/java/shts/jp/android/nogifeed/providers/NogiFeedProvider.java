@@ -16,12 +16,14 @@ public class NogiFeedProvider extends ContentProvider {
 
 	private static final int FAVORITE = 1;
     private static final int PROFILE_WIDGET = 2;
+    private static final int UNREAD = 3;
 
 	private static final UriMatcher URI_MATCHER;
 	static {
 		URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 		URI_MATCHER.addURI(NogiFeedContent.AUTHORITY, NogiFeedContent.TABLE_FAVORITE, FAVORITE);
         URI_MATCHER.addURI(NogiFeedContent.AUTHORITY, NogiFeedContent.TABLE_PROFILE_WIDGET, PROFILE_WIDGET);
+        URI_MATCHER.addURI(NogiFeedContent.AUTHORITY, NogiFeedContent.TABLE_UNREAD, UNREAD);
 	}
 	private NogiFeedDatabaseHelper mDBHelper;
 
@@ -33,7 +35,9 @@ public class NogiFeedProvider extends ContentProvider {
 
 	@Override
 	public Uri insert(Uri uri, ContentValues initialValues) {
-		if (URI_MATCHER.match(uri) != FAVORITE && URI_MATCHER.match(uri) != PROFILE_WIDGET) {
+		if ((URI_MATCHER.match(uri) != FAVORITE)
+                && (URI_MATCHER.match(uri) != PROFILE_WIDGET)
+                && (URI_MATCHER.match(uri) != UNREAD)) {
 			throw new IllegalArgumentException("Unknown URL *** " + uri);
 		}
 
@@ -66,6 +70,15 @@ public class NogiFeedProvider extends ContentProvider {
                 return newUri;
             }
             break;
+        case UNREAD:
+            rowID = db.replace(NogiFeedContent.TABLE_UNREAD, "NULL", values);
+
+            if (rowID > 0) {
+                Uri newUri = ContentUris.withAppendedId(NogiFeedContent.UnRead.CONTENT_URI, rowID);
+                getContext().getContentResolver().notifyChange(newUri, null);
+                return newUri;
+            }
+            break;
 		}
 		throw new SQLException("Failed to insert row into " + uri);
 	}
@@ -92,6 +105,14 @@ public class NogiFeedProvider extends ContentProvider {
                         + NogiFeedContent.ProfileWidget.KEY_ID + " like '%'", null);
             }
             break;
+        case UNREAD:
+            if (whereClause != null || whereArgs != null) {
+                count = db.delete(NogiFeedContent.TABLE_UNREAD, whereClause, whereArgs);
+            } else {
+                count = db.delete(NogiFeedContent.TABLE_UNREAD, " "
+                        + NogiFeedContent.UnRead.KEY_ID + " like '%'", null);
+            }
+            break;
 		default:
 			throw new IllegalArgumentException("Unknown URL " + uri);
 		}
@@ -111,6 +132,9 @@ public class NogiFeedProvider extends ContentProvider {
 			break;
         case PROFILE_WIDGET:
             count = db.update(NogiFeedContent.TABLE_PROFILE_WIDGET, values, where, whereArgs);
+            break;
+        case UNREAD:
+            count = db.update(NogiFeedContent.TABLE_UNREAD, values, where, whereArgs);
             break;
 		default:
 			throw new IllegalArgumentException("Unknown URL " + uri);
@@ -145,6 +169,14 @@ public class NogiFeedProvider extends ContentProvider {
                 orderBy = sortOrder;
             }
             break;
+        case UNREAD:
+            qb.setTables(NogiFeedContent.TABLE_UNREAD);
+            if (TextUtils.isEmpty(sortOrder)) {
+                orderBy = NogiFeedContent.UnRead.KEY_ID + " DESC";
+            } else {
+                orderBy = sortOrder;
+            }
+            break;
 		default:
 			throw new IllegalArgumentException("Unknown URL " + uri);
 		}
@@ -163,6 +195,8 @@ public class NogiFeedProvider extends ContentProvider {
 			return NogiFeedContent.Favorite.CONTENT_TYPE;
         case PROFILE_WIDGET:
             return NogiFeedContent.ProfileWidget.CONTENT_TYPE;
+        case UNREAD:
+            return NogiFeedContent.UnRead.CONTENT_TYPE;
 		default:
 			throw new IllegalArgumentException("Unknown URL " + uri);
 		}

@@ -14,14 +14,13 @@
             android:layout_gravity="center_horizontal"
             />
         <TextView
-            android:id="@+id/counter"
-            android:padding="5dp"
-            android:layout_gravity="top|right"
+            android:padding="3dp"
+            android:layout_gravity="center|right"
             android:gravity="center"
+            android:id="@+id/count"
             android:textColor="#fff"
-            android:textSize="12dp"
             android:text="1"
-            android:background="@color/nogifeed_dark"
+            android:background="#d3321b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </FrameLayout>
