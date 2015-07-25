@@ -10,6 +10,7 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import shts.jp.android.nogifeed.BuildConfig;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.providers.NogiFeedContent;
 import shts.jp.android.nogifeed.utils.DataStoreUtils;
@@ -45,8 +46,9 @@ public class FromParseReceiver extends BroadcastReceiver {
             // show notification
             BlogUpdateNotification.show(context, url, title, author);
 
-            // TODO: debug
-            DataStoreUtils.allUnReadArticle(context);
+            if (BuildConfig.DEBUG) {
+                DataStoreUtils.allUnReadArticle(context);
+            }
 
         } catch (JSONException e) {
             Logger.e("failed to Parse : ", e.toString());

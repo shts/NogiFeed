@@ -27,26 +27,27 @@ public class NogiFeedApplication extends Application {
 
         ProfileWidgetProvider.initialize(getApplicationContext());
 
-        // TODO: debug
-        registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                try {
-                    // http://blog.nogizaka46.com/mai.shiraishi/2015/07/024287.php
-                    JSONObject json = new JSONObject();
-                    json.put("_url", "http://blog.nogizaka46.com/mai.shiraishi/2015/07/024287.php");
-                    json.put("_title", "debug_title");
-                    json.put("_author", "debug_auther");
+        if (BuildConfig.DEBUG) {
+            registerReceiver(new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    try {
+                        // http://blog.nogizaka46.com/mai.shiraishi/2015/07/024287.php
+                        JSONObject json = new JSONObject();
+                        json.put("_url", "http://blog.nogizaka46.com/mai.shiraishi/2015/07/024287.php");
+                        json.put("_title", "debug_title");
+                        json.put("_author", "debug_auther");
 
-                    Intent i = new Intent("android.shts.jp.nogifeed.UPDATE_STATUS");
-                    i.putExtra("com.parse.Data", json.toString());
-                    sendBroadcast(i);
+                        Intent i = new Intent("android.shts.jp.nogifeed.UPDATE_STATUS");
+                        i.putExtra("com.parse.Data", json.toString());
+                        sendBroadcast(i);
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        }, new IntentFilter("jp.shts.nogifeed.action.DEBUG"));
+            }, new IntentFilter("jp.shts.nogifeed.action.DEBUG"));
+        }
     }
 
     public void parseInstllation() {
