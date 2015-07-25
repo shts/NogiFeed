@@ -16,6 +16,7 @@ import shts.jp.android.nogifeed.models.Entry;
 public class AtomRssParser {
 
 	private static final String TAG = AtomRssParser.class.getSimpleName();
+    private static final boolean DEBUG = false;
 
 	private static final String TAG_ENTRY = "entry";
 	private static final String TAG_TITLE = "title";
@@ -41,22 +42,22 @@ public class AtomRssParser {
 				String tag = null;
 				switch (eventType) {
 				case XmlPullParser.START_DOCUMENT:
-                    Logger.v(TAG, "parse start");
+                    if (DEBUG) Logger.v(TAG, "parse start");
 					break;
 
 				case XmlPullParser.START_TAG:
 					tag = parser.getName();
-                    Logger.v(TAG, "TAG: " + tag);
+                    if (DEBUG) Logger.v(TAG, "TAG: " + tag);
 
 					if (tag.equals(TAG_ENTRY)) {
 						entry = new Entry();
-                        Logger.v(TAG, "entry");
+                        if (DEBUG) Logger.v(TAG, "entry");
 
 					} else if (tag.equals(TAG_TITLE)) {
 						if (entry != null) {
 							String text = parser.nextText();
 							entry.title = text;
-                            Logger.v(TAG, "title " + text);
+                            if (DEBUG) Logger.v(TAG, "title " + text);
 						}
 
 					} else if (tag.equals(TAG_LINK)) {
@@ -65,7 +66,7 @@ public class AtomRssParser {
 							for (int i = 0; i < attrCount; i++) {
 								String text = parser.getAttributeValue(i);
                                 entry.link = text;
-                                Logger.v(TAG, "link " + text);
+                                if (DEBUG) Logger.v(TAG, "link " + text);
 							}
 						}
 
@@ -73,46 +74,46 @@ public class AtomRssParser {
 						if (entry != null) {
 							String text = parser.nextText();
 							entry.id = text;
-                            Logger.v(TAG, "id " + text);
+                            if (DEBUG) Logger.v(TAG, "id " + text);
 						}
 
 					} else if (tag.equals(TAG_PUBLISHED)) {
 						if (entry != null) {
 							String text = parser.nextText();
 							entry.published = text;
-                            Logger.v(TAG, "published " + text);
+                            if (DEBUG) Logger.v(TAG, "published " + text);
 						}
 
 					} else if (tag.equals(TAG_UPDATED)) {
 						if (entry != null) {
 							String text = parser.nextText();
 							entry.updated = text;
-                            Logger.v(TAG, "updated " + text);
+                            if (DEBUG) Logger.v(TAG, "updated " + text);
 						}
 
 					} else if (tag.equals(TAG_SUMMARY)) {
 						if (entry != null) {
 							String text = parser.nextText();
 							entry.summary = text;
-                            Logger.v(TAG, "summary " + text);
+                            if (DEBUG) Logger.v(TAG, "summary " + text);
 						}
 
 					} else if (tag.equals(TAG_NAME)) {
 						if (entry != null) {
 							String text = parser.nextText();
 							entry.name = text;
-                            Logger.v(TAG, "name " + text);
+                            if (DEBUG) Logger.v(TAG, "name " + text);
 						}
 
 					} else if (tag.equals(TAG_CONTENT)) {
 						if (entry != null) {
 							String text = parser.nextText();
 							entry.content = StringUtils.ignoreCdataTagWithCrlf(text); // without CDATA tag
-                            Logger.v(TAG, "content " + text);
+                            if (DEBUG) Logger.v(TAG, "content " + text);
 						}
 
 					} else {
-                        Logger.v(TAG, "cannot find tag: " + tag);
+                        if (DEBUG) Logger.v(TAG, "cannot find tag: " + tag);
 					}
 					break;
 
@@ -122,18 +123,18 @@ public class AtomRssParser {
 						entries.add(entry);
 						entry = null;
 					}
-                    Logger.v(TAG, "END_TAG : " + tag);
+                    if (DEBUG) Logger.v(TAG, "END_TAG : " + tag);
 					break;
 				}
 				eventType = parser.next();
 			}
-            Logger.v(TAG, "parse finish");
+            if (DEBUG) Logger.v(TAG, "parse finish");
 
 		} catch (XmlPullParserException e) {
-			Log.e(TAG, "parse error ! : " + e);
+            if (DEBUG) Log.e(TAG, "parse error ! : " + e);
 			return null;
 		} catch (IOException e) {
-			Log.e(TAG, "parse error ! : " + e);
+            if (DEBUG) Log.e(TAG, "parse error ! : " + e);
 			return null;
 		}
 		return entries;
