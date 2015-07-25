@@ -31,6 +31,11 @@ public class ThumbnailDownloadClient {
     public static boolean get(final Context context, final List<String> imageUrls,
                               final Entry entry, final DownloadFinishListener listener) {
 
+        if (listener == null) {
+            Logger.w(TAG, "cannot download listener is null.");
+            return false;
+        }
+
         if (!NetworkUtils.enableNetwork(context)) {
             Logger.w(TAG, "cannot download because of network disconnected.");
             return false;
@@ -43,11 +48,6 @@ public class ThumbnailDownloadClient {
 
         if (entry == null) {
             Logger.w(TAG, "cannot download because of entry is null.");
-            return false;
-        }
-
-        if (listener == null) {
-            Logger.w(TAG, "cannot download listener is null.");
             return false;
         }
 
@@ -78,6 +78,11 @@ public class ThumbnailDownloadClient {
     public static boolean get(final Context context, final String imageUrl,
                               final Entry entry, final DownloadFinishListener listener) {
 
+        if (listener == null) {
+            Logger.w(TAG, "cannot download listener is null.");
+            return false;
+        }
+
         if (!NetworkUtils.enableNetwork(context)) {
             Logger.w(TAG, "cannot download because of network disconnected.");
             return false;
@@ -90,11 +95,6 @@ public class ThumbnailDownloadClient {
 
         if (entry == null) {
             Logger.w(TAG, "cannot download because of entry is null.");
-            return false;
-        }
-
-        if (listener == null) {
-            Logger.w(TAG, "cannot download handler is null.");
             return false;
         }
 
