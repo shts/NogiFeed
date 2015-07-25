@@ -14,12 +14,16 @@ public class PicassoHelper {
     public static void load(Context context, ImageView target, String url) {
         Picasso.with(context)
                 .load(url)
+                .fit()
+                .centerCrop()
                 .into(target);
     }
 
     public static void loadAndCircleTransform(Context context, ImageView target, String url) {
         Picasso.with(context)
                 .load(url)
+                .fit()
+                .centerCrop()
                 .transform(CIRCLE_TRANSFORMATION)
                 .into(target);
     }
