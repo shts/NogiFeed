@@ -53,7 +53,7 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
         // SwipeRefreshLayoutの設定
         mMultiSwipeRefreshLayout = (MultiSwipeRefreshLayout) view.findViewById(R.id.refresh);
         mMultiSwipeRefreshLayout.setOnRefreshListener(this);
-        mMultiSwipeRefreshLayout.setSwipeableChildren(R.id.refresh, R.id.empty_view);
+        mMultiSwipeRefreshLayout.setSwipeableChildren(R.id.recyclerview, R.id.empty_view);
         mMultiSwipeRefreshLayout.setColorSchemeResources(
                 R.color.nogifeed, R.color.nogifeed, R.color.nogifeed, R.color.nogifeed);
 
