@@ -46,7 +46,7 @@ public class ThumbnailDownloadClient {
             return false;
         }
 
-        if (entry == null) {
+        if (entry == null || TextUtils.isEmpty(entry.content)) {
             Logger.w(TAG, "cannot download because of entry is null.");
             return false;
         }
@@ -93,7 +93,7 @@ public class ThumbnailDownloadClient {
             return false;
         }
 
-        if (entry == null) {
+        if (entry == null || TextUtils.isEmpty(entry.content)) {
             Logger.w(TAG, "cannot download because of entry is null.");
             return false;
         }
