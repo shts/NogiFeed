@@ -16,15 +16,15 @@ public class DownloadConfirmDialog extends DialogFragment {
     /**
      * Callbacks for dialog button click
      */
-    public interface Callbakcs {
+    public interface Callbacks {
         public void onClickPositiveButton();
         public void onClickNegativeButton();
     }
 
-    private Callbakcs mCallbakcs;
+    private Callbacks mCallbacks;
 
-    public void setCallbacks(Callbakcs callbacks) {
-        mCallbakcs = callbacks;
+    public void setCallbacks(Callbacks callbacks) {
+        mCallbacks = callbacks;
     }
 
     @NonNull
@@ -38,8 +38,8 @@ public class DownloadConfirmDialog extends DialogFragment {
                 new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (mCallbakcs != null) {
-                    mCallbakcs.onClickPositiveButton();
+                if (mCallbacks != null) {
+                    mCallbacks.onClickPositiveButton();
                 }
             }
         });
@@ -47,8 +47,8 @@ public class DownloadConfirmDialog extends DialogFragment {
                 new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (mCallbakcs != null) {
-                    mCallbakcs.onClickNegativeButton();
+                if (mCallbacks != null) {
+                    mCallbacks.onClickNegativeButton();
                 }
             }
         });

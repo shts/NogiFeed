@@ -79,11 +79,14 @@ public class BlogFragment extends Fragment {
 
     private void showDownloadConfirmDialog(WebView webView) {
         WebView.HitTestResult hr = webView.getHitTestResult();
+        Logger.v(TAG, "showDownloadConfirmDialog() in : hr type(" + hr.getType() + ")");
 
-        if (WebView.HitTestResult.IMAGE_TYPE == hr.getType()) {
+        if ((WebView.HitTestResult.IMAGE_TYPE == hr.getType())
+                || (WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE == hr.getType())) {
             final String url = hr.getExtra();
+            Logger.v(TAG, "showDownloadConfirmDialog() in : url(" + url + ")");
             DownloadConfirmDialog confirmDialog = new DownloadConfirmDialog();
-            confirmDialog.setCallbacks(new DownloadConfirmDialog.Callbakcs() {
+            confirmDialog.setCallbacks(new DownloadConfirmDialog.Callbacks() {
                 @Override
                 public void onClickPositiveButton() {
                     if (mEntry == null || TextUtils.isEmpty(mEntry.content)) {
