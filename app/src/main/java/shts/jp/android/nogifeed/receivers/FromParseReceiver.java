@@ -33,11 +33,11 @@ public class FromParseReceiver extends BroadcastReceiver {
             Log.i(TAG, json.toString());
 
             //取り出したデータを変数へ
-            String url = json.getString("_url");
-            String title = json.getString("_title");
-            String author = json.getString("_author");
+            final String url = json.getString("_url");
+            final String title = json.getString("_title");
+            final String author = json.getString("_author");
 
-            Log.i(TAG, "url(" + url + ") title(" + title
+            Log.d(TAG, "url(" + url + ") title(" + title
                     + ") author(" + author + ")");
 
             // save unread article

@@ -34,7 +34,7 @@ public class NogiFeedApplication extends Application {
                     try {
                         // http://blog.nogizaka46.com/mai.shiraishi/2015/07/024287.php
                         JSONObject json = new JSONObject();
-                        json.put("_url", "http://blog.nogizaka46.com/mai.shiraishi/2015/07/024287.php");
+                        json.put("_url", "http://blog.nogizaka46.com/karin.itou/2015/01/022252.php");
                         json.put("_title", "debug_title");
                         json.put("_author", "debug_auther");
 

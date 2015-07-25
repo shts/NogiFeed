@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.fragments.BlogFragment;
@@ -25,13 +27,11 @@ public class BlogActivity extends BaseActivity {
         setContentView(R.layout.activity_blog);
 
         Bundle bundle = new Bundle();
-        Entry entry = getIntent().getParcelableExtra(Entry.KEY);
-        if (entry != null) {
-            bundle.putParcelable(Entry.KEY, entry);
-        } else {
-            String blogUrl = getIntent().getStringExtra(BlogUpdateNotification.KEY);
-            bundle.putString(BlogUpdateNotification.KEY, blogUrl);
-        }
+        mEntry = getIntent().getParcelableExtra(Entry.KEY);
+        bundle.putParcelable(Entry.KEY, mEntry);
+
+        String blogUrl = getIntent().getStringExtra(BlogUpdateNotification.KEY);
+        bundle.putString(BlogUpdateNotification.KEY, blogUrl);
 
         BlogFragment blogFragment = new BlogFragment();
         blogFragment.setArguments(bundle);
@@ -40,19 +40,20 @@ public class BlogActivity extends BaseActivity {
         ft.commit();
 
         setupActionBar();
-
-        mEntry = entry;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // TODO: mEntryがnullの場合ブログURLからEntryオブジェクトを生成する必要がある
         new MenuInflater(this).inflate(R.menu.activity_blog, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (mEntry == null || TextUtils.isEmpty(mEntry.content)) {
+            Toast.makeText(getApplicationContext(), R.string.toast_failed_download, Toast.LENGTH_SHORT).show();
+            return super.onOptionsItemSelected(item);
+        }
         ImageDownloader.downloads(getApplicationContext(), mEntry);
         return super.onOptionsItemSelected(item);
     }

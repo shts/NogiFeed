@@ -1,5 +1,7 @@
 package shts.jp.android.nogifeed.models;
 
+import android.text.TextUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,9 +22,16 @@ public class Entries extends ArrayList<Entry> {
         return sb.toString();
     }
 
-    public synchronized Entries cat(Entries entries) {
-        ArrayUtils.concatenation(entries, this);
-        return this;
+    public Entry getEntryFrom(String article) {
+        for (Entry e : this) {
+            if (e == null || TextUtils.isEmpty(e.link)) {
+                continue;
+            }
+            if (e.link.equals(article)) {
+                return e;
+            }
+        }
+        return null;
     }
 
     public synchronized Entries sort() {

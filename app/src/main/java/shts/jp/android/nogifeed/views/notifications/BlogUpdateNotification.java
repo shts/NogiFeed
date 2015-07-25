@@ -11,9 +11,15 @@ import android.widget.RemoteViews;
 
 import com.squareup.picasso.Picasso;
 
+import org.apache.http.Header;
+
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.BlogActivity;
+import shts.jp.android.nogifeed.api.AsyncRssClient;
 import shts.jp.android.nogifeed.common.Logger;
+import shts.jp.android.nogifeed.listener.RssClientFinishListener;
+import shts.jp.android.nogifeed.models.Entries;
+import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.utils.PreferencesUtils;
 import shts.jp.android.nogifeed.utils.UrlUtils;
 import shts.jp.android.nogifeed.views.transformations.CircleTransformation;
@@ -27,14 +33,35 @@ public class BlogUpdateNotification {
     private static final int DEFAULT_NOTIFICATION_ID = 1000;
 
     public static synchronized void show(final Context context, final String url,
-                            final String title, final String author) {
+                                         final String title, final String author) {
+
+        final boolean ret = AsyncRssClient.read(context, UrlUtils.FEED_ALL_URL, new RssClientFinishListener() {
+            @Override
+            public void onSuccessWrapper(int statusCode, Header[] headers, Entries entries) {}
+            @Override
+            public void onFailureWrapper(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {}
+            @Override
+            public void onFinish(Entries entries) {
+                show(context, url, title, author, entries.getEntryFrom(url));
+            }
+        });
+        if (!ret) {
+            show(context, url, title, author, null);
+        }
+    }
+
+    public static synchronized void show(final Context context, final String url,
+                            final String title, final String author, final Entry entry) {
         Logger.d(TAG, "url(" + url + ") title(" + title
-                + ") author(" + author + ")");
+                + ") author(" + author + ") entry(" + (entry == null ? "": entry.toString()) + ")");
 
         Intent intent = new Intent(context, BlogActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(KEY, url);
+        if (entry != null) {
+            intent.putExtra(Entry.KEY, entry);
+        }
 
         final int notificationId = getNotificationId(context);
 

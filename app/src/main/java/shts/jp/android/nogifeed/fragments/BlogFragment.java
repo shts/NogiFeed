@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.api.ThumbnailDownloadClient;
@@ -39,9 +41,7 @@ public class BlogFragment extends Fragment {
         if (savedInstanceState == null) {
             Bundle bundle = getArguments();
             mEntry = bundle.getParcelable(Entry.KEY);
-            if (mEntry == null) {
-                mBlogUrl = bundle.getString(BlogUpdateNotification.KEY);
-            }
+            mBlogUrl = bundle.getString(BlogUpdateNotification.KEY);
         } else {
             mBeforeUrl = savedInstanceState.getString(KEY_PAGE_URL);
         }
@@ -86,6 +86,10 @@ public class BlogFragment extends Fragment {
             confirmDialog.setCallbacks(new DownloadConfirmDialog.Callbakcs() {
                 @Override
                 public void onClickPositiveButton() {
+                    if (mEntry == null || TextUtils.isEmpty(mEntry.content)) {
+                        Toast.makeText(getActivity(), R.string.toast_failed_download, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     ThumbnailDownloadClient.get(
                             getActivity(), url, mEntry, new DownloadFinishListener(getActivity(), 1));
                     // Toast.makeText(getActivity(), R.string.toast_download_complete, Toast.LENGTH_SHORT).show();
@@ -136,6 +140,7 @@ public class BlogFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putString(KEY_PAGE_URL, mWebView.getUrl());
+        outState.putParcelable(Entry.KEY, mEntry);
         super.onSaveInstanceState(outState);
     }
 
