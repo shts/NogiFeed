@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.fragments.AllFeedListFragment;
 import shts.jp.android.nogifeed.fragments.FavoriteMemberFeedListFragment;
+import shts.jp.android.nogifeed.fragments.NewsFeedListFragment;
 import shts.jp.android.nogifeed.views.PagerSlidingTabStrip;
 
 /**

@@ -8,8 +8,10 @@ import org.apache.http.protocol.HTTP;
 
 import shts.jp.android.nogifeed.activities.BlogActivity;
 import shts.jp.android.nogifeed.activities.MemberDetailActivity;
+import shts.jp.android.nogifeed.activities.NewsBrowseActivity;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.Member;
+import shts.jp.android.nogifeed.models.News;
 
 public class IntentUtils {
 
@@ -53,6 +55,12 @@ public class IntentUtils {
     public static void startBlogActivity(Context context, Entry entry) {
         Intent i = new Intent(context, BlogActivity.class);
         i.putExtra(Entry.KEY, entry);
+        context.startActivity(i);
+    }
+
+    public static void startNewsActivity(Context context, News news) {
+        Intent i = new Intent(context, NewsBrowseActivity.class);
+        i.putExtra(News.KEY, news);
         context.startActivity(i);
     }
 

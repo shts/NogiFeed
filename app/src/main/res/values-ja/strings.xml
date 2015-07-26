@@ -4,6 +4,7 @@
     <string name="app_name">NogiFeed</string>
     <string name="action_about">"このアプリについて"</string>
     <string name="action_settings">Settings</string>
+    <string name="action_news">ニュース</string>
 
     <!-- activity all members -->
     <string name="failed_get_all_members">"メンバーが取得できませんでした。ネットワークの状態を確認してください"</string>
