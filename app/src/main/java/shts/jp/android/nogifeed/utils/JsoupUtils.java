@@ -252,7 +252,7 @@ public class JsoupUtils {
         return getNewsFeed(newsFeedUrl, listener);
     }
 
-    public static boolean getNewsFeed(final String url,
+    private static boolean getNewsFeed(final String url,
                                       final GetNewsFeedListener listener) {
 
         new Thread(new Runnable() {
@@ -284,7 +284,7 @@ public class JsoupUtils {
         return true;
     }
 
-    public static ArrayList<News> getNewsFeed(final String url) throws IOException {
+    private static ArrayList<News> getNewsFeed(final String url) throws IOException {
         final ArrayList<News> newsList = new ArrayList<News>();
 
         Document document = Jsoup.connect(url).get();
