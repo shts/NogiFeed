@@ -27,23 +27,43 @@ public class News implements Parcelable {
             public int getIconResource() {
                 return R.drawable.ic_news_media;
             }
+
+            @Override
+            public String getNewsUrl() {
+                return "http://www.nogizaka46.com/smph/news/media/";
+            }
         },
         EVENT("icon2") {
             @Override
             public int getIconResource() {
                 return R.drawable.ic_news_event;
             }
+
+            @Override
+            public String getNewsUrl() {
+                return "http://www.nogizaka46.com/smph/news/events/";
+            }
         },
-        RELEASE("icon2") {
+        RELEASE("icon3") {
             @Override
             public int getIconResource() {
                 return R.drawable.ic_news_release;
+            }
+
+            @Override
+            public String getNewsUrl() {
+                return "http://www.nogizaka46.com/smph/news/releases/";
             }
         },
         OTHER("icon4") {
             @Override
             public int getIconResource() {
                 return R.drawable.ic_news_other;
+            }
+
+            @Override
+            public String getNewsUrl() {
+                return "http://www.nogizaka46.com/smph/news/etc/";
             }
         },
         ;
@@ -63,6 +83,7 @@ public class News implements Parcelable {
             return null;
         }
         public abstract int getIconResource();
+        public abstract String getNewsUrl();
     }
 
     public Type getNewsType() {

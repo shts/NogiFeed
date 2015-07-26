@@ -230,8 +230,8 @@ public class JsoupUtils {
         return -1;
     }
 
-    public static boolean getNewsFeed(final Context context, final GetNewsFeedListener listener) {
-
+    public static boolean getNewsFeed(final Context context, final News.Type newsType,
+                                      final GetNewsFeedListener listener) {
         if (listener == null) {
             Logger.w(TAG, "listener is null.");
             return false;
@@ -242,11 +242,24 @@ public class JsoupUtils {
             return false;
         }
 
+        String newsFeedUrl = null;
+        if (newsType == null) {
+            newsFeedUrl = URL_NEWS;
+        } else {
+            newsFeedUrl = newsType.getNewsUrl();
+        }
+
+        return getNewsFeed(newsFeedUrl, listener);
+    }
+
+    public static boolean getNewsFeed(final String url,
+                                      final GetNewsFeedListener listener) {
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    final List<News> newsList = getNewsFeed();
+                    final List<News> newsList = getNewsFeed(url);
                     if (newsList != null && !newsList.isEmpty()) {
                         HANDLER.post(new Runnable() {
                             @Override
@@ -271,10 +284,10 @@ public class JsoupUtils {
         return true;
     }
 
-    public static ArrayList<News> getNewsFeed() throws IOException {
+    public static ArrayList<News> getNewsFeed(final String url) throws IOException {
         final ArrayList<News> newsList = new ArrayList<News>();
 
-        Document document = Jsoup.connect(URL_NEWS).get();
+        Document document = Jsoup.connect(url).get();
         Element body = document.body();
         Element dl = body.getElementsByTag("dl").get(0);
 
@@ -286,8 +299,8 @@ public class JsoupUtils {
             }
             final String date = dl.getElementsByTag("dt").get(i).text();
             final String title = dl.getElementsByTag("dd").get(i).text();
-            final String url = dl.getElementsByTag("a").get(i).attr("href");
-            newsList.add(new News(date, iconTypeText, url, title));
+            final String newsUrl = dl.getElementsByTag("a").get(i).attr("href");
+            newsList.add(new News(date, iconTypeText, newsUrl, title));
         }
         return newsList;
     }

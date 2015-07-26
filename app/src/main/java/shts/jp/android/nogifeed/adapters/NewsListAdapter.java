@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.models.News;
 
 public class NewsListAdapter extends BindableAdapter<News> {
@@ -50,6 +51,8 @@ public class NewsListAdapter extends BindableAdapter<News> {
             final News.Type type = news.getNewsType();
             if (type != null) {
                 holder.iconImageView.setImageResource(news.getNewsType().getIconResource());
+            } else {
+                Logger.w(TAG, "news type is null. iconType(" + news.iconType + ")");
             }
         }
     }

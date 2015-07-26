@@ -47,7 +47,7 @@ public class NewsFeedListFragment extends Fragment implements SwipeRefreshLayout
     private void getNewsFeed() {
 
         final boolean ret = JsoupUtils.getNewsFeed(getActivity().getApplicationContext(),
-                new JsoupUtils.GetNewsFeedListener() {
+                null/* all news feed */, new JsoupUtils.GetNewsFeedListener() {
             @Override
             public void onSuccess(List<News> newsList) {
                 setupAdapter(newsList);
