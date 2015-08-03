@@ -14,10 +14,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
+import shts.jp.android.nogifeed.BuildConfig;
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.api.AsyncBlogFeedClient;
+import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.fragments.AllFeedListFragment;
 import shts.jp.android.nogifeed.fragments.FavoriteMemberFeedListFragment;
-import shts.jp.android.nogifeed.fragments.NewsFeedListFragment;
+import shts.jp.android.nogifeed.models.BlogEntry;
 import shts.jp.android.nogifeed.views.PagerSlidingTabStrip;
 
 /**
@@ -116,6 +121,21 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (BuildConfig.DEBUG) {
+            final AsyncBlogFeedClient.Target target = new AsyncBlogFeedClient.Target(1, 8);
+            AsyncBlogFeedClient.getBlogEntry(this, target,
+                    new AsyncBlogFeedClient.Callbacks() {
+                        @Override
+                        public void onFinish(ArrayList<BlogEntry> blogEntries) {
+                            Logger.v(TAG, "blogEntries size(" + blogEntries.size() + ")");
+                            for (BlogEntry e : blogEntries) {
+                                Logger.v(TAG, "--------------");
+                                Logger.v(TAG, "blogEntry(" + e.toString() + ")");
+                            }
+                        }
+                    });
+            return super.onOptionsItemSelected(item);
+        }
         // TODO: go to settings
         Intent i = new Intent(this, AboutActivity.class);
         // MemberListActivity
