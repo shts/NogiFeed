@@ -7,17 +7,24 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.activities.BlogActivity;
 import shts.jp.android.nogifeed.api.ThumbnailDownloadClient;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.listener.DownloadFinishListener;
+import shts.jp.android.nogifeed.models.BlogEntry;
 import shts.jp.android.nogifeed.models.Entry;
+import shts.jp.android.nogifeed.services.ImageDownloader;
 import shts.jp.android.nogifeed.utils.DataStoreUtils;
 import shts.jp.android.nogifeed.views.dialogs.DownloadConfirmDialog;
 import shts.jp.android.nogifeed.views.notifications.BlogUpdateNotification;
@@ -28,11 +35,11 @@ public class BlogFragment extends Fragment {
     private static final String TAG = BlogFragment.class.getSimpleName();
     private static final String KEY_PAGE_URL = "key_page_url";
 
-    //private MainActivity mActivity;
     private String mBlogUrl;
-    private Entry mEntry;
+    private BlogEntry mBlogEntry;
     private WebView mWebView;
     private String mBeforeUrl;
+    private String mContent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +47,7 @@ public class BlogFragment extends Fragment {
         setRetainInstance(true);
         if (savedInstanceState == null) {
             Bundle bundle = getArguments();
-            mEntry = bundle.getParcelable(Entry.KEY);
+            mBlogEntry = bundle.getParcelable(BlogEntry.KEY);
             mBlogUrl = bundle.getString(BlogUpdateNotification.KEY);
         } else {
             mBeforeUrl = savedInstanceState.getString(KEY_PAGE_URL);
@@ -62,19 +69,35 @@ public class BlogFragment extends Fragment {
 
         mWebView.setWebViewClient(new BrowserViewClient());
         mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.addJavascriptInterface(new GetHtmlTextInterface(), "HTMLOUT");
 
-        if (mEntry == null) {
+        if (mBlogEntry == null) {
             mWebView.loadUrl(mBlogUrl);
             return view;
         }
 
         if (mBeforeUrl == null) {
-            mWebView.loadUrl(mEntry.link);
+            mWebView.loadUrl(mBlogEntry.url);
+
         } else {
             mWebView.loadUrl(mBeforeUrl);
             mBeforeUrl = null;
         }
+
+        setHasOptionsMenu(true);
+
         return view;
+    }
+
+    class GetHtmlTextInterface {
+        @JavascriptInterface
+        public void processHTML(String html) {
+            mContent = html;
+        }
+    }
+
+    public String getContent() {
+        return mContent;
     }
 
     private void showDownloadConfirmDialog(WebView webView) {
@@ -89,19 +112,19 @@ public class BlogFragment extends Fragment {
             confirmDialog.setCallbacks(new DownloadConfirmDialog.Callbacks() {
                 @Override
                 public void onClickPositiveButton() {
-                    if (mEntry == null || TextUtils.isEmpty(mEntry.content)) {
+                    if (mBlogEntry == null) {
                         Toast.makeText(getActivity(), R.string.toast_failed_download, Toast.LENGTH_SHORT).show();
                         return;
+                    } else {
+                        final Entry entry = mBlogEntry.toEntryObject();
+                        entry.content = getContent();
+                        Logger.i(TAG, "content(" + entry.content + ")");
+                        ThumbnailDownloadClient.get(
+                                getActivity(), url, entry, new DownloadFinishListener(getActivity(), 1));
                     }
-                    ThumbnailDownloadClient.get(
-                            getActivity(), url, mEntry, new DownloadFinishListener(getActivity(), 1));
-                    // Toast.makeText(getActivity(), R.string.toast_download_complete, Toast.LENGTH_SHORT).show();
                 }
-
                 @Override
-                public void onClickNegativeButton() {
-                    // do nothing
-                }
+                public void onClickNegativeButton() {}
             });
             confirmDialog.show(getFragmentManager(), TAG);
         }
@@ -125,25 +148,62 @@ public class BlogFragment extends Fragment {
 
         @Override
         public void onPageFinished(WebView view, String url) {
+            markReadArticle(url);
+            /* This call inject JavaScript into the page which just finished loading. */
+            mWebView.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
+        }
+
+        private void markReadArticle(String url) {
             if (url.contains("smph")) {
                 url = url.replace("smph/", "");
             }
-            DataStoreUtils.readArticle(
-                    getActivity().getApplicationContext(), url);
-            super.onPageFinished(view, url);
+            final Activity activity = getActivity();
+            if (activity != null) {
+                DataStoreUtils.readArticle(
+                        getActivity().getApplicationContext(), url);
+            }
         }
     }
 
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        new MenuInflater(this).inflate(R.menu.activity_blog, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        //mActivity = (MainActivity) activity;
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.activity_blog, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final Activity activity = getActivity();
+        if (activity == null) {
+            Logger.w(TAG, "cannot show Menu because activity is null");
+            return false;
+        }
+        if (mBlogEntry == null || TextUtils.isEmpty(mBlogEntry.content)) {
+            if (TextUtils.isEmpty(mContent)) {
+                Toast.makeText(activity.getApplicationContext(),
+                        R.string.toast_failed_download, Toast.LENGTH_SHORT).show();
+                return super.onOptionsItemSelected(item);
+            }
+        }
+        if (mBlogEntry != null) {
+            final Entry entry = mBlogEntry.toEntryObject();
+            entry.content = mContent;
+            Logger.i("", "content(" + entry.content + ")");
+            ImageDownloader.downloads(activity.getApplicationContext(), entry);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putString(KEY_PAGE_URL, mWebView.getUrl());
-        outState.putParcelable(Entry.KEY, mEntry);
+        outState.putParcelable(BlogEntry.KEY, mBlogEntry);
         super.onSaveInstanceState(outState);
     }
 

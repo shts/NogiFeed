@@ -15,11 +15,13 @@ import org.apache.http.Header;
 import java.util.ArrayList;
 import java.util.List;
 
+import shts.jp.android.nogifeed.activities.BlogActivity;
 import shts.jp.android.nogifeed.activities.MemberDetailActivity;
 import shts.jp.android.nogifeed.adapters.MemberFeedListAdapter;
 import shts.jp.android.nogifeed.api.AsyncRssClient;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.listener.RssClientFinishListener;
+import shts.jp.android.nogifeed.models.BlogEntry;
 import shts.jp.android.nogifeed.models.Entries;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.Member;
@@ -43,6 +45,7 @@ public class MemberDetailFragment extends ListFragment {
     private MemberFeedListAdapter mMemberFeedListAdapter;
     private String mFeedUrl;
     private Member mMember;
+    private BlogEntry mBlogEntry;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,7 @@ public class MemberDetailFragment extends ListFragment {
         Bundle bundle = getArguments();
         mEntry = bundle.getParcelable(Entry.KEY);
         mMember = bundle.getParcelable(Member.KEY);
+        mBlogEntry = bundle.getParcelable(BlogEntry.KEY);
     }
 
     @Override
@@ -122,12 +126,14 @@ public class MemberDetailFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         if (mEntry != null) {
             mFeedUrl = UrlUtils.getMemberFeedUrl(mEntry.link);
-            setupMemberFeedList(mFeedUrl);
         }
         if (mMember != null) {
             mFeedUrl = mMember.feedUrl;
-            setupMemberFeedList(mFeedUrl);
         }
+        if (mBlogEntry != null) {
+            mFeedUrl = UrlUtils.getMemberFeedUrl(mBlogEntry.url);
+        }
+        setupMemberFeedList(mFeedUrl);
     }
 
 
@@ -138,7 +144,8 @@ public class MemberDetailFragment extends ListFragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Entry entry = (Entry) getListView().getItemAtPosition(position);
-                IntentUtils.startBlogActivity(mActivity, entry);
+                //IntentUtils.startBlogActivity(mActivity, entry);
+                mActivity.startActivity(BlogActivity.getStartIntent(mActivity, mBlogEntry));
                 TrackerUtils.sendTrack(getActivity(), TAG,
                         "OnClicked", "-> Blog : " + "entry(" + entry.toString() + ")");
             }

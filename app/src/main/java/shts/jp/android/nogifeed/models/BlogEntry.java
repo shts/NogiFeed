@@ -3,26 +3,47 @@ package shts.jp.android.nogifeed.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.utils.UrlUtils;
 
 public class BlogEntry implements Parcelable {
 
-    final String date;
-    final String title;
-    final String url;
-    final String author;
-    final String comment;
+    private static final String TAG = BlogEntry.class.getSimpleName();
+    public static final String KEY = BlogEntry.class.getSimpleName();
 
-    public BlogEntry(String date, String title, String url, String author, String comment) {
+    public final String date;
+    public final String title;
+    public final String url;
+    public final String author;
+    public final String comment;
+    public final String content;
+
+    public BlogEntry(String date, String title, String url, String author, String comment, String content) {
         this.date = date;
         this.title = title;
         this.url = url;
         this.author = author;
         this.comment = comment;
+        this.content = content;
+    }
+
+    public Entry toEntryObject() {
+        Entry e = new Entry();
+        e.link = url;
+        e.content = content;
+        e.name = author;
+        e.published = date;
+        e.updated = date;
+        e.title = title;
+        return e;
     }
 
     public String getProfileImageUrl() {
         return UrlUtils.getImageUrlFromArticleUrl(url);
+    }
+
+    public String getFeedUrl() {
+        return UrlUtils.getMemberFeedUrl(url);
     }
 
     @Override
@@ -33,6 +54,7 @@ public class BlogEntry implements Parcelable {
         sb.append("url(").append(url).append(") ");
         sb.append("author(").append(author).append(") ");
         sb.append("comment(").append(comment).append(") ");
+        sb.append("content(").append(content).append(") ");
         return sb.toString();
     }
 
@@ -42,6 +64,7 @@ public class BlogEntry implements Parcelable {
         url = in.readString();
         author = in.readString();
         comment = in.readString();
+        content = in.readString();
     }
 
     @Override
@@ -56,6 +79,7 @@ public class BlogEntry implements Parcelable {
         dest.writeString(url);
         dest.writeString(author);
         dest.writeString(comment);
+        dest.writeString(content);
     }
 
     @SuppressWarnings("unused")

@@ -66,7 +66,7 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
         holder.backgroudImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                IntentUtils.startBlogActivity(mContext, entry);
+                //IntentUtils.startBlogActivity(mContext, entry);
                 TrackerUtils.sendTrack(mContext, TAG,
                         "OnClicked", "-> Blog : " + "entry(" + entry.toString() + ")");
             }

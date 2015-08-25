@@ -41,6 +41,10 @@ public class AsyncBlogFeedClient {
         public int year;
         public int month;
         public Page page;
+        public Target() {
+            // デフォルトは1ページから8ページまで読み込む
+            this(1, 8);
+        }
         public Target(int from, int to) {
             Calendar calendar = Calendar.getInstance();
             this.year = calendar.get(Calendar.YEAR);
@@ -60,14 +64,6 @@ public class AsyncBlogFeedClient {
                 this.to = to;
             }
         }
-
-        public void nextPage() {
-            Logger.v(TAG, "next before(" + toString() + ")");
-//            page.from += 8;
-//            page.to += 8;
-            Logger.v(TAG, "next after(" + toString() + ")");
-        }
-
         void nextMonth() {
             Logger.v(TAG, "next before(" + toString() + ")");
             if (month == 1) {
@@ -76,11 +72,8 @@ public class AsyncBlogFeedClient {
             } else {
                 month--;
             }
-            page.from = 1;
-            page.to = 8;
             Logger.v(TAG, "next after(" + toString() + ")");
         }
-
         String getDateParameter() {
             return String.valueOf(year) + (month < 10 ? String.valueOf("0") + month : month);
         }
@@ -136,25 +129,51 @@ public class AsyncBlogFeedClient {
         return true;
     }
 
-    private static ArrayList<BlogEntry> getBlogEntry(
-            final Target target) throws IOException {
+    private synchronized static ArrayList<BlogEntry> getBlogEntry(
+                final Target target) throws IOException {
+
+        // 指定の月の最大ページ数を取得する
+        final int maxSize = getMaxPage(target.getDateParameter());
+
+        int pending = 0;
+        if (maxSize < target.page.to) {
+            pending = target.page.to - maxSize;
+            target.page.to -= pending;
+        }
+
+        final ArrayList<BlogEntry> blogEntries = readBlog(target.page.from,
+                target.page.to, target.getDateParameter());
+
+        if (pending != 0) {
+            target.page.from = 1;
+            target.page.to = pending;
+            target.nextMonth();
+
+            return cat(blogEntries, getBlogEntry(target));
+
+        } else {
+            target.page.from += 8;
+            target.page.to += 8;
+
+            return blogEntries;
+        }
+    }
+
+    private static <E> ArrayList<E> cat(ArrayList<E> e1, ArrayList<E> e2) {
+        e1.addAll(e2);
+        return e1;
+    }
+
+    private static ArrayList<BlogEntry> readBlog(
+            final int from, final int to, final String param) throws IOException {
+        Logger.d(TAG, "readBlog() : from(" + from + ") to(" + to + ") param(" + param + ")");
 
         final ArrayList<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
 
-        // decriment read page to max page size
-        final int maxSize = getPaginate(target.getDateParameter());
-        Logger.v(TAG, "getBlogEntry(Target) in : maxSize(" + maxSize
-                + ") to(" + target.page.to + ")");
-        final boolean needToNextMonth = (maxSize < (target.page.to + 1));
-        while (maxSize < (target.page.to + 1)) {
-            target.page.to--;
-        }
-        Logger.v(TAG, "getBlogEntry(Target) in : target(" + target.toString() + ")");
+        for (int i = from; i < (to + 1); i++) {
 
-        for (int i = target.page.from; i < (target.page.to + 1); i++) {
-
-            String pageUrl = URL + "?p=" + i + "&d=" + target.getDateParameter();
-            Logger.d(TAG, "getBlogEntry() : pageUrl(" + pageUrl + ")");
+            String pageUrl = URL + "?p=" + i + "&d=" + param;
+            Logger.d(TAG, "readBlog() : pageUrl(" + pageUrl + ")");
 
             Document document = Jsoup.connect(pageUrl).userAgent(USER_AGENT).get();
 
@@ -179,18 +198,16 @@ public class AsyncBlogFeedClient {
                         .get(j).getElementsByTag("a").get(1)
                         .text().replace("コメント(", "").replace(")", "");
 
-                blogEntries.add(new BlogEntry(date, title, url, author, comment));
+//                String content = Jsoup.connect(url).get().body()
+//                        .getElementsByClass("entrybodyin").get(0).toString();
+
+                blogEntries.add(new BlogEntry(date, title, url, author, comment, null));
             }
         }
-
-        if (needToNextMonth) {
-            target.nextMonth();
-        }
-
         return blogEntries;
     }
 
-    private static int getPaginate(String param) throws IOException {
+    private static int getMaxPage(String param) throws IOException {
         Document document = Jsoup.connect(URL + "?d=" + param).userAgent(USER_AGENT).get();
         Element paginate = document.body()
                 .getElementsByClass("paginate").get(0);

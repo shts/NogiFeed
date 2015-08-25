@@ -13,7 +13,7 @@ public class DateUtils {
     private static final SimpleDateFormat FORMATTER_FILE = new SimpleDateFormat("yyyyMMddHHmmss");
 
     public static synchronized String formatFileName(String source) {
-        String updated = null;
+        String updated = source;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
             Date date = sdf.parse(source);
@@ -21,7 +21,10 @@ public class DateUtils {
 
         } catch (ParseException e) {
             Logger.e(TAG, "failed to parse");
-            return null;
+            // 2015/08/23 Sun
+            updated = source.replace("/", "_").replace(" ", "_");
+            updated = updated + "_";
+            return updated;
         }
         return updated;
     }

@@ -1,6 +1,8 @@
 package shts.jp.android.nogifeed.activities;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
@@ -9,17 +11,27 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.fragments.BlogFragment;
+import shts.jp.android.nogifeed.models.BlogEntry;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.services.ImageDownloader;
 import shts.jp.android.nogifeed.views.notifications.BlogUpdateNotification;
 
 public class BlogActivity extends BaseActivity {
 
-    private Entry mEntry;
+    private BlogEntry mBlogEntry;
+    private final BlogFragment mBlogFragment = new BlogFragment();
+
+    public static Intent getStartIntent(Context context, BlogEntry blogEntry) {
+        Intent intent = new Intent(context, BlogActivity.class);
+        intent.putExtra(BlogEntry.KEY, blogEntry);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,35 +39,19 @@ public class BlogActivity extends BaseActivity {
         setContentView(R.layout.activity_blog);
 
         Bundle bundle = new Bundle();
-        mEntry = getIntent().getParcelableExtra(Entry.KEY);
-        bundle.putParcelable(Entry.KEY, mEntry);
+
+        mBlogEntry = getIntent().getParcelableExtra(BlogEntry.KEY);
+        bundle.putParcelable(BlogEntry.KEY, mBlogEntry);
 
         String blogUrl = getIntent().getStringExtra(BlogUpdateNotification.KEY);
         bundle.putString(BlogUpdateNotification.KEY, blogUrl);
 
-        BlogFragment blogFragment = new BlogFragment();
-        blogFragment.setArguments(bundle);
+        mBlogFragment.setArguments(bundle);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, blogFragment, BlogFragment.class.getSimpleName());
+        ft.replace(R.id.container, mBlogFragment, BlogFragment.class.getSimpleName());
         ft.commit();
 
         setupActionBar();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        new MenuInflater(this).inflate(R.menu.activity_blog, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (mEntry == null || TextUtils.isEmpty(mEntry.content)) {
-            Toast.makeText(getApplicationContext(), R.string.toast_failed_download, Toast.LENGTH_SHORT).show();
-            return super.onOptionsItemSelected(item);
-        }
-        ImageDownloader.downloads(getApplicationContext(), mEntry);
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

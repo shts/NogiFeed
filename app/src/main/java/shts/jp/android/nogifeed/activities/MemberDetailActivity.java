@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.fragments.MemberDetailFragment;
+import shts.jp.android.nogifeed.models.BlogEntry;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.Member;
 
@@ -28,16 +29,24 @@ public class MemberDetailActivity extends BaseActivity {
 
         Intent i = getIntent();
         Bundle bundle = new Bundle();
+        // Maybe not use
         Entry entry = i.getParcelableExtra(Entry.KEY);
         if (entry != null) {
             // intent from AllFeedListFragment
             bundle.putParcelable(Entry.KEY, entry);
             setupActionBar(entry.name);
-        } else {
+        }
+        Member member = i.getParcelableExtra(Member.KEY);
+        if (member != null) {
             // intent from MemberGridListFragment
-            Member member = i.getParcelableExtra(Member.KEY);
             bundle.putParcelable(Member.KEY, member);
             setupActionBar(member.name);
+        }
+        BlogEntry blogEntry = i.getParcelableExtra(BlogEntry.KEY);
+        if (blogEntry != null) {
+            // intent from AllFeedListFragment
+            bundle.putParcelable(BlogEntry.KEY, blogEntry);
+            setupActionBar(blogEntry.author);
         }
 
         MemberDetailFragment memberDetailFragment = new MemberDetailFragment();
