@@ -5,8 +5,10 @@
 
     <ProgressBar
         android:id="@+id/more_progress"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/custom_progress"
         android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="72dp" />
 
 </LinearLayout>

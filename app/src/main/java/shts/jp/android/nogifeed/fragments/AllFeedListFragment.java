@@ -46,7 +46,6 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
     private BlogFeedListAdapter mBlogFeedListAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private LinearLayout mFooterView;
-    private ProgressBar mProgress;
 
     private AsyncBlogFeedClient.Target mTarget = new AsyncBlogFeedClient.Target();
 
@@ -67,8 +66,9 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
                 R.color.nogifeed, R.color.nogifeed, R.color.nogifeed, R.color.nogifeed);
 
         mFooterView = (LinearLayout) inflater.inflate(R.layout.list_item_more_load, null);
-        mProgress = (ProgressBar) mFooterView.findViewById(R.id.more_progress);
+        mFooterView.setVisibility(View.GONE);
 
+        mAllFeedList.addFooterView(mFooterView);
         return view;
     }
 
@@ -134,11 +134,8 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
     }
 
     private void setupAdapter(ArrayList<BlogEntry> blogEntries) {
-        final int footerCount = mAllFeedList.getFooterViewsCount();
-        if (footerCount > 0) {
-            mAllFeedList.removeFooterView(mFooterView);
-        }
         mAllFeedList.setFooterDividersEnabled(false);
+        mFooterView.setVisibility(View.GONE);
 
         if (mBlogFeedListAdapter != null) {
             for (BlogEntry e : blogEntries) {
@@ -162,7 +159,8 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
                 new BlogFeedListAdapter.OnPageMaxScrolledListener() {
                     @Override
                     public void onScrolledMaxPage() {
-                        mAllFeedList.addFooterView(mFooterView, null, true);
+//                        mAllFeedList.addFooterView(mFooterView, null, true);
+                        mFooterView.setVisibility(View.VISIBLE);
                         getAllFeeds(mTarget);
                     }
                 });
