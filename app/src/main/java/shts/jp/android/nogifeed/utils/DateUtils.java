@@ -12,6 +12,7 @@ public class DateUtils {
     private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy'/'MM'/'dd HH:mm:ss");
     private static final SimpleDateFormat FORMATTER_FILE = new SimpleDateFormat("yyyyMMddHHmmss");
 
+    // TODO: リンクの日付からファイル名を生成する
     public static synchronized String formatFileName(String source) {
         String updated = source;
         try {

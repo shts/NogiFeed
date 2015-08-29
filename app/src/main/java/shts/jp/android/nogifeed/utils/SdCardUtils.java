@@ -1,12 +1,9 @@
 package shts.jp.android.nogifeed.utils;
 
-import android.content.ContentResolver;
 import android.content.Context;
-import android.database.Cursor;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
-import android.provider.MediaStore;
 
 import java.io.File;
 
@@ -34,20 +31,8 @@ public class SdCardUtils {
      * Reflect image to gallery.
      * @param context application context.
      * @param file file object.
-     * @return
+     * @param listener callback for scan completed.
      */
-    public static void scanFile(Context context, File file) {
-        MediaScannerConnection.scanFile(
-                context, new String[] { file.getAbsolutePath() }, MIMETYPE,
-                    new MediaScannerConnection.OnScanCompletedListener() {
-                    @Override
-                    public void onScanCompleted(String path, Uri uri) {
-                        Logger.d("MediaScannerConnection", "Scanned " + path + ":");
-                        Logger.d("MediaScannerConnection", "-> uri=" + uri);
-                    }
-                });
-    }
-
     public static void scanFile(Context context, File file,
                                 MediaScannerConnection.OnScanCompletedListener listener ) {
         MediaScannerConnection.scanFile(
@@ -60,24 +45,43 @@ public class SdCardUtils {
      * @return file absolute path.
      */
     public static String getDownloadFilePath(Entry entry, int counter, String imageType) {
+        return getDownloadFilePath() + File.separator + getFileName(entry.link, counter, imageType);
+    }
 
-        String updated = DateUtils.formatFileName(entry.updated);
-
-        String path;
-        String[] names = StringUtils.getFullNameFromArticleUrl(entry.link);
+    /**
+     * Get saved file name.
+     * @param articleUrl article url. ex) http://blog.nogizaka46.com/mai.shiraishi/2015/07/024287.php
+     * @return file name. ex) mai_shiraishi_2015_07_024287_t_0.jpeg [saved thumbnail]
+     */
+    private static String getFileName(String articleUrl, int counter, String imageType) {
+        String fileName;
+        final String[] names = StringUtils.getFullNameFromArticleUrl(articleUrl);
         if (names.length == 2) {
-            path = getDownloadFilePath() + File.separator + names[0] + names[1]
-                    + updated + imageType + "_" + counter;
+            fileName = names[0] + "_" + names[1] + "_"
+                    + getFormattedDate(articleUrl) + "_" + imageType + "_" + counter + "_";
         } else {
-            path = getDownloadFilePath() + File.separator + names[0]
-                    + updated + imageType + "_" + counter;
+            fileName = names[0] + "_"
+                    + getFormattedDate(articleUrl) + "_" + imageType + "_" + counter + "_";
         }
 
-        if (!hasExtension(path)) {
-            path += ".jpeg";
+        if (!hasExtension(fileName)) {
+            fileName += ".jpeg";
         }
 
-        return path;
+        return fileName;
+    }
+
+    /**
+     * Get formatted date text.
+     * @param articleUrl ex) http://blog.nogizaka46.com/mai.shiraishi/2015/07/024287.php
+     * @return formatted date text. ex) 2015_07_024287
+     */
+    private static String getFormattedDate(String articleUrl) {
+        String[] dates = articleUrl.replace(".php", "").split("/");
+        String year = dates[dates.length - 3];
+        String month = dates[dates.length - 2];
+        String daytime = dates[dates.length - 1];
+        return year + "_" + month + "_" + daytime;
     }
 
     /**

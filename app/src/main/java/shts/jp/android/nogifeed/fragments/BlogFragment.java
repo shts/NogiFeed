@@ -18,7 +18,6 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import shts.jp.android.nogifeed.R;
-import shts.jp.android.nogifeed.activities.BlogActivity;
 import shts.jp.android.nogifeed.api.ThumbnailDownloadClient;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.listener.DownloadFinishListener;
@@ -96,10 +95,6 @@ public class BlogFragment extends Fragment {
         }
     }
 
-    public String getContent() {
-        return mContent;
-    }
-
     private void showDownloadConfirmDialog(WebView webView) {
         WebView.HitTestResult hr = webView.getHitTestResult();
         Logger.v(TAG, "showDownloadConfirmDialog() in : hr type(" + hr.getType() + ")");
@@ -117,8 +112,7 @@ public class BlogFragment extends Fragment {
                         return;
                     } else {
                         final Entry entry = mBlogEntry.toEntryObject();
-                        entry.content = getContent();
-                        Logger.i(TAG, "content(" + entry.content + ")");
+                        entry.content = mContent;
                         ThumbnailDownloadClient.get(
                                 getActivity(), url, entry, new DownloadFinishListener(getActivity(), 1));
                     }
@@ -165,12 +159,6 @@ public class BlogFragment extends Fragment {
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        new MenuInflater(this).inflate(R.menu.activity_blog, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.activity_blog, menu);
@@ -194,7 +182,6 @@ public class BlogFragment extends Fragment {
         if (mBlogEntry != null) {
             final Entry entry = mBlogEntry.toEntryObject();
             entry.content = mContent;
-            Logger.i("", "content(" + entry.content + ")");
             ImageDownloader.downloads(activity.getApplicationContext(), entry);
         }
         return super.onOptionsItemSelected(item);
