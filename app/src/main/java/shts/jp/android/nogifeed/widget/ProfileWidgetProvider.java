@@ -73,7 +73,7 @@ public class ProfileWidgetProvider extends AppWidgetProvider {
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
         Logger.v(TAG, "onDeleted(Context, int[]) in : appWidgetIds("
-                + IntArrayToString(appWidgetIds) + ")");
+                + intArrayToString(appWidgetIds) + ")");
 
         // Delete member from database
         final ContentResolver cr = context.getContentResolver();
@@ -89,7 +89,7 @@ public class ProfileWidgetProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         Logger.v(TAG, "onUpdate(Context, AppWidgetManager, int[]) in : appWidgetIds("
-                + IntArrayToString(appWidgetIds) + ")");
+                + intArrayToString(appWidgetIds) + ")");
 
         for (int appWidgetId : appWidgetIds) {
             Member member = getMemberFrom(context, appWidgetId);
@@ -101,7 +101,7 @@ public class ProfileWidgetProvider extends AppWidgetProvider {
         }
     }
 
-    private String IntArrayToString(int[] appWidgetIds) {
+    private String intArrayToString(int[] appWidgetIds) {
         if (appWidgetIds == null) {
             return "null";
         }
