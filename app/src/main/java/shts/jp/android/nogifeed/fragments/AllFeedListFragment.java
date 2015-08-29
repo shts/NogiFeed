@@ -5,18 +5,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import org.apache.http.Header;
 
 import java.util.ArrayList;
 
@@ -24,16 +19,9 @@ import shts.jp.android.nogifeed.BuildConfig;
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.BlogActivity;
 import shts.jp.android.nogifeed.adapters.BlogFeedListAdapter;
-import shts.jp.android.nogifeed.adapters.FeedListAdapter;
 import shts.jp.android.nogifeed.api.AsyncBlogFeedClient;
-import shts.jp.android.nogifeed.api.AsyncRssClient;
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.listener.RssClientFinishListener;
 import shts.jp.android.nogifeed.models.BlogEntry;
-import shts.jp.android.nogifeed.models.Entries;
-import shts.jp.android.nogifeed.models.Entry;
-import shts.jp.android.nogifeed.utils.IntentUtils;
-import shts.jp.android.nogifeed.utils.UrlUtils;
 
 // TODO: 通信ができない場合、エラー表示を行う
 // 現在は Exception が発生する
