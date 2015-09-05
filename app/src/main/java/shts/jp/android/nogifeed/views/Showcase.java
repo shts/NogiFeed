@@ -1,11 +1,9 @@
 package shts.jp.android.nogifeed.views;
 
 import android.content.Context;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
@@ -14,7 +12,9 @@ import android.widget.ImageView;
 import java.util.List;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.adapters.ShowcaseAdapter;
 import shts.jp.android.nogifeed.utils.PicassoHelper;
+import shts.jp.android.nogifeed.utils.TrackerUtils;
 
 public class Showcase extends FrameLayout {
     private static final String TAG = Showcase.class.getSimpleName();
@@ -24,6 +24,19 @@ public class Showcase extends FrameLayout {
     private List<String> mImageUrls;
     private FavoriteView mFavoriteCheckbox;
     private final FavoriteChangeListener mListener;
+
+    private final ShowcaseAdapter<String> mShowcaseAdapter
+                = new ShowcaseAdapter<String>(getContext(), mImageUrls) {
+        @Override
+        protected Object getInstantiateItem(ViewGroup container, String item) {
+            final Context context = getContext();
+            ImageView iv = new ImageView(context);
+            iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            PicassoHelper.load(context, iv, item);
+            container.addView(iv);
+            return iv;
+        }
+    };
 
     public interface FavoriteChangeListener {
         public void onCheckdChanged(CompoundButton compoundButton, boolean b);
@@ -43,8 +56,10 @@ public class Showcase extends FrameLayout {
         mFavoriteCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                mListener.onCheckdChanged(compoundButton, b);
-                shts.jp.android.nogifeed.utils.TrackerUtils.sendTrack(getContext(), TAG,
+                if (mListener != null) {
+                    mListener.onCheckdChanged(compoundButton, b);
+                }
+                TrackerUtils.sendTrack(getContext(), TAG,
                         "OnClicked", "-> Favorite : " + "isFavorite(" + b + ")");
             }
         });
@@ -57,57 +72,14 @@ public class Showcase extends FrameLayout {
     }
 
     private void setupAdapter() {
-        CustomPageAdapter adapter = new CustomPageAdapter(getContext(), mImageUrls);
-        mViewPager.setAdapter(adapter);
-
+        mViewPager.setAdapter(mShowcaseAdapter);
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 mViewPageIndicator.setCurrentPosition(position);
             }
         });
-        mViewPageIndicator.setCount(adapter.getCount());
-    }
-
-    public class CustomPageAdapter extends PagerAdapter {
-
-        Context mContext;
-        private final List<String> mImageUrls;
-
-        public CustomPageAdapter(Context context, List<String> imageUrls) {
-            mContext = context;
-            mImageUrls = imageUrls;
-
-            for (String s : mImageUrls) {
-                shts.jp.android.nogifeed.common.Logger.d(TAG, "url : " + s);
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return mImageUrls.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object o) {
-            return ((View)o).equals(view);
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            //Log.d(TAG, "instantiateItem called : position(" + position + ")");
-            ImageView iv = new ImageView(mContext);
-            iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            PicassoHelper.load(mContext, iv, mImageUrls.get(position));
-            container.addView(iv);
-            return iv;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            View v = (View) object;
-            container.removeView(v);
-        }
+        mViewPageIndicator.setCount(mShowcaseAdapter.getCount());
     }
 
 }
