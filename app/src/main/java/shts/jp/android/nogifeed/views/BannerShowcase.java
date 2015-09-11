@@ -74,6 +74,7 @@ public class BannerShowcase extends FrameLayout {
                 });
                 iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 PicassoHelper.load(context, iv, banner.thumurl);
+                container.addView(iv);
                 return iv;
             }
         });

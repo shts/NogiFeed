@@ -25,18 +25,7 @@ public class Showcase extends FrameLayout {
     private FavoriteView mFavoriteCheckbox;
     private final FavoriteChangeListener mListener;
 
-    private final ShowcaseAdapter<String> mShowcaseAdapter
-                = new ShowcaseAdapter<String>(getContext(), mImageUrls) {
-        @Override
-        protected Object getInstantiateItem(ViewGroup container, String item) {
-            final Context context = getContext();
-            ImageView iv = new ImageView(context);
-            iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            PicassoHelper.load(context, iv, item);
-            container.addView(iv);
-            return iv;
-        }
-    };
+    private ShowcaseAdapter<String> mShowcaseAdapter;
 
     public interface FavoriteChangeListener {
         public void onCheckdChanged(CompoundButton compoundButton, boolean b);
@@ -72,6 +61,17 @@ public class Showcase extends FrameLayout {
     }
 
     private void setupAdapter() {
+        mShowcaseAdapter = new ShowcaseAdapter<String>(getContext(), mImageUrls) {
+            @Override
+            protected Object getInstantiateItem(ViewGroup container, String item) {
+                final Context context = getContext();
+                ImageView iv = new ImageView(context);
+                iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                PicassoHelper.load(context, iv, item);
+                container.addView(iv);
+                return iv;
+            }
+        };
         mViewPager.setAdapter(mShowcaseAdapter);
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override

@@ -37,9 +37,7 @@ public abstract class ShowcaseAdapter<T> extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View instantiateItem = (View) getInstantiateItem(container, mList.get(position));
-        container.addView(instantiateItem);
-        return instantiateItem;
+        return (View) getInstantiateItem(container, mList.get(position));
     }
 
     protected abstract Object getInstantiateItem(ViewGroup container, T item);
