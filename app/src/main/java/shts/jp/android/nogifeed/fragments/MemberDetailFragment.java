@@ -23,14 +23,14 @@ import shts.jp.android.nogifeed.activities.MemberDetailActivity;
 import shts.jp.android.nogifeed.adapters.MemberFeedListAdapter;
 import shts.jp.android.nogifeed.api.AsyncRssClient;
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.listener.RssClientFinishListener;
 import shts.jp.android.nogifeed.entities.BlogEntry;
 import shts.jp.android.nogifeed.entities.Entries;
 import shts.jp.android.nogifeed.entities.Entry;
 import shts.jp.android.nogifeed.entities.Member;
+import shts.jp.android.nogifeed.listener.RssClientFinishListener;
+import shts.jp.android.nogifeed.models.Favorite;
 import shts.jp.android.nogifeed.providers.NogiFeedContent;
 import shts.jp.android.nogifeed.utils.ArrayUtils;
-import shts.jp.android.nogifeed.utils.DataStoreUtils;
 import shts.jp.android.nogifeed.utils.JsoupUtils;
 import shts.jp.android.nogifeed.utils.TrackerUtils;
 import shts.jp.android.nogifeed.utils.UrlUtils;
@@ -196,12 +196,12 @@ public class MemberDetailFragment extends ListFragment {
         mShowcase = new Showcase(getActivity(), mImageUrls, new shts.jp.android.nogifeed.views.Showcase.FavoriteChangeListener() {
             @Override
             public void onCheckdChanged(CompoundButton compoundButton, boolean isChecked) {
-                DataStoreUtils.favorite(getActivity(), mFeedUrl, isChecked);
+                Favorite.set(getActivity(), mFeedUrl, isChecked);
             }
         });
         mShowcase.setLayoutParams(new AbsListView.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, height));
-        mShowcase.setFavorite(DataStoreUtils.alreadyExist(getActivity(), mFeedUrl));
+        mShowcase.setFavorite(Favorite.exist(getActivity(), mFeedUrl));
         ListView listView = getListView();
         listView.addHeaderView(mShowcase, null, false);
     }

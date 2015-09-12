@@ -12,6 +12,7 @@ import java.util.List;
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.entities.BlogEntry;
+import shts.jp.android.nogifeed.models.Favorite;
 import shts.jp.android.nogifeed.utils.DataStoreUtils;
 import shts.jp.android.nogifeed.utils.IntentUtils;
 import shts.jp.android.nogifeed.utils.PicassoHelper;
@@ -87,7 +88,7 @@ public class BlogFeedListAdapter extends BindableAdapter<BlogEntry> {
 //        holder.updatedTextView.setText(DateUtils.formatUpdated(blogEntry.date));
         holder.updatedTextView.setText(blogEntry.date);
         boolean isFavorite =
-                DataStoreUtils.alreadyExist(getContext(), blogEntry.getFeedUrl());
+                Favorite.exist(getContext(), blogEntry.getFeedUrl());
         holder.favoriteImageView.setVisibility(isFavorite ? View.VISIBLE : View.GONE);
 
         if (getCount() - 1 <= position) {

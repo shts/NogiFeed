@@ -12,6 +12,7 @@ import java.util.List;
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.entities.Entry;
+import shts.jp.android.nogifeed.models.Favorite;
 import shts.jp.android.nogifeed.utils.DataStoreUtils;
 import shts.jp.android.nogifeed.utils.DateUtils;
 import shts.jp.android.nogifeed.utils.IntentUtils;
@@ -75,7 +76,7 @@ public class FeedListAdapter extends BindableAdapter<Entry> {
         holder.authorNameTextView.setText(entry.name);
         holder.updatedTextView.setText(DateUtils.formatUpdated(entry.updated));
         boolean isFavorite =
-                DataStoreUtils.alreadyExist(getContext(), UrlUtils.getMemberFeedUrl(entry.link));
+                Favorite.exist(getContext(), UrlUtils.getMemberFeedUrl(entry.link));
         holder.favoriteImageView.setVisibility(isFavorite ? View.VISIBLE : View.GONE);
     }
 }

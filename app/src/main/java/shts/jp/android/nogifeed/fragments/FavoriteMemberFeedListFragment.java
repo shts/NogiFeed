@@ -18,9 +18,9 @@ import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.adapters.FavoriteFeedListAdapter;
 import shts.jp.android.nogifeed.api.AsyncRssClient;
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.listener.RssClientFinishListener;
 import shts.jp.android.nogifeed.entities.Entries;
-import shts.jp.android.nogifeed.utils.DataStoreUtils;
+import shts.jp.android.nogifeed.listener.RssClientFinishListener;
+import shts.jp.android.nogifeed.models.Favorite;
 import shts.jp.android.nogifeed.views.MultiSwipeRefreshLayout;
 
 // TODO: インストール後に何度か起動された時、アプリ評価を誘導する View を表示する
@@ -67,7 +67,7 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
     }
 
     private void setupFavoriteMemberFeed() {
-        mFavoriteUrls = DataStoreUtils.getAllFavoriteLink(getActivity());
+        mFavoriteUrls = Favorite.all(getActivity());
         if (mFavoriteUrls == null || mFavoriteUrls.isEmpty()) {
             if (mMultiSwipeRefreshLayout.isRefreshing()) {
                 mMultiSwipeRefreshLayout.setRefreshing(false);

@@ -7,8 +7,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import shts.jp.android.nogifeed.models.Favorite;
 import shts.jp.android.nogifeed.providers.NogiFeedContent;
-import shts.jp.android.nogifeed.utils.DataStoreUtils;
 import shts.jp.android.nogifeed.utils.UrlUtils;
 
 public class Member implements Parcelable {
@@ -83,7 +83,7 @@ public class Member implements Parcelable {
     };
 
     public boolean isFavorite(Context context) {
-        return DataStoreUtils.alreadyExist(context, feedUrl);
+        return Favorite.exist(context, feedUrl);
     }
 
     public ContentValues toContentValues() {
