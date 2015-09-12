@@ -11,9 +11,9 @@ import android.support.v7.widget.Toolbar;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.fragments.MemberDetailFragment;
-import shts.jp.android.nogifeed.models.BlogEntry;
-import shts.jp.android.nogifeed.models.Entry;
-import shts.jp.android.nogifeed.models.Member;
+import shts.jp.android.nogifeed.entities.BlogEntry;
+import shts.jp.android.nogifeed.entities.Entry;
+import shts.jp.android.nogifeed.entities.Member;
 
 public class MemberDetailActivity extends BaseActivity {
 

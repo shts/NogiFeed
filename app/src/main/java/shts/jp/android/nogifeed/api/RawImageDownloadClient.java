@@ -18,7 +18,7 @@ import java.util.List;
 
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.listener.DownloadFinishListener;
-import shts.jp.android.nogifeed.models.Entry;
+import shts.jp.android.nogifeed.entities.Entry;
 import shts.jp.android.nogifeed.utils.JsoupUtils;
 import shts.jp.android.nogifeed.utils.NetworkUtils;
 import shts.jp.android.nogifeed.utils.SdCardUtils;

@@ -24,7 +24,7 @@ import shts.jp.android.nogifeed.activities.BlogActivity;
 import shts.jp.android.nogifeed.adapters.BlogFeedListAdapter;
 import shts.jp.android.nogifeed.api.AsyncBlogFeedClient;
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.models.BlogEntry;
+import shts.jp.android.nogifeed.entities.BlogEntry;
 import shts.jp.android.nogifeed.providers.NogiFeedContent;
 
 // TODO: 通信ができない場合、エラー表示を行う

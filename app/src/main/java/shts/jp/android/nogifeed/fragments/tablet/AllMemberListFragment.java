@@ -11,7 +11,7 @@ import java.util.List;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.adapters.AllMemberListAdapter;
-import shts.jp.android.nogifeed.models.Member;
+import shts.jp.android.nogifeed.entities.Member;
 import shts.jp.android.nogifeed.utils.JsoupUtils;
 import shts.jp.android.nogifeed.utils.UrlUtils;
 

@@ -17,7 +17,7 @@ import shts.jp.android.nogifeed.activities.NewsBrowseActivity;
 import shts.jp.android.nogifeed.adapters.ShowcaseAdapter;
 import shts.jp.android.nogifeed.api.AsyncBannerClient;
 import shts.jp.android.nogifeed.api.AsyncBannerResponseHandler;
-import shts.jp.android.nogifeed.models.Banner;
+import shts.jp.android.nogifeed.entities.Banner;
 import shts.jp.android.nogifeed.utils.PicassoHelper;
 
 public class BannerShowcase extends FrameLayout {

@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import shts.jp.android.nogifeed.models.Banner;
+import shts.jp.android.nogifeed.entities.Banner;
 
 public abstract class AsyncBannerResponseHandler extends AsyncHttpResponseHandler {
 

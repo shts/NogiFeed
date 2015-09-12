@@ -1,12 +1,10 @@
-package shts.jp.android.nogifeed.models;
+package shts.jp.android.nogifeed.entities;
 
 import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-
-import shts.jp.android.nogifeed.utils.ArrayUtils;
 
 public class Entries extends ArrayList<Entry> {
 

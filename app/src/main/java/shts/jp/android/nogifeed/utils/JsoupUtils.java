@@ -16,7 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.models.News;
+import shts.jp.android.nogifeed.entities.Member;
+import shts.jp.android.nogifeed.entities.News;
 
 public class JsoupUtils {
 
@@ -25,7 +26,7 @@ public class JsoupUtils {
     private static final String URL_NEWS = "http://www.nogizaka46.com/smph/news/";
 
     public interface GetMemberListener {
-        public void onSuccess(List<shts.jp.android.nogifeed.models.Member> memberList);
+        public void onSuccess(List<Member> memberList);
         public void onFailed();
     }
 
@@ -57,7 +58,7 @@ public class JsoupUtils {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final List<shts.jp.android.nogifeed.models.Member> members = getAllMembers();
+                final List<Member> members = getAllMembers();
                 if (members != null && !members.isEmpty()) {
                     HANDLER.post(new Runnable() {
                         @Override
@@ -79,8 +80,8 @@ public class JsoupUtils {
         return true;
     }
 
-    private static List<shts.jp.android.nogifeed.models.Member> getAllMembers() {
-        List<shts.jp.android.nogifeed.models.Member> members = new ArrayList<shts.jp.android.nogifeed.models.Member>();
+    private static List<Member> getAllMembers() {
+        List<Member> members = new ArrayList<Member>();
 
         try {
             Document document = Jsoup.connect(URL_ALL_MEMBER).get();
@@ -100,7 +101,7 @@ public class JsoupUtils {
                 } else if (url.startsWith("http://blog.nogizaka46.com/")) {
                     shts.jp.android.nogifeed.common.Logger.v(TAG, "valid value : url(" + url
                             + ") name(" + name + ")");
-                    members.add(new shts.jp.android.nogifeed.models.Member(url, name));
+                    members.add(new Member(url, name));
                 }
             }
         } catch (IOException e) {

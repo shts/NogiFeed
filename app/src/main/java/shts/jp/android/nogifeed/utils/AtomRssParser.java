@@ -10,8 +10,8 @@ import android.util.Log;
 import android.util.Xml;
 
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.models.Entries;
-import shts.jp.android.nogifeed.models.Entry;
+import shts.jp.android.nogifeed.entities.Entries;
+import shts.jp.android.nogifeed.entities.Entry;
 
 public class AtomRssParser {
 

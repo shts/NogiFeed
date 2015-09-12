@@ -19,8 +19,7 @@ import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.NewsBrowseActivity;
 import shts.jp.android.nogifeed.activities.NewsListActivity;
 import shts.jp.android.nogifeed.adapters.NewsListAdapter;
-import shts.jp.android.nogifeed.models.News;
-import shts.jp.android.nogifeed.utils.IntentUtils;
+import shts.jp.android.nogifeed.entities.News;
 import shts.jp.android.nogifeed.utils.JsoupUtils;
 import shts.jp.android.nogifeed.views.BannerShowcase;
 

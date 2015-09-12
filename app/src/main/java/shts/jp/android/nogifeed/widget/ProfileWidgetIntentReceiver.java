@@ -6,7 +6,7 @@ import android.content.Intent;
 
 import shts.jp.android.nogifeed.activities.MemberDetailActivity;
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.models.Member;
+import shts.jp.android.nogifeed.entities.Member;
 
 public class ProfileWidgetIntentReceiver extends BroadcastReceiver {
 

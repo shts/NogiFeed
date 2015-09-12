@@ -14,7 +14,7 @@ import java.util.List;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.models.Entry;
+import shts.jp.android.nogifeed.entities.Entry;
 import shts.jp.android.nogifeed.utils.DateUtils;
 import shts.jp.android.nogifeed.utils.IntentUtils;
 import shts.jp.android.nogifeed.utils.JsoupUtils;

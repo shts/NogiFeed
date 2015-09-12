@@ -1,9 +1,8 @@
-package shts.jp.android.nogifeed.models;
+package shts.jp.android.nogifeed.entities;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.utils.UrlUtils;
 
 public class BlogEntry implements Parcelable {

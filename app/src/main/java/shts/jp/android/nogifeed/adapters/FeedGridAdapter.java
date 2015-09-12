@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.entities.Entries;
 
 /**
  * show all feed grid for tablet.
@@ -16,9 +17,9 @@ import shts.jp.android.nogifeed.R;
 public class FeedGridAdapter extends RecyclableAdapter {
 
     private final Context mContext;
-    private final shts.jp.android.nogifeed.models.Entries mEntries;
+    private final Entries mEntries;
 
-    public FeedGridAdapter(Context context, shts.jp.android.nogifeed.models.Entries entries) {
+    public FeedGridAdapter(Context context, Entries entries) {
         super(context, entries);
         mContext = context;
         mEntries = entries;

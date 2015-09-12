@@ -9,12 +9,12 @@ import android.widget.TextView;
 import java.util.List;
 
 import shts.jp.android.nogifeed.R;
-import shts.jp.android.nogifeed.models.Entry;
+import shts.jp.android.nogifeed.entities.Entry;
 import shts.jp.android.nogifeed.utils.DataStoreUtils;
 import shts.jp.android.nogifeed.utils.DateUtils;
 
 
-public class MemberFeedListAdapter extends BindableAdapter<shts.jp.android.nogifeed.models.Entry> {
+public class MemberFeedListAdapter extends BindableAdapter<Entry> {
 
     private static final String TAG = MemberFeedListAdapter.class.getSimpleName();
 
@@ -45,7 +45,7 @@ public class MemberFeedListAdapter extends BindableAdapter<shts.jp.android.nogif
     }
 
     @Override
-    public void bindView(shts.jp.android.nogifeed.models.Entry item, int position, View view) {
+    public void bindView(Entry item, int position, View view) {
         final ViewHolder holder = (ViewHolder) view.getTag();
         holder.titleTextView.setText(item.title);
         holder.authorNameTextView.setText(item.name);

@@ -12,8 +12,8 @@ import android.webkit.WebViewClient;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.models.Banner;
-import shts.jp.android.nogifeed.models.News;
+import shts.jp.android.nogifeed.entities.Banner;
+import shts.jp.android.nogifeed.entities.News;
 
 public class NewsBrowseFragment extends Fragment {
 

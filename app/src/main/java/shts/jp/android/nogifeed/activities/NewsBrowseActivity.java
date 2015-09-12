@@ -10,8 +10,8 @@ import android.support.v7.widget.Toolbar;
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.fragments.BlogFragment;
 import shts.jp.android.nogifeed.fragments.NewsBrowseFragment;
-import shts.jp.android.nogifeed.models.Banner;
-import shts.jp.android.nogifeed.models.News;
+import shts.jp.android.nogifeed.entities.Banner;
+import shts.jp.android.nogifeed.entities.News;
 
 public class NewsBrowseActivity extends BaseActivity {
 

@@ -8,22 +8,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
-
-import shts.jp.android.nogifeed.BuildConfig;
 import shts.jp.android.nogifeed.R;
-import shts.jp.android.nogifeed.api.AsyncBlogFeedClient;
-import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.fragments.AllFeedListFragment;
 import shts.jp.android.nogifeed.fragments.FavoriteMemberFeedListFragment;
-import shts.jp.android.nogifeed.models.BlogEntry;
 import shts.jp.android.nogifeed.views.PagerSlidingTabStrip;
 
 /**

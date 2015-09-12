@@ -4,14 +4,10 @@ import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 
-import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.fragments.AllMemberGridListFragment;
-import shts.jp.android.nogifeed.models.Member;
+import shts.jp.android.nogifeed.entities.Member;
 import shts.jp.android.nogifeed.widget.ProfileWidgetProvider;
 
 public class ConfigureActivity extends BaseActivity {

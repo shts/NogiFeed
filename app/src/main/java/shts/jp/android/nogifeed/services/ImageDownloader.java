@@ -10,10 +10,9 @@ import shts.jp.android.nogifeed.api.RawImageDownloadClient;
 import shts.jp.android.nogifeed.api.ThumbnailDownloadClient;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.listener.DownloadFinishListener;
-import shts.jp.android.nogifeed.models.Entry;
+import shts.jp.android.nogifeed.entities.Entry;
 import shts.jp.android.nogifeed.utils.JsoupUtils;
 import shts.jp.android.nogifeed.utils.NetworkUtils;
-import shts.jp.android.nogifeed.views.notifications.DownloadNotification;
 
 public class ImageDownloader {
 

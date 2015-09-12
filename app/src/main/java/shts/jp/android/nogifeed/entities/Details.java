@@ -1,4 +1,4 @@
-package shts.jp.android.nogifeed.models;
+package shts.jp.android.nogifeed.entities;
 
 import android.os.Parcel;
 import android.os.Parcelable;

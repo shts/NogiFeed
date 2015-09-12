@@ -6,20 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.webkit.JavascriptInterface;
-import android.widget.Toast;
 
 import shts.jp.android.nogifeed.R;
-import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.fragments.BlogFragment;
-import shts.jp.android.nogifeed.models.BlogEntry;
-import shts.jp.android.nogifeed.models.Entry;
-import shts.jp.android.nogifeed.services.ImageDownloader;
+import shts.jp.android.nogifeed.entities.BlogEntry;
 import shts.jp.android.nogifeed.views.notifications.BlogUpdateNotification;
 
 public class BlogActivity extends BaseActivity {

@@ -6,13 +6,11 @@ import android.net.Uri;
 
 import org.apache.http.protocol.HTTP;
 
-import shts.jp.android.nogifeed.activities.BlogActivity;
 import shts.jp.android.nogifeed.activities.MemberDetailActivity;
 import shts.jp.android.nogifeed.activities.NewsBrowseActivity;
-import shts.jp.android.nogifeed.models.BlogEntry;
-import shts.jp.android.nogifeed.models.Entry;
-import shts.jp.android.nogifeed.models.Member;
-import shts.jp.android.nogifeed.models.News;
+import shts.jp.android.nogifeed.entities.BlogEntry;
+import shts.jp.android.nogifeed.entities.Entry;
+import shts.jp.android.nogifeed.entities.News;
 
 public class IntentUtils {
 

@@ -23,8 +23,8 @@ import shts.jp.android.nogifeed.adapters.RecyclableAdapter;
 import shts.jp.android.nogifeed.api.AsyncRssClient;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.listener.RssClientFinishListener;
-import shts.jp.android.nogifeed.models.Entries;
-import shts.jp.android.nogifeed.models.Member;
+import shts.jp.android.nogifeed.entities.Entries;
+import shts.jp.android.nogifeed.entities.Member;
 import shts.jp.android.nogifeed.utils.PicassoHelper;
 import shts.jp.android.nogifeed.utils.UrlUtils;
 

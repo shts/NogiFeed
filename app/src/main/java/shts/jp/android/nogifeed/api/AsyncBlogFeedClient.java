@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.models.BlogEntry;
+import shts.jp.android.nogifeed.entities.BlogEntry;
 import shts.jp.android.nogifeed.utils.NetworkUtils;
 
 // TODO: implement pagination

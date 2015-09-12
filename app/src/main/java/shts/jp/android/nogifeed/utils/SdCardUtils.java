@@ -2,13 +2,11 @@ package shts.jp.android.nogifeed.utils;
 
 import android.content.Context;
 import android.media.MediaScannerConnection;
-import android.net.Uri;
 import android.os.Environment;
 
 import java.io.File;
 
-import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.models.Entry;
+import shts.jp.android.nogifeed.entities.Entry;
 
 /**
  * Get information of sd card and download directory.

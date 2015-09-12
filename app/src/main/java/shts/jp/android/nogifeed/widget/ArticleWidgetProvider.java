@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso;
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.ConfigureActivity;
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.models.Member;
+import shts.jp.android.nogifeed.entities.Member;
 import shts.jp.android.nogifeed.providers.NogiFeedContent;
 import shts.jp.android.nogifeed.utils.DataStoreUtils;
 import shts.jp.android.nogifeed.views.transformations.CircleTransformation;

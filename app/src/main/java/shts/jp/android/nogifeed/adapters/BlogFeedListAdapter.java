@@ -10,11 +10,9 @@ import android.widget.TextView;
 import java.util.List;
 
 import shts.jp.android.nogifeed.R;
-import shts.jp.android.nogifeed.api.AsyncBlogFeedClient;
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.models.BlogEntry;
+import shts.jp.android.nogifeed.entities.BlogEntry;
 import shts.jp.android.nogifeed.utils.DataStoreUtils;
-import shts.jp.android.nogifeed.utils.DateUtils;
 import shts.jp.android.nogifeed.utils.IntentUtils;
 import shts.jp.android.nogifeed.utils.PicassoHelper;
 import shts.jp.android.nogifeed.utils.TrackerUtils;

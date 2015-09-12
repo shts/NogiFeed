@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.models.Entries;
+import shts.jp.android.nogifeed.entities.Entries;
 import shts.jp.android.nogifeed.utils.AtomRssParser;
 
 public abstract class RssClientFinishListener extends AsyncHttpResponseHandler {

@@ -19,7 +19,7 @@ import shts.jp.android.nogifeed.adapters.FavoriteFeedListAdapter;
 import shts.jp.android.nogifeed.api.AsyncRssClient;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.listener.RssClientFinishListener;
-import shts.jp.android.nogifeed.models.Entries;
+import shts.jp.android.nogifeed.entities.Entries;
 import shts.jp.android.nogifeed.utils.DataStoreUtils;
 import shts.jp.android.nogifeed.views.MultiSwipeRefreshLayout;
 

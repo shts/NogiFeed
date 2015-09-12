@@ -1,4 +1,4 @@
-package shts.jp.android.nogifeed.models;
+package shts.jp.android.nogifeed.entities;
 
 import android.content.ContentValues;
 import android.content.Context;

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.models.Member;
+import shts.jp.android.nogifeed.entities.Member;
 import shts.jp.android.nogifeed.providers.NogiFeedContent;
 
 public class DataStoreUtils {
