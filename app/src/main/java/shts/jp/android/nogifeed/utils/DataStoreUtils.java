@@ -32,51 +32,6 @@ public class DataStoreUtils {
         });
     }
 
-    public static int getUnReadCounter(final Context context, final String feedUrl) {
-        final ContentResolver cr = context.getContentResolver();
-        String selection = NogiFeedContent.UnRead.KEY_FEED_URL + "=?";
-        String[] selectionArgs = { feedUrl };
-
-        Cursor c = cr.query(NogiFeedContent.UnRead.CONTENT_URI, NogiFeedContent.UnRead.sProjection,
-                selection, selectionArgs, null);
-        if (c == null) {
-            Logger.w(TAG, "cursor is null. because of use favorite function first time");
-            return 0;
-        }
-        final int count = c.getCount();
-        Logger.d(TAG, "getUnReadCounter : feed(" + feedUrl + ") count(" + count + ")");
-        c.close();
-        return count;
-    }
-
-    public static void readArticle(final Context context, final String articleUrl) {
-        Logger.v(TAG, "readArticle(Context, String) in : articleUrl(" + articleUrl + ")");
-
-        final ContentResolver cr = context.getContentResolver();
-        String selection = NogiFeedContent.UnRead.KEY_ARTICLE_URL + "=?";
-        String[] selectionArgs = { articleUrl };
-
-        Cursor c = cr.query(NogiFeedContent.UnRead.CONTENT_URI,
-                NogiFeedContent.UnRead.sProjection,
-                selection, selectionArgs, null);
-        if (c == null) {
-            Logger.w(TAG, "cursor is null");
-            return;
-        }
-        if (c.moveToFirst()) {
-            final int id = c.getInt(c.getColumnIndexOrThrow(
-                    NogiFeedContent.UnRead.KEY_ID
-            ));
-
-            String deleteSelection = NogiFeedContent.UnRead.KEY_ID + "=?";
-            String[] deleteSelectionArgs = { String.valueOf(id) };
-            cr.delete(NogiFeedContent.UnRead.CONTENT_URI, deleteSelection, deleteSelectionArgs);
-        } else {
-            Logger.w(TAG, "cannot moveToFirst()");
-        }
-        c.close();
-    }
-
     public static boolean hasAlreadyWidget(final Context context, final String feedUrl) {
         Logger.v(TAG, "hasAlreadyRead(String) in : feedUrl(" + feedUrl + ")");
         final ContentResolver cr = context.getContentResolver();
@@ -98,54 +53,6 @@ public class DataStoreUtils {
             c.close();
             return true;
         }
-    }
-
-    /**
-     * Whether the article has already read. If has already read the article return true.
-     * @param context
-     * @param articleUrl
-     * @return
-     */
-    public static boolean hasAlreadyRead(final Context context, final String articleUrl) {
-        Logger.v(TAG, "hasAlreadyRead(String) in : article(" + articleUrl + ")");
-        final ContentResolver cr = context.getContentResolver();
-        String selection = NogiFeedContent.UnRead.KEY_ARTICLE_URL + "=?";
-        String[] selectionArgs = { articleUrl };
-
-        Cursor c = cr.query(NogiFeedContent.UnRead.CONTENT_URI, NogiFeedContent.UnRead.sProjection,
-                selection, selectionArgs, null);
-        if (c == null) {
-            Logger.w(TAG, "cursor is null");
-            return true;
-        }
-        if (c.moveToFirst()) {
-            c.close();
-            return false;
-        } else {
-            Logger.w(TAG, "cannot moveToFirst()");
-        }
-        c.close();
-        return true;
-    }
-
-    public static void allUnReadArticle(final Context context) {
-        Logger.v(TAG, "allUnReadArticle(Context)");
-        final ContentResolver cr = context.getContentResolver();
-        Cursor c = cr.query(NogiFeedContent.UnRead.CONTENT_URI, NogiFeedContent.UnRead.sProjection,
-                null, null, null);
-        if (c == null) {
-            Logger.w(TAG, "cursor is null");
-            return;
-        }
-        if (c.moveToFirst()) {
-            final int id = c.getInt(c.getColumnIndexOrThrow(NogiFeedContent.UnRead.KEY_ID));
-            final String url = c.getString(c.getColumnIndexOrThrow(NogiFeedContent.UnRead.KEY_ARTICLE_URL));
-            final String feed = c.getString(c.getColumnIndexOrThrow(NogiFeedContent.UnRead.KEY_FEED_URL));
-            Logger.d(TAG, "id(" + id + ") url(" + url + ") feed(" + feed + ")");
-        } else {
-            Logger.w(TAG, "cannot move to first");
-        }
-        c.close();
     }
 
 //    public static void allWidgetProfile(Context context) {

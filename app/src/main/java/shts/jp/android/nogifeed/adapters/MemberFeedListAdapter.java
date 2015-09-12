@@ -10,7 +10,7 @@ import java.util.List;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.entities.Entry;
-import shts.jp.android.nogifeed.utils.DataStoreUtils;
+import shts.jp.android.nogifeed.models.UnRead;
 import shts.jp.android.nogifeed.utils.DateUtils;
 
 
@@ -51,11 +51,12 @@ public class MemberFeedListAdapter extends BindableAdapter<Entry> {
         holder.authorNameTextView.setText(item.name);
         holder.updatedTextView.setText(DateUtils.formatUpdated(item.updated));
         //
-        if (DataStoreUtils.hasAlreadyRead(getContext(), item.link)) {
+        final boolean unread = UnRead.exist(getContext(), item.link);
+        if (unread) {
+            holder.unreadMarker.setVisibility(View.VISIBLE);
+        } else {
             // not View.GONE
             holder.unreadMarker.setVisibility(View.INVISIBLE);
-        } else {
-            holder.unreadMarker.setVisibility(View.VISIBLE);
         }
     }
 

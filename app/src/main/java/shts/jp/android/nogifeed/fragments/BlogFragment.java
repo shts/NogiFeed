@@ -23,6 +23,7 @@ import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.listener.DownloadFinishListener;
 import shts.jp.android.nogifeed.entities.BlogEntry;
 import shts.jp.android.nogifeed.entities.Entry;
+import shts.jp.android.nogifeed.models.UnRead;
 import shts.jp.android.nogifeed.services.ImageDownloader;
 import shts.jp.android.nogifeed.utils.DataStoreUtils;
 import shts.jp.android.nogifeed.views.dialogs.DownloadConfirmDialog;
@@ -153,7 +154,7 @@ public class BlogFragment extends Fragment {
             }
             final Activity activity = getActivity();
             if (activity != null) {
-                DataStoreUtils.readArticle(
+                UnRead.readComplete(
                         getActivity().getApplicationContext(), url);
             }
         }
