@@ -52,6 +52,16 @@ public class MemberDetailFragment extends ListFragment {
     private Member mMember;
     private BlogEntry mBlogEntry;
 
+    private final ContentObserver mUnreadContentObserver = new ContentObserver(new Handler()) {
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+            if (mMemberFeedListAdapter != null) {
+                mMemberFeedListAdapter.notifyDataSetChanged();
+            }
+        }
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,18 +78,19 @@ public class MemberDetailFragment extends ListFragment {
         mActivity = (MemberDetailActivity) activity;
 
         if (activity != null) {
-            ContentResolver cr = activity.getApplicationContext().getContentResolver();
+            final ContentResolver cr = activity.getContentResolver();
             cr.registerContentObserver(
-                    NogiFeedContent.UnRead.CONTENT_URI, true, new ContentObserver(new Handler()) {
-                        @Override
-                        public void onChange(boolean selfChange) {
-                            super.onChange(selfChange);
-                            if (mMemberFeedListAdapter != null) {
-                                mMemberFeedListAdapter.notifyDataSetChanged();
-                            }
-                        }
-                    });
+                    NogiFeedContent.UnRead.CONTENT_URI, true, mUnreadContentObserver);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mActivity != null) {
+            final ContentResolver cr = mActivity.getContentResolver();
+            cr.unregisterContentObserver(mUnreadContentObserver);
+        }
+        super.onDestroy();
     }
 
     @Override

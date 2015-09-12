@@ -1,7 +1,10 @@
 package shts.jp.android.nogifeed.fragments;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.database.ContentObserver;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -22,6 +25,7 @@ import shts.jp.android.nogifeed.adapters.BlogFeedListAdapter;
 import shts.jp.android.nogifeed.api.AsyncBlogFeedClient;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.models.BlogEntry;
+import shts.jp.android.nogifeed.providers.NogiFeedContent;
 
 // TODO: 通信ができない場合、エラー表示を行う
 // 現在は Exception が発生する
@@ -36,6 +40,16 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
     private LinearLayout mFooterView;
 
     private AsyncBlogFeedClient.Target mTarget = new AsyncBlogFeedClient.Target();
+
+    private final ContentObserver mFavoriteContentObserver = new ContentObserver(new Handler()) {
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+            if (mBlogFeedListAdapter != null) {
+                mBlogFeedListAdapter.notifyDataSetChanged();
+            }
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,6 +72,28 @@ public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.
 
         mAllFeedList.addFooterView(mFooterView);
         return view;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity == null) {
+            return;
+        }
+        final ContentResolver cr = activity.getContentResolver();
+        cr.registerContentObserver(NogiFeedContent.Favorite.CONTENT_URI,
+                true, mFavoriteContentObserver);
+    }
+
+    @Override
+    public void onDestroy() {
+        final Activity activity = getActivity();
+        if (activity == null) {
+            return;
+        }
+        final ContentResolver cr = activity.getContentResolver();
+        cr.unregisterContentObserver(mFavoriteContentObserver);
+        super.onDestroy();
     }
 
     @Override
