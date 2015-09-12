@@ -18,6 +18,7 @@ import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.ConfigureActivity;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.entities.Member;
+import shts.jp.android.nogifeed.models.UnRead;
 import shts.jp.android.nogifeed.providers.NogiFeedContent;
 import shts.jp.android.nogifeed.utils.DataStoreUtils;
 import shts.jp.android.nogifeed.views.transformations.CircleTransformation;
@@ -55,7 +56,7 @@ public class ProfileWidgetProvider extends AppWidgetProvider {
                             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_profile);
                             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
                             // unread badge
-                            final int unReadCount = DataStoreUtils.getUnReadCounter(context, feedUrl);
+                            final int unReadCount = UnRead.count(context, feedUrl);
                             Logger.d(TAG, "unReadCount(" + unReadCount + ") feedUrl(" + feedUrl + ")");
                             if (unReadCount <= 0) {
                                 remoteViews.setViewVisibility(R.id.counter, View.GONE);
@@ -163,7 +164,7 @@ public class ProfileWidgetProvider extends AppWidgetProvider {
                 .into(remoteViews, R.id.image, new int[] { appWidgetId });
 
         // unread badge
-        final int unReadCount = DataStoreUtils.getUnReadCounter(context, member.feedUrl);
+        final int unReadCount = UnRead.count(context, member.feedUrl);
         if (unReadCount <= 0) {
             remoteViews.setViewVisibility(R.id.counter, View.GONE);
         } else {
