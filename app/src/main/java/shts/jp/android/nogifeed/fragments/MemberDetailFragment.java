@@ -1,7 +1,10 @@
 package shts.jp.android.nogifeed.fragments;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.database.ContentObserver;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +29,7 @@ import shts.jp.android.nogifeed.models.BlogEntry;
 import shts.jp.android.nogifeed.models.Entries;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.Member;
+import shts.jp.android.nogifeed.providers.NogiFeedContent;
 import shts.jp.android.nogifeed.utils.ArrayUtils;
 import shts.jp.android.nogifeed.utils.DataStoreUtils;
 import shts.jp.android.nogifeed.utils.IntentUtils;
@@ -62,6 +66,20 @@ public class MemberDetailFragment extends ListFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mActivity = (MemberDetailActivity) activity;
+
+        if (activity != null) {
+            ContentResolver cr = activity.getApplicationContext().getContentResolver();
+            cr.registerContentObserver(
+                    NogiFeedContent.UnRead.CONTENT_URI, true, new ContentObserver(new Handler()) {
+                        @Override
+                        public void onChange(boolean selfChange) {
+                            super.onChange(selfChange);
+                            if (mMemberFeedListAdapter != null) {
+                                mMemberFeedListAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    });
+        }
     }
 
     @Override

@@ -10,6 +10,7 @@ import java.util.List;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.models.Entry;
+import shts.jp.android.nogifeed.utils.DataStoreUtils;
 import shts.jp.android.nogifeed.utils.DateUtils;
 
 
@@ -21,11 +22,13 @@ public class MemberFeedListAdapter extends BindableAdapter<shts.jp.android.nogif
         TextView titleTextView;
         TextView authorNameTextView;
         TextView updatedTextView;
+        View unreadMarker;
 
         public ViewHolder(View view) {
             titleTextView = (TextView) view.findViewById(R.id.title);
             authorNameTextView = (TextView) view.findViewById(R.id.authorname);
             updatedTextView = (TextView) view.findViewById(R.id.updated);
+            unreadMarker = view.findViewById(R.id.marker);
         }
     }
 
@@ -47,6 +50,13 @@ public class MemberFeedListAdapter extends BindableAdapter<shts.jp.android.nogif
         holder.titleTextView.setText(item.title);
         holder.authorNameTextView.setText(item.name);
         holder.updatedTextView.setText(DateUtils.formatUpdated(item.updated));
+        //
+        if (DataStoreUtils.hasAlreadyRead(getContext(), item.link)) {
+            // not View.GONE
+            holder.unreadMarker.setVisibility(View.INVISIBLE);
+        } else {
+            holder.unreadMarker.setVisibility(View.VISIBLE);
+        }
     }
 
 }

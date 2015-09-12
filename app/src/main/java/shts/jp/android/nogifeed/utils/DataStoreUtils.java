@@ -211,6 +211,12 @@ public class DataStoreUtils {
         }
     }
 
+    /**
+     * Whether the article has already read. If has already read the article return true.
+     * @param context
+     * @param articleUrl
+     * @return
+     */
     public static boolean hasAlreadyRead(final Context context, final String articleUrl) {
         Logger.v(TAG, "hasAlreadyRead(String) in : article(" + articleUrl + ")");
         final ContentResolver cr = context.getContentResolver();
@@ -221,16 +227,16 @@ public class DataStoreUtils {
                 selection, selectionArgs, null);
         if (c == null) {
             Logger.w(TAG, "cursor is null");
-            return false;
+            return true;
         }
         if (c.moveToFirst()) {
             c.close();
-            return true;
+            return false;
         } else {
             Logger.w(TAG, "cannot moveToFirst()");
         }
         c.close();
-        return false;
+        return true;
     }
 
     public static void allUnReadArticle(final Context context) {
