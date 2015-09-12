@@ -3,6 +3,7 @@ package shts.jp.android.nogifeed.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -137,15 +138,14 @@ public class MemberDetailFragment extends ListFragment {
     }
 
 
-    private void setupAdapter(Entries entries) {
+    private void setupAdapter(final Entries entries) {
         mMemberFeedListAdapter = new MemberFeedListAdapter(getActivity(), entries);
         setListAdapter(mMemberFeedListAdapter);
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Entry entry = (Entry) getListView().getItemAtPosition(position);
-                //IntentUtils.startBlogActivity(mActivity, entry);
-                mActivity.startActivity(BlogActivity.getStartIntent(mActivity, mBlogEntry));
+                mActivity.startActivity(BlogActivity.getStartIntent(mActivity, entry.toBlogEntry()));
                 TrackerUtils.sendTrack(getActivity(), TAG,
                         "OnClicked", "-> Blog : " + "entry(" + entry.toString() + ")");
             }

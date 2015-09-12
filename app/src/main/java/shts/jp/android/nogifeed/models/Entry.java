@@ -25,6 +25,10 @@ public class Entry implements Parcelable {
 
     public Entry() {}
 
+    public BlogEntry toBlogEntry() {
+        return new BlogEntry(published, title, link, name, null, content);
+    }
+
     public String toString() {
         /*
         StringBuilder sb = new StringBuilder();
