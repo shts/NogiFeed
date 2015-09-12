@@ -8,6 +8,6 @@ public class MyActivity extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((NogiFeedApplication) getApplication()).parseInstllation();
+        ((NogiFeedApplication) getApplication()).parseInstallation();
     }
 }
