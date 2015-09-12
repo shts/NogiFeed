@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -121,26 +122,18 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (BuildConfig.DEBUG) {
-            final AsyncBlogFeedClient.Target target = new AsyncBlogFeedClient.Target(1, 8);
-            AsyncBlogFeedClient.getBlogEntry(this, target,
-                    new AsyncBlogFeedClient.Callbacks() {
-                        @Override
-                        public void onFinish(ArrayList<BlogEntry> blogEntries) {
-                            Logger.v(TAG, "blogEntries size(" + blogEntries.size() + ")");
-                            for (BlogEntry e : blogEntries) {
-                                Logger.v(TAG, "--------------");
-                                Logger.v(TAG, "blogEntry(" + e.toString() + ")");
-                            }
-                        }
-                    });
-            return super.onOptionsItemSelected(item);
+        Intent intent = null;
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                intent = new Intent(this, SettingsActivity.class);
+                break;
+            case R.id.action_about:
+                intent = new Intent(this, AboutActivity.class);
+                break;
         }
-        // TODO: go to settings
-        Intent i = new Intent(this, AboutActivity.class);
-        // MemberListActivity
-        //Intent i = new Intent(this, MemberListActivity.class);
-        startActivity(i);
+        if (intent != null) {
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
     }
 }

@@ -5,8 +5,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.squareup.picasso.Picasso;
@@ -32,8 +34,15 @@ public class BlogUpdateNotification {
     private static final String NOTIFICATION_ID_KEY = "pref_key_blog_update_notification_id";
     private static final int DEFAULT_NOTIFICATION_ID = 1000;
 
+    private static final String NOTIFICATION_ENABLE = "pref_key_blog_updated_notification_enable";
+
     public static synchronized void show(final Context context, final String url,
                                          final String title, final String author) {
+        final boolean isEnableNotification = PreferencesUtils.getBoolean(context, NOTIFICATION_ENABLE, true);
+        if (!isEnableNotification) {
+            Logger.d(TAG, "do not show notification because of notification disable");
+            return;
+        }
 
         final boolean ret = AsyncRssClient.read(context, UrlUtils.FEED_ALL_URL, new RssClientFinishListener() {
             @Override

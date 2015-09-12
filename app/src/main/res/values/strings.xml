@@ -6,6 +6,11 @@
     <string name="action_settings">Settings</string>
     <string name="action_news">News</string>
 
+    <!-- activity settings -->
+    <string name="setting_category_title_notification">Notification</string>
+    <string name="setting_title_notification">Blog Update Notification</string>
+    <string name="setting_summary_notification">Receive blog update notification</string>
+
     <!-- activity all members -->
     <string name="failed_get_all_members">Failed to get all members. Check your network state.</string>
 

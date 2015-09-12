@@ -22,4 +22,8 @@ public class PreferencesUtils {
         return getDefaultSharedPreferences(context).getInt(key, defValue);
     }
 
+    public static boolean getBoolean(Context context, String key, boolean defValue) {
+        return getDefaultSharedPreferences(context).getBoolean(key, defValue);
+    }
+
 }

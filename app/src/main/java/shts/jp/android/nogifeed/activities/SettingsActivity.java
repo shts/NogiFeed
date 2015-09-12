@@ -18,7 +18,7 @@ public class SettingsActivity extends BaseActivity {
 
         SettingsFragment settingsFragment = new SettingsFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, settingsFragment, AllFeedListFragment.class.getSimpleName());
+        ft.replace(R.id.container, settingsFragment, SettingsFragment.class.getSimpleName());
         ft.commit();
 
         setupActionBar();

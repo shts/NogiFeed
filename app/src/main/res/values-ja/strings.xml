@@ -3,8 +3,13 @@
 
     <string name="app_name">NogiFeed</string>
     <string name="action_about">"このアプリについて"</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">"設定"</string>
     <string name="action_news">ニュース</string>
+
+    <!-- activity settings -->
+    <string name="setting_category_title_notification">通知設定</string>
+    <string name="setting_title_notification">ブログ更新通知</string>
+    <string name="setting_summary_notification">ブログ更新通知を受け取るかどうか設定できます</string>
 
     <!-- activity all members -->
     <string name="failed_get_all_members">"メンバーが取得できませんでした。ネットワークの状態を確認してください"</string>
