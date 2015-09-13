@@ -15,8 +15,8 @@ import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.ConfigureActivity;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.entities.Member;
+import shts.jp.android.nogifeed.models.ProfileWidget;
 import shts.jp.android.nogifeed.providers.NogiFeedContent;
-import shts.jp.android.nogifeed.utils.DataStoreUtils;
 import shts.jp.android.nogifeed.views.transformations.CircleTransformation;
 
 public class ArticleWidgetProvider extends AppWidgetProvider {
@@ -83,6 +83,6 @@ public class ArticleWidgetProvider extends AppWidgetProvider {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
 
-        DataStoreUtils.saveWidgetProfileMember(context, member, appWidgetId);
+        ProfileWidget.save(context, member, appWidgetId);
     }
 }
