@@ -12,7 +12,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import com.squareup.picasso.Picasso;
+import java.util.ArrayList;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.ConfigureActivity;
@@ -21,70 +21,56 @@ import shts.jp.android.nogifeed.entities.Member;
 import shts.jp.android.nogifeed.models.ProfileWidget;
 import shts.jp.android.nogifeed.models.UnRead;
 import shts.jp.android.nogifeed.providers.NogiFeedContent;
-import shts.jp.android.nogifeed.views.transformations.CircleTransformation;
+import shts.jp.android.nogifeed.utils.PicassoHelper;
 
 public class ProfileWidgetProvider extends AppWidgetProvider {
 
     private static final String TAG = ProfileWidgetProvider.class.getSimpleName();
 
+    static class ProfileWidgetContentObserver extends ContentObserver {
+
+        private final Context context;
+
+        public ProfileWidgetContentObserver(Context context) {
+            super(new Handler());
+            this.context = context;
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+            ArrayList<ProfileWidget> profileWidgets = ProfileWidget.all(context);
+            for (ProfileWidget widget : profileWidgets) {
+                updateWidget(context, widget);
+            }
+        }
+
+        private void updateWidget(Context context, ProfileWidget widget) {
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_profile);
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            // unread badge
+            final int unReadCount = UnRead.count(context, widget.feedUrl);
+            Logger.d(TAG, "unReadCount(" + unReadCount + ") feedUrl(" + widget.feedUrl + ")");
+            if (unReadCount <= 0) {
+                remoteViews.setViewVisibility(R.id.counter, View.GONE);
+            } else {
+                remoteViews.setViewVisibility(R.id.counter, View.VISIBLE);
+                remoteViews.setTextViewText(R.id.counter, String.valueOf(unReadCount));
+            }
+            appWidgetManager.updateAppWidget(widget.widgetId, remoteViews);
+        }
+    }
+
     public static void initialize(final Context context) {
         context.getContentResolver().registerContentObserver(
-                NogiFeedContent.UnRead.CONTENT_URI, true, new ContentObserver(new Handler()) {
-                    @Override
-                    public void onChange(boolean selfChange) {
-                        super.onChange(selfChange);
-                        updateAllRegisteredMembersFrom(context);
-                    }
-
-                    private void updateAllRegisteredMembersFrom(Context context) {
-                        Logger.v(TAG, "updateAllRegisteredMembersFrom(Context)");
-
-                        final ContentResolver cr = context.getContentResolver();
-                        Cursor c = cr.query(NogiFeedContent.ProfileWidget.CONTENT_URI,
-                                NogiFeedContent.ProfileWidget.sProjection, null, null, null);
-                        if (c == null || !c.moveToFirst()) {
-                            Logger.w(TAG, "cursor is null");
-                            return;
-                        }
-                        do {
-                            final String feedUrl = c.getString(c.getColumnIndexOrThrow(
-                                    NogiFeedContent.ProfileWidget.KEY_FEED_URL
-                            ));
-                            final int appWidgetId = c.getInt(c.getColumnIndexOrThrow(
-                                    NogiFeedContent.ProfileWidget.KEY_WIDGET_ID
-                            ));
-                            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_profile);
-                            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-                            // unread badge
-                            final int unReadCount = UnRead.count(context, feedUrl);
-                            Logger.d(TAG, "unReadCount(" + unReadCount + ") feedUrl(" + feedUrl + ")");
-                            if (unReadCount <= 0) {
-                                remoteViews.setViewVisibility(R.id.counter, View.GONE);
-                            } else {
-                                remoteViews.setViewVisibility(R.id.counter, View.VISIBLE);
-                                remoteViews.setTextViewText(R.id.counter, String.valueOf(unReadCount));
-                            }
-                            appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
-                        } while (c.moveToNext());
-                        c.close();
-                    }
-                });
+                NogiFeedContent.UnRead.CONTENT_URI, true, new ProfileWidgetContentObserver(context));
     }
 
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
         Logger.v(TAG, "onDeleted(Context, int[]) in : appWidgetIds("
                 + intArrayToString(appWidgetIds) + ")");
-
-        // Delete member from database
-        final ContentResolver cr = context.getContentResolver();
-        String selection = NogiFeedContent.ProfileWidget.KEY_WIDGET_ID + "=?";
-
-        for (int appWidgetId : appWidgetIds) {
-            String[] selectionArgs = { Integer.toString(appWidgetId) };
-            cr.delete(NogiFeedContent.ProfileWidget.CONTENT_URI,
-                    selection, selectionArgs);
-        }
+        ProfileWidget.delete(context, appWidgetIds);
     }
 
     @Override
@@ -98,7 +84,7 @@ public class ProfileWidgetProvider extends AppWidgetProvider {
                 Logger.v(TAG, "member is null");
                 continue;
             }
-            updateWidget(context, member, appWidgetId);
+            updateWidgetView(context, member, appWidgetId);
         }
     }
 
@@ -147,21 +133,21 @@ public class ProfileWidgetProvider extends AppWidgetProvider {
             Logger.w(TAG, "member is null");
             return;
         }
-        updateWidget(context, member, appWidgetId);
+        updateWidgetView(context, member, appWidgetId);
 
         // save new widget
         ProfileWidget.save(context, member, appWidgetId);
     }
 
-    private static void updateWidget(Context context, Member member, int appWidgetId) {
-        Logger.d(TAG, "updateWidget(Context, Member, int) in : member("
+    private static void updateWidgetView(Context context, Member member, int appWidgetId) {
+        Logger.d(TAG, "updateWidgetView(Context, Member, int) in : member("
             + member.toString() + ") appWidgetId(" + appWidgetId + ")");
 
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_profile);
         remoteViews.setTextViewText(R.id.text, member.name);
         remoteViews.setOnClickPendingIntent(R.id.image, getOnClickIntent(context, member, appWidgetId));
-        Picasso.with(context).load(member.profileImageUrl).transform(new CircleTransformation())
-                .into(remoteViews, R.id.image, new int[] { appWidgetId });
+        PicassoHelper.loadAndCircleTransform(
+                context, member.profileImageUrl, remoteViews, R.id.image, appWidgetId);
 
         // unread badge
         final int unReadCount = UnRead.count(context, member.feedUrl);

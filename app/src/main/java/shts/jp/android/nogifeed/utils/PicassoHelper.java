@@ -2,6 +2,7 @@ package shts.jp.android.nogifeed.utils;
 
 import android.content.Context;
 import android.widget.ImageView;
+import android.widget.RemoteViews;
 
 import com.squareup.picasso.Picasso;
 
@@ -28,6 +29,16 @@ public class PicassoHelper {
                 .centerCrop()
                 .transform(CIRCLE_TRANSFORMATION)
                 .into(target);
+    }
+
+    public static void loadAndCircleTransform(Context context, String url, RemoteViews remoteViews,
+                                              int resId, int appWidgetId) {
+        Picasso.with(context)
+                .load(url)
+                .fit()
+                .centerCrop()
+                .transform(CIRCLE_TRANSFORMATION)
+                .into(remoteViews, resId, new int[] { appWidgetId });
     }
 
     public static void loadAndBannerTransform(Context context, ImageView target, String url) {
