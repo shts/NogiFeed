@@ -13,7 +13,6 @@ import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.entities.BlogEntry;
 import shts.jp.android.nogifeed.models.Favorite;
-import shts.jp.android.nogifeed.utils.DataStoreUtils;
 import shts.jp.android.nogifeed.utils.IntentUtils;
 import shts.jp.android.nogifeed.utils.PicassoHelper;
 import shts.jp.android.nogifeed.utils.TrackerUtils;

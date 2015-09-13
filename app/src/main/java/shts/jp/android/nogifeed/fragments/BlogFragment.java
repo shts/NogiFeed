@@ -20,12 +20,11 @@ import android.widget.Toast;
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.api.ThumbnailDownloadClient;
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.listener.DownloadFinishListener;
 import shts.jp.android.nogifeed.entities.BlogEntry;
 import shts.jp.android.nogifeed.entities.Entry;
+import shts.jp.android.nogifeed.listener.DownloadFinishListener;
 import shts.jp.android.nogifeed.models.UnRead;
 import shts.jp.android.nogifeed.services.ImageDownloader;
-import shts.jp.android.nogifeed.utils.DataStoreUtils;
 import shts.jp.android.nogifeed.views.dialogs.DownloadConfirmDialog;
 import shts.jp.android.nogifeed.views.notifications.BlogUpdateNotification;
 
