@@ -23,6 +23,13 @@
         <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-1967dbff3c65dc19fbd47f0cc6ea7f8be55e3ea5.jar" />
     </item>
     <item
+        jar="/Applications/git/android/NogiFeed/app/libs/Parse-1.9.0.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="5811138d4e6cb9d45030e133ef1a61b935154c3a">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/Parse-1.9.0-d94ce12fc6681ac6e1c86ab0ade81d0d49794270.jar" />
+    </item>
+    <item
         jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
         jumboMode="false"
         revision="21.1.0"
@@ -35,20 +42,6 @@
         revision="21.1.0"
         sha1="1262995965440e28ba5c4d480c9c9ab4ccce84cc">
         <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/picasso-2.3.3-24fd63ae3e584d50a5376609c3006358a473cfdf.jar" />
-    </item>
-    <item
-        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.1.4/129874135e6081269ace2312092031558865de12/bolts-android-1.1.4.jar"
-        jumboMode="false"
-        revision="21.1.0"
-        sha1="129874135e6081269ace2312092031558865de12">
-        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/bolts-android-1.1.4-50c0af04441db1caadee6fe03574ae4029b8a183.jar" />
-    </item>
-    <item
-        jar="/Applications/git/android/NogiFeed/app/libs/Parse-1.8.2.jar"
-        jumboMode="false"
-        revision="21.1.0"
-        sha1="c2cb0bfe37cbefd855b6faa3c9a5be833aba7300">
-        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/Parse-1.8.2-d666e9ebc2d943dfd81b0db452884477da3db86d.jar" />
     </item>
     <item
         jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.11/classes.jar"
@@ -72,18 +65,11 @@
         <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-2c6800023c56ad9d7f429950e257afd4595ad3dd.jar" />
     </item>
     <item
-        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.readystatesoftware.systembartint/systembartint/1.0.3/de4f7404e2f58d8f6e83cb1e85d0c2d6c2987287/systembartint-1.0.3.jar"
+        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.loopj.android/android-async-http/1.4.8/77bbfe240e437ecb396d982afa0d3bd4f9090ba7/android-async-http-1.4.8.jar"
         jumboMode="false"
         revision="21.1.0"
-        sha1="de4f7404e2f58d8f6e83cb1e85d0c2d6c2987287">
-        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/systembartint-1.0.3-74d69d3d28c64212d47021355d7f385f248e1acb.jar" />
-    </item>
-    <item
-        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.loopj.android/android-async-http/1.4.5/77bf7cacf9cefe19dc105e5425d2eb1bb5285881/android-async-http-1.4.5.jar"
-        jumboMode="false"
-        revision="21.1.0"
-        sha1="77bf7cacf9cefe19dc105e5425d2eb1bb5285881">
-        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/android-async-http-1.4.5-b4ef43b277f96d73df95d232b1085fc386df5249.jar" />
+        sha1="77bbfe240e437ecb396d982afa0d3bd4f9090ba7">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/android-async-http-1.4.8-d85231e5f41bbccd60e3b297e0e920a28750eda9.jar" />
     </item>
     <item
         jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
@@ -105,6 +91,13 @@
         revision="21.1.0"
         sha1="4b8945fc23a7461c6fdde15753456d64b0a9358b">
         <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-3146449361841e9eccf182879967faa2fbf300fd.jar" />
+    </item>
+    <item
+        jar="/Applications/git/android/NogiFeed/app/libs/bolts-android-1.1.4.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="129874135e6081269ace2312092031558865de12">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/bolts-android-1.1.4-8e35c3663fe252726c91e9b97b08a57b5dccbcef.jar" />
     </item>
 
 </items>
