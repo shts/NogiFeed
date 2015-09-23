@@ -36,6 +36,9 @@ import shts.jp.android.nogifeed.utils.TrackerUtils;
 import shts.jp.android.nogifeed.utils.UrlUtils;
 import shts.jp.android.nogifeed.views.Showcase;
 
+/**
+ * // TODO: このフィードに含まれないほど昔の記事に未読があった場合、既読にすること
+ */
 public class MemberDetailFragment extends ListFragment {
 
     private static final String TAG = MemberDetailFragment.class.getSimpleName();
