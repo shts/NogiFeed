@@ -33,6 +33,8 @@ public class AsyncBlogFeedClient {
         HANDLER = new Handler(WORKER_THREAD.getLooper());
     }
 
+    private static final Handler sUiThreadHandler = new Handler(Looper.getMainLooper());
+
     public interface Callbacks {
         public void onFinish(ArrayList<BlogEntry> blogEntries);
     }
@@ -113,15 +115,25 @@ public class AsyncBlogFeedClient {
                     final ArrayList<BlogEntry> blogEntries
                             = getBlogEntry(target);
 
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    sUiThreadHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            callbacks.onFinish(blogEntries);
+                            if (callbacks != null) {
+                                callbacks.onFinish(blogEntries);
+                            }
                         }
                     });
 
                 } catch (IOException e) {
                     Logger.e(TAG, "failed to parse blog feed", e);
+                    sUiThreadHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (callbacks != null) {
+                                callbacks.onFinish(null);
+                            }
+                        }
+                    });
                 }
             }
         });
