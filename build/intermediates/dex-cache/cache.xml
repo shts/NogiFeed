@@ -44,11 +44,11 @@
         <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/picasso-2.3.3-24fd63ae3e584d50a5376609c3006358a473cfdf.jar" />
     </item>
     <item
-        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.11/classes.jar"
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
         jumboMode="false"
         revision="21.1.0"
-        sha1="0f700f6802ba1a1f1fa7ac26d5db0666a89d75a6">
-        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-6c130010f3e815e96634b3dc957293b113b997be.jar" />
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-2c6800023c56ad9d7f429950e257afd4595ad3dd.jar" />
     </item>
     <item
         jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.3/classes.jar"
@@ -58,11 +58,11 @@
         <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-cb28ff9e608b3087b0964b1ada5869088e4f5bc6.jar" />
     </item>
     <item
-        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.11/classes.jar"
         jumboMode="false"
         revision="21.1.0"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-2c6800023c56ad9d7f429950e257afd4595ad3dd.jar" />
+        sha1="0f700f6802ba1a1f1fa7ac26d5db0666a89d75a6">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-6c130010f3e815e96634b3dc957293b113b997be.jar" />
     </item>
     <item
         jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.loopj.android/android-async-http/1.4.8/77bbfe240e437ecb396d982afa0d3bd4f9090ba7/android-async-http-1.4.8.jar"
