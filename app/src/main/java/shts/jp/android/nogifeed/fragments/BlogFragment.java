@@ -148,6 +148,10 @@ public class BlogFragment extends Fragment {
         }
 
         private void markReadArticle(String url) {
+            if (TextUtils.isEmpty(url)) {
+                Logger.w(TAG, "cannot markReadArticle because of url is empty");
+                return;
+            }
             if (url.contains("smph")) {
                 url = url.replace("smph/", "");
             }
