@@ -5,6 +5,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.provider.Settings;
 
+import shts.jp.android.nogifeed.common.Logger;
+
 public class NetworkUtils {
 
     private NetworkUtils() {}
@@ -15,9 +17,9 @@ public class NetworkUtils {
      * @return if true network enabled.
      */
     public static boolean enableNetwork(Context context) {
-        if (NetworkUtils.isAirplaneModeOn(context)) {
-            return false;
-        }
+//        if (NetworkUtils.isAirplaneModeOn(context)) {
+//            return false;
+//        }
         return NetworkUtils.isConnected(context);
     }
 
