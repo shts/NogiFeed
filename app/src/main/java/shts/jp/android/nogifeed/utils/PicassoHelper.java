@@ -35,8 +35,6 @@ public class PicassoHelper {
                                               int resId, int appWidgetId) {
         Picasso.with(context)
                 .load(url)
-                .fit()
-                .centerCrop()
                 .transform(CIRCLE_TRANSFORMATION)
                 .into(remoteViews, resId, new int[] { appWidgetId });
     }
