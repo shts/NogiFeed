@@ -83,6 +83,10 @@ public class BlogUpdateNotification {
                 .setSmallIcon(R.drawable.ic_notification)
                 .setAutoCancel(true)
                 .build();
+
+        notification.defaults |= Notification.DEFAULT_SOUND;
+        notification.defaults |= Notification.DEFAULT_VIBRATE;
+
         ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).notify(notificationId, notification);
 
         notified(context, notificationId);
