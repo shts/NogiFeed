@@ -13,6 +13,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.entities.BlogEntry;
@@ -146,6 +147,10 @@ public class AsyncBlogFeedClient {
 
         // 指定の月の最大ページ数を取得する
         final int maxSize = getMaxPage(target.getDateParameter());
+        if (maxSize <= 0) {
+            // return empty list
+            return new ArrayList<>();
+        }
 
         int pending = 0;
         if (maxSize < target.page.to) {
@@ -221,8 +226,12 @@ public class AsyncBlogFeedClient {
 
     private static int getMaxPage(String param) throws IOException {
         Document document = Jsoup.connect(URL + "?d=" + param).userAgent(USER_AGENT).get();
-        Element paginate = document.body()
-                .getElementsByClass("paginate").get(0);
-        return paginate.getElementsByTag("a").size();
+        try {
+            Element paginate = document.body()
+                    .getElementsByClass("paginate").get(0);
+            return paginate.getElementsByTag("a").size();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return -1;
+        }
     }
 }
