@@ -10,5 +10,11 @@
             android:summary="@string/setting_summary_notification"
             android:defaultValue="true"
             />
+        <CheckBoxPreference
+            android:key="pref_key_blog_updated_notification_restriction_enable"
+            android:title="@string/setting_title_notification_restriction"
+            android:summary="@string/setting_summary_notification_restriction"
+            android:defaultValue="false"
+            />
     </PreferenceCategory>
 </PreferenceScreen>

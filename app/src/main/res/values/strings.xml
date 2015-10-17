@@ -11,6 +11,9 @@
     <string name="setting_title_notification">Blog Update Notification</string>
     <string name="setting_summary_notification">Receive blog update notification</string>
 
+    <string name="setting_title_notification_restriction">Blog Update Notification Restriction</string>
+    <string name="setting_summary_notification_restriction">Receive blog update notification only fav members</string>
+
     <!-- activity all members -->
     <string name="failed_get_all_members">Failed to get all members. Check your network state.</string>
 

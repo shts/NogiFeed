@@ -53,8 +53,7 @@ public class Favorite {
         }
     }
 
-
-    public static boolean exist(Context context, String link) {
+    public static boolean exist(Context context, String link/* feed url*/) {
         final ContentResolver cr = context.getContentResolver();
         String selection = KEY_LINK + "=?";
         String[] selectionArgs = { link };
