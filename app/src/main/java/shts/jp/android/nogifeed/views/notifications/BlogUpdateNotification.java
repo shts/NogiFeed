@@ -60,7 +60,11 @@ public class BlogUpdateNotification {
             public void onFailureWrapper(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {}
             @Override
             public void onFinish(Entries entries) {
-                show(context, url, title, author, entries.getEntryFrom(url));
+                if (entries != null && !entries.isEmpty()) {
+                    show(context, url, title, author, entries.getEntryFrom(url));
+                } else {
+                    show(context, url, title, author, null);
+                }
             }
         });
         if (!ret) {
