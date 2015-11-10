@@ -8,8 +8,8 @@ android {
         applicationId "shts.jp.android.nogifeed"
         minSdkVersion 10
         targetSdkVersion 21
-        versionCode 12
-        versionName "1.2.1"
+        versionCode 13
+        versionName "1.2.2"
     }
     buildTypes {
         debug {
