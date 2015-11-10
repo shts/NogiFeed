@@ -232,6 +232,8 @@ public class AsyncBlogFeedClient {
             return paginate.getElementsByTag("a").size();
         } catch (ArrayIndexOutOfBoundsException e) {
             return -1;
+        } catch (IndexOutOfBoundsException e) {
+            return -1;
         }
     }
 }
