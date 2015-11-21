@@ -24,3 +24,9 @@
 -assumenosideeffects class shts.jp.android.nogifeed.common.Logger {
     <methods>;
 }
+
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @com.squareup.otto.Subscribe public *;
+    @com.squareup.otto.Produce public *;
+}

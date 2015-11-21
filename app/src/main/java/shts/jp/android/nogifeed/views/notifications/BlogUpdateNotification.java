@@ -20,7 +20,7 @@ import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.listener.RssClientFinishListener;
 import shts.jp.android.nogifeed.entities.Entries;
 import shts.jp.android.nogifeed.entities.Entry;
-import shts.jp.android.nogifeed.models.Favorite;
+import shts.jp.android.nogifeed.models.legacy.Favorite;
 import shts.jp.android.nogifeed.utils.PreferencesUtils;
 import shts.jp.android.nogifeed.utils.UrlUtils;
 import shts.jp.android.nogifeed.views.transformations.CircleTransformation;
