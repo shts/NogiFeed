@@ -46,13 +46,6 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         setupActionBar();
         setupViewPager();
-        Member.getReference("QqZq8icigu").fetchIfNeededInBackground(new GetCallback<Member>() {
-            @Override
-            public void done(Member member, ParseException e) {
-                // QqZq8icigu
-                Favorite.add(member);
-            }
-        });
     }
 
     @Override
