@@ -15,8 +15,7 @@ import java.util.List;
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.listener.DownloadFinishListener;
-import shts.jp.android.nogifeed.entities.Entry;
-import shts.jp.android.nogifeed.utils.JsoupUtils;
+import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.utils.NetworkUtils;
 import shts.jp.android.nogifeed.utils.SdCardUtils;
 
@@ -46,17 +45,17 @@ public class ThumbnailDownloadClient {
             return false;
         }
 
-        if (entry == null || TextUtils.isEmpty(entry.content)) {
-            Logger.w(TAG, "cannot download because of entry is null.");
-            return false;
-        }
+//        if (entry == null || TextUtils.isEmpty(entry.content)) {
+//            Logger.w(TAG, "cannot download because of entry is null.");
+//            return false;
+//        }
 
         for (int i = 0; i < imageUrls.size(); i++) {
 
             final String imageUrl = imageUrls.get(i);
-            final File file = new File(SdCardUtils.getDownloadFilePath(entry, i, "t"));
+            //final File file = new File(SdCardUtils.getDownloadFilePath(entry, i, "t"));
 
-            client.get(imageUrl, new FileAsyncHttpResponseHandler(file) {
+            client.get(imageUrl, new FileAsyncHttpResponseHandler(new File("")) {
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
@@ -93,15 +92,16 @@ public class ThumbnailDownloadClient {
             return false;
         }
 
-        if (entry == null || TextUtils.isEmpty(entry.content)) {
-            Logger.w(TAG, "cannot download because of entry is null.");
-            return false;
-        }
+//        if (entry == null || TextUtils.isEmpty(entry.content)) {
+//            Logger.w(TAG, "cannot download because of entry is null.");
+//            return false;
+//        }
 
-        final int thumbnailIndex = JsoupUtils.getThumbnailIndex(entry.content, imageUrl);
-        final File file = new File(SdCardUtils.getDownloadFilePath(entry, thumbnailIndex, "t"));
+//        final int thumbnailIndex = JsoupUtils.getThumbnailIndex(entry.content, imageUrl);
+        int thumbnailIndex = 0;
+        //final File file = new File(SdCardUtils.getDownloadFilePath(entry, thumbnailIndex, "t"));
 
-        client.get(imageUrl, new FileAsyncHttpResponseHandler(file) {
+        client.get(imageUrl, new FileAsyncHttpResponseHandler(new File("")) {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {

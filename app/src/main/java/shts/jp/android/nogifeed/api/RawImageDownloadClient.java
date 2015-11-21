@@ -13,13 +13,11 @@ import org.apache.http.Header;
 import org.apache.http.impl.cookie.BasicClientCookie;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.listener.DownloadFinishListener;
-import shts.jp.android.nogifeed.entities.Entry;
-import shts.jp.android.nogifeed.utils.JsoupUtils;
+import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.utils.NetworkUtils;
 import shts.jp.android.nogifeed.utils.SdCardUtils;
 
@@ -60,9 +58,9 @@ public class RawImageDownloadClient {
                 continue;
             }
 
-            final File file = new File(SdCardUtils.getDownloadFilePath(entry, i, "r"));
+            //final File file = new File(SdCardUtils.getDownloadFilePath(entry, i, "r"));
 
-            download(context, imageUrl, file, listener);
+            download(context, imageUrl, null, listener);
         }
         return true;
     }
@@ -93,7 +91,8 @@ public class RawImageDownloadClient {
                 try {
                     // TODO: this is ui thread. should worker thread.
                     // get enable raw image url from html.
-                    String url = JsoupUtils.getEnableRawImageUrl(new String(responseBody, "UTF-8"));
+                    //String url = JsoupUtils.getEnableRawImageUrl(new String(responseBody, "UTF-8"));
+                    String url = "test";
                     if (TextUtils.isEmpty(url)) {
                         Logger.w(TAG, "failed to get enable url from HTML.");
                         listener.onFailure();
@@ -126,7 +125,7 @@ public class RawImageDownloadClient {
                             listener.onFailure();
                         }
                     });
-                } catch (UnsupportedEncodingException e) {
+                } catch (Exception e) {
                     Logger.e(TAG, "failed to parse responseBody. 'byte' -> 'String'");
                 }
             }

@@ -6,7 +6,7 @@ import android.os.Environment;
 
 import java.io.File;
 
-import shts.jp.android.nogifeed.entities.Entry;
+import shts.jp.android.nogifeed.models.Entry;
 
 /**
  * Get information of sd card and download directory.
@@ -43,7 +43,7 @@ public class SdCardUtils {
      * @return file absolute path.
      */
     public static String getDownloadFilePath(Entry entry, int counter, String imageType) {
-        return getDownloadFilePath() + File.separator + getFileName(entry.link, counter, imageType);
+        return getDownloadFilePath() + File.separator + getFileName(entry.getBlogUrl(), counter, imageType);
     }
 
     /**

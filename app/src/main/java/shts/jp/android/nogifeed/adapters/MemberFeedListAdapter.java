@@ -9,8 +9,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import shts.jp.android.nogifeed.R;
-import shts.jp.android.nogifeed.entities.Entry;
-import shts.jp.android.nogifeed.models.UnRead;
+import shts.jp.android.nogifeed.models.Entry;
+import shts.jp.android.nogifeed.models.NotYetRead;
 import shts.jp.android.nogifeed.utils.DateUtils;
 
 
@@ -45,13 +45,12 @@ public class MemberFeedListAdapter extends BindableAdapter<Entry> {
     }
 
     @Override
-    public void bindView(Entry item, int position, View view) {
+    public void bindView(Entry entry, int position, View view) {
         final ViewHolder holder = (ViewHolder) view.getTag();
-        holder.titleTextView.setText(item.title);
-        holder.authorNameTextView.setText(item.name);
-        holder.updatedTextView.setText(DateUtils.formatUpdated(item.updated));
-        //
-        final boolean unread = UnRead.exist(getContext(), item.link);
+        holder.titleTextView.setText(entry.getTitle());
+        holder.authorNameTextView.setText(entry.getAuthor());
+        holder.updatedTextView.setText(DateUtils.dateToString(entry.getPublishedDate()));
+        final boolean unread = NotYetRead.isRead(entry.getBlogUrl());
         if (unread) {
             holder.unreadMarker.setVisibility(View.VISIBLE);
         } else {

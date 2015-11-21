@@ -1,207 +1,152 @@
 package shts.jp.android.nogifeed.fragments;
 
-import android.app.Activity;
-import android.content.ContentResolver;
-import android.database.ContentObserver;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.squareup.otto.Subscribe;
 
-import shts.jp.android.nogifeed.BuildConfig;
+import java.util.List;
+
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.BlogActivity;
-import shts.jp.android.nogifeed.adapters.BlogFeedListAdapter;
-import shts.jp.android.nogifeed.api.AsyncBlogFeedClient;
+import shts.jp.android.nogifeed.adapters.AllFeedListAdapter;
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.entities.BlogEntry;
-import shts.jp.android.nogifeed.providers.NogiFeedContent;
+import shts.jp.android.nogifeed.models.Entry;
+import shts.jp.android.nogifeed.models.eventbus.BusHolder;
+import shts.jp.android.nogifeed.models.eventbus.EventOnChangeFavoriteState;
 
-// TODO: 通信ができない場合、エラー表示を行う
-// 現在は Exception が発生する
-// http://www.google.com/design/spec/whats-new/whats-new.html
-public class AllFeedListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class AllFeedListFragment extends Fragment {
 
     private static final String TAG = AllFeedListFragment.class.getSimpleName();
 
-    private ListView mAllFeedList;
-    private BlogFeedListAdapter mBlogFeedListAdapter;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-    private LinearLayout mFooterView;
+    private static final int PAGE_LIMIT = 30;
+    private int counter = 0;
 
-    private AsyncBlogFeedClient.Target mTarget = new AsyncBlogFeedClient.Target();
+    private ListView listView;
+    private AllFeedListAdapter adapter;
+    private LinearLayout footerView;
 
-    private final ContentObserver mFavoriteContentObserver = new ContentObserver(new Handler()) {
+    private final AllFeedListAdapter.OnPageMaxScrolledListener scrolledListener
+            = new AllFeedListAdapter.OnPageMaxScrolledListener() {
         @Override
-        public void onChange(boolean selfChange) {
-            super.onChange(selfChange);
-            if (mBlogFeedListAdapter != null) {
-                mBlogFeedListAdapter.notifyDataSetChanged();
-            }
+        public void onScrolledMaxPage() {
+            getNextFeed();
         }
     };
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    private abstract class Callback implements FindCallback<Entry> {
+        @Override
+        public void done(List<Entry> entries, ParseException e) {
+            if (e != null || entries == null || entries.isEmpty()) {
+                // TODO: show error toast
+                Logger.e(TAG, "cannot get entries", e);
+            } else {
+                done(entries);
+            }
+            if (footerView != null) {
+                footerView.setVisibility(View.GONE);
+            }
+        }
+        public abstract void done(List<Entry> entries);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_all_feed_list, null);
-        mAllFeedList = (ListView) view.findViewById(R.id.all_feed_list);
+        listView = (ListView) view.findViewById(R.id.all_feed_list);
 
         // SwipeRefreshLayoutの設定
-        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorSchemeResources(
+        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getAllFeeds();
+            }
+        });
+        swipeRefreshLayout.setColorSchemeResources(
                 R.color.nogifeed, R.color.nogifeed, R.color.nogifeed, R.color.nogifeed);
 
-        mFooterView = (LinearLayout) inflater.inflate(R.layout.list_item_more_load, null);
-        mFooterView.setVisibility(View.GONE);
+        footerView = (LinearLayout) inflater.inflate(R.layout.list_item_more_load, null);
+        footerView.setVisibility(View.GONE);
 
-        mAllFeedList.addFooterView(mFooterView);
+        listView.addFooterView(footerView);
         return view;
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (activity == null) {
-            return;
-        }
-        final ContentResolver cr = activity.getContentResolver();
-        cr.registerContentObserver(NogiFeedContent.Favorite.CONTENT_URI,
-                true, mFavoriteContentObserver);
-    }
-
-    @Override
-    public void onDestroy() {
-        final Activity activity = getActivity();
-        if (activity == null) {
-            return;
-        }
-        final ContentResolver cr = activity.getContentResolver();
-        cr.unregisterContentObserver(mFavoriteContentObserver);
-        super.onDestroy();
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getAllFeeds(null);
+        getAllFeeds();
     }
 
-    private void getAllFeeds(AsyncBlogFeedClient.Target target) {
-        if (target == null) {
-            mTarget = new AsyncBlogFeedClient.Target();
-            target = mTarget;
-        }
-
-        boolean ret = AsyncBlogFeedClient.getBlogEntry(getActivity().getApplicationContext(),
-                target, new AsyncBlogFeedClient.Callbacks() {
-                    @Override
-                    public void onFinish(ArrayList<BlogEntry> blogEntries) {
-                        Logger.v("getAllFeed()", "get all member feed : size(" +
-                                (blogEntries == null ? "null" : blogEntries.size()) + ")");
-
-                        if (BuildConfig.DEBUG) {
-                            if (blogEntries != null) {
-                                for (BlogEntry blogEntry : blogEntries) {
-                                    Log.v(TAG, "blogEntry {" + blogEntry.toString() + "}");
-                                }
-                            }
-                        }
-
-                        // check Activity life cycle
-                        final Activity activity = getActivity();
-                        if (activity == null) {
-                            Logger.w(TAG, "activity already finished");
-                            return;
-                        }
-
-                        if (blogEntries == null || blogEntries.isEmpty()) {
-                            Logger.w(TAG, "failed to get blog entries");
-                            Toast.makeText(activity, R.string.feed_failure,
-                                    Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
-                        // refresh feed list
-                        setupAdapter(blogEntries);
-
-                        if (mSwipeRefreshLayout != null) {
-                            if (mSwipeRefreshLayout.isRefreshing()) {
-                                mSwipeRefreshLayout.setRefreshing(false);
-                            }
-                        }
-                    }
-                });
-
-        if (!ret) {
-            Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
-                    Toast.LENGTH_SHORT).show();
-            if (mSwipeRefreshLayout.isRefreshing()) {
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        }
-    }
-
-    private void setupAdapter(ArrayList<BlogEntry> blogEntries) {
-        mAllFeedList.setFooterDividersEnabled(false);
-        mFooterView.setVisibility(View.GONE);
-
-        if (mBlogFeedListAdapter != null) {
-            for (BlogEntry e : blogEntries) {
-                mBlogFeedListAdapter.add(e);
-            }
-            mBlogFeedListAdapter.notifyDataSetChanged();
-            if (mAllFeedList.getAdapter() == null) {
-                mAllFeedList.setAdapter(mBlogFeedListAdapter);
-                mAllFeedList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                        BlogEntry blogEntry = (BlogEntry) mAllFeedList.getItemAtPosition(position);
-                        startActivity(BlogActivity.getStartIntent(getActivity(), blogEntry));
-                    }
-                });
-            }
-            return;
-        }
-        mBlogFeedListAdapter = new BlogFeedListAdapter(getActivity(), blogEntries);
-        mBlogFeedListAdapter.setOnPageMaxScrolled(
-                new BlogFeedListAdapter.OnPageMaxScrolledListener() {
-                    @Override
-                    public void onScrolledMaxPage() {
-//                        mAllFeedList.addFooterView(mFooterView, null, true);
-                        mFooterView.setVisibility(View.VISIBLE);
-                        getAllFeeds(mTarget);
-                    }
-                });
-        mAllFeedList.setAdapter(mBlogFeedListAdapter);
-        mAllFeedList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    private void getAllFeeds() {
+        Entry.getQuery(PAGE_LIMIT, counter).findInBackground(new Callback() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                BlogEntry blogEntry = (BlogEntry) mAllFeedList.getItemAtPosition(position);
-                startActivity(BlogActivity.getStartIntent(getActivity(), blogEntry));
+            public void done(final List<Entry> entries) {
+                for (Entry e : entries) {
+                    e.encache();
+                }
+                adapter = new AllFeedListAdapter(getActivity(), entries);
+                adapter.setPageMaxScrolledListener(scrolledListener);
+                listView.setAdapter(adapter);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Entry entry = (Entry) parent.getItemAtPosition(position);
+                        if (entry != null) {
+                            getActivity().startActivity(
+                                    BlogActivity.getStartIntent(getActivity(), entry.getObjectId()));
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private void getNextFeed() {
+        if (footerView != null) {
+            footerView.setVisibility(View.VISIBLE);
+        }
+        counter++;
+        Entry.getQuery(PAGE_LIMIT, (counter * PAGE_LIMIT)).findInBackground(new Callback() {
+            @Override
+            public void done(List<Entry> entries) {
+                for (Entry e : entries) {
+                    e.encache();
+                }
+                adapter.add(entries);
+                adapter.notifyDataSetChanged();
             }
         });
     }
 
     @Override
-    public void onRefresh() {
-        mBlogFeedListAdapter = null;
-        getAllFeeds(null);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        BusHolder.get().register(this);
     }
 
+    @Override
+    public void onDestroy() {
+        BusHolder.get().unregister(this);
+        super.onDestroy();
+    }
+
+    @Subscribe
+    public void onChange(EventOnChangeFavoriteState eventOnChangeFavoriteState) {
+        Logger.v(TAG, "onChange favorite");
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+    }
 }

@@ -23,22 +23,21 @@ public class Showcase extends FrameLayout {
     private ViewPageIndicator mViewPageIndicator;
     private List<String> mImageUrls;
     private FavoriteView mFavoriteCheckbox;
-    private final FavoriteChangeListener mListener;
+    private FavoriteChangeListener mListener;
 
     private ShowcaseAdapter<String> mShowcaseAdapter;
 
     public interface FavoriteChangeListener {
-        public void onCheckdChanged(CompoundButton compoundButton, boolean b);
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b);
     }
 
-    public Showcase(Context context, List<String> imageUrls, FavoriteChangeListener listener) {
-        this(context, null, imageUrls, listener);
+    public Showcase(Context context, List<String> imageUrls) {
+        this(context, null, imageUrls);
     }
 
-    public Showcase(Context context, AttributeSet attrs, List<String> imageUrls, FavoriteChangeListener listener) {
+    public Showcase(Context context, AttributeSet attrs, List<String> imageUrls) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.showcase, this);
-        mListener = listener;
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPageIndicator = (ViewPageIndicator) findViewById(R.id.indicator);
         mFavoriteCheckbox = (FavoriteView) findViewById(R.id.favorite);
@@ -46,7 +45,7 @@ public class Showcase extends FrameLayout {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (mListener != null) {
-                    mListener.onCheckdChanged(compoundButton, b);
+                    mListener.onCheckedChanged(compoundButton, b);
                 }
                 TrackerUtils.sendTrack(getContext(), TAG,
                         "OnClicked", "-> Favorite : " + "isFavorite(" + b + ")");
@@ -54,6 +53,10 @@ public class Showcase extends FrameLayout {
         });
         mImageUrls = imageUrls;
         setupAdapter();
+    }
+
+    public void setOnCheckedChangeListener(FavoriteChangeListener listener) {
+        mListener = listener;
     }
 
     public void setFavorite(boolean isChecked) {

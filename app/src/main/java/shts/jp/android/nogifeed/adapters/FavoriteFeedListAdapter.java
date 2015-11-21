@@ -1,6 +1,7 @@
 package shts.jp.android.nogifeed.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -13,14 +14,13 @@ import android.widget.TextView;
 import java.util.List;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.activities.BlogActivity;
+import shts.jp.android.nogifeed.activities.MemberDetailActivity;
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.entities.Entry;
+import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.utils.DateUtils;
-import shts.jp.android.nogifeed.utils.IntentUtils;
-import shts.jp.android.nogifeed.utils.JsoupUtils;
 import shts.jp.android.nogifeed.utils.PicassoHelper;
 import shts.jp.android.nogifeed.utils.TrackerUtils;
-import shts.jp.android.nogifeed.utils.UrlUtils;
 
 // TODO: お気に入りメンバーがいないときは EmptyView を表示する
 public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
@@ -35,17 +35,17 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView backgroudImageView;
+        ImageView backgroundImageView;
         ImageView profileImageView;
         TextView titleTextView;
-        TextView autherTextView;
+        TextView authorTextView;
         TextView updatedTextView;
 
         public ViewHolder(View view) {
             super(view);
             titleTextView = (TextView) view.findViewById(R.id.card_title);
-            autherTextView = (TextView) view.findViewById(R.id.authorname);
-            backgroudImageView = (ImageView) view.findViewById(R.id.card_background);
+            authorTextView = (TextView) view.findViewById(R.id.authorname);
+            backgroundImageView = (ImageView) view.findViewById(R.id.card_background);
             profileImageView = (ImageView) view.findViewById(R.id.profile_image);
             updatedTextView = (TextView) view.findViewById(R.id.updated);
         }
@@ -55,31 +55,32 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, Object object) {
         final ViewHolder holder = (ViewHolder) viewHolder;
         final Entry entry = (Entry) object;
-        holder.titleTextView.setText(entry.title);
-        holder.autherTextView.setText(entry.name);
-        holder.updatedTextView.setText(DateUtils.formatUpdated(entry.published));
-        final List<String> urls = JsoupUtils.getThumbnailImageUrls(entry.content, 1);
+        holder.titleTextView.setText(entry.getTitle());
+        holder.authorTextView.setText(entry.getAuthor());
+        holder.updatedTextView.setText(DateUtils.dateToString(entry.getPublishedDate()));
+        List<String> urls = entry.getUploadedThumbnailUrlList();
         if (urls != null && !urls.isEmpty()) {
             PicassoHelper.load(
-                    mContext, holder.backgroudImageView, urls.get(0));
+                    mContext, holder.backgroundImageView, urls.get(0));
         }
-        holder.backgroudImageView.setOnClickListener(new View.OnClickListener() {
+        holder.backgroundImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //IntentUtils.startBlogActivity(mContext, entry);
+                mContext.startActivity(BlogActivity.getStartIntent(mContext, entry.getObjectId()));
                 TrackerUtils.sendTrack(mContext, TAG,
                         "OnClicked", "-> Blog : " + "entry(" + entry.toString() + ")");
             }
         });
-        final String profileImageUrl = UrlUtils.getMemberImageUrlFromFeedUrl(entry.link);
-        Logger.d(TAG, "profileImageUrl : " + profileImageUrl);
+        final String profileImageUrl = entry.getAuthorImageUrl();
         if (!TextUtils.isEmpty(profileImageUrl)) {
             PicassoHelper.loadAndCircleTransform(
                     mContext, holder.profileImageView, profileImageUrl);
             holder.profileImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    IntentUtils.startMemberDetailActivity(mContext, entry);
+                    Intent intent = MemberDetailActivity.createIntent(
+                            mContext, entry.getAuthorId());
+                    mContext.startActivity(intent);
                     TrackerUtils.sendTrack(mContext, TAG,
                             "OnClicked", "-> Detail : " + "entry(" + entry.toString() + ")");
                 }

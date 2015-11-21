@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 
 import shts.jp.android.nogifeed.R;
-import shts.jp.android.nogifeed.fragments.AllFeedListFragment;
 import shts.jp.android.nogifeed.fragments.AllMemberGridListFragment;
 
 public class MemberListActivity extends ConfigureActivity {

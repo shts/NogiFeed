@@ -14,9 +14,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.fragments.AllFeedListFragment;
 import shts.jp.android.nogifeed.fragments.FavoriteMemberFeedListFragment;
+import shts.jp.android.nogifeed.models.Favorite;
+import shts.jp.android.nogifeed.models.Member;
 import shts.jp.android.nogifeed.views.PagerSlidingTabStrip;
 
 /**
@@ -40,6 +46,13 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         setupActionBar();
         setupViewPager();
+        Member.getReference("QqZq8icigu").fetchIfNeededInBackground(new GetCallback<Member>() {
+            @Override
+            public void done(Member member, ParseException e) {
+                // QqZq8icigu
+                Favorite.add(member);
+            }
+        });
     }
 
     @Override

@@ -10,16 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import org.apache.http.Header;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.adapters.FavoriteFeedListAdapter;
-import shts.jp.android.nogifeed.api.AsyncRssClient;
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.entities.Entries;
-import shts.jp.android.nogifeed.listener.RssClientFinishListener;
+import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.Favorite;
 import shts.jp.android.nogifeed.views.MultiSwipeRefreshLayout;
 
@@ -30,10 +31,8 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
     private static final String TAG = FavoriteMemberFeedListFragment.class.getSimpleName();
 
     private MultiSwipeRefreshLayout mMultiSwipeRefreshLayout;
-    private List<String> mFavoriteUrls;
     private RecyclerView mRecyclerView;
     private View mEmptyView;
-    private final Entries mEntries = new Entries();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,62 +66,58 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
     }
 
     private void setupFavoriteMemberFeed() {
-        mFavoriteUrls = Favorite.all(getActivity());
-        if (mFavoriteUrls == null || mFavoriteUrls.isEmpty()) {
-            if (mMultiSwipeRefreshLayout.isRefreshing()) {
-                mMultiSwipeRefreshLayout.setRefreshing(false);
+        Favorite.getQuery().findInBackground(new FindCallback<Favorite>() {
+            @Override
+            public void done(List<Favorite> objects, ParseException e) {
+                if (e != null || objects == null || objects.isEmpty()) {
+                    if (mMultiSwipeRefreshLayout.isRefreshing()) {
+                        mMultiSwipeRefreshLayout.setRefreshing(false);
+                    }
+                    Logger.d(TAG, "setupFavoriteMemberFeed() : no favorite feed.");
+                    setVisibilityEmptyView(true);
+                    Toast.makeText(getActivity(), R.string.empty_favorite, Toast.LENGTH_LONG).show();
+                    return;
+                }
+                List<String> memberObjectIdList = new ArrayList<>();
+                for (Favorite favorite : objects) {
+                    memberObjectIdList.add(favorite.getMemberObjectId());
+                }
+                getAllFeeds(memberObjectIdList);
             }
-            Logger.d(TAG, "setupFavoriteMemberFeed() : no favorite feed.");
-            setVisibilityEmptyView(true);
-            Toast.makeText(getActivity(), R.string.empty_favorite, Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        getAllFeeds(mFavoriteUrls);
+        });
     }
 
-    private void getAllFeeds(List<String> favoriteUrls) {
-        // clear feed list before add new feed.
-        mEntries.clear();
-
-        boolean ret = AsyncRssClient.read(getActivity().getApplicationContext(), favoriteUrls, new RssClientFinishListener() {
+    private void getAllFeeds(List<String> memberObjectIdList) {
+        ParseQuery<Entry> query = Entry.getQuery();
+        query.whereContainedIn("author_id", memberObjectIdList);
+        query.findInBackground(new FindCallback<Entry>() {
             @Override
-            public void onSuccessWrapper(int statusCode, Header[] headers, Entries entries) {
-            }
-
-            @Override
-            public void onFailureWrapper(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-            }
-
-            @Override
-            public void onFinish(Entries entries) {
-                if (entries == null || entries.isEmpty()) {
+            public void done(List<Entry> entries, ParseException e) {
+                if (e != null || entries == null || entries.isEmpty()) {
+                    Logger.e(TAG, "cannot get all feed entries", e);
                     // Show error toast
                     Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
                             Toast.LENGTH_SHORT).show();
                     setVisibilityEmptyView(true);
-                } else {
-                    setVisibilityEmptyView(false);
-                    setupAdapter(entries.sort());
+                    if (mMultiSwipeRefreshLayout != null) {
+                        if (mMultiSwipeRefreshLayout.isRefreshing()) {
+                            mMultiSwipeRefreshLayout.setRefreshing(false);
+                        }
+                    }
+                    return;
                 }
-
-                if (mMultiSwipeRefreshLayout.isRefreshing()) {
-                    mMultiSwipeRefreshLayout.setRefreshing(false);
+                setVisibilityEmptyView(false);
+                setupAdapter(entries);
+                if (mMultiSwipeRefreshLayout != null) {
+                    if (mMultiSwipeRefreshLayout.isRefreshing()) {
+                        mMultiSwipeRefreshLayout.setRefreshing(false);
+                    }
                 }
             }
         });
-
-        if (!ret) {
-            // Show error toast
-            Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
-                    Toast.LENGTH_SHORT).show();
-            if (mMultiSwipeRefreshLayout.isRefreshing()) {
-                mMultiSwipeRefreshLayout.setRefreshing(false);
-            }
-        }
     }
 
-    private void setupAdapter(Entries entries) {
+    private void setupAdapter(List<Entry> entries) {
         Logger.v("setupAdapter()", "setupAdapter() : size( " + entries.size() + ") entry(" + entries.toString() + ")");
         setVisibilityEmptyView(false);
         mRecyclerView.setAdapter(new FavoriteFeedListAdapter(getActivity(), entries));
@@ -136,7 +131,7 @@ public class FavoriteMemberFeedListFragment extends Fragment implements SwipeRef
     private void setVisibilityEmptyView(boolean isVisible) {
         if (isVisible) {
             // mRecyclerView を setVisiblity(View.GONE) で表示にするとプログレスが表示されない
-            mEntries.clear();
+            //mEntries.clear();
             mRecyclerView.setAdapter(null);
             mEmptyView.setVisibility(View.VISIBLE);
         } else {

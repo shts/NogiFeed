@@ -1,6 +1,7 @@
 package shts.jp.android.nogifeed.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -11,14 +12,17 @@ import android.support.v7.widget.Toolbar;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.fragments.MemberDetailFragment;
-import shts.jp.android.nogifeed.entities.BlogEntry;
-import shts.jp.android.nogifeed.entities.Entry;
-import shts.jp.android.nogifeed.entities.Member;
 
 public class MemberDetailActivity extends BaseActivity {
 
     private Drawable mActionBarDrawable;
     private Toolbar mToolbar;
+
+    public static Intent createIntent(Context context, String memberObjectId) {
+        Intent intent = new Intent(context, MemberDetailActivity.class);
+        intent.putExtra("memberObjectId", memberObjectId);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,32 +32,13 @@ public class MemberDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_member_detail);
 
         Intent i = getIntent();
-        Bundle bundle = new Bundle();
-        // Maybe not use
-        Entry entry = i.getParcelableExtra(Entry.KEY);
-        if (entry != null) {
-            // intent from AllFeedListFragment
-            bundle.putParcelable(Entry.KEY, entry);
-            setupActionBar(entry.name);
-        }
-        Member member = i.getParcelableExtra(Member.KEY);
-        if (member != null) {
-            // intent from MemberGridListFragment
-            bundle.putParcelable(Member.KEY, member);
-            setupActionBar(member.name);
-        }
-        BlogEntry blogEntry = i.getParcelableExtra(BlogEntry.KEY);
-        if (blogEntry != null) {
-            // intent from AllFeedListFragment
-            bundle.putParcelable(BlogEntry.KEY, blogEntry);
-            setupActionBar(blogEntry.author);
-        }
+        String memberObjectId = i.getStringExtra("memberObjectId");
 
-        MemberDetailFragment memberDetailFragment = new MemberDetailFragment();
-        memberDetailFragment.setArguments(bundle);
+        setupActionBar("Name");
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, memberDetailFragment, MemberDetailFragment.class.getSimpleName());
+        ft.replace(R.id.container, MemberDetailFragment.newMemberDetailFragment(memberObjectId),
+                MemberDetailFragment.class.getSimpleName());
         ft.commit();
     }
 

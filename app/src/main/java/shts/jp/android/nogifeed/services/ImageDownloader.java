@@ -3,6 +3,7 @@ package shts.jp.android.nogifeed.services;
 import android.content.Context;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import shts.jp.android.nogifeed.R;
@@ -10,8 +11,7 @@ import shts.jp.android.nogifeed.api.RawImageDownloadClient;
 import shts.jp.android.nogifeed.api.ThumbnailDownloadClient;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.listener.DownloadFinishListener;
-import shts.jp.android.nogifeed.entities.Entry;
-import shts.jp.android.nogifeed.utils.JsoupUtils;
+import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.utils.NetworkUtils;
 
 public class ImageDownloader {
@@ -42,11 +42,13 @@ public class ImageDownloader {
 
         // get thumbnail image urls from blog HTML.
         final List<String> thumbnailImageUrls
-                = JsoupUtils.getThumbnailImageUrls(entry.content, 0);
+//                = JsoupUtils.getThumbnailImageUrls(entry.content, 0);
+                = new ArrayList<>();
 
         // get raw image urls from blog HTML.
         final List<String> rawImagePageUrls
-                = JsoupUtils.getRawImagePageUrls(entry.content, 0);
+//                = JsoupUtils.getRawImagePageUrls(entry.content, 0);
+                = new ArrayList<>();
 
         final int targetSize = getDownloadTargetSize(thumbnailImageUrls, rawImagePageUrls);
         DownloadFinishListener listener = new DownloadFinishListener(context, targetSize);

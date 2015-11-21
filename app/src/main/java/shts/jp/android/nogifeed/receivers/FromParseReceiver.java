@@ -9,9 +9,7 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import shts.jp.android.nogifeed.BuildConfig;
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.models.UnRead;
 import shts.jp.android.nogifeed.views.notifications.BlogUpdateNotification;
 
 public class FromParseReceiver extends BroadcastReceiver {
@@ -21,6 +19,7 @@ public class FromParseReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Logger.i(TAG, "onReceive");
+        // TODO: change ref object id
         try {
             //jsonから値を取り出し
             Bundle extra = intent.getExtras();
@@ -29,22 +28,16 @@ public class FromParseReceiver extends BroadcastReceiver {
             Log.i(TAG, json.toString());
 
             //取り出したデータを変数へ
-            final String url = json.getString("_url");
-            final String title = json.getString("_title");
-            final String author = json.getString("_author");
+//            final String url = json.getString("_url");
+//            final String title = json.getString("_title");
+//            final String author = json.getString("_author");
+            final String entryObjectId = json.getString("_objectId");
 
-            Log.d(TAG, "url(" + url + ") title(" + title
-                    + ") author(" + author + ")");
-
-            // save unread article
-            UnRead.newUnReadArticle(context, url);
+            //TODO: save unread article
+            //UnRead.newUnReadArticle(context, url);
 
             // show notification
-            BlogUpdateNotification.show(context, url, title, author);
-
-            if (BuildConfig.DEBUG) {
-                UnRead.dump(context);
-            }
+            BlogUpdateNotification.show(context, entryObjectId);
 
         } catch (JSONException e) {
             Logger.e("failed to Parse : ", e.toString());
