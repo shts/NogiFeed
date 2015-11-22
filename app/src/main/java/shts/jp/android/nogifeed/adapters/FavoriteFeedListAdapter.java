@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.activities.BlogActivity;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.entities.Entry;
 import shts.jp.android.nogifeed.utils.DateUtils;
@@ -35,6 +37,7 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
+        LinearLayout labelView;
         ImageView backgroudImageView;
         ImageView profileImageView;
         TextView titleTextView;
@@ -43,6 +46,7 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
 
         public ViewHolder(View view) {
             super(view);
+            labelView = (LinearLayout) view.findViewById(R.id.card_rebel);
             titleTextView = (TextView) view.findViewById(R.id.card_title);
             autherTextView = (TextView) view.findViewById(R.id.authorname);
             backgroudImageView = (ImageView) view.findViewById(R.id.card_background);
@@ -66,7 +70,7 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
         holder.backgroudImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //IntentUtils.startBlogActivity(mContext, entry);
+                mContext.startActivity(BlogActivity.getStartIntent(mContext, entry.toBlogEntry()));
                 TrackerUtils.sendTrack(mContext, TAG,
                         "OnClicked", "-> Blog : " + "entry(" + entry.toString() + ")");
             }
