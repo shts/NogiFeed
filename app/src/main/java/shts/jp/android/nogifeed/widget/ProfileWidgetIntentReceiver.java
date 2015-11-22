@@ -19,8 +19,7 @@ public class ProfileWidgetIntentReceiver extends BroadcastReceiver {
         Logger.v(TAG, "in : intent(" + intent.toUri(Intent.URI_INTENT_SCHEME));
         if (CLICK.equals(intent.getAction())) {
             String memberObjectId = intent.getStringExtra(Member.KEY);
-            Intent i = new Intent(context, MemberDetailActivity.class);
-            i.putExtra(Member.KEY, memberObjectId);
+            Intent i = MemberDetailActivity.createIntent(context, memberObjectId);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
         }

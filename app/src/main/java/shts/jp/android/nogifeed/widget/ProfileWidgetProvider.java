@@ -10,6 +10,10 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+
 import java.util.List;
 
 import shts.jp.android.nogifeed.R;
@@ -103,6 +107,7 @@ public class ProfileWidgetProvider extends AppWidgetProvider {
     }
 
     private static PendingIntent getOnClickIntent(Context context, Member member, int appWidgetId) {
+        Logger.v(TAG, "widget click : memberObjectId(" + member.getObjectId() + ")");
         Intent intent = new Intent();
         intent.setAction(ProfileWidgetIntentReceiver.CLICK);
         intent.putExtra(Member.KEY, member.getObjectId());
@@ -121,27 +126,32 @@ public class ProfileWidgetProvider extends AppWidgetProvider {
         ProfileWidget.saveLocal(appWidgetId, member);
     }
 
-    private static void updateWidgetView(Context context, Member member, int appWidgetId) {
+    private static void updateWidgetView(final Context context, Member member, final int appWidgetId) {
         Logger.d(TAG, "updateWidgetView(Context, Member, int) in : member("
-            + member.toString() + ") appWidgetId(" + appWidgetId + ")");
+            + member.getObjectId() + ") appWidgetId(" + appWidgetId + ")");
 
-        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_profile);
-        remoteViews.setTextViewText(R.id.text, member.getNameMain());
-        remoteViews.setOnClickPendingIntent(R.id.image, getOnClickIntent(context, member, appWidgetId));
-        PicassoHelper.loadAndCircleTransform(
-                context, member.getProfileImageUrl(), remoteViews, R.id.image, appWidgetId);
+        member.fetchIfNeededInBackground(new GetCallback<Member>() {
+            @Override
+            public void done(Member member, ParseException e) {
+                RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_profile);
+                remoteViews.setTextViewText(R.id.text, member.getNameMain());
+                remoteViews.setOnClickPendingIntent(R.id.image, getOnClickIntent(context, member, appWidgetId));
+                PicassoHelper.loadAndCircleTransform(
+                        context, member.getProfileImageUrl(), remoteViews, R.id.image, appWidgetId);
 
-        // unread badge
-        final int unReadCount = NotYetRead.count(member);
-        if (unReadCount <= 0) {
-            remoteViews.setViewVisibility(R.id.counter, View.GONE);
-        } else {
-            remoteViews.setViewVisibility(R.id.counter, View.VISIBLE);
-            remoteViews.setTextViewText(R.id.counter, String.valueOf(unReadCount));
-        }
+                // unread badge
+                final int unReadCount = NotYetRead.count(member);
+                if (unReadCount <= 0) {
+                    remoteViews.setViewVisibility(R.id.counter, View.GONE);
+                } else {
+                    remoteViews.setViewVisibility(R.id.counter, View.VISIBLE);
+                    remoteViews.setTextViewText(R.id.counter, String.valueOf(unReadCount));
+                }
 
-        // update remote view
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+                // update remote view
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+                appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+            }
+        });
     }
 }

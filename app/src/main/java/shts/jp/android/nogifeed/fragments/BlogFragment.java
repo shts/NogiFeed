@@ -1,10 +1,12 @@
 package shts.jp.android.nogifeed.fragments;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,12 +15,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.api.ImageDownloadClient;
 import shts.jp.android.nogifeed.common.Logger;
+import shts.jp.android.nogifeed.listener.DownloadFinishListener;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.NotYetRead;
 import shts.jp.android.nogifeed.views.dialogs.DownloadConfirmDialog;
@@ -31,7 +39,7 @@ public class BlogFragment extends Fragment {
     private static final String KEY_PAGE_URL = "key_page_url";
 
     private WebView mWebView;
-    private String mBeforeUrl;
+    private String mBeforeUrl = null;
 
     private String entryObjectId;
     private Entry entry;
@@ -58,6 +66,7 @@ public class BlogFragment extends Fragment {
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_blog, null);
@@ -73,20 +82,12 @@ public class BlogFragment extends Fragment {
 
         mWebView.setWebViewClient(new BrowserViewClient());
         mWebView.getSettings().setJavaScriptEnabled(true);
-        //mWebView.addJavascriptInterface(new GetHtmlTextInterface(), "HTMLOUT");
 
-//        if (mBlogEntry == null) {
-//            mWebView.loadUrl(mBlogUrl);
-//            return view;
-//        }
-
-//        if (mBeforeUrl == null) {
-//            mWebView.loadUrl(mBlogEntry.url);
-//
-//        } else {
-//            mWebView.loadUrl(mBeforeUrl);
-//            mBeforeUrl = null;
-//        }
+        if (!TextUtils.isEmpty(mBeforeUrl)) {
+            Logger.v(TAG, "load before url : url(" + mBeforeUrl + ")");
+            mWebView.loadUrl(mBeforeUrl);
+            return view;
+        }
 
         entry.fetchIfNeededInBackground(new GetCallback<Entry>() {
             @Override
@@ -117,16 +118,8 @@ public class BlogFragment extends Fragment {
             confirmDialog.setCallbacks(new DownloadConfirmDialog.Callbacks() {
                 @Override
                 public void onClickPositiveButton() {
-                    // TODO: download image
-//                    if (mBlogEntry == null) {
-//                        Toast.makeText(getActivity(), R.string.toast_failed_download, Toast.LENGTH_SHORT).show();
-//                        return;
-//                    } else {
-//                        final Entry entry = mBlogEntry.toEntryObject();
-//                        entry.content = mContent;
-//                        ThumbnailDownloadClient.get(
-//                                getActivity(), url, entry, new DownloadFinishListener(getActivity(), 1));
-//                    }
+                    DownloadFinishListener listener = new DownloadFinishListener(getActivity(), 1);
+                    ImageDownloadClient.get(getActivity(), url, listener);
                 }
                 @Override
                 public void onClickNegativeButton() {}
@@ -136,7 +129,6 @@ public class BlogFragment extends Fragment {
     }
 
     private class BrowserViewClient extends WebViewClient {
-
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Logger.d(TAG, "shouldOverrideUrlLoading(WebView, String) in : url(" + url + ")");
@@ -147,14 +139,11 @@ public class BlogFragment extends Fragment {
             Logger.d(TAG, "shouldOverrideUrlLoading : " + false);
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
-
             return true;
         }
 
         @Override
         public void onPageFinished(WebView view, String url) {
-            /* This call inject JavaScript into the page which just finished loading. */
-            mWebView.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
             NotYetRead.delete(entryObjectId);
         }
     }
@@ -167,25 +156,23 @@ public class BlogFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        final Activity activity = getActivity();
-        if (activity == null) {
-            Logger.w(TAG, "cannot show Menu because activity is null");
+        final Context context = getActivity().getApplicationContext();
+
+        final List<String> target = new ArrayList<>();
+        final List<String> thumbnailUrls = entry.getUploadedThumbnailUrlList();
+        if (thumbnailUrls != null && !thumbnailUrls.isEmpty()) {
+            target.addAll(thumbnailUrls);
+        }
+        final List<String> rawImageUrls = entry.getUploadedRawImageUrlList();
+        if (rawImageUrls != null && !rawImageUrls.isEmpty()) {
+            target.addAll(rawImageUrls);
+        }
+        if (target.size() <= 0) {
+            Toast.makeText(context, R.string.toast_failed_download, Toast.LENGTH_SHORT).show();
             return false;
         }
-        // TODO: download url list
-        entry.getUploadedThumbnailUrlList();
-//        if (mBlogEntry == null || TextUtils.isEmpty(mBlogEntry.content)) {
-//            if (TextUtils.isEmpty(mContent)) {
-//                Toast.makeText(activity.getApplicationContext(),
-//                        R.string.toast_failed_download, Toast.LENGTH_SHORT).show();
-//                return super.onOptionsItemSelected(item);
-//            }
-//        }
-//        if (mBlogEntry != null) {
-//            final Entry entry = mBlogEntry.toEntryObject();
-//            entry.content = mContent;
-//            ImageDownloader.downloads(activity.getApplicationContext(), entry);
-//        }
+        ImageDownloadClient.get(context, target,
+                new DownloadFinishListener(context, target.size()));
         return super.onOptionsItemSelected(item);
     }
 

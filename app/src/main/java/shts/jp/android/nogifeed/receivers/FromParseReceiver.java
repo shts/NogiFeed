@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import shts.jp.android.nogifeed.common.Logger;
+import shts.jp.android.nogifeed.models.NotYetRead;
 import shts.jp.android.nogifeed.views.notifications.BlogUpdateNotification;
 
 public class FromParseReceiver extends BroadcastReceiver {
@@ -35,6 +36,7 @@ public class FromParseReceiver extends BroadcastReceiver {
 
             //TODO: save unread article
             //UnRead.newUnReadArticle(context, url);
+            NotYetRead.add(entryObjectId);
 
             // show notification
             BlogUpdateNotification.show(context, entryObjectId);

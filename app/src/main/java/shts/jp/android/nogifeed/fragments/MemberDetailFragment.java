@@ -27,7 +27,6 @@ import shts.jp.android.nogifeed.models.Favorite;
 import shts.jp.android.nogifeed.models.Member;
 import shts.jp.android.nogifeed.models.eventbus.BusHolder;
 import shts.jp.android.nogifeed.models.eventbus.EventOnChangeFavoriteState;
-import shts.jp.android.nogifeed.utils.ArrayUtils;
 import shts.jp.android.nogifeed.utils.TrackerUtils;
 import shts.jp.android.nogifeed.views.Showcase;
 
@@ -60,7 +59,11 @@ public class MemberDetailFragment extends ListFragment {
         Member.getReference(memberObjectId).fetchIfNeededInBackground(new GetCallback<Member>() {
             @Override
             public void done(Member member, ParseException e) {
-                setupMemberFeedList(member.getObjectId());
+                if (e != null || member == null) {
+                    Logger.e(TAG, "cannot get member");
+                } else {
+                    setupMemberFeedList(member.getObjectId());
+                }
             }
         });
         BusHolder.get().register(this);
@@ -139,7 +142,7 @@ public class MemberDetailFragment extends ListFragment {
         for (int i = 0; i < entries.size(); i++) {
             Entry e = entries.get(i);
             List<String> images = e.getUploadedThumbnailUrlList();
-            ArrayUtils.concatenation(images, mImageUrls);
+            mImageUrls.addAll(images);
             if (mImageUrls.size() >= IMAGE_MAX_SIZE) {
                 break;
             }

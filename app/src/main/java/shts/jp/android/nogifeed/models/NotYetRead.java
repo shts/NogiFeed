@@ -67,14 +67,20 @@ public class NotYetRead extends ParseObject {
         return -1;
     }
 
-    public static void add(String articleUrl, Member member) {
-        NotYetRead notYetRead = new NotYetRead();
-        notYetRead.put("articleUrl", articleUrl);
-        notYetRead.put("memberObjectId", member.getObjectId());
-        notYetRead.pinInBackground(new SaveCallback() {
+    public static void add(String entryObjectId) {
+        final Entry entry = Entry.getReference(entryObjectId);
+        entry.fetchIfNeededInBackground(new GetCallback<ParseObject>() {
             @Override
-            public void done(ParseException e) {
-                notifyOnChangeState();
+            public void done(ParseObject object, ParseException e) {
+                NotYetRead notYetRead = new NotYetRead();
+                notYetRead.put("articleUrl", entry.getBlogUrl());
+                notYetRead.put("memberObjectId", entry.getAuthorId());
+                notYetRead.pinInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        notifyOnChangeState();
+                    }
+                });
             }
         });
     }
