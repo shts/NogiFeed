@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
-import android.widget.ListView;
 
 import com.parse.FindCallback;
 import com.parse.GetCallback;
