@@ -98,7 +98,7 @@
     <orderEntry type="library" exported="" name="preferencefragment-0.1.1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
-    <orderEntry type="library" exported="" name="parse-android-1.11.0" level="project" />
+    <orderEntry type="library" exported="" name="parse-android-1.12.0" level="project" />
   </component>
 </module>
 
