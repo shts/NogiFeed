@@ -9,20 +9,16 @@ import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.squareup.picasso.Picasso;
-
-import org.apache.http.Header;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.BlogActivity;
-import shts.jp.android.nogifeed.api.AsyncRssClient;
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.listener.RssClientFinishListener;
-import shts.jp.android.nogifeed.entities.Entries;
-import shts.jp.android.nogifeed.entities.Entry;
+import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.Favorite;
 import shts.jp.android.nogifeed.utils.PreferencesUtils;
-import shts.jp.android.nogifeed.utils.UrlUtils;
 import shts.jp.android.nogifeed.views.transformations.CircleTransformation;
 
 public class BlogUpdateNotification {
@@ -38,75 +34,56 @@ public class BlogUpdateNotification {
     /** ブログ更新通知制限設定(お気に入りメンバーのみ通知する設定) */
     private static final String NOTIFICATION_RESTRICTION_ENABLE = "pref_key_blog_updated_notification_restriction_enable";
 
-    public static synchronized void show(final Context context, final String url,
-                                         final String title, final String author) {
-
-        final boolean isEnableNotification = PreferencesUtils.getBoolean(context, NOTIFICATION_ENABLE, true);
-        if (!isEnableNotification) {
-            Logger.d(TAG, "do not show notification because of notification disable");
-            return;
-        }
-
-        if (isRestriction(context, url)) {
-            Logger.d(TAG, "do not show notification because of notification restriction");
-            return;
-        }
-
-        // ブログエントリーを取得した後に通知を行う
-        final boolean ret = AsyncRssClient.read(context, UrlUtils.FEED_ALL_URL, new RssClientFinishListener() {
+    public static synchronized void show(final Context context, final String entryObjectId) {
+        Entry entry = Entry.getReference(entryObjectId);
+        entry.fetchIfNeededInBackground(new GetCallback<Entry>() {
             @Override
-            public void onSuccessWrapper(int statusCode, Header[] headers, Entries entries) {}
-            @Override
-            public void onFailureWrapper(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {}
-            @Override
-            public void onFinish(Entries entries) {
-                if (entries != null && !entries.isEmpty()) {
-                    show(context, url, title, author, entries.getEntryFrom(url));
-                } else {
-                    show(context, url, title, author, null);
+            public void done(Entry entry, ParseException e) {
+                if (e != null || entry == null) {
+                    return;
                 }
+                final boolean isEnableNotification = PreferencesUtils.getBoolean(
+                        context, NOTIFICATION_ENABLE, true);
+                if (!isEnableNotification) {
+                    Logger.d(TAG, "do not show notification because of notification disable");
+                    return;
+                }
+                if (isRestriction(context, entry.getAuthorId())) {
+                    Logger.d(TAG, "do not show notification because of notification restriction");
+                    return;
+                }
+                show(context, entry);
             }
         });
-        if (!ret) {
-            show(context, url, title, author, null);
-        }
     }
 
-    private static boolean isRestriction(Context context, String url/* article url */) {
-        final boolean isRestriction = PreferencesUtils.getBoolean(context, NOTIFICATION_RESTRICTION_ENABLE, false);
+    private static boolean isRestriction(Context context, String memberObjectId) {
+        final boolean isRestriction = PreferencesUtils.getBoolean(
+                context, NOTIFICATION_RESTRICTION_ENABLE, false);
         if (!isRestriction) {
             // 通知制限設定をしていない場合はそのまま通知するようfalseを返却する
             Logger.d(TAG, "restriction is not setting");
             return false;
         }
-
-        final String feedUrl = UrlUtils.getMemberFeedUrl(url);
-        final boolean exist = Favorite.exist(context, feedUrl);
+        final boolean exist = Favorite.exist(memberObjectId);
         // お気に入りメンバー登録済みの場合false, お気に入りメンバー登録済みでない場合trueを返却する
-        Logger.d(TAG, "restriction exist(" + exist + ") feedUrl(" + feedUrl + ")");
         return !exist;
     }
 
-    private static synchronized void show(final Context context, final String url,
-                            final String title, final String author, final Entry entry) {
-        Logger.d(TAG, "url(" + url + ") title(" + title
-                + ") author(" + author + ") entry(" + (entry == null ? "": entry.toString()) + ")");
-
+    private static synchronized void show(final Context context, final Entry entry) {
+        Logger.v(TAG, "entry(" + entry.toString() + ")");
         Intent intent = new Intent(context, BlogActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra(KEY, url);
-        if (entry != null) {
-            intent.putExtra(Entry.KEY, entry);
-        }
+        intent.putExtra(KEY, entry.getObjectId());
 
         final int notificationId = getNotificationId(context);
 
         PendingIntent contentIntent = PendingIntent.getActivity(context, notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.notification_blog_update);
-        views.setTextViewText(R.id.title, title);
-        views.setTextViewText(R.id.text, author);
+        views.setTextViewText(R.id.title, entry.getTitle());
+        views.setTextViewText(R.id.text, entry.getAuthor());
         Notification notification = new NotificationCompat.Builder(context)
                 .setContentIntent(contentIntent)
                 .setContent(views)
@@ -121,7 +98,7 @@ public class BlogUpdateNotification {
 
         notified(context, notificationId);
 
-        String profileImageUrl = UrlUtils.getImageUrlFromArticleUrl(url);
+        String profileImageUrl = entry.getAuthorImageUrl();
         if (!TextUtils.isEmpty(profileImageUrl)) {
             Picasso.with(context).load(profileImageUrl)
                     .transform(new CircleTransformation()).into(views, R.id.icon, notificationId, notification);

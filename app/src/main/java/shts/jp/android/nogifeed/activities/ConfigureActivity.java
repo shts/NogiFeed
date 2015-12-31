@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.util.SparseArray;
 
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.entities.Member;
+import shts.jp.android.nogifeed.models.Member;
 import shts.jp.android.nogifeed.widget.ProfileWidgetProvider;
 
 public class ConfigureActivity extends BaseActivity {
@@ -41,12 +41,12 @@ public class ConfigureActivity extends BaseActivity {
         Logger.v(TAG, "in : member(" + member.toString() + ") mAppWidgetId(" + mAppWidgetId + ")");
         sMembers.put(mAppWidgetId, member);
 
+        ProfileWidgetProvider.update(getApplicationContext(), mAppWidgetId);
+
         Intent resultValue = new Intent();
         resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
         setResult(RESULT_OK, resultValue);
         finish();
-
-        ProfileWidgetProvider.update(getApplicationContext(), mAppWidgetId);
     }
 
     public static Member getMember(int widgetId) {

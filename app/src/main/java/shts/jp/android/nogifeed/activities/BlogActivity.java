@@ -10,17 +10,13 @@ import android.view.KeyEvent;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.fragments.BlogFragment;
-import shts.jp.android.nogifeed.entities.BlogEntry;
-import shts.jp.android.nogifeed.views.notifications.BlogUpdateNotification;
+import shts.jp.android.nogifeed.models.Entry;
 
 public class BlogActivity extends BaseActivity {
 
-    private BlogEntry mBlogEntry;
-    private final BlogFragment mBlogFragment = new BlogFragment();
-
-    public static Intent getStartIntent(Context context, BlogEntry blogEntry) {
+    public static Intent getStartIntent(Context context, String entryObjectId) {
         Intent intent = new Intent(context, BlogActivity.class);
-        intent.putExtra(BlogEntry.KEY, blogEntry);
+        intent.putExtra(Entry.KEY, entryObjectId);
         return intent;
     }
 
@@ -29,17 +25,11 @@ public class BlogActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blog);
 
-        Bundle bundle = new Bundle();
+        String entryObjectId = getIntent().getStringExtra(Entry.KEY);
+        BlogFragment blogFragment = BlogFragment.newBlogFragment(entryObjectId);
 
-        mBlogEntry = getIntent().getParcelableExtra(BlogEntry.KEY);
-        bundle.putParcelable(BlogEntry.KEY, mBlogEntry);
-
-        String blogUrl = getIntent().getStringExtra(BlogUpdateNotification.KEY);
-        bundle.putString(BlogUpdateNotification.KEY, blogUrl);
-
-        mBlogFragment.setArguments(bundle);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, mBlogFragment, BlogFragment.class.getSimpleName());
+        ft.replace(R.id.container, blogFragment, BlogFragment.class.getSimpleName());
         ft.commit();
 
         setupActionBar();

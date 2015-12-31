@@ -11,8 +11,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import shts.jp.android.nogifeed.R;
-import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.entities.Member;
+import shts.jp.android.nogifeed.models.Favorite;
+import shts.jp.android.nogifeed.models.Member;
 import shts.jp.android.nogifeed.utils.PicassoHelper;
 
 public class AllMemberListAdapter extends BindableAdapter<Member> {
@@ -49,16 +49,15 @@ public class AllMemberListAdapter extends BindableAdapter<Member> {
     @Override
     public void bindView(Member member, int position, View view) {
         final ViewHolder holder = (ViewHolder) view.getTag();
-        Logger.d(TAG, member.toString());
-        holder.authorNameTextView.setText(member.name);
+        holder.authorNameTextView.setText(member.getNameMain());
         holder.favoriteImageView.setVisibility(
-                member.isFavorite(mContext) ? View.VISIBLE : View.GONE/*View.VISIBLE*/);
+                Favorite.exist(member.getObjectId()) ? View.VISIBLE : View.GONE);
 
-        if (TextUtils.isEmpty(member.profileImageUrl) || position == 0) {
+        if (TextUtils.isEmpty(member.getProfileImageUrl()) || position == 0) {
             holder.profileImageView.setImageResource(R.drawable.kensyusei);
         } else {
             PicassoHelper.loadAndCircleTransform(
-                    mContext, holder.profileImageView, member.profileImageUrl);
+                    mContext, holder.profileImageView, member.getProfileImageUrl());
         }
     }
 }

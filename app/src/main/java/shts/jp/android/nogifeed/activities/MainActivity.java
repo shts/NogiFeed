@@ -14,9 +14,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.fragments.AllFeedListFragment;
 import shts.jp.android.nogifeed.fragments.FavoriteMemberFeedListFragment;
+import shts.jp.android.nogifeed.models.Favorite;
+import shts.jp.android.nogifeed.models.Member;
 import shts.jp.android.nogifeed.views.PagerSlidingTabStrip;
 
 /**

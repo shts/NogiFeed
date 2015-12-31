@@ -6,12 +6,6 @@ import android.net.Uri;
 
 import org.apache.http.protocol.HTTP;
 
-import shts.jp.android.nogifeed.activities.MemberDetailActivity;
-import shts.jp.android.nogifeed.activities.NewsBrowseActivity;
-import shts.jp.android.nogifeed.entities.BlogEntry;
-import shts.jp.android.nogifeed.entities.Entry;
-import shts.jp.android.nogifeed.entities.News;
-
 public class IntentUtils {
 
     private static final String URL_TWITTER = "https://twitter.com/";
@@ -45,21 +39,4 @@ public class IntentUtils {
         context.startActivity(intent);
     }
 
-    public static void startMemberDetailActivity(Context context, Entry entry) {
-        Intent i = new Intent(context, MemberDetailActivity.class);
-        i.putExtra(Entry.KEY, entry);
-        context.startActivity(i);
-    }
-
-    public static void startMemberDetailActivity(Context context, BlogEntry blogEntry) {
-        Intent i = new Intent(context, MemberDetailActivity.class);
-        i.putExtra(BlogEntry.KEY, blogEntry);
-        context.startActivity(i);
-    }
-
-    public static void startNewsActivity(Context context, News news) {
-        Intent i = new Intent(context, NewsBrowseActivity.class);
-        i.putExtra(News.KEY, news);
-        context.startActivity(i);
-    }
 }

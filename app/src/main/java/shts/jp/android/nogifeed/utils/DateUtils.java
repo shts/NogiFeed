@@ -2,6 +2,7 @@ package shts.jp.android.nogifeed.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import shts.jp.android.nogifeed.common.Logger;
@@ -31,6 +32,7 @@ public class DateUtils {
     }
 
     public static synchronized String formatUpdated(String source) {
+        Logger.d(TAG, "formatUpdated source(" + source + ")");
         String updated = null;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
@@ -56,5 +58,15 @@ public class DateUtils {
 
     public static synchronized Date formatUpdatedDate(String source) throws ParseException {
         return FORMATTER.parse(formatUpdated(source));
+    }
+
+    public static String dateToString(Date date) {
+        Calendar datetime = Calendar.getInstance();
+        datetime.setTime(date);
+        return datetime.get(Calendar.YEAR) + "/" + datetime.get(Calendar.MONTH)
+                + "/" + datetime.get(Calendar.DATE);
+//                + " "
+//                + datetime.get(Calendar.HOUR) + ":" + datetime.get(Calendar.MINUTE)
+//                + ":" + datetime.get(Calendar.SECOND);
     }
 }
