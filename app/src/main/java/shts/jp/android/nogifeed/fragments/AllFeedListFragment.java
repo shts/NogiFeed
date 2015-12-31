@@ -11,8 +11,6 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.squareup.otto.Subscribe;
 
 import java.util.List;
@@ -20,10 +18,9 @@ import java.util.List;
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.BlogActivity;
 import shts.jp.android.nogifeed.adapters.AllFeedListAdapter;
-import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.models.Entry;
+import shts.jp.android.nogifeed.models.Favorite;
 import shts.jp.android.nogifeed.models.eventbus.BusHolder;
-import shts.jp.android.nogifeed.models.eventbus.EventOnChangeFavoriteState;
 
 public class AllFeedListFragment extends Fragment {
 
@@ -35,6 +32,8 @@ public class AllFeedListFragment extends Fragment {
     private ListView listView;
     private AllFeedListAdapter adapter;
     private LinearLayout footerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private static List<Entry> cache;
 
     private final AllFeedListAdapter.OnPageMaxScrolledListener scrolledListener
             = new AllFeedListAdapter.OnPageMaxScrolledListener() {
@@ -44,29 +43,13 @@ public class AllFeedListFragment extends Fragment {
         }
     };
 
-    private abstract class Callback implements FindCallback<Entry> {
-        @Override
-        public void done(List<Entry> entries, ParseException e) {
-            if (e != null || entries == null || entries.isEmpty()) {
-                // TODO: show error toast
-                Logger.e(TAG, "cannot get entries", e);
-            } else {
-                done(entries);
-            }
-            if (footerView != null) {
-                footerView.setVisibility(View.GONE);
-            }
-        }
-        public abstract void done(List<Entry> entries);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_all_feed_list, null);
         listView = (ListView) view.findViewById(R.id.all_feed_list);
 
         // SwipeRefreshLayoutの設定
-        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -90,27 +73,7 @@ public class AllFeedListFragment extends Fragment {
     }
 
     private void getAllFeeds() {
-        Entry.getQuery(PAGE_LIMIT, counter).findInBackground(new Callback() {
-            @Override
-            public void done(final List<Entry> entries) {
-                for (Entry e : entries) {
-                    e.encache();
-                }
-                adapter = new AllFeedListAdapter(getActivity(), entries);
-                adapter.setPageMaxScrolledListener(scrolledListener);
-                listView.setAdapter(adapter);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Entry entry = (Entry) parent.getItemAtPosition(position);
-                        if (entry != null) {
-                            getActivity().startActivity(
-                                    BlogActivity.getStartIntent(getActivity(), entry.getObjectId()));
-                        }
-                    }
-                });
-            }
-        });
+        Entry.all(PAGE_LIMIT, counter);
     }
 
     private void getNextFeed() {
@@ -118,18 +81,43 @@ public class AllFeedListFragment extends Fragment {
             footerView.setVisibility(View.VISIBLE);
         }
         counter++;
-        Entry.getQuery(PAGE_LIMIT, (counter * PAGE_LIMIT)).findInBackground(new Callback() {
-            @Override
-            public void done(List<Entry> entries) {
-                for (Entry e : entries) {
-                    e.encache();
-                }
-                adapter.add(entries);
-                adapter.notifyDataSetChanged();
-            }
-        });
+        Entry.next(PAGE_LIMIT, (counter * PAGE_LIMIT));
     }
 
+    @Subscribe
+    public void onGotNextEntries(Entry.GotAllEntryCallback.Next callback) {
+        if (footerView != null) {
+            footerView.setVisibility(View.GONE);
+        }
+        if (callback.e == null) {
+            adapter.add(callback.entries);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Subscribe
+    public void onGotAllEntries(Entry.GotAllEntryCallback.All callback) {
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
+        if (callback.e == null) {
+            adapter = new AllFeedListAdapter(getActivity(), callback.entries);
+            adapter.setPageMaxScrolledListener(scrolledListener);
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Entry entry = (Entry) parent.getItemAtPosition(position);
+                    if (entry != null) {
+                        getActivity().startActivity(
+                                BlogActivity.getStartIntent(getActivity(), entry.getObjectId()));
+                    }
+                }
+            });
+        }
+    }
+
+    // 推しメン登録は個人ページより行われるので resume <-> pause だと拾えない
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,10 +131,7 @@ public class AllFeedListFragment extends Fragment {
     }
 
     @Subscribe
-    public void onChange(EventOnChangeFavoriteState eventOnChangeFavoriteState) {
-        Logger.v(TAG, "onChange favorite");
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
-        }
+    public void onChangedFavorite(Favorite.ChangedFavoriteState callback) {
+        adapter.notifyDataSetChanged();
     }
 }

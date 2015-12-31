@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.squareup.otto.Subscribe;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import shts.jp.android.nogifeed.adapters.AllMemberGridListAdapter;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.models.Member;
 import shts.jp.android.nogifeed.models.ProfileWidget;
+import shts.jp.android.nogifeed.models.eventbus.BusHolder;
 
 public class AllMemberGridListFragment extends Fragment {
 
@@ -49,19 +51,29 @@ public class AllMemberGridListFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        setupAdapter();
+    public void onResume() {
+        super.onResume();
+        BusHolder.get().register(this);
     }
 
-    private void setupAdapter() {
-        Member.getQuery().findInBackground(new FindCallback<Member>() {
-            @Override
-            public void done(List<Member> memberList, ParseException e) {
-                AllMemberGridListAdapter gridAdapter = new AllMemberGridListAdapter(getActivity(), memberList);
-                gridView.setAdapter(gridAdapter);
-            }
-        });
+    @Override
+    public void onPause() {
+        super.onPause();
+        BusHolder.get().unregister(this);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Member.all();
+    }
+
+    @Subscribe
+    public void onGotAllMembers(Member.GetMembersCallback callback) {
+        if (callback.e == null && callback.members != null) {
+            AllMemberGridListAdapter gridAdapter = new AllMemberGridListAdapter(getActivity(), callback.members);
+            gridView.setAdapter(gridAdapter);
+        }
     }
 
 }

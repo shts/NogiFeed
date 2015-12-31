@@ -8,10 +8,8 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
 
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -25,7 +23,6 @@ import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.Favorite;
 import shts.jp.android.nogifeed.models.Member;
 import shts.jp.android.nogifeed.models.eventbus.BusHolder;
-import shts.jp.android.nogifeed.models.eventbus.EventOnChangeFavoriteState;
 import shts.jp.android.nogifeed.utils.TrackerUtils;
 import shts.jp.android.nogifeed.views.Showcase;
 
@@ -61,24 +58,27 @@ public class MemberDetailFragment extends ListFragment {
                 if (e != null || member == null) {
                     Logger.e(TAG, "cannot get member");
                 } else {
-                    setupMemberFeedList(member.getObjectId());
+                    Entry.findById(30, 0, member.getObjectId());
                 }
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         BusHolder.get().register(this);
     }
 
     @Override
-    public void onDestroy() {
+    public void onPause() {
+        super.onPause();
         BusHolder.get().unregister(this);
-        super.onDestroy();
     }
 
     @Subscribe
-    public void onChange(EventOnChangeFavoriteState eventOnChangeFavoriteState) {
-        if (mMemberFeedListAdapter != null) {
-            mMemberFeedListAdapter.notifyDataSetChanged();
-        }
+    public void onChangedFavorite(Favorite.ChangedFavoriteState callback) {
+        mMemberFeedListAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -110,19 +110,17 @@ public class MemberDetailFragment extends ListFragment {
         });
     }
 
-    private void setupMemberFeedList(String memberObjectId) {
-        ParseQuery<Entry> query = Entry.getQuery(30, 0);
-        query.whereEqualTo("author_id", memberObjectId);
-        query.findInBackground(new FindCallback<Entry>() {
-            @Override
-            public void done(List<Entry> entries, ParseException e) {
-                setupShowcase(entries);
-                setupAdapter(entries);
-            }
-        });
+    @Subscribe
+    public void onGotAllEntries(Entry.GotAllEntryCallback.FindById callback) {
+        Logger.v(TAG, "onGotAllEntries");
+        if (callback.e == null) {
+            setupShowcase(callback.entries);
+            setupAdapter(callback.entries);
+        }
     }
 
     private void setupAdapter(final List<Entry> entries) {
+        Logger.v(TAG, "setupAdapter");
         mMemberFeedListAdapter = new MemberFeedListAdapter(getActivity(), entries);
         setListAdapter(mMemberFeedListAdapter);
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -138,6 +136,7 @@ public class MemberDetailFragment extends ListFragment {
     }
 
     private void setupShowcase(final List<Entry> entries) {
+        Logger.v(TAG, "setupShowcase");
         for (int i = 0; i < entries.size(); i++) {
             Entry e = entries.get(i);
             List<String> images = e.getUploadedThumbnailUrlList();

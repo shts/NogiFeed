@@ -1,11 +1,14 @@
 package shts.jp.android.nogifeed.models;
 
+import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.List;
+
+import shts.jp.android.nogifeed.models.eventbus.BusHolder;
 
 @ParseClassName("Member")
 public class Member extends ParseObject {
@@ -20,9 +23,26 @@ public class Member extends ParseObject {
         return ParseObject.createWithoutData(Member.class, objectId);
     }
 
-    public static ParseQuery<Member> getQuery() {
+    /**
+     * Callback
+     */
+    public static class GetMembersCallback {
+        final public List<Member> members;
+        final public ParseException e;
+        GetMembersCallback(List<Member> members, ParseException e) {
+            this.members = members;
+            this.e = e;
+        }
+    }
+
+    public static void all() {
         ParseQuery<Member> query = ParseQuery.getQuery(Member.class);
-        return query;
+        query.findInBackground(new FindCallback<Member>() {
+            @Override
+            public void done(List<Member> members, ParseException e) {
+                BusHolder.get().post(new GetMembersCallback(members, e));
+            }
+        });
     }
 
     public String getNameMain() {

@@ -10,10 +10,7 @@ import com.parse.SaveCallback;
 
 import java.util.List;
 
-import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.models.eventbus.BusHolder;
-import shts.jp.android.nogifeed.models.eventbus.EventOnChangeFavoriteState;
-import shts.jp.android.nogifeed.models.eventbus.EventOnChangeNotYetRead;
 
 @ParseClassName("NotYetRead")
 public class NotYetRead extends ParseObject {
@@ -38,6 +35,11 @@ public class NotYetRead extends ParseObject {
         query.fromLocalDatastore();
         return query;
     }
+
+    /**
+     * 推しメン登録状態変更通知
+     */
+    public static class ChangedReadState {}
 
     public static boolean isRead(String articleUrl) {
         try {
@@ -78,7 +80,7 @@ public class NotYetRead extends ParseObject {
                 notYetRead.pinInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        notifyOnChangeState();
+                        BusHolder.get().post(new ChangedReadState());
                     }
                 });
             }
@@ -95,15 +97,11 @@ public class NotYetRead extends ParseObject {
                 notYetRead.unpinInBackground(new DeleteCallback() {
                     @Override
                     public void done(ParseException e) {
-                        notifyOnChangeState();
+                        BusHolder.get().post(new ChangedReadState());
                     }
                 });
             }
         });
-    }
-
-    private static void notifyOnChangeState() {
-        BusHolder.get().post(new EventOnChangeNotYetRead());
     }
 
 }

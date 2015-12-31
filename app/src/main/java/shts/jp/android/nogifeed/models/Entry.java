@@ -1,13 +1,15 @@
 package shts.jp.android.nogifeed.models;
 
-import android.content.Context;
-
+import com.parse.FindCallback;
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.Date;
 import java.util.List;
+
+import shts.jp.android.nogifeed.models.eventbus.BusHolder;
 
 @ParseClassName("Entry")
 public class Entry extends ParseObject {
@@ -22,20 +24,47 @@ public class Entry extends ParseObject {
         return ParseObject.createWithoutData(Entry.class, objectId);
     }
 
-    public static ParseQuery<Entry> getQuery(String objectId) {
-        ParseQuery<Entry> query = ParseQuery.getQuery(Entry.class);
-        query.whereEqualTo("objectId", objectId);
-        query.orderByDescending("published");
-        return query;
+    public static void findById(int limit, int skip, String memberObjectId) {
+        ParseQuery<Entry> q = query(limit, skip);
+        q.whereEqualTo("author_id", memberObjectId);
+        q.findInBackground(new FindCallback<Entry>() {
+            @Override
+            public void done(List<Entry> entries, ParseException e) {
+                BusHolder.get().post(new GotAllEntryCallback.FindById(entries, e));
+            }
+        });
     }
 
-    public static ParseQuery<Entry> getQuery() {
-        ParseQuery<Entry> query = ParseQuery.getQuery(Entry.class);
-        query.orderByDescending("published");
-        return query;
+    public static void findById(int limit, int skip, List<String> memberObjectIdList) {
+        ParseQuery<Entry> q = query(limit, skip);
+        q.whereContainedIn("author_id", memberObjectIdList);
+        q.findInBackground(new FindCallback<Entry>() {
+            @Override
+            public void done(List<Entry> entries, ParseException e) {
+                BusHolder.get().post(new GotAllEntryCallback.FindById(entries, e));
+            }
+        });
     }
 
-    public static ParseQuery<Entry> getQuery(int limit, int skip) {
+    public static void all(int limit, int skip) {
+        query(limit, skip).findInBackground(new FindCallback<Entry>() {
+            @Override
+            public void done(List<Entry> entries, ParseException e) {
+                BusHolder.get().post(new GotAllEntryCallback.All(entries, e));
+            }
+        });
+    }
+
+    public static void next(int limit, int skip) {
+        query(limit, skip).findInBackground(new FindCallback<Entry>() {
+            @Override
+            public void done(List<Entry> entries, ParseException e) {
+                BusHolder.get().post(new GotAllEntryCallback.Next(entries, e));
+            }
+        });
+    }
+
+    private static ParseQuery<Entry> query(int limit, int skip) {
         ParseQuery<Entry> query = ParseQuery.getQuery(Entry.class);
         query.orderByDescending("published");
         query.setLimit(limit);
@@ -43,36 +72,25 @@ public class Entry extends ParseObject {
         return query;
     }
 
-    public void archive(Context context) {
-        // TODO: download image file
-        pinInBackground();
-    }
-
-    public void encache() {
-        this.cache = new Cache();
-    }
-
-    private Cache cache;
-    public class Cache {
-        String author, authorId, title, body, blogUrl,
-         year, month, day, dayweek;
-        Date entryDate, published;
-        List<String> thumbnailUrls, rawImageUrls;
-        Cache() {
-            author = getAuthor();
-            title = getTitle();
-            blogUrl = getBlogUrl();
-            entryDate = getEntryDate();
-            published = getPublishedDate();
+    public static class GotAllEntryCallback {
+        public final List<Entry> entries;
+        public final ParseException e;
+        GotAllEntryCallback(List<Entry> entries, ParseException e) {
+            this.entries = entries;
+            this.e = e;
+        }
+        public static class All extends GotAllEntryCallback {
+            All(List<Entry> entries, ParseException e) { super(entries, e); }
+        }
+        public static class Next extends GotAllEntryCallback {
+            Next(List<Entry> entries, ParseException e) { super(entries, e); }
+        }
+        public static class FindById extends GotAllEntryCallback {
+            FindById(List<Entry> entries, ParseException e) { super(entries, e); }
         }
     }
 
-    // --------------------------------------------------
-    // Accesser
-    // --------------------------------------------------
-
     public String getAuthor() {
-        if (cache != null) return cache.author;
         return getString("author");
     }
 
@@ -85,7 +103,6 @@ public class Entry extends ParseObject {
     }
 
     public String getTitle() {
-        if (cache != null) return cache.title;
         return getString("title");
     }
 
@@ -94,17 +111,14 @@ public class Entry extends ParseObject {
     }
 
     public String getBlogUrl() {
-        if (cache != null) return cache.blogUrl;
         return getString("url");
     }
 
     public Date getEntryDate() {
-        if (cache != null) return cache.entryDate;
         return getDate("date");
     }
 
     public Date getPublishedDate() {
-        if (cache != null) return cache.published;
         return getDate("published");
     }
 

@@ -11,7 +11,6 @@ import java.util.List;
 
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.models.eventbus.BusHolder;
-import shts.jp.android.nogifeed.models.eventbus.EventOnChangeFavoriteState;
 
 @ParseClassName("Favorite")
 public class Favorite extends ParseObject {
@@ -45,6 +44,11 @@ public class Favorite extends ParseObject {
         return false;
     }
 
+    /**
+     * 推しメン登録状態変更通知
+     */
+    public static class ChangedFavoriteState {}
+
     public static void add(List<Member> memberList) {
         for (Member member : memberList) {
             add(member);
@@ -57,7 +61,7 @@ public class Favorite extends ParseObject {
         fav.pinInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                notifyOnChangeState();
+                BusHolder.get().post(new ChangedFavoriteState());
             }
         });
     }
@@ -68,7 +72,7 @@ public class Favorite extends ParseObject {
         fav.pinInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                notifyOnChangeState();
+                BusHolder.get().post(new ChangedFavoriteState());
             }
         });
     }
@@ -81,8 +85,7 @@ public class Favorite extends ParseObject {
                 favorite.unpinInBackground(new DeleteCallback() {
                     @Override
                     public void done(ParseException e) {
-                        Logger.d(TAG, "unpin favorite e(" + e + ")");
-                        notifyOnChangeState();
+                        BusHolder.get().post(new ChangedFavoriteState());
                     }
                 });
             } else {
@@ -90,12 +93,7 @@ public class Favorite extends ParseObject {
             }
         } catch (ParseException e) {
             Logger.e(TAG, "cannot get favorite member", e);
-            e.printStackTrace();
         }
-    }
-
-    private static void notifyOnChangeState() {
-        BusHolder.get().post(new EventOnChangeFavoriteState());
     }
 
     public String getMemberObjectId() {
