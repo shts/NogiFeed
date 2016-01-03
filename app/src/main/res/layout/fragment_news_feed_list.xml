@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/refresh"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <ListView
-        android:background="@color/grey_50"
+    android:layout_height="match_parent"
+    android:id="@+id/coordinator"
+    tools:context=".MainActivity">
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/news_feed_list" />
-</android.support.v4.widget.SwipeRefreshLayout>
+        android:layout_height="match_parent">
+        <ListView
+            android:background="@color/grey_50"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/news_feed_list" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+</android.support.design.widget.CoordinatorLayout>

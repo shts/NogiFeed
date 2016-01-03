@@ -57,7 +57,7 @@ public class AllFeedListFragment extends Fragment {
             }
         });
         swipeRefreshLayout.setColorSchemeResources(
-                R.color.nogifeed, R.color.nogifeed, R.color.nogifeed, R.color.nogifeed);
+                R.color.primary, R.color.primary, R.color.primary, R.color.primary);
 
         footerView = (LinearLayout) inflater.inflate(R.layout.list_item_more_load, null);
         footerView.setVisibility(View.GONE);

@@ -21,8 +21,6 @@ public class NogiFeedApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Logger.v("NogiFeedApplication", "id(" + BuildConfig.PARSE_API_ID
-                + ") key(" + BuildConfig.PARSE_API_KEY + ")");
         parseInstallation();
 
         ProfileWidgetProvider.initialize(getApplicationContext());

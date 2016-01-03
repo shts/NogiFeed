@@ -54,4 +54,10 @@
     <string name="feed_failure">Failed to get feed. Check your network state.</string>
 
     <string name="empty_favorite">You have not favorite member. you check favorite at member detail page</string>
+
+    <string name="property_name_birthday">誕生日 : %1$s</string>
+    <string name="property_name_birthplace">出身地 : %1$s</string>
+    <string name="property_name_blood_type">血液型 : %1$s</string>
+    <string name="property_name_constellation">星座 : %1$s</string>
+    <string name="property_name_height">身長 : %1$s</string>
 </resources>

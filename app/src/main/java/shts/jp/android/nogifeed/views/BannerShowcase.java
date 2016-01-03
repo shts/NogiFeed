@@ -68,8 +68,8 @@ public class BannerShowcase extends FrameLayout {
                 iv.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        context.startActivity(
-                                NewsBrowseActivity.createIntent(context, banner));
+//                        context.startActivity(
+//                                NewsBrowseActivity.createIntent(context, banner));
                     }
                 });
                 iv.setScaleType(ImageView.ScaleType.CENTER_CROP);

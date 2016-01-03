@@ -63,10 +63,7 @@ public class DateUtils {
     public static String dateToString(Date date) {
         Calendar datetime = Calendar.getInstance();
         datetime.setTime(date);
-        return datetime.get(Calendar.YEAR) + "/" + datetime.get(Calendar.MONTH)
+        return datetime.get(Calendar.YEAR) + "/" + (datetime.get(Calendar.MONTH) + 1)
                 + "/" + datetime.get(Calendar.DATE);
-//                + " "
-//                + datetime.get(Calendar.HOUR) + ":" + datetime.get(Calendar.MINUTE)
-//                + ":" + datetime.get(Calendar.SECOND);
     }
 }

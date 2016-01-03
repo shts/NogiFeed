@@ -1,35 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shts.jp.android.nogifeed.views.MultiSwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/refresh"
+<RelativeLayout
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <shts.jp.android.nogifeed.views.MultiSwipeRefreshLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerview"
+        android:layout_height="match_parent"
+        android:id="@+id/refresh">
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical" />
-        <LinearLayout
-            android:id="@+id/empty_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <ImageView
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_favorite_base"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:padding="16dp"
-                android:textSize="14sp"
-                android:gravity="center"
-                android:text="推しメンが登録されていません。\n個人ページから登録してください。"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </FrameLayout>
-</shts.jp.android.nogifeed.views.MultiSwipeRefreshLayout>
+                android:layout_height="match_parent"
+                android:scrollbars="vertical" />
+            <LinearLayout
+                android:id="@+id/empty_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+                <ImageView
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_favorite_base"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:padding="16dp"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:text="推しメンが登録されていません。\n右下の+ボタンから推しメンを登録してください。"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </FrameLayout>
+    </shts.jp.android.nogifeed.views.MultiSwipeRefreshLayout>
+    <android.support.design.widget.FloatingActionButton
+        style="@style/FabMargin"
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add_white_18dp"
+        app:borderWidth="0dp" />
+</RelativeLayout>

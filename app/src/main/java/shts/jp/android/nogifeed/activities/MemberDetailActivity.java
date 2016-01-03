@@ -18,7 +18,7 @@ public class MemberDetailActivity extends BaseActivity {
     private Drawable mActionBarDrawable;
     private Toolbar mToolbar;
 
-    public static Intent createIntent(Context context, String memberObjectId) {
+    public static Intent getStartIntent(Context context, String memberObjectId) {
         Intent intent = new Intent(context, MemberDetailActivity.class);
         intent.putExtra("memberObjectId", memberObjectId);
         return intent;

@@ -6,6 +6,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,9 +36,13 @@ public class Entry extends ParseObject {
         });
     }
 
-    public static void findById(int limit, int skip, List<String> memberObjectIdList) {
+    public static void findById(int limit, int skip, List<Favorite> favorites) {
+        List<String> ids = new ArrayList<>();
+        for (Favorite favorite : favorites) {
+            ids.add(favorite.getMemberObjectId());
+        }
         ParseQuery<Entry> q = query(limit, skip);
-        q.whereContainedIn("author_id", memberObjectIdList);
+        q.whereContainedIn("author_id", ids);
         q.findInBackground(new FindCallback<Entry>() {
             @Override
             public void done(List<Entry> entries, ParseException e) {
@@ -45,6 +50,17 @@ public class Entry extends ParseObject {
             }
         });
     }
+
+//    public static void findById(int limit, int skip, List<String> memberObjectIdList) {
+//        ParseQuery<Entry> q = query(limit, skip);
+//        q.whereContainedIn("author_id", memberObjectIdList);
+//        q.findInBackground(new FindCallback<Entry>() {
+//            @Override
+//            public void done(List<Entry> entries, ParseException e) {
+//                BusHolder.get().post(new GotAllEntryCallback.FindById(entries, e));
+//            }
+//        });
+//    }
 
     public static void all(int limit, int skip) {
         query(limit, skip).findInBackground(new FindCallback<Entry>() {
@@ -87,6 +103,9 @@ public class Entry extends ParseObject {
         }
         public static class FindById extends GotAllEntryCallback {
             FindById(List<Entry> entries, ParseException e) { super(entries, e); }
+        }
+        public boolean hasError() {
+            return e != null || entries == null || entries.isEmpty();
         }
     }
 

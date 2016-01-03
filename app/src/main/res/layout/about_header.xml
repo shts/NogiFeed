@@ -3,7 +3,7 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/nogifeed_color"
+    android:background="@color/primary"
     android:paddingTop="16dp"
     android:paddingRight="16dp"
     android:paddingLeft="16dp"

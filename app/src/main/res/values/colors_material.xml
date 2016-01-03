@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="pink_50">#fce4ec</color>
+    <color name="pink_100">#f8bbd0</color>
+    <color name="pink_200">#f48fb1</color>
+    <color name="pink_300">#f06292</color>
+    <color name="pink_400">#ec407a</color>
+    <color name="pink_500">#e91e63</color>
+    <color name="pink_600">#d81b60</color>
+    <color name="pink_700">#c2185b</color>
+    <color name="pink_800">#ad1457</color>
+    <color name="pink_900">#880e4f</color>
+    <color name="pink_a100">#ff80ab</color>
+    <color name="pink_a200">#ff4081</color>
+    <color name="pink_a400">#f50057</color>
+    <color name="pink_a700">#c51162</color>
+
+    <color name="purple_50">#f3e5f5</color>
+    <color name="purple_100">#e1bee7</color>
+    <color name="purple_200">#ce93d8</color>
+    <color name="purple_300">#ba68c8</color>
+    <color name="purple_400">#ab47bc</color>
+    <color name="purple_500">#9c27b0</color>
+    <color name="purple_600">#8e24aa</color>
+    <color name="purple_700">#7b1fa2</color>
+    <color name="purple_800">#6a1b9a</color>
+    <color name="purple_900">#4a148c</color>
+    <color name="purple_a100">#ea80fc</color>
+    <color name="purple_a200">#e040fb</color>
+    <color name="purple_a400">#d500f9</color>
+    <color name="purple_a700">#aa00ff</color>
+
+    <color name="deep_purple_50">#ede7f6</color>
+    <color name="deep_purple_100">#d1c4e9</color>
+    <color name="deep_purple_200">#b39ddb</color>
+    <color name="deep_purple_300">#9575cd</color>
+    <color name="deep_purple_400">#7e57c2</color>
+    <color name="deep_purple_500">#673ab7</color>
+    <color name="deep_purple_600">#5e35b1</color>
+    <color name="deep_purple_700">#512da8</color>
+    <color name="deep_purple_800">#4527a0</color>
+    <color name="deep_purple_900">#311b92</color>
+    <color name="deep_purple_a100">#b388ff</color>
+    <color name="deep_purple_a200">#7c4dff</color>
+    <color name="deep_purple_a400">#651fff</color>
+    <color name="deep_purple_a700">#6200ea</color>
+
+    <color name="green_50">#d0f8ce</color>
+    <color name="green_100">#a3e9a4</color>
+    <color name="green_200">#72d572</color>
+    <color name="green_300">#42bd41</color>
+    <color name="green_400">#2baf2b</color>
+    <color name="green_500">#259b24</color>
+    <color name="green_600">#0a8f08</color>
+    <color name="green_700">#0a7e07</color>
+    <color name="green_800">#056f00</color>
+    <color name="green_900">#0d5302</color>
+    <color name="green_a100">#a2f78d</color>
+    <color name="green_a200">#5af158</color>
+    <color name="green_a400">#14e715</color>
+    <color name="green_a700">#12c700</color>
+
+    <color name="light_green_50">#f1f8e9</color>
+    <color name="light_green_100">#dcedc8</color>
+    <color name="light_green_200">#c5e1a5</color>
+    <color name="light_green_300">#aed581</color>
+    <color name="light_green_400">#9ccc65</color>
+    <color name="light_green_500">#8bc34a</color>
+    <color name="light_green_600">#7cb342</color>
+    <color name="light_green_700">#689f38</color>
+    <color name="light_green_800">#558b2f</color>
+    <color name="light_green_900">#33691e</color>
+    <color name="light_green_a100">#ccff90</color>
+    <color name="light_green_a200">#b2ff59</color>
+    <color name="light_green_a400">#76ff03</color>
+    <color name="light_green_a700">#64dd17</color>
+
+    <color name="grey_50">#fafafa</color>
+
+</resources>

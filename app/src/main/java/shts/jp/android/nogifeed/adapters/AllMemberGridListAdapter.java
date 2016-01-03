@@ -46,7 +46,6 @@ public class AllMemberGridListAdapter extends BindableAdapter<Member> {
     @Override
     public void bindView(Member member, int position, View view) {
         final ViewHolder holder = (ViewHolder) view.getTag();
-        Logger.i(TAG, member.toString());
 
         holder.titleTextView.setText(member.getNameMain());
         holder.favoriteImageView.setVisibility(

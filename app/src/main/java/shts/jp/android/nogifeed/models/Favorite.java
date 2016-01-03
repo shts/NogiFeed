@@ -1,6 +1,7 @@
 package shts.jp.android.nogifeed.models;
 
 import com.parse.DeleteCallback;
+import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -34,6 +35,41 @@ public class Favorite extends ParseObject {
         return query;
     }
 
+    /**
+     * 推しメン全件を取得するコールバック
+     */
+    public static class GetFavoritesCallback {
+        public List<Favorite> favorites;
+        public ParseException e;
+        public GetFavoritesCallback(List<Favorite> favorites, ParseException e) {
+            this.favorites = favorites;
+            this.e = e;
+        }
+        public boolean hasError() {
+            return this.e != null || this.favorites == null || this.favorites.isEmpty();
+        }
+    }
+
+    /**
+     * 推しメン全件を取得する
+     */
+    public static void all() {
+        getQuery().findInBackground(new FindCallback<Favorite>() {
+            @Override
+            public void done(List<Favorite> favorites, ParseException e) {
+                BusHolder.get().post(new GetFavoritesCallback(favorites, e));
+            }
+        });
+    }
+
+    public static void toggle(String memberObjectId) {
+        if (exist(memberObjectId)) {
+            removeMember(memberObjectId);
+        } else {
+            add(memberObjectId);
+        }
+    }
+
     public static boolean exist(String memberObjectId) {
         try {
             List<Favorite> favorites = getQuery(memberObjectId).find();
@@ -47,7 +83,15 @@ public class Favorite extends ParseObject {
     /**
      * 推しメン登録状態変更通知
      */
-    public static class ChangedFavoriteState {}
+    public static class ChangedFavoriteState {
+        public enum Action { ADD, REMOVE }
+        public final Action action;
+        public final ParseException e;
+        public ChangedFavoriteState(Action action, ParseException e) {
+            this.action = action;
+            this.e = e;
+        }
+    }
 
     public static void add(List<Member> memberList) {
         for (Member member : memberList) {
@@ -61,20 +105,13 @@ public class Favorite extends ParseObject {
         fav.pinInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                BusHolder.get().post(new ChangedFavoriteState());
+                BusHolder.get().post(new ChangedFavoriteState(ChangedFavoriteState.Action.ADD, e));
             }
         });
     }
 
     public static void add(Member member) {
-        Favorite fav = new Favorite();
-        fav.put("memberObjectId", member.getObjectId());
-        fav.pinInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                BusHolder.get().post(new ChangedFavoriteState());
-            }
-        });
+        add(member.getObjectId());
     }
 
     public static void removeMember(String memberObjectId) {
@@ -85,7 +122,7 @@ public class Favorite extends ParseObject {
                 favorite.unpinInBackground(new DeleteCallback() {
                     @Override
                     public void done(ParseException e) {
-                        BusHolder.get().post(new ChangedFavoriteState());
+                        BusHolder.get().post(new ChangedFavoriteState(ChangedFavoriteState.Action.REMOVE, e));
                     }
                 });
             } else {
@@ -93,6 +130,7 @@ public class Favorite extends ParseObject {
             }
         } catch (ParseException e) {
             Logger.e(TAG, "cannot get favorite member", e);
+            BusHolder.get().post(new ChangedFavoriteState(ChangedFavoriteState.Action.REMOVE, e));
         }
     }
 

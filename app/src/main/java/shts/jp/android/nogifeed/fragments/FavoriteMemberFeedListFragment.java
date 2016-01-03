@@ -1,6 +1,8 @@
 package shts.jp.android.nogifeed.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,17 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.squareup.otto.Subscribe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.activities.AllMemberActivity;
 import shts.jp.android.nogifeed.adapters.FavoriteFeedListAdapter;
-import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.Favorite;
 import shts.jp.android.nogifeed.models.eventbus.BusHolder;
@@ -52,6 +50,14 @@ public class FavoriteMemberFeedListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorite_feed_list, null);
+        final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = AllMemberActivity.getStartIntent(getActivity());
+                getContext().startActivity(intent);
+            }
+        });
 
         mEmptyView = view.findViewById(R.id.empty_view);
 
@@ -69,72 +75,46 @@ public class FavoriteMemberFeedListFragment extends Fragment {
         });
         mMultiSwipeRefreshLayout.setSwipeableChildren(R.id.recyclerview, R.id.empty_view);
         mMultiSwipeRefreshLayout.setColorSchemeResources(
-                R.color.nogifeed, R.color.nogifeed, R.color.nogifeed, R.color.nogifeed);
+                R.color.primary, R.color.primary, R.color.primary, R.color.primary);
+        setupFavoriteMemberFeed();
 
         return view;
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Logger.v(TAG, "onActivityCreated");
-        setupFavoriteMemberFeed();
+    private void setupFavoriteMemberFeed() {
+        setVisibilityEmptyView(false);
+        Favorite.all();
     }
 
-    private void setupFavoriteMemberFeed() {
-        Logger.v(TAG, "setupFavoriteMemberFeed");
-        Favorite.getQuery().findInBackground(new FindCallback<Favorite>() {
-            @Override
-            public void done(List<Favorite> objects, ParseException e) {
-                Logger.v(TAG, "Favorite callback done");
-                if (e != null || objects == null || objects.isEmpty()) {
-                    if (mMultiSwipeRefreshLayout.isRefreshing()) {
-                        mMultiSwipeRefreshLayout.setRefreshing(false);
-                    }
-                    Logger.d(TAG, "setupFavoriteMemberFeed() : no favorite feed.");
-                    setVisibilityEmptyView(true);
-                    Toast.makeText(getActivity(), R.string.empty_favorite, Toast.LENGTH_LONG).show();
-                    return;
-                }
-                List<String> memberObjectIdList = new ArrayList<>();
-                for (Favorite favorite : objects) {
-                    memberObjectIdList.add(favorite.getMemberObjectId());
-                }
-                Logger.v(TAG, "Favorite callback set " + memberObjectIdList.size());
-                //getAllFeeds(memberObjectIdList);
-                Entry.findById(30, 0, memberObjectIdList);
+    @Subscribe
+    public void onGotAllFavorities(Favorite.GetFavoritesCallback callback) {
+        if (callback.hasError()) {
+            if (mMultiSwipeRefreshLayout.isRefreshing()) {
+                mMultiSwipeRefreshLayout.setRefreshing(false);
             }
-        });
+            setVisibilityEmptyView(true);
+            Toast.makeText(getActivity(), R.string.empty_favorite, Toast.LENGTH_LONG).show();
+            return;
+        }
+        Entry.findById(30, 0, callback.favorites);
     }
 
     @Subscribe
     public void onGotAllEntries(Entry.GotAllEntryCallback.FindById callback) {
-        Logger.v(TAG, "onGotAllEntries");
-        if (callback.e != null || callback.entries == null || callback.entries.isEmpty()) {
-            Logger.e(TAG, "cannot get all feed entries", callback.e);
-            // Show error toast
-            Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
-                    Toast.LENGTH_SHORT).show();
-            setVisibilityEmptyView(true);
-            if (mMultiSwipeRefreshLayout != null) {
-                if (mMultiSwipeRefreshLayout.isRefreshing()) {
-                    mMultiSwipeRefreshLayout.setRefreshing(false);
-                }
-            }
-            return;
-        }
-        setVisibilityEmptyView(false);
-        setupAdapter(callback.entries);
+        setVisibilityEmptyView(true);
         if (mMultiSwipeRefreshLayout != null) {
             if (mMultiSwipeRefreshLayout.isRefreshing()) {
                 mMultiSwipeRefreshLayout.setRefreshing(false);
             }
         }
-    }
-
-    private void setupAdapter(List<Entry> entries) {
+        if (callback.hasError()) {
+            // Show error toast
+            Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
         setVisibilityEmptyView(false);
-        mRecyclerView.setAdapter(new FavoriteFeedListAdapter(getActivity(), entries));
+        mRecyclerView.setAdapter(new FavoriteFeedListAdapter(getActivity(), callback.entries));
     }
 
     private void setVisibilityEmptyView(boolean isVisible) {
