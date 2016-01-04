@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
@@ -21,6 +20,7 @@ import shts.jp.android.nogifeed.adapters.MemberFeedListAdapter2;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.Favorite;
 import shts.jp.android.nogifeed.models.eventbus.BusHolder;
+import shts.jp.android.nogifeed.views.DividerItemDecoration;
 import shts.jp.android.nogifeed.views.ViewMemberDetailHeader;
 
 public class MemberDetailFragment2 extends Fragment {
@@ -78,6 +78,7 @@ public class MemberDetailFragment2 extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(false);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
 
         Entry.findById(30, 0, memberObjectId);
         return view;
@@ -86,9 +87,7 @@ public class MemberDetailFragment2 extends Fragment {
     @Subscribe
     public void onGotAllEntries(Entry.GotAllEntryCallback.FindById callback) {
         if (callback.hasError()) {
-            // Show error toast
-            Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
-                    Toast.LENGTH_SHORT).show();
+            Snackbar.make(coordinatorLayout, "ブログ記事の取得に失敗しました", Snackbar.LENGTH_SHORT).show();
             return;
         }
         recyclerView.setAdapter(new MemberFeedListAdapter2(getActivity(), callback.entries));
