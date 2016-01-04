@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,30 +19,40 @@ public class FromParseReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Logger.i(TAG, "onReceive");
-        // TODO: change ref object id
+
+        final String action = intent.getAction();
+        if (TextUtils.isEmpty(action)) {
+            Logger.w(TAG, "action is empty");
+            return;
+        }
+
         try {
             //jsonから値を取り出し
             Bundle extra = intent.getExtras();
             String data = extra.getString("com.parse.Data");
             JSONObject json = new JSONObject(data);
-            Log.i(TAG, json.toString());
 
-            //取り出したデータを変数へ
-//            final String url = json.getString("_url");
-//            final String title = json.getString("_title");
-//            final String author = json.getString("_author");
-            final String entryObjectId = json.getString("_objectId");
+            if (action.equals("android.shts.jp.nogifeed.UPDATE_STATUS")) {
+                // ブログ更新通知の場合
+                final String entryObjectId = json.getString("_objectId");
+                // 未読記事としてマーキング
+                NotYetRead.add(entryObjectId);
+                // Notification通知
+                BlogUpdateNotification.show(context, entryObjectId);
 
-            //TODO: save unread article
-            //UnRead.newUnReadArticle(context, url);
-            NotYetRead.add(entryObjectId);
+            } else if (action.equals("android.shts.jp.nogifeed.UPDATE_NEWS")) {
+                // ニュース通知の場合
+                final String category = json.getString("_category");
+                final String title = json.getString("_title");
+                final String url = json.getString("_url");
+                // TODO: notification
 
-            // show notification
-            BlogUpdateNotification.show(context, entryObjectId);
-
+            } else {
+                Logger.w(TAG, "illegal action received : action(" + action + ")");
+            }
         } catch (JSONException e) {
-            Logger.e("failed to Parse : ", e.toString());
+            Logger.w(TAG, "illegal data received");
         }
     }
+
 }

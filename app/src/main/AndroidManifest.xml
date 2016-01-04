@@ -139,6 +139,7 @@
         <receiver android:name="shts.jp.android.nogifeed.receivers.FromParseReceiver" android:exported="false">
             <intent-filter>
                 <action android:name="android.shts.jp.nogifeed.UPDATE_STATUS"/>
+                <action android:name="android.shts.jp.nogifeed.UPDATE_NEWS"/>
             </intent-filter>
         </receiver>
 
