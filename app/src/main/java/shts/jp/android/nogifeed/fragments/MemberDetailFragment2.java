@@ -3,7 +3,9 @@ package shts.jp.android.nogifeed.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -47,14 +49,15 @@ public class MemberDetailFragment2 extends Fragment {
 
     private RecyclerView recyclerView;
     private CollapsingToolbarLayout collapsingToolbarLayout;
-    private ViewMemberDetailHeader viewMemberDetailHeader;
+    private CoordinatorLayout coordinatorLayout;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_member_detail2, null);
 
-        viewMemberDetailHeader = (ViewMemberDetailHeader) view.findViewById(R.id.view_member_detail_header);
+        final ViewMemberDetailHeader viewMemberDetailHeader
+                = (ViewMemberDetailHeader) view.findViewById(R.id.view_member_detail_header);
         final String memberObjectId = getArguments().getString("memberObjectId");
         viewMemberDetailHeader.setup(memberObjectId);
 
@@ -65,6 +68,8 @@ public class MemberDetailFragment2 extends Fragment {
                 Favorite.toggle(memberObjectId);
             }
         });
+
+        coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.coordinator);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(android.R.color.white));
@@ -94,9 +99,9 @@ public class MemberDetailFragment2 extends Fragment {
     public void onChangedFavoriteState(Favorite.ChangedFavoriteState state) {
         if (state.e == null) {
             if (state.action == Favorite.ChangedFavoriteState.Action.ADD) {
-                viewMemberDetailHeader.showFavoriteIcon();
+                Snackbar.make(coordinatorLayout, "推しメンに登録しました", Snackbar.LENGTH_SHORT).show();
             } else {
-                viewMemberDetailHeader.hideFavoriteIcon();
+                Snackbar.make(coordinatorLayout, "推しメン登録を解除しました", Snackbar.LENGTH_SHORT).show();
             }
         }
     }

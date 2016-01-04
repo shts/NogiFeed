@@ -11,11 +11,13 @@ import android.widget.TextView;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.squareup.otto.Subscribe;
 
 import me.gujun.android.taggroup.TagGroup;
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.models.Favorite;
 import shts.jp.android.nogifeed.models.Member;
+import shts.jp.android.nogifeed.models.eventbus.BusHolder;
 import shts.jp.android.nogifeed.utils.PicassoHelper;
 
 public class ViewMemberDetailHeader extends LinearLayout {
@@ -89,12 +91,27 @@ public class ViewMemberDetailHeader extends LinearLayout {
         });
     }
 
-    public void showFavoriteIcon() {
-        favoriteIcon.setVisibility(View.VISIBLE);
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        BusHolder.get().register(this);
     }
 
-    public void hideFavoriteIcon() {
-        favoriteIcon.setVisibility(View.GONE);
+    @Override
+    protected void onDetachedFromWindow() {
+        BusHolder.get().unregister(this);
+        super.onDetachedFromWindow();
+    }
+
+    @Subscribe
+    public void onChangedFavoriteState(Favorite.ChangedFavoriteState state) {
+        if (state.e == null) {
+            if (state.action == Favorite.ChangedFavoriteState.Action.ADD) {
+                favoriteIcon.setVisibility(View.VISIBLE);
+            } else {
+                favoriteIcon.setVisibility(View.GONE);
+            }
+        }
     }
 
 }
