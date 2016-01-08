@@ -38,7 +38,7 @@ public class FromParseReceiver extends BroadcastReceiver {
                 // 未読記事としてマーキング
                 NotYetRead.add(entryObjectId);
                 // Notification通知
-                BlogUpdateNotification.show(context, entryObjectId);
+                new BlogUpdateNotification(context).show(entryObjectId);
 
             } else if (action.equals("android.shts.jp.nogifeed.UPDATE_NEWS")) {
                 // ニュース通知の場合

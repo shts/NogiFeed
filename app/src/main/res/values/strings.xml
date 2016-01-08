@@ -7,6 +7,9 @@
     <string name="action_news">News</string>
 
     <!-- activity settings -->
+    <string name="setting_enable_notification_key">pref_key_blog_updated_notification_enable</string>
+    <string name="setting_enable_notification_restriction_key">pref_key_blog_updated_notification_restriction_enable</string>
+
     <string name="setting_category_title_notification">Notification</string>
     <string name="setting_title_notification">Blog Update Notification</string>
     <string name="setting_summary_notification">Receive blog update notification</string>

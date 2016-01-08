@@ -21,63 +21,71 @@ import shts.jp.android.nogifeed.models.Favorite;
 import shts.jp.android.nogifeed.utils.PreferencesUtils;
 import shts.jp.android.nogifeed.views.transformations.CircleTransformation;
 
-public class BlogUpdateNotification {
+public class BlogUpdateNotification extends NotificationWithId {
 
     private static final String TAG = BlogUpdateNotification.class.getSimpleName();
     public static final String KEY = BlogUpdateNotification.class.getSimpleName();
 
+    /** Notification id */
     private static final String NOTIFICATION_ID_KEY = "pref_key_blog_update_notification_id";
+    /** Notification idのデフォルト値 */
     private static final int DEFAULT_NOTIFICATION_ID = 1000;
 
     /** ブログ更新通知可否設定 */
-    private static final String NOTIFICATION_ENABLE = "pref_key_blog_updated_notification_enable";
+    public static final int RES_ID_NOTIFICATION_ENABLE = R.string.setting_enable_notification_key;
     /** ブログ更新通知制限設定(お気に入りメンバーのみ通知する設定) */
-    private static final String NOTIFICATION_RESTRICTION_ENABLE = "pref_key_blog_updated_notification_restriction_enable";
+    public static final int RES_ID_NOTIFICATION_RESTRICTION_ENABLE = R.string.setting_enable_notification_restriction_key;
 
-    public static synchronized void show(final Context context, final String entryObjectId) {
-        Entry entry = Entry.getReference(entryObjectId);
-        entry.fetchIfNeededInBackground(new GetCallback<Entry>() {
+    public BlogUpdateNotification(Context context) {
+        super(context);
+    }
+
+    public void show(String entryObjectId) {
+        Entry.getReference(entryObjectId).fetchIfNeededInBackground(new GetCallback<Entry>() {
             @Override
             public void done(Entry entry, ParseException e) {
                 if (e != null || entry == null) {
                     return;
                 }
-                final boolean isEnableNotification = PreferencesUtils.getBoolean(
-                        context, NOTIFICATION_ENABLE, true);
-                if (!isEnableNotification) {
-                    Logger.d(TAG, "do not show notification because of notification disable");
+                // ブログ更新通知可否設定
+                if (!enable()) {
+                    Logger.d(TAG, "do not show notification because of disable from SettingsFragment");
                     return;
                 }
-                if (isRestriction(context, entry.getAuthorId())) {
-                    Logger.d(TAG, "do not show notification because of notification restriction");
-                    return;
+                // ブログ更新通知制限設定
+                if (restrict()) {
+                    // 押しメンの場合false, 押しメンでない場合trueを返却する
+                    if (!Favorite.exist(entry.getAuthorId())) {
+                        Logger.d(TAG, "do not show restricted because of disable from SettingsFragment");
+                        return;
+                    }
                 }
                 show(context, entry);
             }
         });
     }
 
-    private static boolean isRestriction(Context context, String memberObjectId) {
-        final boolean isRestriction = PreferencesUtils.getBoolean(
-                context, NOTIFICATION_RESTRICTION_ENABLE, false);
-        if (!isRestriction) {
-            // 通知制限設定をしていない場合はそのまま通知するようfalseを返却する
-            Logger.d(TAG, "restriction is not setting");
-            return false;
-        }
-        final boolean exist = Favorite.exist(memberObjectId);
-        // お気に入りメンバー登録済みの場合false, お気に入りメンバー登録済みでない場合trueを返却する
-        return !exist;
+    /** ブログ更新通知可否判定 */
+    private boolean enable() {
+        final String key = context.getResources().getString(RES_ID_NOTIFICATION_ENABLE);
+        return PreferencesUtils.getBoolean(context, key, true);
     }
 
-    private static synchronized void show(final Context context, final Entry entry) {
+    /** ブログ更新通知制限判定(推しメンのみ通知する設定) */
+    private boolean restrict() {
+        final String key = context.getResources().getString(RES_ID_NOTIFICATION_RESTRICTION_ENABLE);
+        return PreferencesUtils.getBoolean(context, key, true);
+    }
+
+    private void show(final Context context, final Entry entry) {
         Logger.v(TAG, "entry(" + entry.toString() + ")");
+
         Intent intent = new Intent(context, BlogActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(KEY, entry.getObjectId());
 
-        final int notificationId = getNotificationId(context);
+        final int notificationId = nextId();
 
         PendingIntent contentIntent = PendingIntent.getActivity(context, notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -96,7 +104,7 @@ public class BlogUpdateNotification {
 
         ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).notify(notificationId, notification);
 
-        notified(context, notificationId);
+        notified(notificationId);
 
         String profileImageUrl = entry.getAuthorImageUrl();
         if (!TextUtils.isEmpty(profileImageUrl)) {
@@ -105,14 +113,13 @@ public class BlogUpdateNotification {
         }
     }
 
-    private static int getNotificationId(Context context) {
-        return PreferencesUtils.getInt(context, NOTIFICATION_ID_KEY, DEFAULT_NOTIFICATION_ID);
+    @Override
+    public String getNotificationIdKey() {
+        return NOTIFICATION_ID_KEY;
     }
 
-    private static void notified(Context context, int id) {
-        if (++id >= 1999) {
-            id = DEFAULT_NOTIFICATION_ID;
-        }
-        PreferencesUtils.setInt(context, NOTIFICATION_ID_KEY, id);
+    @Override
+    public int getNotificationIdDefVal() {
+        return DEFAULT_NOTIFICATION_ID;
     }
 }

@@ -1,19 +1,17 @@
 package shts.jp.android.nogifeed.fragments;
 
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 
 import com.github.machinarius.preferencefragment.PreferenceFragment;
-
 import shts.jp.android.nogifeed.R;
 
-public class SettingsFragment extends PreferenceFragment {
+import static shts.jp.android.nogifeed.views.notifications.BlogUpdateNotification.RES_ID_NOTIFICATION_ENABLE;
+import static shts.jp.android.nogifeed.views.notifications.BlogUpdateNotification.RES_ID_NOTIFICATION_RESTRICTION_ENABLE;
 
-    /** ブログ更新通知可否設定 */
-    private static final String NOTIFICATION_ENABLE = "pref_key_blog_updated_notification_enable";
-    /** ブログ更新通知制限設定(お気に入りメンバーのみ通知する設定) */
-    private static final String NOTIFICATION_RESTRICTION_ENABLE = "pref_key_blog_updated_notification_restriction_enable";
+public class SettingsFragment extends PreferenceFragment {
 
     private SharedPreferences.OnSharedPreferenceChangeListener listener
             = new SharedPreferences.OnSharedPreferenceChangeListener() {
@@ -43,10 +41,15 @@ public class SettingsFragment extends PreferenceFragment {
     }
 
     private void updateView() {
+        final Resources res = getResources();
+
+        final String keyEnable = res.getString(RES_ID_NOTIFICATION_ENABLE);
         CheckBoxPreference enableNotification
-                = (CheckBoxPreference) findPreference(NOTIFICATION_ENABLE);
+                = (CheckBoxPreference) findPreference(keyEnable);
+
+        final String keyRestrict = res.getString(RES_ID_NOTIFICATION_RESTRICTION_ENABLE);
         CheckBoxPreference restrictionNotification
-                = (CheckBoxPreference) findPreference(NOTIFICATION_RESTRICTION_ENABLE);
+                = (CheckBoxPreference) findPreference(keyRestrict);
         restrictionNotification.setEnabled(enableNotification.isChecked());
     }
 }

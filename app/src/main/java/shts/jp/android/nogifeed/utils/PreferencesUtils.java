@@ -12,6 +12,10 @@ public class PreferencesUtils {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
+    public static String getString(Context context, String key, String defValue) {
+        return getDefaultSharedPreferences(context).getString(key, defValue);
+    }
+
     public static void setInt(Context context, String key, int value) {
         SharedPreferences.Editor editor = getDefaultSharedPreferences(context).edit();
         editor.putInt(key, value);
