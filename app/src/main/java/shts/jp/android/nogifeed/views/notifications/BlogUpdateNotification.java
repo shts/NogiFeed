@@ -80,14 +80,14 @@ public class BlogUpdateNotification extends NotificationWithId {
     private void show(final Context context, final Entry entry) {
         Logger.v(TAG, "entry(" + entry.toString() + ")");
 
-        Intent intent = new Intent(context, BlogActivity.class);
+        Intent intent = BlogActivity.getStartIntent(context, entry.getObjectId());
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra(KEY, entry.getObjectId());
 
         final int notificationId = nextId();
 
-        PendingIntent contentIntent = PendingIntent.getActivity(context, notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent contentIntent = PendingIntent.getActivity(
+                context, notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.notification_blog_update);
         views.setTextViewText(R.id.title, entry.getTitle());
@@ -102,7 +102,8 @@ public class BlogUpdateNotification extends NotificationWithId {
         notification.defaults |= Notification.DEFAULT_SOUND;
         notification.defaults |= Notification.DEFAULT_VIBRATE;
 
-        ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).notify(notificationId, notification);
+        ((NotificationManager) context.getSystemService(
+                Context.NOTIFICATION_SERVICE)).notify(notificationId, notification);
 
         notified(notificationId);
 
