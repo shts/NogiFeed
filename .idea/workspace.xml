@@ -50,9 +50,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="caf53cd6-228f-4f1e-8792-e90b4706d327" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/receivers/FromParseReceiver.java" afterPath="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/receivers/FromParseReceiver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/entities/News.java" afterPath="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/entities/News.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/activities/NewsBrowseActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/activities/NewsBrowseActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/activities/BlogActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/activities/BlogActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/fragments/BlogFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/fragments/BlogFragment.java" />
     </list>
     <ignored path="NogiFeed.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -80,32 +79,30 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="BlogUpdateNotification.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/views/notifications/BlogUpdateNotification.java">
+      <file leaf-file-name="BlogActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/activities/BlogActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.375" vertical-offset="1347" max-vertical-offset="1875">
-              <caret line="102" column="10" selection-start-line="102" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="161" max-vertical-offset="1065">
+              <caret line="28" column="22" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1746#2591#0" expanded="true" />
-                <element signature="e#2580#2581#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NewsUpdateNotification.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/views/notifications/NewsUpdateNotification.java">
+      <file leaf-file-name="BlogFragment.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/fragments/BlogFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1005">
-              <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.3309859" vertical-offset="2349" max-vertical-offset="2775">
+              <caret line="166" column="20" selection-start-line="166" selection-start-column="20" selection-end-line="166" selection-end-column="20" />
               <folding>
-                <element signature="e#806#807#0" expanded="true" />
-                <element signature="e#836#837#0" expanded="true" />
-                <element signature="e#1872#1873#0" expanded="true" />
-                <element signature="e#1914#1915#0" expanded="true" />
-                <element signature="e#1972#1973#0" expanded="true" />
-                <element signature="e#2018#2019#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#2179#2441#0" expanded="true" />
+                <element signature="e#2430#2431#0" expanded="true" />
+                <element signature="e#2795#3078#0" expanded="true" />
+                <element signature="e#3067#3068#0" expanded="true" />
+                <element signature="e#5575#5605#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1117,7 +1114,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/activities/AboutActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values-v21/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_favorite_feed_list.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_all_member.xml" />
@@ -1164,10 +1160,11 @@
         <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/fragments/SettingsFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/views/notifications/Notification.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/views/notifications/NotificationWithId.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/views/notifications/BlogUpdateNotification.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/receivers/FromParseReceiver.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/entities/News.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/views/notifications/NewsUpdateNotification.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/views/notifications/BlogUpdateNotification.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/fragments/BlogFragment.java" />
       </list>
     </option>
   </component>
@@ -2234,7 +2231,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293718" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.237691" sideWeight="0.16420361" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20713073" sideWeight="0.16420361" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.59083194" sideWeight="0.60673237" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41935483" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
@@ -2286,14 +2283,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/activities/BlogActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31764707" vertical-offset="90" max-vertical-offset="915">
-          <caret line="25" column="31" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/fragments/AllFeedListFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.03640777" vertical-offset="1095" max-vertical-offset="1665">
@@ -2393,13 +2382,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/utils/PicassoHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17266187" vertical-offset="183" max-vertical-offset="600">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/adapters/MemberFeedListAdapter2.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2662722" vertical-offset="0" max-vertical-offset="1020">
@@ -2483,12 +2465,12 @@
         <state vertical-scroll-proportion="3.8148148" vertical-offset="0" max-vertical-offset="1950">
           <caret line="117" column="13" selection-start-line="117" selection-start-column="13" selection-end-line="117" selection-end-column="13" />
           <folding>
-            <element signature="e#3114#3329#0" expanded="true" />
-            <element signature="e#3318#3319#0" expanded="true" />
-            <element signature="e#3381#3382#0" expanded="true" />
-            <element signature="e#3422#3423#0" expanded="true" />
-            <element signature="e#3691#3951#0" expanded="true" />
-            <element signature="e#3932#3933#0" expanded="true" />
+            <element signature="e#3114#3329#0" expanded="false" />
+            <element signature="e#3318#3319#0" expanded="false" />
+            <element signature="e#3381#3382#0" expanded="false" />
+            <element signature="e#3422#3423#0" expanded="false" />
+            <element signature="e#3691#3951#0" expanded="false" />
+            <element signature="e#3932#3933#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2571,6 +2553,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.50729924" vertical-offset="1222" max-vertical-offset="1770">
           <caret line="105" column="14" selection-start-line="105" selection-start-column="14" selection-end-line="105" selection-end-column="14" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#3089#3157#0" expanded="false" />
+            <element signature="e#3202#3273#0" expanded="false" />
+            <element signature="e#3322#3400#0" expanded="false" />
+            <element signature="e#3442#3506#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2592,16 +2581,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="420">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9536585" vertical-offset="1604" max-vertical-offset="2565">
-          <caret line="133" column="43" selection-start-line="133" selection-start-column="43" selection-end-line="133" selection-end-column="43" />
-          <folding>
-            <element signature="e#4292#4310#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2655,8 +2634,8 @@
         <state vertical-scroll-proportion="0.21784233" vertical-offset="0" max-vertical-offset="915">
           <caret line="7" column="68" selection-start-line="7" selection-start-column="68" selection-end-line="7" selection-end-column="68" />
           <folding>
-            <element signature="e#682#897#0" expanded="true" />
-            <element signature="e#890#891#0" expanded="true" />
+            <element signature="e#682#897#0" expanded="false" />
+            <element signature="e#890#891#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2669,19 +2648,6 @@
             <element signature="imports" expanded="true" />
             <element signature="e#345#346#0" expanded="true" />
             <element signature="e#384#385#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/fragments/BlogFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36674815" vertical-offset="570" max-vertical-offset="2535">
-          <caret line="77" column="35" selection-start-line="77" selection-start-column="35" selection-end-line="77" selection-end-column="35" />
-          <folding>
-            <element signature="e#2532#2794#0" expanded="true" />
-            <element signature="e#2783#2784#0" expanded="true" />
-            <element signature="e#3154#3575#0" expanded="true" />
-            <element signature="e#3564#3565#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2699,8 +2665,8 @@
         <state vertical-scroll-proportion="1.0661764" vertical-offset="210" max-vertical-offset="1380">
           <caret line="64" column="31" selection-start-line="64" selection-start-column="31" selection-end-line="64" selection-end-column="31" />
           <folding>
-            <element signature="e#2512#2677#0" expanded="true" />
-            <element signature="e#2666#2667#0" expanded="true" />
+            <element signature="e#2512#2677#0" expanded="false" />
+            <element signature="e#2666#2667#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2709,14 +2675,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.036764707" vertical-offset="45" max-vertical-offset="1275">
           <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/receivers/FromParseReceiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5700713" vertical-offset="300" max-vertical-offset="825">
-          <caret line="49" column="31" selection-start-line="49" selection-start-column="31" selection-end-line="49" selection-end-column="31" />
           <folding />
         </state>
       </provider>
@@ -2741,29 +2699,71 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22058824" vertical-offset="0" max-vertical-offset="2565">
+          <caret line="6" column="50" selection-start-line="6" selection-start-column="50" selection-end-line="6" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/views/notifications/NewsUpdateNotification.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1005">
-          <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+        <state vertical-scroll-proportion="-0.74584323" vertical-offset="479" max-vertical-offset="900">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding>
-            <element signature="e#806#807#0" expanded="true" />
-            <element signature="e#836#837#0" expanded="true" />
-            <element signature="e#1872#1873#0" expanded="true" />
-            <element signature="e#1914#1915#0" expanded="true" />
-            <element signature="e#1972#1973#0" expanded="true" />
-            <element signature="e#2018#2019#0" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/receivers/FromParseReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.96199524" vertical-offset="0" max-vertical-offset="825">
+          <caret line="40" column="34" selection-start-line="40" selection-start-column="34" selection-end-line="40" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/views/notifications/BlogUpdateNotification.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.375" vertical-offset="1347" max-vertical-offset="1875">
-          <caret line="102" column="10" selection-start-line="102" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.38732395" vertical-offset="390" max-vertical-offset="1845">
+          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1746#2591#0" expanded="true" />
-            <element signature="e#2580#2581#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/utils/PicassoHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.65831435" vertical-offset="161" max-vertical-offset="600">
+          <caret line="36" column="37" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/activities/BlogActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="161" max-vertical-offset="1065">
+          <caret line="28" column="22" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/fragments/BlogFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3309859" vertical-offset="2349" max-vertical-offset="2775">
+          <caret line="166" column="20" selection-start-line="166" selection-start-column="20" selection-end-line="166" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2179#2441#0" expanded="true" />
+            <element signature="e#2430#2431#0" expanded="true" />
+            <element signature="e#2795#3078#0" expanded="true" />
+            <element signature="e#3067#3068#0" expanded="true" />
+            <element signature="e#5575#5605#0" expanded="true" />
           </folding>
         </state>
       </provider>

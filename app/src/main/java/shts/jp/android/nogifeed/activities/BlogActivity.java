@@ -26,7 +26,7 @@ public class BlogActivity extends BaseActivity {
         setContentView(R.layout.activity_blog);
 
         String entryObjectId = getIntent().getStringExtra(Entry.KEY);
-        BlogFragment blogFragment = BlogFragment.newBlogFragment(entryObjectId);
+        BlogFragment blogFragment = BlogFragment.newInstance(entryObjectId);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, blogFragment, BlogFragment.class.getSimpleName());
