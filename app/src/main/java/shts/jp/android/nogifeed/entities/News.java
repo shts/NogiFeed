@@ -22,7 +22,7 @@ public class News implements Parcelable {
     }
 
     public enum Type {
-        MEDIA("icon1") {
+        MEDIA("icon1", 1) {
             @Override
             public int getIconResource() {
                 return R.drawable.ic_news_media;
@@ -33,7 +33,7 @@ public class News implements Parcelable {
                 return "http://www.nogizaka46.com/smph/news/media/";
             }
         },
-        EVENT("icon2") {
+        EVENT("icon2", 2) {
             @Override
             public int getIconResource() {
                 return R.drawable.ic_news_event;
@@ -44,7 +44,7 @@ public class News implements Parcelable {
                 return "http://www.nogizaka46.com/smph/news/events/";
             }
         },
-        RELEASE("icon3") {
+        RELEASE("icon3", 3) {
             @Override
             public int getIconResource() {
                 return R.drawable.ic_news_release;
@@ -55,7 +55,7 @@ public class News implements Parcelable {
                 return "http://www.nogizaka46.com/smph/news/releases/";
             }
         },
-        OTHER("icon4") {
+        OTHER("icon4", 4) {
             @Override
             public int getIconResource() {
                 return R.drawable.ic_news_other;
@@ -68,15 +68,22 @@ public class News implements Parcelable {
         },
         ;
         private final String iconTypeText;
-        private Type(String iconTypeText) {
+        private final int iconTypeNumber;
+        private Type(String iconTypeText, int iconTypeNumber) {
             this.iconTypeText = iconTypeText;
-        }
-        private String getIconTypeText() {
-            return this.iconTypeText;
+            this.iconTypeNumber = iconTypeNumber;
         }
         public static Type from(String typeText) {
             for (Type t : values()) {
-                if (t.getIconTypeText().equals(typeText)) {
+                if (t.iconTypeText.equals(typeText)) {
+                    return t;
+                }
+            }
+            return null;
+        }
+        public static Type from(int typeText) {
+            for (Type t : values()) {
+                if (t.iconTypeNumber == typeText) {
                     return t;
                 }
             }

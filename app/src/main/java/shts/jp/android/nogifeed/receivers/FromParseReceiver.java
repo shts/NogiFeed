@@ -10,8 +10,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import shts.jp.android.nogifeed.common.Logger;
+import shts.jp.android.nogifeed.entities.News;
 import shts.jp.android.nogifeed.models.NotYetRead;
 import shts.jp.android.nogifeed.views.notifications.BlogUpdateNotification;
+import shts.jp.android.nogifeed.views.notifications.NewsUpdateNotification;
 
 public class FromParseReceiver extends BroadcastReceiver {
 
@@ -43,9 +45,11 @@ public class FromParseReceiver extends BroadcastReceiver {
             } else if (action.equals("android.shts.jp.nogifeed.UPDATE_NEWS")) {
                 // ニュース通知の場合
                 final String category = json.getString("_category");
+                final String date = json.getString("_date");
                 final String title = json.getString("_title");
                 final String url = json.getString("_url");
-                // TODO: notification
+                // Notification通知
+                new NewsUpdateNotification(context).show(new News(category, date, title, url));
 
             } else {
                 Logger.w(TAG, "illegal action received : action(" + action + ")");
