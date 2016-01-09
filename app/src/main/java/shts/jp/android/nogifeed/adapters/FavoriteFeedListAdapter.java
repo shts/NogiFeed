@@ -1,7 +1,6 @@
 package shts.jp.android.nogifeed.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -15,24 +14,21 @@ import java.util.List;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.BlogActivity;
-import shts.jp.android.nogifeed.activities.MemberDetailActivity;
 import shts.jp.android.nogifeed.activities.MemberDetailActivity2;
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.models.Entry;
-import shts.jp.android.nogifeed.models.Member;
 import shts.jp.android.nogifeed.utils.DateUtils;
 import shts.jp.android.nogifeed.utils.PicassoHelper;
 import shts.jp.android.nogifeed.utils.TrackerUtils;
 
-// TODO: お気に入りメンバーがいないときは EmptyView を表示する
 public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
 
     private static final String TAG = FavoriteFeedListAdapter.class.getSimpleName();
-    private final Context mContext;
+    private final Context context;
 
     public FavoriteFeedListAdapter(Context context, List list) {
         super(context, list);
-        mContext = context;
+        this.context = context;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -63,26 +59,30 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
         List<String> urls = entry.getUploadedThumbnailUrlList();
         if (urls != null && !urls.isEmpty()) {
             PicassoHelper.load(
-                    mContext, holder.backgroundImageView, urls.get(0));
+                    context, holder.backgroundImageView, urls.get(0));
+        } else {
+            holder.backgroundImageView.setImageResource(R.drawable.noimage);
         }
+
         holder.backgroundImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mContext.startActivity(BlogActivity.getStartIntent(mContext, entry.getObjectId()));
-                TrackerUtils.sendTrack(mContext, TAG,
+                context.startActivity(BlogActivity.getStartIntent(context, entry.getObjectId()));
+                TrackerUtils.sendTrack(context, TAG,
                         "OnClicked", "-> Blog : " + "entry(" + entry.toString() + ")");
             }
         });
+
         final String profileImageUrl = entry.getAuthorImageUrl();
         if (!TextUtils.isEmpty(profileImageUrl)) {
             PicassoHelper.loadAndCircleTransform(
-                    mContext, holder.profileImageView, profileImageUrl);
+                    context, holder.profileImageView, profileImageUrl);
             holder.profileImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mContext.startActivity(MemberDetailActivity2
-                            .getStartIntent(mContext, entry.getAuthorId()));
-                    TrackerUtils.sendTrack(mContext, TAG,
+                    context.startActivity(MemberDetailActivity2
+                            .getStartIntent(context, entry.getAuthorId()));
+                    TrackerUtils.sendTrack(context, TAG,
                             "OnClicked", "-> Detail : " + "entry(" + entry.toString() + ")");
                 }
             });
