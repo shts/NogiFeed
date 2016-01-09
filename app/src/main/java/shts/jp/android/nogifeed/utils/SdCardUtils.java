@@ -6,8 +6,6 @@ import android.os.Environment;
 
 import java.io.File;
 
-import shts.jp.android.nogifeed.models.Entry;
-
 /**
  * Get information of sd card and download directory.
  */
@@ -34,7 +32,9 @@ public class SdCardUtils {
     }
 
     public static String getDownloadFilePath(String url) {
-        return getDownloadFilePath() + File.separator + "download" + File.separator + url;
+        String[] splitUrl = url.split("/");
+        String fileName = splitUrl[splitUrl.length - 1];
+        return getDownloadFilePath() + File.separator + "download" + File.separator + fileName;
     }
 
     /**

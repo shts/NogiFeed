@@ -1,12 +1,20 @@
 package shts.jp.android.nogifeed.fragments;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,15 +27,21 @@ import android.widget.Toast;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.api.ImageDownloadClient;
+import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.listener.DownloadFinishListener;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.NotYetRead;
+import shts.jp.android.nogifeed.models.eventbus.BusHolder;
+import shts.jp.android.nogifeed.utils.SdCardUtils;
+import shts.jp.android.nogifeed.utils.SimpleImageDownloader;
+import shts.jp.android.nogifeed.utils.WaitMinimunImageDownloader;
 import shts.jp.android.nogifeed.views.dialogs.DownloadConfirmDialog;
 
 // TODO: How terrible code...
@@ -59,6 +73,18 @@ public class BlogFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        BusHolder.get().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BusHolder.get().unregister(this);
+    }
+
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,6 +104,7 @@ public class BlogFragment extends Fragment {
         setHasOptionsMenu(true);
 
         if (!TextUtils.isEmpty(beforeUrl)) {
+            Logger.e(TAG, "load beforeUrl : url(" + beforeUrl + ")");
             webView.loadUrl(beforeUrl);
             return view;
         }
@@ -87,6 +114,7 @@ public class BlogFragment extends Fragment {
             @Override
             public void done(Entry entry, ParseException e) {
                 if (e != null || entry == null) {
+                    Logger.e(TAG, "failed to get entry");
                     return;
                 }
                 webView.loadUrl(entry.getBlogUrl());
@@ -106,8 +134,9 @@ public class BlogFragment extends Fragment {
                 @Override
                 public void onClickPositiveButton() {
                     // TODO: use new Downloader
-                    DownloadFinishListener listener = new DownloadFinishListener(getActivity(), 1);
-                    ImageDownloadClient.get(getActivity(), url, listener);
+//                    DownloadFinishListener listener = new DownloadFinishListener(getActivity(), 1);
+//                    ImageDownloadClient.get(getActivity(), url, listener);
+                    download(url);
                 }
                 @Override
                 public void onClickNegativeButton() {}
@@ -141,22 +170,18 @@ public class BlogFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         final Context context = getActivity().getApplicationContext();
+        List<String> urlList = new ArrayList<>();
 
-        final List<String> target = new ArrayList<>();
-        final List<String> thumbnailUrls = entry.getUploadedThumbnailUrlList();
-        if (thumbnailUrls != null && !thumbnailUrls.isEmpty()) {
-            target.addAll(thumbnailUrls);
-        }
-        final List<String> rawImageUrls = entry.getUploadedRawImageUrlList();
-        if (rawImageUrls != null && !rawImageUrls.isEmpty()) {
-            target.addAll(rawImageUrls);
-        }
-        if (target.size() <= 0) {
-            Toast.makeText(context, R.string.toast_failed_download, Toast.LENGTH_SHORT).show();
+        urlList.addAll(entry.getUploadedThumbnailUrlList());
+        urlList.addAll(entry.getUploadedRawImageUrlList());
+
+        if (urlList.isEmpty()) {
+            Toast.makeText(getActivity(),
+                    "画像がありません", Toast.LENGTH_SHORT).show();
             return false;
         }
-        ImageDownloadClient.get(context, target,
-                new DownloadFinishListener(context, target.size()));
+        download(urlList);
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -165,6 +190,140 @@ public class BlogFragment extends Fragment {
         outState.putString("before-url", webView.getUrl());
         outState.putString("entry", entry.getObjectId());
         super.onSaveInstanceState(outState);
+    }
+
+    private List<String> downloadTargetList;
+    private void download(List<String> urlList) {
+        if (!hasPermission()) {
+            // 権限がない場合はリクエスト
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_DOWNLOAD_ALL);
+            downloadTargetList = urlList;
+            return;
+        }
+        if (!new WaitMinimunImageDownloader(getActivity(), urlList).get()) {
+            showSnackbar(false);
+        }
+    }
+
+    private String downloadTarget;
+    private void download(String url) {
+        if (!hasPermission()) {
+            // 権限がない場合はリクエスト
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_DOWNLOAD);
+            downloadTarget = url;
+            return;
+        }
+        if (!new SimpleImageDownloader(getActivity(), url).get()) {
+            showSnackbar(false);
+        }
+    }
+
+    private static final int REQUEST_DOWNLOAD = 1;
+    private static final int REQUEST_DOWNLOAD_ALL = 2;
+
+    private boolean hasPermission() {
+        final int permission = ContextCompat.checkSelfPermission(
+                getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        return permission == PackageManager.PERMISSION_GRANTED;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (REQUEST_DOWNLOAD == requestCode) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                download(downloadTarget);
+            } else {
+//                fabDownload.setColorNormalResId(R.color.accent);
+//                fabDownload.setTitle("画像をダウンロードする");
+//                Snackbar.make(coordinatorLayout, "アプリに書き込み権限がないためダウンロードできません。", Snackbar.LENGTH_LONG)
+//                        .show();
+                Toast.makeText(getActivity(), "アプリに書き込み権限がないためダウンロードできません", Toast.LENGTH_SHORT).show();
+            }
+        } else if (REQUEST_DOWNLOAD_ALL == requestCode) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                download(downloadTargetList);
+            } else {
+//                fabDownload.setColorNormalResId(R.color.accent);
+//                fabDownload.setTitle("画像をダウンロードする");
+//                Snackbar.make(coordinatorLayout, "アプリに書き込み権限がないためダウンロードできません。", Snackbar.LENGTH_LONG)
+//                        .show();
+                Toast.makeText(getActivity(), "アプリに書き込み権限がないためダウンロードできません", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private Uri recentDownloadedUri;
+
+    /**
+     * WaitMinimunImageDownloader のコールバック
+     * @param callback callback
+     */
+    @Subscribe
+    public void onFinishDownload(
+            WaitMinimunImageDownloader.Callback.ResponseDownloadImage callback) {
+        if (callback != null && callback.file != null) {
+            SdCardUtils.scanFile(getActivity(), callback.file,
+                    new MediaScannerConnection.OnScanCompletedListener() {
+                        @Override
+                        public void onScanCompleted(String path, Uri uri) {
+                            Log.w(TAG, "path(" + path + ") uri(" + uri + ")");
+                            recentDownloadedUri = uri;
+                        }
+                    });
+        }
+    }
+
+    /**
+     * WaitMinimunImageDownloader のコールバック
+     * @param callback callback
+     */
+    @Subscribe
+    public void onFinishDownload(
+            WaitMinimunImageDownloader.Callback.CompleteDownloadImage callback) {
+        // TODO: レスポンスリスト内にerrorがないことを確認してからSnackbarを表示すること
+        // TODO: 一部画像のダウンロードに失敗した場合はその旨を通知すること
+        showSnackbar(true);
+    }
+
+    /**
+     * SimpleImageDownloader のコールバック
+     * @param callback callback
+     */
+    @Subscribe
+    public void onFinishDownload(SimpleImageDownloader.Callback callback) {
+        if (callback != null && callback.file != null) {
+            SdCardUtils.scanFile(getActivity(), callback.file,
+                    new MediaScannerConnection.OnScanCompletedListener() {
+                        @Override
+                        public void onScanCompleted(String path, Uri uri) {
+                            Log.w(TAG, "path(" + path + ") uri(" + uri + ")");
+                            recentDownloadedUri = uri;
+                            final Activity activity = getActivity();
+                            if (activity != null) {
+                                activity.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        showSnackbar(true);
+                                    }
+                                });
+                            }
+                        }
+                    });
+        }
+    }
+
+    /**
+     * Temp
+     * @param success
+     */
+    private void showSnackbar(boolean success) {
+        if (success) {
+            Toast.makeText(getActivity(),
+                    "成功", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getActivity(),
+                    "失敗", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public boolean goBack() {
