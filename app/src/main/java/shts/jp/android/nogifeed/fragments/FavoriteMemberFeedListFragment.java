@@ -2,7 +2,6 @@ package shts.jp.android.nogifeed.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,9 +29,9 @@ public class FavoriteMemberFeedListFragment extends Fragment {
 
     private static final String TAG = FavoriteMemberFeedListFragment.class.getSimpleName();
 
-    private MultiSwipeRefreshLayout mMultiSwipeRefreshLayout;
-    private RecyclerView mRecyclerView;
-    private View mEmptyView;
+    private MultiSwipeRefreshLayout swipeRefreshLayout;
+    private RecyclerView recyclerView;
+    private View emptyView;
     private static List<Entry> cache;
 
     @Override
@@ -50,8 +49,7 @@ public class FavoriteMemberFeedListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorite_feed_list, null);
-        final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = AllMemberActivity.getStartIntent(getActivity());
@@ -59,22 +57,22 @@ public class FavoriteMemberFeedListFragment extends Fragment {
             }
         });
 
-        mEmptyView = view.findViewById(R.id.empty_view);
+        emptyView = view.findViewById(R.id.empty_view);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setHasFixedSize(true); // アイテムは固定サイズ
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setHasFixedSize(true); // アイテムは固定サイズ
 
         // SwipeRefreshLayoutの設定
-        mMultiSwipeRefreshLayout = (MultiSwipeRefreshLayout) view.findViewById(R.id.refresh);
-        mMultiSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        swipeRefreshLayout = (MultiSwipeRefreshLayout) view.findViewById(R.id.refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 setupFavoriteMemberFeed();
             }
         });
-        mMultiSwipeRefreshLayout.setSwipeableChildren(R.id.recyclerview, R.id.empty_view);
-        mMultiSwipeRefreshLayout.setColorSchemeResources(
+        swipeRefreshLayout.setSwipeableChildren(R.id.recyclerview, R.id.empty_view);
+        swipeRefreshLayout.setColorSchemeResources(
                 R.color.primary, R.color.primary, R.color.primary, R.color.primary);
         setupFavoriteMemberFeed();
 
@@ -89,8 +87,8 @@ public class FavoriteMemberFeedListFragment extends Fragment {
     @Subscribe
     public void onGotAllFavorities(Favorite.GetFavoritesCallback callback) {
         if (callback.hasError()) {
-            if (mMultiSwipeRefreshLayout.isRefreshing()) {
-                mMultiSwipeRefreshLayout.setRefreshing(false);
+            if (swipeRefreshLayout.isRefreshing()) {
+                swipeRefreshLayout.setRefreshing(false);
             }
             setVisibilityEmptyView(true);
             Toast.makeText(getActivity(), R.string.empty_favorite, Toast.LENGTH_LONG).show();
@@ -102,9 +100,9 @@ public class FavoriteMemberFeedListFragment extends Fragment {
     @Subscribe
     public void onGotAllEntries(Entry.GotAllEntryCallback.FindById callback) {
         setVisibilityEmptyView(true);
-        if (mMultiSwipeRefreshLayout != null) {
-            if (mMultiSwipeRefreshLayout.isRefreshing()) {
-                mMultiSwipeRefreshLayout.setRefreshing(false);
+        if (swipeRefreshLayout != null) {
+            if (swipeRefreshLayout.isRefreshing()) {
+                swipeRefreshLayout.setRefreshing(false);
             }
         }
         if (callback.hasError()) {
@@ -114,17 +112,16 @@ public class FavoriteMemberFeedListFragment extends Fragment {
             return;
         }
         setVisibilityEmptyView(false);
-        mRecyclerView.setAdapter(new FavoriteFeedListAdapter(getActivity(), callback.entries));
+        recyclerView.setAdapter(new FavoriteFeedListAdapter(getActivity(), callback.entries));
     }
 
     private void setVisibilityEmptyView(boolean isVisible) {
         if (isVisible) {
-            // mRecyclerView を setVisiblity(View.GONE) で表示にするとプログレスが表示されない
-            //mEntries.clear();
-            mRecyclerView.setAdapter(null);
-            mEmptyView.setVisibility(View.VISIBLE);
+            // recyclerView を setVisiblity(View.GONE) で表示にするとプログレスが表示されない
+            recyclerView.setAdapter(null);
+            emptyView.setVisibility(View.VISIBLE);
         } else {
-            mEmptyView.setVisibility(View.GONE);
+            emptyView.setVisibility(View.GONE);
         }
     }
 
