@@ -18,6 +18,7 @@ import java.util.List;
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.BlogActivity;
 import shts.jp.android.nogifeed.adapters.AllFeedListAdapter;
+import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.Favorite;
 import shts.jp.android.nogifeed.models.eventbus.BusHolder;
@@ -33,7 +34,6 @@ public class AllFeedListFragment extends Fragment {
     private AllFeedListAdapter adapter;
     private LinearLayout footerView;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private static List<Entry> cache;
 
     private final AllFeedListAdapter.OnPageMaxScrolledListener scrolledListener
             = new AllFeedListAdapter.OnPageMaxScrolledListener() {
@@ -47,6 +47,16 @@ public class AllFeedListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_all_feed_list, null);
         listView = (ListView) view.findViewById(R.id.all_feed_list);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Entry entry = (Entry) parent.getItemAtPosition(position);
+                if (entry != null) {
+                    getActivity().startActivity(
+                            BlogActivity.getStartIntent(getActivity(), entry.getObjectId()));
+                }
+            }
+        });
 
         // SwipeRefreshLayoutの設定
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
@@ -104,16 +114,6 @@ public class AllFeedListFragment extends Fragment {
             adapter = new AllFeedListAdapter(getActivity(), callback.entries);
             adapter.setPageMaxScrolledListener(scrolledListener);
             listView.setAdapter(adapter);
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Entry entry = (Entry) parent.getItemAtPosition(position);
-                    if (entry != null) {
-                        getActivity().startActivity(
-                                BlogActivity.getStartIntent(getActivity(), entry.getObjectId()));
-                    }
-                }
-            });
         }
     }
 

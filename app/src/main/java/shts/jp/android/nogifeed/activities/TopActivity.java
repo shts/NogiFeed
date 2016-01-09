@@ -57,11 +57,6 @@ public class TopActivity extends AppCompatActivity {
                         return false;
                     }
                 });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         setupFragment(getLastSelectedMenuId());
     }
 
