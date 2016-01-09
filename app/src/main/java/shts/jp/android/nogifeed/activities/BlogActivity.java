@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 
 import shts.jp.android.nogifeed.R;
@@ -31,19 +30,11 @@ public class BlogActivity extends BaseActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, blogFragment, BlogFragment.class.getSimpleName());
         ft.commit();
-
-        setupActionBar();
     }
 
     @Override
     public Activity getTrackerActivity() {
         return BlogActivity.this;
-    }
-
-    private void setupActionBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_actionbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setElevation(0);
     }
 
     @Override

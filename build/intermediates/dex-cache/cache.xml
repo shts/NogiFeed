@@ -16,6 +16,13 @@
         <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-1967dbff3c65dc19fbd47f0cc6ea7f8be55e3ea5.jar" />
     </item>
     <item
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/net.i2p.android.ext/floatingactionbutton/1.10.1/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="03bb03938a4c7792c8168e6fee71253669d53407">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-8a6a8fb95bfe0dc11e914ec4f90039b552d696f3.jar" />
+    </item>
+    <item
         jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.3.0/27cabf3558be23a89f054334dd92512645ad34d9/bolts-android-1.3.0.jar"
         jumboMode="false"
         revision="21.1.0"
@@ -86,6 +93,13 @@
         <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.0-9bf73d7867aa3194b86374ef7e3ea5d2cad68081.jar" />
     </item>
     <item
+        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/library-2.4.0-18477289386316d7a7f8d59d3c93cfc200f9af9a.jar" />
+    </item>
+    <item
         jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.11/classes.jar"
         jumboMode="false"
         revision="22.0.1"
@@ -135,13 +149,6 @@
         <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.0-a1a9b399284249225677cb3098ceb9989a34cd97.jar" />
     </item>
     <item
-        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.11/classes.jar"
-        jumboMode="false"
-        revision="21.1.0"
-        sha1="0f700f6802ba1a1f1fa7ac26d5db0666a89d75a6">
-        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-6c130010f3e815e96634b3dc957293b113b997be.jar" />
-    </item>
-    <item
         jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.3/classes.jar"
         jumboMode="false"
         revision="21.1.0"
@@ -149,11 +156,11 @@
         <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-cb28ff9e608b3087b0964b1ada5869088e4f5bc6.jar" />
     </item>
     <item
-        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.3.0/27cabf3558be23a89f054334dd92512645ad34d9/bolts-android-1.3.0.jar"
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.11/classes.jar"
         jumboMode="false"
-        revision="22.0.1"
-        sha1="27cabf3558be23a89f054334dd92512645ad34d9">
-        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/bolts-android-1.3.0-43e615cfb6f075d343aa98dae049a8f2c1717be5.jar" />
+        revision="21.1.0"
+        sha1="0f700f6802ba1a1f1fa7ac26d5db0666a89d75a6">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/classes-6c130010f3e815e96634b3dc957293b113b997be.jar" />
     </item>
     <item
         jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-applinks/1.3.0/bc535105332645408ef5f1380215cc954b842178/bolts-applinks-1.3.0.jar"
@@ -161,6 +168,13 @@
         revision="22.0.1"
         sha1="bc535105332645408ef5f1380215cc954b842178">
         <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/bolts-applinks-1.3.0-9df1c8f6b3fba215580429ad129a7d4d0c72ebb8.jar" />
+    </item>
+    <item
+        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.3.0/27cabf3558be23a89f054334dd92512645ad34d9/bolts-android-1.3.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="27cabf3558be23a89f054334dd92512645ad34d9">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/bolts-android-1.3.0-43e615cfb6f075d343aa98dae049a8f2c1717be5.jar" />
     </item>
     <item
         jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.loopj.android/android-async-http/1.4.8/77bbfe240e437ecb396d982afa0d3bd4f9090ba7/android-async-http-1.4.8.jar"

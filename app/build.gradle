@@ -41,7 +41,7 @@ dependencies {
     compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
     compile 'com.android.support:design:22.2.0'
     compile 'me.gujun.android.taggroup:library:1.4@aar'
-
+    compile 'net.i2p.android.ext:floatingactionbutton:1.10.1'
     compile 'com.squareup:otto:1.3.8'
 
 //    compile fileTree(dir: 'libs', include: 'bolts-android-1.1.4.jar')
