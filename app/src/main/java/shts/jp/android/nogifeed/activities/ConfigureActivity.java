@@ -13,8 +13,8 @@ import shts.jp.android.nogifeed.widget.ProfileWidgetProvider;
 public class ConfigureActivity extends BaseActivity {
 
     private static final String TAG = ConfigureActivity.class.getSimpleName();
-    private static SparseArray<Member> sMembers = new SparseArray<Member>();
-    private int mAppWidgetId;
+    private static SparseArray<Member> members = new SparseArray<>();
+    private int appWidgetId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,33 +24,33 @@ public class ConfigureActivity extends BaseActivity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
-            mAppWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
+            appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
                     AppWidgetManager.INVALID_APPWIDGET_ID);
-            Logger.v(TAG, "mAppWidgetId(" + mAppWidgetId + ")");
+            Logger.v(TAG, "appWidgetId(" + appWidgetId + ")");
         }
 
         // If they gave us an intent without the widget id, just bail.
-        if (mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
-            Logger.w(TAG, "mAppWidgetId is invalidate");
+        if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
+            Logger.w(TAG, "appWidgetId is invalidate");
             finish();
         }
 
     }
 
     public void setConfigure(Member member) {
-        Logger.v(TAG, "in : member(" + member.toString() + ") mAppWidgetId(" + mAppWidgetId + ")");
-        sMembers.put(mAppWidgetId, member);
+        Logger.v(TAG, "in : member(" + member.toString() + ") appWidgetId(" + appWidgetId + ")");
+        members.put(appWidgetId, member);
 
-        ProfileWidgetProvider.update(getApplicationContext(), mAppWidgetId);
+        ProfileWidgetProvider.update(getApplicationContext(), appWidgetId);
 
         Intent resultValue = new Intent();
-        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
+        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         setResult(RESULT_OK, resultValue);
         finish();
     }
 
     public static Member getMember(int widgetId) {
-        return sMembers.get(widgetId);
+        return members.get(widgetId);
     }
 
     @Override

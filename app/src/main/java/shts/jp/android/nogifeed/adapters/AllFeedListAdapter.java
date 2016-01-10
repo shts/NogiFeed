@@ -12,7 +12,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import shts.jp.android.nogifeed.R;
-import shts.jp.android.nogifeed.activities.MemberDetailActivity;
 import shts.jp.android.nogifeed.activities.MemberDetailActivity2;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.Favorite;

@@ -16,7 +16,6 @@ import com.squareup.otto.Subscribe;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.ConfigureActivity;
-import shts.jp.android.nogifeed.activities.MemberDetailActivity;
 import shts.jp.android.nogifeed.activities.MemberDetailActivity2;
 import shts.jp.android.nogifeed.adapters.AllMemberGridListAdapter;
 import shts.jp.android.nogifeed.models.Favorite;
@@ -82,6 +81,20 @@ public class AllMemberGridListFragment extends Fragment {
                     getActivity().finish();
                 }
             });
+
+        } else if (type == Type.ADD_WIDGET) {
+            Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+            toolbar.setVisibility(View.VISIBLE);
+            toolbar.setTitleTextColor(getResources().getColor(R.color.primary));
+            toolbar.setTitle(R.string.select_widget_title);
+            toolbar.setNavigationIcon(R.drawable.ic_clear_purple_700_18dp);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().finish();
+                }
+            });
+
         }
 
         gridView = (GridView) view.findViewById(R.id.gridview);
@@ -93,8 +106,6 @@ public class AllMemberGridListFragment extends Fragment {
                     case ALL_MEMBER:
                         startActivity(MemberDetailActivity2
                                 .getStartIntent(getActivity(), member));
-//                        startActivity(MemberDetailActivity
-//                                .getStartIntent(getActivity(), member.getObjectId()));
                         break;
 
                     case ADD_FAVORITE:

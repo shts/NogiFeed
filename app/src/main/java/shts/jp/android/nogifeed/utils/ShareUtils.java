@@ -1,6 +1,5 @@
 package shts.jp.android.nogifeed.utils;
 
-import android.content.Context;
 import android.content.Intent;
 
 import shts.jp.android.nogifeed.entities.News;

@@ -8,7 +8,6 @@ import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.Favorite;
 import shts.jp.android.nogifeed.models.Member;
@@ -34,11 +33,11 @@ public class NogiFeedApplication extends Application {
         ParseObject.registerSubclass(NotYetRead.class);
         ParseObject.registerSubclass(ProfileWidget.class);
 
-        // TODO: ここにローカルDBの設定をすると強制終了する
+        // ここにローカルDBの設定をすると強制終了する
         Parse.enableLocalDatastore(getApplicationContext());
 
         Parse.initialize(this, BuildConfig.PARSE_API_ID, BuildConfig.PARSE_API_KEY);
-        //ParseInstallation.getCurrentInstallation().saveInBackground();
+        ParseInstallation.getCurrentInstallation().saveInBackground();
 
         ParseUser.enableAutomaticUser();
         ParseACL defaultACL = new ParseACL();

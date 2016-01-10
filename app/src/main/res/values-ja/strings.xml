@@ -98,5 +98,7 @@
     <string name="registered_favorite_member">"推しメンに登録しました"</string>
     <string name="unregistered_favorite_member">"推しメン登録を解除しました"</string>
 
+    <!-- widget chooser -->
+    <string name="select_widget_title">"メンバーを選択してください"</string>
 
 </resources>

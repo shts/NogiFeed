@@ -34,7 +34,7 @@ public class AboutFragment extends Fragment {
                 R.drawable.ic_social_share, new OnClickListener() {
             @Override
             public void onClick() {
-                IntentUtils.recomendApp(getActivity());
+                IntentUtils.recommendApp(getActivity());
             }
         }));
         abouts.add(new AboutItem(getResources().getString(R.string.about_item_rate),

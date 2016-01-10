@@ -118,4 +118,7 @@
     <string name="registered_favorite_member">Registered Member</string>
     <string name="unregistered_favorite_member">Unregistered Member</string>
 
+    <!-- widget chooser -->
+    <string name="select_widget_title">Select Member</string>
+
 </resources>

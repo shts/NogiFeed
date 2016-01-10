@@ -1,20 +1,22 @@
 package shts.jp.android.nogifeed.activities;
 
-import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.fragments.AllFeedListFragment;
 import shts.jp.android.nogifeed.fragments.AllMemberGridListFragment;
+import shts.jp.android.nogifeed.fragments.CalenderFragment;
 import shts.jp.android.nogifeed.fragments.FavoriteMemberFeedListFragment;
 import shts.jp.android.nogifeed.fragments.NewsListFragment;
 import shts.jp.android.nogifeed.fragments.SettingsFragment;
@@ -84,6 +86,9 @@ public class TopActivity extends AppCompatActivity {
             case R.id.menu_news:
                 fragment = new NewsListFragment();
                 break;
+            case R.id.menu_calender:
+                fragment = CalenderFragment.newInstance();
+                break;
             case R.id.menu_settings:
                 fragment = new SettingsFragment();
                 break;
@@ -100,9 +105,29 @@ public class TopActivity extends AppCompatActivity {
         toolbar.setTitle(navigationView.getMenu().findItem(id).getTitle());
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, fragment, fragment.toString());
+        Log.i(TAG, "id -> " + fragment.getClass().getSimpleName());
+        ft.replace(R.id.container, fragment, fragment.getClass().getSimpleName());
         ft.commit();
         setLastSelectedMenuId(id);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            CalenderFragment calenderFragment =
+                    (CalenderFragment) getSupportFragmentManager().findFragmentByTag(
+                            CalenderFragment.class.getSimpleName());
+
+            if (calenderFragment != null) {
+                if (calenderFragment.isVisible()) {
+                    if (calenderFragment.goBack()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

@@ -2,12 +2,10 @@ package shts.jp.android.nogifeed.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.fragments.AllMemberGridListFragment;

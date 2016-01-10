@@ -91,7 +91,6 @@ public class FavoriteMemberFeedListFragment extends Fragment {
                 swipeRefreshLayout.setRefreshing(false);
             }
             setVisibilityEmptyView(true);
-            Toast.makeText(getActivity(), R.string.empty_favorite, Toast.LENGTH_LONG).show();
             return;
         }
         Entry.findById(30, 0, callback.favorites);

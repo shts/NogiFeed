@@ -30,7 +30,7 @@ public class IntentUtils {
         context.startActivity(intent);
     }
 
-    public static void recomendApp(Context context) {
+    public static void recommendApp(Context context) {
         String text = RECOMEND_TEXT + "\n" + PLAY_STORE_URL;
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
