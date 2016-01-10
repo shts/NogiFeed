@@ -6,38 +6,38 @@
         <item
             android:id="@+id/menu_all_feed"
             android:icon="@drawable/ic_list_black_18dp"
-            android:title="すべてのブログ" />
+            android:title="@string/nav_menu_all_feed" />
         <item
             android:id="@+id/menu_fav_member_feed"
             android:icon="@drawable/ic_favorite_black_18dp"
-            android:title="推しメンのブログ" />
+            android:title="@string/nav_menu_favorite_member_feed" />
         <item
             android:id="@+id/menu_member"
             android:icon="@drawable/ic_group_black_18dp"
-            android:title="メンバー" />
+            android:title="@string/nav_menu_all_member" />
         <item
             android:id="@+id/menu_news"
             android:icon="@drawable/ic_settings_input_antenna_black_18dp"
-            android:title="ニュース" />
+            android:title="@string/nav_menu_news" />
         <item
             android:id="@+id/menu_calender"
             android:icon="@drawable/ic_insert_invitation_black_18dp"
-            android:title="カレンダー" />
+            android:title="@string/nav_menu_calender" />
         <item
             android:id="@+id/menu_settings"
             android:icon="@drawable/ic_settings_black_18dp"
-            android:title="設定" />
+            android:title="@string/nav_menu_settings" />
     </group>
     <group
         android:id="@+id/menu_other_group">
         <item
             android:id="@+id/menu_request"
-            android:title="ご意見・ご要望" />
+            android:title="@string/nav_menu_request" />
         <item
             android:id="@+id/menu_about_app"
-            android:title="このアプリについて" />
+            android:title="@string/nav_menu_about_app" />
         <item
             android:id="@+id/menu_lisences"
-            android:title="オープンソースライセンス" />
+            android:title="@string/nav_menu_licenses" />
     </group>
 </menu>

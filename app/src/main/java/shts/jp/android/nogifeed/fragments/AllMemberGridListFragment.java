@@ -74,7 +74,7 @@ public class AllMemberGridListFragment extends Fragment {
             Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
             toolbar.setVisibility(View.VISIBLE);
             toolbar.setTitleTextColor(getResources().getColor(R.color.primary));
-            toolbar.setTitle("推しメンを選択してください");
+            toolbar.setTitle(R.string.choose_member);
             toolbar.setNavigationIcon(R.drawable.ic_clear_purple_700_18dp);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
@@ -103,7 +103,7 @@ public class AllMemberGridListFragment extends Fragment {
 
                     case ADD_WIDGET:
                         if (ProfileWidget.exist(member.getObjectId())) {
-                            Toast.makeText(getActivity(), "already set same widget", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.already_set_same_widget, Toast.LENGTH_SHORT).show();
                             return;
                         }
                         ConfigureActivity activity = (ConfigureActivity) getActivity();

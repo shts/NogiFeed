@@ -101,7 +101,7 @@ public class AllFeedListFragment extends Fragment {
             adapter.add(callback.entries);
             adapter.notifyDataSetChanged();
         } else {
-            Toast.makeText(getActivity(), "フィードの取得に失敗しました", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.feed_failure, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -115,7 +115,7 @@ public class AllFeedListFragment extends Fragment {
             adapter.setPageMaxScrolledListener(scrolledListener);
             listView.setAdapter(adapter);
         } else {
-            Toast.makeText(getActivity(), "フィードの取得に失敗しました", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.feed_failure, Toast.LENGTH_SHORT).show();
         }
     }
 

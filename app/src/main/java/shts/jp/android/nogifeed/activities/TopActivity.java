@@ -72,24 +72,19 @@ public class TopActivity extends AppCompatActivity {
         Fragment fragment = null;
         switch (id) {
             case R.id.menu_all_feed:
-                toolbar.setTitle("すべてのブログ");
                 fragment = new AllFeedListFragment();
                 break;
             case R.id.menu_fav_member_feed:
-                toolbar.setTitle("推しメンのブログ");
                 fragment = new FavoriteMemberFeedListFragment();
                 break;
             case R.id.menu_member:
-                toolbar.setTitle("すべてのメンバー");
                 fragment = AllMemberGridListFragment.newInstance(
                         AllMemberGridListFragment.Type.ALL_MEMBER);
                 break;
             case R.id.menu_news:
-                toolbar.setTitle("ニュース");
                 fragment = new NewsListFragment();
                 break;
             case R.id.menu_settings:
-                toolbar.setTitle("設定");
                 fragment = new SettingsFragment();
                 break;
             case R.id.menu_about_app:
@@ -104,6 +99,7 @@ public class TopActivity extends AppCompatActivity {
                 return;
         }
         navigationView.getMenu().findItem(id).setChecked(true);
+        toolbar.setTitle(navigationView.getMenu().findItem(id).getTitle());
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, fragment, fragment.toString());

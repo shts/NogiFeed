@@ -13,12 +13,16 @@
     <string name="setting_enable_news_notification_key">pref_key_news_updated_notification_enable</string>
     <string name="setting_enable_news_notification_restriction_key">pref_key_news_updated_notification_restriction_enable</string>
 
+    <!-- Blog -->
     <string name="setting_category_title_notification">Notification</string>
     <string name="setting_title_notification">Blog Update Notification</string>
     <string name="setting_summary_notification">Receive blog update notification</string>
 
     <string name="setting_title_notification_restriction">Blog Update Notification Restriction</string>
     <string name="setting_summary_notification_restriction">Receive blog update notification only fav members</string>
+    <!-- News -->
+    <string name="setting_title_notification_blog">News Update Notification</string>
+    <string name="setting_summary_notification_blog">Receive news update notification</string>
 
     <!-- activity all members -->
     <string name="failed_get_all_members">Failed to get all members. Check your network state.</string>
@@ -61,11 +65,12 @@
 
     <string name="empty_favorite">You have not favorite member. you check favorite at member detail page</string>
 
-    <string name="property_name_birthday">誕生日 : %1$s</string>
-    <string name="property_name_birthplace">出身地 : %1$s</string>
-    <string name="property_name_blood_type">血液型 : %1$s</string>
-    <string name="property_name_constellation">星座 : %1$s</string>
-    <string name="property_name_height">身長 : %1$s</string>
+    <!-- member detail -->
+    <string name="property_name_birthday">Birthday : %1$s</string>
+    <string name="property_name_birthplace">BirthPlace : %1$s</string>
+    <string name="property_name_blood_type">BloodType : %1$s</string>
+    <string name="property_name_constellation">Constellation : %1$s</string>
+    <string name="property_name_height">Height : %1$s</string>
 
     <string name="news_category_media">icon1</string>
     <string name="news_category_event">icon2</string>
@@ -84,4 +89,33 @@
         <item>@string/news_category_release</item>
         <item>@string/news_category_other</item>
     </string-array>
+
+    <!-- navigation menu -->
+    <string name="nav_menu_all_feed">All Feed</string>
+    <string name="nav_menu_favorite_member_feed">Favorite Member Feed</string>
+    <string name="nav_menu_all_member">All Member</string>
+    <string name="nav_menu_news">News</string>
+    <string name="nav_menu_calender">Calender</string>
+    <string name="nav_menu_settings">Settings</string>
+
+    <string name="nav_menu_request">Request</string>
+    <string name="nav_menu_about_app">About This App</string>
+    <string name="nav_menu_licenses">Open Source License</string>
+
+    <!-- fragment member grid  -->
+    <string name="choose_member">Choose Favorite Member</string>
+    <string name="already_set_same_widget">Already set same member</string>
+
+    <!-- fragment blog  -->
+    <string name="no_download_image">This blog does not have images</string>
+    <string name="downloading_image">Now Downloading …</string>
+    <string name="download_image">Download all images</string>
+    <string name="download_finish">Finish Download</string>
+    <string name="failed_to_download">Failed to download. Please check your network</string>
+    <string name="no_permission_download">Cannot download images because of have not permission</string>
+
+    <!-- fragment detail member -->
+    <string name="registered_favorite_member">Registered Member</string>
+    <string name="unregistered_favorite_member">Unregistered Member</string>
+
 </resources>

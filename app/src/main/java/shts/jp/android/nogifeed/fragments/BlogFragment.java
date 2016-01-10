@@ -123,12 +123,12 @@ public class BlogFragment extends Fragment {
                 urlList.addAll(entry.getUploadedThumbnailUrlList());
                 urlList.addAll(entry.getUploadedRawImageUrlList());
                 if (urlList.isEmpty()) {
-                    Snackbar.make(coordinatorLayout, "画像がありません", Snackbar.LENGTH_LONG)
+                    Snackbar.make(coordinatorLayout, R.string.no_download_image, Snackbar.LENGTH_LONG)
                             .show();
                     return;
                 }
                 fabDownload.setColorNormalResId(R.color.primary);
-                fabDownload.setTitle("ダウンロード中です ...");
+                fabDownload.setTitle(getString(R.string.downloading_image));
                 download(urlList);
             }
         });
@@ -239,8 +239,8 @@ public class BlogFragment extends Fragment {
                 download(downloadTarget);
             } else {
                 fabDownload.setColorNormalResId(R.color.accent);
-                fabDownload.setTitle("画像をダウンロードする");
-                Snackbar.make(coordinatorLayout, "アプリに書き込み権限がないためダウンロードできません。", Snackbar.LENGTH_LONG)
+                fabDownload.setTitle(getString(R.string.download_image));
+                Snackbar.make(coordinatorLayout, R.string.no_permission_download, Snackbar.LENGTH_LONG)
                         .show();
             }
         } else if (REQUEST_DOWNLOAD_ALL == requestCode) {
@@ -248,8 +248,8 @@ public class BlogFragment extends Fragment {
                 download(downloadTargetList);
             } else {
                 fabDownload.setColorNormalResId(R.color.accent);
-                fabDownload.setTitle("画像をダウンロードする");
-                Snackbar.make(coordinatorLayout, "アプリに書き込み権限がないためダウンロードできません。", Snackbar.LENGTH_LONG)
+                fabDownload.setTitle(getString(R.string.download_image));
+                Snackbar.make(coordinatorLayout, R.string.no_permission_download, Snackbar.LENGTH_LONG)
                         .show();
             }
         }
@@ -316,9 +316,9 @@ public class BlogFragment extends Fragment {
 
     private void showSnackbar(boolean isSucceed) {
         fabDownload.setColorNormalResId(R.color.accent);
-        fabDownload.setTitle("画像をダウンロードする");
+        fabDownload.setTitle(getString(R.string.download_image));
         if (isSucceed) {
-            Snackbar.make(coordinatorLayout, "ダウンロード完了しました", Snackbar.LENGTH_LONG)
+            Snackbar.make(coordinatorLayout, R.string.download_finish, Snackbar.LENGTH_LONG)
                     .setAction("確認する", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -331,7 +331,7 @@ public class BlogFragment extends Fragment {
                     .setActionTextColor(getResources().getColor(R.color.accent))
                     .show();
         } else {
-            Snackbar.make(coordinatorLayout, "ダウンロードに失敗しました。通信環境をご確認下さい", Snackbar.LENGTH_LONG)
+            Snackbar.make(coordinatorLayout, R.string.failed_to_download, Snackbar.LENGTH_LONG)
                     .show();
         }
     }

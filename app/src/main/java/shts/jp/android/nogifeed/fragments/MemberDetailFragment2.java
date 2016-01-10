@@ -87,7 +87,7 @@ public class MemberDetailFragment2 extends Fragment {
     @Subscribe
     public void onGotAllEntries(Entry.GotAllEntryCallback.FindById callback) {
         if (callback.hasError()) {
-            Snackbar.make(coordinatorLayout, "ブログ記事の取得に失敗しました", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(coordinatorLayout, R.string.feed_failure, Snackbar.LENGTH_SHORT).show();
             return;
         }
         recyclerView.setAdapter(new MemberFeedListAdapter2(getActivity(), callback.entries));
@@ -98,9 +98,9 @@ public class MemberDetailFragment2 extends Fragment {
     public void onChangedFavoriteState(Favorite.ChangedFavoriteState state) {
         if (state.e == null) {
             if (state.action == Favorite.ChangedFavoriteState.Action.ADD) {
-                Snackbar.make(coordinatorLayout, "推しメンに登録しました", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(coordinatorLayout, R.string.registered_favorite_member, Snackbar.LENGTH_SHORT).show();
             } else {
-                Snackbar.make(coordinatorLayout, "推しメン登録を解除しました", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(coordinatorLayout, R.string.unregistered_favorite_member, Snackbar.LENGTH_SHORT).show();
             }
         }
     }

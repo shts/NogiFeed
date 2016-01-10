@@ -7,12 +7,20 @@
     <string name="action_news">ニュース</string>
 
     <!-- activity settings -->
+    <!-- Blog -->
     <string name="setting_category_title_notification">通知設定</string>
     <string name="setting_title_notification">ブログ更新通知</string>
     <string name="setting_summary_notification">ブログ更新通知を受け取るかどうか設定できます</string>
 
     <string name="setting_title_notification_restriction">ブログ更新通知制限</string>
     <string name="setting_summary_notification_restriction">推しメン登録したメンバーのみブログ更新通知を受け取るかどうか設定できます</string>
+
+    <!-- News -->
+    <string name="setting_title_notification_blog">ニュース更新通知設定</string>
+    <string name="setting_summary_notification_blog">ニュース更新通知を受け取るかどうか設定できます</string>
+
+    <string name="setting_title_notification_restriction_blog">ブログ更新通知制限</string>
+    <string name="setting_summary_notification_restriction_blog">推しメン登録したメンバーのみブログ更新通知を受け取るかどうか設定できます</string>
 
     <!-- activity all members -->
     <string name="failed_get_all_members">"メンバーが取得できませんでした。ネットワークの状態を確認してください"</string>
@@ -51,7 +59,44 @@
     <string name="about_item_rate">"このアプリを評価する"</string>
     <string name="about_item_mention">"アプリについて問い合わせる"</string>
 
-    <string name="feed_failure">"フィードの取得に失敗しました。端末の通信状態を確認してください。"</string>
+    <string name="feed_failure">"ブログ記事の取得に失敗しました。端末の通信状態を確認してください。"</string>
 
     <string name="empty_favorite">"押しメンが登録されていません。個人ページから登録してください。"</string>
+
+    <!-- member detail -->
+    <string name="property_name_birthday">誕生日 : %1$s</string>
+    <string name="property_name_birthplace">出身地 : %1$s</string>
+    <string name="property_name_blood_type">血液型 : %1$s</string>
+    <string name="property_name_constellation">星座 : %1$s</string>
+    <string name="property_name_height">身長 : %1$s</string>
+
+    <!-- navigation menu -->
+    <string name="nav_menu_all_feed">"すべてのブログ"</string>
+    <string name="nav_menu_favorite_member_feed">"推しメンのブログ"</string>
+    <string name="nav_menu_all_member">"メンバー"</string>
+    <string name="nav_menu_news">"ニュース"</string>
+    <string name="nav_menu_calender">"カレンダー"</string>
+    <string name="nav_menu_settings">"設定"</string>
+
+    <string name="nav_menu_request">"ご意見・ご要望"</string>
+    <string name="nav_menu_about_app">"このアプリについて"</string>
+    <string name="nav_menu_licenses">"オープンソースライセンス"</string>
+
+    <!-- fragment member grid  -->
+    <string name="choose_member">"推しメンを選択してください"</string>
+    <string name="already_set_same_widget">"そのメンバーはすでに登録されています"</string>
+
+    <!-- fragment blog  -->
+    <string name="no_download_image">"ダウンロードする画像がありません"</string>
+    <string name="downloading_image">"ダウンロード中です …"</string>
+    <string name="download_image">"画像をダウンロードする"</string>
+    <string name="download_finish">"ダウンロード完了しました"</string>
+    <string name="failed_to_download">"ダウンロードに失敗しました。通信環境をご確認下さい"</string>
+    <string name="no_permission_download">"アプリに書き込み権限がないためダウンロードできません"</string>
+
+    <!-- fragment detail member -->
+    <string name="registered_favorite_member">"推しメンに登録しました"</string>
+    <string name="unregistered_favorite_member">"推しメン登録を解除しました"</string>
+
+
 </resources>

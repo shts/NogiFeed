@@ -18,8 +18,8 @@
             />
         <CheckBoxPreference
             android:key="@string/setting_enable_news_notification_key"
-            android:title="ニュース更新通知設定"
-            android:summary="ニュース更新通知を受け取るかどうか設定できます"
+            android:title="@string/setting_title_notification_blog"
+            android:summary="@string/setting_summary_notification_blog"
             android:defaultValue="true"
             />
         <!--
