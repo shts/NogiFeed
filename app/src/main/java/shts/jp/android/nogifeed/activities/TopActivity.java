@@ -88,11 +88,9 @@ public class TopActivity extends AppCompatActivity {
                 fragment = new SettingsFragment();
                 break;
             case R.id.menu_about_app:
-                startActivity(AboutActivity.getStartIntent(this));
-                return;
             case R.id.menu_request:
             case R.id.menu_lisences:
-                //startActivity(OtherMenuActivity.getStartIntent(this, id));
+                startActivity(OtherMenuActivity.getStartIntent(this, id));
                 return;
             default:
                 Log.e(TAG, "failed to change fragment");

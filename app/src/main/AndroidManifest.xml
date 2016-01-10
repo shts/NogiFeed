@@ -92,6 +92,11 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
+            android:name=".activities.OtherMenuActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name=".activities.MemberListActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">

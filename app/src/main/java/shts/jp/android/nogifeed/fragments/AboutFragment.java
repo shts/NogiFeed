@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +26,7 @@ public class AboutFragment extends Fragment {
 
     private static final String TAG = AboutFragment.class.getSimpleName();
     private static final String URL_ICON = "https://avatars1.githubusercontent.com/u/7928836?v=3&s=460";
-    private ListView mAboutList;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    private ListView listView;
 
     private void setupAboutListAdapter() {
         List<AboutItem> abouts = new ArrayList<AboutItem>();
@@ -55,7 +51,7 @@ public class AboutFragment extends Fragment {
                 IntentUtils.inquiryApp(getActivity());
             }
         }));
-        mAboutList.setAdapter(new AboutListAdapter(getActivity(), abouts));
+        listView.setAdapter(new AboutListAdapter(getActivity(), abouts));
     }
 
     private void setupListHeader(LayoutInflater inflater, ListView listView) {
@@ -77,8 +73,19 @@ public class AboutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_about, null);
-        mAboutList = (ListView) view.findViewById(R.id.about_list);
-        mAboutList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        final Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.nav_menu_about_app);
+        toolbar.setNavigationIcon(R.drawable.ic_clear_white_18dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+
+        listView = (ListView) view.findViewById(R.id.about_list);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 ListView listView = (ListView) adapterView;
@@ -90,7 +97,7 @@ public class AboutFragment extends Fragment {
                 }
             }
         });
-        setupListHeader(inflater, mAboutList);
+        setupListHeader(inflater, listView);
         setupAboutListAdapter();
         return view;
     }
