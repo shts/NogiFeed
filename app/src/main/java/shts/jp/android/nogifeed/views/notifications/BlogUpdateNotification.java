@@ -32,10 +32,9 @@ public class BlogUpdateNotification extends NotificationWithId {
     private static final int DEFAULT_NOTIFICATION_ID = 1000;
 
     /** ブログ更新通知可否設定 */
-    public static final int RES_ID_NOTIFICATION_ENABLE = R.string.setting_enable_notification_key;
+    public static final int RES_ID_NOTIFICATION_ENABLE = R.string.setting_enable_blog_notification_key;
     /** ブログ更新通知制限設定(お気に入りメンバーのみ通知する設定) */
-    public static final int RES_ID_NOTIFICATION_RESTRICTION_ENABLE = R.string.setting_enable_notification_restriction_key;
-
+    public static final int RES_ID_NOTIFICATION_RESTRICTION_ENABLE = R.string.setting_enable_blog_notification_restriction_key;
     public BlogUpdateNotification(Context context) {
         super(context);
     }

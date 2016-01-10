@@ -5,16 +5,32 @@
         android:title="@string/setting_category_title_notification"
         >
         <CheckBoxPreference
-            android:key="@string/setting_enable_notification_key"
+            android:key="@string/setting_enable_blog_notification_key"
             android:title="@string/setting_title_notification"
             android:summary="@string/setting_summary_notification"
             android:defaultValue="true"
             />
         <CheckBoxPreference
-            android:key="@string/setting_enable_notification_restriction_key"
+            android:key="@string/setting_enable_blog_notification_restriction_key"
             android:title="@string/setting_title_notification_restriction"
             android:summary="@string/setting_summary_notification_restriction"
             android:defaultValue="false"
             />
+        <CheckBoxPreference
+            android:key="@string/setting_enable_news_notification_key"
+            android:title="ニュース更新通知設定"
+            android:summary="ニュース更新通知を受け取るかどうか設定できます"
+            android:defaultValue="true"
+            />
+        <!--
+        <MultiSelectListPreference
+            android:key="@string/setting_enable_news_notification_restriction_key"
+            android:title="ニュース更新通知制限"
+            android:summary="興味のあるニュースのみ通知を受け取ることができます"
+            android:dialogTitle="ニュース"
+            android:entries="@array/news_category_array"
+            android:entryValues="@array/news_category_array_value"
+            />
+        -->
     </PreferenceCategory>
 </PreferenceScreen>

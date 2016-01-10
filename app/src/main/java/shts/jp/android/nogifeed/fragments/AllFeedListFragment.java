@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
@@ -99,6 +100,8 @@ public class AllFeedListFragment extends Fragment {
         if (callback.e == null) {
             adapter.add(callback.entries);
             adapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(getActivity(), "フィードの取得に失敗しました", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -111,6 +114,8 @@ public class AllFeedListFragment extends Fragment {
             adapter = new AllFeedListAdapter(getActivity(), callback.entries);
             adapter.setPageMaxScrolledListener(scrolledListener);
             listView.setAdapter(adapter);
+        } else {
+            Toast.makeText(getActivity(), "フィードの取得に失敗しました", Toast.LENGTH_SHORT).show();
         }
     }
 

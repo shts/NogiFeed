@@ -7,8 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
+import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.NewsBrowseActivity;
 import shts.jp.android.nogifeed.entities.News;
+import shts.jp.android.nogifeed.utils.PreferencesUtils;
 
 public class NewsUpdateNotification extends NotificationWithId {
 
@@ -19,11 +21,19 @@ public class NewsUpdateNotification extends NotificationWithId {
     /** Notification idのデフォルト値 */
     private static final int DEFAULT_NOTIFICATION_ID = 3000;
 
+    /** ブログ更新通知可否設定 */
+    public static final int RES_ID_NOTIFICATION_ENABLE = R.string.setting_enable_news_notification_key;
+    /** ブログ更新通知制限設定(お気に入りメンバーのみ通知する設定) */
+    public static final int RES_ID_NOTIFICATION_RESTRICTION_ENABLE = R.string.setting_enable_news_notification_restriction_key;
+
     public NewsUpdateNotification(Context context) {
         super(context);
     }
 
     public void show(News news) {
+
+        if (!enable(news)) { return; }
+
         Intent intent = NewsBrowseActivity.getStartIntent(context, news);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -46,6 +56,20 @@ public class NewsUpdateNotification extends NotificationWithId {
                 Context.NOTIFICATION_SERVICE)).notify(notificationId, notification);
 
         notified(notificationId);
+    }
+
+    private boolean enable(News news) {
+
+        final String enableKeyResId = context.getResources().getString(RES_ID_NOTIFICATION_ENABLE);
+        final boolean enable = PreferencesUtils.getBoolean(context, enableKeyResId, true);
+        if (!enable) {
+            return false;
+        }
+
+        // TODO: 通知制限機能を追加する
+//        final String restrictKeyResId = context.getResources().getString(RES_ID_NOTIFICATION_RESTRICTION_ENABLE);
+        return true;
+
     }
 
     @Override

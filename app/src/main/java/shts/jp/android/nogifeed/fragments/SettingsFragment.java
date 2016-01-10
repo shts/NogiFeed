@@ -7,9 +7,7 @@ import android.preference.CheckBoxPreference;
 
 import com.github.machinarius.preferencefragment.PreferenceFragment;
 import shts.jp.android.nogifeed.R;
-
-import static shts.jp.android.nogifeed.views.notifications.BlogUpdateNotification.RES_ID_NOTIFICATION_ENABLE;
-import static shts.jp.android.nogifeed.views.notifications.BlogUpdateNotification.RES_ID_NOTIFICATION_RESTRICTION_ENABLE;
+import shts.jp.android.nogifeed.views.notifications.BlogUpdateNotification;
 
 public class SettingsFragment extends PreferenceFragment {
 
@@ -43,13 +41,15 @@ public class SettingsFragment extends PreferenceFragment {
     private void updateView() {
         final Resources res = getResources();
 
-        final String keyEnable = res.getString(RES_ID_NOTIFICATION_ENABLE);
+        final String keyEnable = res.getString(BlogUpdateNotification.RES_ID_NOTIFICATION_ENABLE);
         CheckBoxPreference enableNotification
                 = (CheckBoxPreference) findPreference(keyEnable);
 
-        final String keyRestrict = res.getString(RES_ID_NOTIFICATION_RESTRICTION_ENABLE);
+        final String keyRestrict = res.getString(BlogUpdateNotification.RES_ID_NOTIFICATION_RESTRICTION_ENABLE);
         CheckBoxPreference restrictionNotification
                 = (CheckBoxPreference) findPreference(keyRestrict);
         restrictionNotification.setEnabled(enableNotification.isChecked());
+
+
     }
 }

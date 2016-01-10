@@ -7,8 +7,11 @@
     <string name="action_news">News</string>
 
     <!-- activity settings -->
-    <string name="setting_enable_notification_key">pref_key_blog_updated_notification_enable</string>
-    <string name="setting_enable_notification_restriction_key">pref_key_blog_updated_notification_restriction_enable</string>
+    <string name="setting_enable_blog_notification_key">pref_key_blog_updated_notification_enable</string>
+    <string name="setting_enable_blog_notification_restriction_key">pref_key_blog_updated_notification_restriction_enable</string>
+
+    <string name="setting_enable_news_notification_key">pref_key_news_updated_notification_enable</string>
+    <string name="setting_enable_news_notification_restriction_key">pref_key_news_updated_notification_restriction_enable</string>
 
     <string name="setting_category_title_notification">Notification</string>
     <string name="setting_title_notification">Blog Update Notification</string>
@@ -63,4 +66,22 @@
     <string name="property_name_blood_type">血液型 : %1$s</string>
     <string name="property_name_constellation">星座 : %1$s</string>
     <string name="property_name_height">身長 : %1$s</string>
+
+    <string name="news_category_media">icon1</string>
+    <string name="news_category_event">icon2</string>
+    <string name="news_category_release">icon3</string>
+    <string name="news_category_other">icon4</string>
+
+    <string-array name="news_category_array">
+        <item>@string/news_category_media</item>
+        <item>@string/news_category_event</item>
+        <item>@string/news_category_release</item>
+        <item>@string/news_category_other</item>
+    </string-array>
+    <string-array name="news_category_array_value">
+        <item>@string/news_category_media</item>
+        <item>@string/news_category_event</item>
+        <item>@string/news_category_release</item>
+        <item>@string/news_category_other</item>
+    </string-array>
 </resources>
