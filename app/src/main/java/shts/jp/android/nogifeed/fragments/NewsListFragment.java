@@ -22,6 +22,7 @@ import shts.jp.android.nogifeed.adapters.NewsListAdapter;
 import shts.jp.android.nogifeed.api.AsyncNewsClient;
 import shts.jp.android.nogifeed.entities.News;
 import shts.jp.android.nogifeed.models.eventbus.BusHolder;
+import shts.jp.android.nogifeed.views.dialogs.NewsTypeFilterDialog;
 
 public class NewsListFragment extends Fragment {
 
@@ -46,6 +47,20 @@ public class NewsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_feed_list, null);
+        view.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NewsTypeFilterDialog dialog = new NewsTypeFilterDialog();
+                dialog.setCallbacks(new NewsTypeFilterDialog.Callbacks() {
+                    @Override
+                    public void onClickPositiveButton() {
+                    }
+                    @Override
+                    public void onClickNegativeButton() {}
+                });
+                dialog.show(getFragmentManager(), NewsTypeFilterDialog.class.getSimpleName());
+            }
+        });
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -65,7 +80,7 @@ public class NewsListFragment extends Fragment {
 
     private void getAllNews() {
         if (!AsyncNewsClient.get(getActivity())) {
-            Snackbar.make(coordinatorLayout, "ニュースの取得に失敗しました。通信環境をご確認下さい", Snackbar.LENGTH_LONG)
+            Snackbar.make(coordinatorLayout, R.string.failed_to_get_news, Snackbar.LENGTH_LONG)
                     .show();
             swipeRefreshLayout.setRefreshing(false);
         }
@@ -75,6 +90,8 @@ public class NewsListFragment extends Fragment {
     public void onGotNewsFeedList(AsyncNewsClient.GetNewsFeedCallback callback) {
         swipeRefreshLayout.setRefreshing(false);
         if (callback == null || callback.hasError()) {
+            Snackbar.make(coordinatorLayout, R.string.failed_to_get_news, Snackbar.LENGTH_LONG)
+                    .show();
             return;
         }
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

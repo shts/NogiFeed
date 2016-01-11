@@ -70,6 +70,18 @@
     <string name="property_name_constellation">星座 : %1$s</string>
     <string name="property_name_height">身長 : %1$s</string>
 
+    <!-- news -->
+    <string name="news_category_media">"メディア"</string>
+    <string name="news_category_event">"イベント"</string>
+    <string name="news_category_release">"リリース"</string>
+    <string name="news_category_other">"その他"</string>
+
+    <string name="news_filter_dialog_title">"カテゴリで絞り込む"</string>
+    <string name="news_filter_dialog_ok">"更新する"</string>
+    <string name="news_filter_dialog_cancel">"キャンセル"</string>
+
+    <string name="failed_to_get_news">"ニュースの取得に失敗しました。通信環境をご確認下さい"</string>
+
     <!-- navigation menu -->
     <string name="nav_menu_all_feed">"すべてのブログ"</string>
     <string name="nav_menu_favorite_member_feed">"推しメンのブログ"</string>

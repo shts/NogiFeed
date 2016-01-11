@@ -3,6 +3,7 @@ package shts.jp.android.nogifeed.api;
 import android.content.Context;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -37,31 +38,23 @@ public class AsyncNewsClient {
             Logger.w(TAG, "cannot connection because of network disconnected.");
             return false;
         }
-        getAsyncNewsFeed(URL_NEWS);
+        getAsyncNewsFeed();
         return true;
     }
 
-    public static boolean get(final Context context, final News.Type newsType) {
-        if (!NetworkUtils.enableNetwork(context)) {
-            Logger.w(TAG, "cannot connection because of network disconnected.");
-            return false;
-        }
-        String newsFeedUrl = null;
-        if (newsType == null) {
-            newsFeedUrl = URL_NEWS;
-        } else {
-            newsFeedUrl = newsType.getNewsUrl();
-        }
-        getAsyncNewsFeed(newsFeedUrl);
-        return true;
-    }
-
-    private static void getAsyncNewsFeed(final String url) {
+    private static void getAsyncNewsFeed() {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    callback(getNewsFeed(url));
+                    Log.d(TAG, "getAsyncNewsFeed");
+                    List<News> newsList = getNewsFeed(URL_NEWS);
+                    Log.d(TAG, "newsList : size" + newsList.size());
+                    for (News n : newsList) {
+                        Log.d(TAG, n.toString());
+                    }
+                    // TODO: Sort!!!
+                    callback(newsList);
                 } catch (IOException e) {
                     callback(null);
                 }

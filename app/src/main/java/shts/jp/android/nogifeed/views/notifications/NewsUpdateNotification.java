@@ -45,6 +45,7 @@ public class NewsUpdateNotification extends NotificationWithId {
 
         Notification notification = new NotificationCompat.Builder(context)
                 .setContentIntent(contentIntent)
+                .setContentTitle(news.title)
                 .setSmallIcon(news.getNewsType().getIconResource())
                 .setAutoCancel(true)
                 .build();

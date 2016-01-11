@@ -1,9 +1,14 @@
 package shts.jp.android.nogifeed.entities;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.utils.PreferencesUtils;
 
 public class News implements Parcelable {
 
@@ -16,6 +21,13 @@ public class News implements Parcelable {
 
     public News(String date, String iconType, String url, String title) {
         this.iconType = iconType;
+        this.date = date;
+        this.url = url;
+        this.title = title;
+    }
+
+    public News(String date, int category, String url, String title) {
+        this.iconType = Type.from(category).iconTypeText;
         this.date = date;
         this.url = url;
         this.title = title;
@@ -67,10 +79,13 @@ public class News implements Parcelable {
             }
         },
         ;
+        private static final String URL_NEWS = "http://www.nogizaka46.com/smph/news/";
         private final String iconTypeText;
         private final int iconTypeNumber;
         private Type(String iconTypeText, int iconTypeNumber) {
+            // Feedで利用
             this.iconTypeText = iconTypeText;
+            // Notificationで利用
             this.iconTypeNumber = iconTypeNumber;
         }
         public static Type from(String typeText) {
@@ -88,6 +103,25 @@ public class News implements Parcelable {
                 }
             }
             return null;
+        }
+        public static String[] getTypeList(Context context) {
+            return context.getResources().getStringArray(R.array.news_category_array);
+        }
+        public static void setFilter(Context context, boolean[] filter) {
+            final int N = values().length;
+            for (int i = 0; i < N; i++) {
+                final String key = "pref_key_filter_" + values()[i].name();
+                PreferencesUtils.setBoolean(context, key, filter[i]);
+            }
+        }
+        public static boolean[] getFilter(Context context) {
+            boolean[] filter = new boolean[Type.values().length];
+            final int N = values().length;
+            for (int i = 0; i < N; i++) {
+                final String key = "pref_key_filter_" + values()[i].name();
+                filter[i] = PreferencesUtils.getBoolean(context, key, true);
+            }
+            return filter;
         }
         public abstract int getIconResource();
         public abstract String getNewsUrl();

@@ -26,6 +26,12 @@ public class PreferencesUtils {
         return getDefaultSharedPreferences(context).getInt(key, defValue);
     }
 
+    public static void setBoolean(Context context, String key, boolean value) {
+        SharedPreferences.Editor editor = getDefaultSharedPreferences(context).edit();
+        editor.putBoolean(key, value);
+        editor.apply();
+    }
+
     public static boolean getBoolean(Context context, String key, boolean defValue) {
         return getDefaultSharedPreferences(context).getBoolean(key, defValue);
     }

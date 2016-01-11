@@ -72,10 +72,11 @@
     <string name="property_name_constellation">Constellation : %1$s</string>
     <string name="property_name_height">Height : %1$s</string>
 
-    <string name="news_category_media">icon1</string>
-    <string name="news_category_event">icon2</string>
-    <string name="news_category_release">icon3</string>
-    <string name="news_category_other">icon4</string>
+    <!-- news -->
+    <string name="news_category_media">Media</string>
+    <string name="news_category_event">Event</string>
+    <string name="news_category_release">Release</string>
+    <string name="news_category_other">Others</string>
 
     <string-array name="news_category_array">
         <item>@string/news_category_media</item>
@@ -89,6 +90,12 @@
         <item>@string/news_category_release</item>
         <item>@string/news_category_other</item>
     </string-array>
+
+    <string name="news_filter_dialog_title">Filter by category</string>
+    <string name="news_filter_dialog_ok">Update</string>
+    <string name="news_filter_dialog_cancel">Cancel</string>
+
+    <string name="failed_to_get_news">Failed to get news. Please check your network</string>
 
     <!-- navigation menu -->
     <string name="nav_menu_all_feed">All Feed</string>

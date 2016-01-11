@@ -44,12 +44,11 @@ public class FromParseReceiver extends BroadcastReceiver {
 
             } else if (action.equals("android.shts.jp.nogifeed.UPDATE_NEWS")) {
                 // ニュース通知の場合
-                final String category = json.getString("_category");
-                final String date = json.getString("_date");
+                final int category = Integer.parseInt(json.getString("_category"));
                 final String title = json.getString("_title");
                 final String url = json.getString("_url");
                 // Notification通知
-                new NewsUpdateNotification(context).show(new News(category, date, title, url));
+                new NewsUpdateNotification(context).show(new News(null, category, url, title));
 
             } else {
                 Logger.w(TAG, "illegal action received : action(" + action + ")");
