@@ -3,18 +3,17 @@ package shts.jp.android.nogifeed.api;
 import android.content.Context;
 import android.os.Looper;
 import android.text.TextUtils;
-import android.util.Log;
 
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.entities.News;
+import shts.jp.android.nogifeed.entities.NewsList;
 import shts.jp.android.nogifeed.models.eventbus.BusHolder;
 import shts.jp.android.nogifeed.utils.NetworkUtils;
 
@@ -38,22 +37,18 @@ public class AsyncNewsClient {
             Logger.w(TAG, "cannot connection because of network disconnected.");
             return false;
         }
-        getAsyncNewsFeed();
+        getAsyncNewsFeed(context);
         return true;
     }
 
-    private static void getAsyncNewsFeed() {
+    private static void getAsyncNewsFeed(final Context context) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Log.d(TAG, "getAsyncNewsFeed");
-                    List<News> newsList = getNewsFeed(URL_NEWS);
-                    Log.d(TAG, "newsList : size" + newsList.size());
-                    for (News n : newsList) {
-                        Log.d(TAG, n.toString());
-                    }
-                    // TODO: Sort!!!
+                    NewsList newsList = getNewsFeed(URL_NEWS);
+                    newsList.filter(context);
+                    newsList.sort();
                     callback(newsList);
                 } catch (IOException e) {
                     callback(null);
@@ -71,8 +66,8 @@ public class AsyncNewsClient {
         });
     }
 
-    private static ArrayList<News> getNewsFeed(final String url) throws IOException {
-        final ArrayList<News> newsList = new ArrayList<>();
+    private static NewsList getNewsFeed(final String url) throws IOException {
+        final NewsList newsList = new NewsList();
 
         Document document = Jsoup.connect(url).get();
         Element body = document.body();

@@ -51,6 +51,7 @@ public class NewsListFragment extends Fragment {
                 dialog.setCallbacks(new NewsTypeFilterDialog.Callbacks() {
                     @Override
                     public void onClickPositiveButton() {
+                        getAllNews();
                     }
                     @Override
                     public void onClickNegativeButton() {}

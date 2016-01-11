@@ -4,18 +4,22 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.utils.PreferencesUtils;
 
 public class News implements Parcelable {
 
-    public static final String KEY = News.class.getSimpleName();
+    public static final String TAG = News.class.getSimpleName();
 
     public final String iconType;
-    public final String date;
+    public final String date; // 2016.01.07
     public final String url;
     public final String title;
 
@@ -80,7 +84,7 @@ public class News implements Parcelable {
         },
         ;
         private static final String URL_NEWS = "http://www.nogizaka46.com/smph/news/";
-        private final String iconTypeText;
+        public final String iconTypeText;
         private final int iconTypeNumber;
         private Type(String iconTypeText, int iconTypeNumber) {
             // Feedで利用
@@ -107,6 +111,18 @@ public class News implements Parcelable {
         public static String[] getTypeList(Context context) {
             return context.getResources().getStringArray(R.array.news_category_array);
         }
+
+        public static List<Type> getFilteredTypes(Context context) {
+            List<Type> filteredTypes = new ArrayList<>();
+            final boolean[] filter = getFilter(context);
+            for (int i = 0; i < filter.length; i++) {
+                if (filter[i]) {
+                    filteredTypes.add(values()[i]);
+                }
+            }
+            return filteredTypes;
+        }
+
         public static void setFilter(Context context, boolean[] filter) {
             final int N = values().length;
             for (int i = 0; i < N; i++) {
@@ -129,6 +145,16 @@ public class News implements Parcelable {
 
     public Type getNewsType() {
         return Type.from(iconType);
+    }
+
+    private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy.MM.dd");
+    public Date getDate() {
+        try {
+            return SDF.parse(this.date);
+        } catch (ParseException e) {
+            Logger.e(TAG, "failed to parse date", e);
+        }
+        return null;
     }
 
     @Override
