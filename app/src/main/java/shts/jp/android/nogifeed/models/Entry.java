@@ -43,6 +43,7 @@ public class Entry extends ParseObject {
         }
         ParseQuery<Entry> q = query(limit, skip);
         q.whereContainedIn("author_id", ids);
+        q.orderByDescending("published");
         q.findInBackground(new FindCallback<Entry>() {
             @Override
             public void done(List<Entry> entries, ParseException e) {
@@ -50,17 +51,6 @@ public class Entry extends ParseObject {
             }
         });
     }
-
-//    public static void findById(int limit, int skip, List<String> memberObjectIdList) {
-//        ParseQuery<Entry> q = query(limit, skip);
-//        q.whereContainedIn("author_id", memberObjectIdList);
-//        q.findInBackground(new FindCallback<Entry>() {
-//            @Override
-//            public void done(List<Entry> entries, ParseException e) {
-//                BusHolder.get().post(new GotAllEntryCallback.FindById(entries, e));
-//            }
-//        });
-//    }
 
     public static void all(int limit, int skip) {
         query(limit, skip).findInBackground(new FindCallback<Entry>() {
