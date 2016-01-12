@@ -8,18 +8,8 @@ Screenshot
 
 ### Current Version (1.2.3)
 
-<div>
-<img src="./images/device-2016-01-13-014149.png" style="width:90px">
-<img src="./images/device-2016-01-13-015510.png" style="width:90px">
-<img src="./images/device-2016-01-13-015530.png" style="width:90px">
-<img src="./images/device-2016-01-13-015602.png" style="width:90px">
-</div>
-<div>
-<img src="./images/device-2016-01-13-015617.png" style="width:90px">
-<img src="./images/device-2016-01-13-015716.png" style="width:90px">
-<img src="./images/device-2016-01-13-015652.png" style="width:90px">
-<img src="./images/device-2016-01-13-020302.png" style="width:90px">
-</div>
+<img src="./images/capture.png"">
+<div></div>
 <img src="./images/nogifeed_member_detail.gif" style="width:px">
 <div></div>
 <img src="./images/nogifeed_image_download.gif" style="width:px">
