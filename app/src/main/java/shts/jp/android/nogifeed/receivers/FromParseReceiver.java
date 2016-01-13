@@ -36,11 +36,18 @@ public class FromParseReceiver extends BroadcastReceiver {
 
             if (action.equals("android.shts.jp.nogifeed.UPDATE_STATUS")) {
                 // ブログ更新通知の場合
-                final String entryObjectId = json.getString("_objectId");
+                final String entryObjectId = json.getString("_entryObjectId");
+                final String title = json.getString("_title");
+                final String author = json.getString("_author");
+                final String author_id = json.getString("_author_id");
+                final String author_image_url = json.getString("_author_image_url");
+
                 // 未読記事としてマーキング
                 NotYetRead.add(entryObjectId);
+
                 // Notification通知
-                new BlogUpdateNotification(context).show(entryObjectId);
+                new BlogUpdateNotification(context).show(
+                        entryObjectId, title, author, author_id, author_image_url);
 
             } else if (action.equals("android.shts.jp.nogifeed.UPDATE_NEWS")) {
                 // ニュース通知の場合
