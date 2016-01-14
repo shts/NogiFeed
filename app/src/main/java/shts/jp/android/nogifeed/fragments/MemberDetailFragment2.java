@@ -1,5 +1,6 @@
 package shts.jp.android.nogifeed.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import com.squareup.otto.Subscribe;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.activities.BlogActivity;
 import shts.jp.android.nogifeed.adapters.MemberFeedListAdapter2;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.Favorite;
@@ -90,7 +92,16 @@ public class MemberDetailFragment2 extends Fragment {
             Snackbar.make(coordinatorLayout, R.string.feed_failure, Snackbar.LENGTH_SHORT).show();
             return;
         }
-        recyclerView.setAdapter(new MemberFeedListAdapter2(getActivity(), callback.entries));
+        final Activity activity = getActivity();
+        MemberFeedListAdapter2 adapter = new MemberFeedListAdapter2(activity, callback.entries);
+        adapter.setClickCallback(new MemberFeedListAdapter2.OnItemClickCallback() {
+            @Override
+            public void onClick(Entry entry) {
+                activity.startActivity(BlogActivity.getStartIntent(activity, entry.getObjectId()));
+                ;
+            }
+        });
+        recyclerView.setAdapter(adapter);
         collapsingToolbarLayout.setTitle(callback.entries.get(0).getAuthor());
     }
 

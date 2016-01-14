@@ -23,14 +23,26 @@ public class MemberFeedListAdapter2 extends RecyclableAdapter<Entry> {
         TextView authorNameTextView;
         TextView updatedTextView;
         View unreadMarker;
+        View root;
 
         public ViewHolder(View view) {
             super(view);
+            root = view;
             titleTextView = (TextView) view.findViewById(R.id.title);
             authorNameTextView = (TextView) view.findViewById(R.id.authorname);
             updatedTextView = (TextView) view.findViewById(R.id.updated);
             unreadMarker = view.findViewById(R.id.marker);
         }
+    }
+
+    public interface OnItemClickCallback {
+        public void onClick(Entry entry);
+    }
+
+    private OnItemClickCallback clickCallback;
+
+    public void setClickCallback(OnItemClickCallback clickCallback) {
+        this.clickCallback = clickCallback;
     }
 
     public MemberFeedListAdapter2(Context context, List<Entry> list) {
@@ -51,6 +63,12 @@ public class MemberFeedListAdapter2 extends RecyclableAdapter<Entry> {
             // not View.GONE
             holder.unreadMarker.setVisibility(View.INVISIBLE);
         }
+        holder.root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clickCallback != null) clickCallback.onClick(entry);
+            }
+        });
     }
 
     @Override
