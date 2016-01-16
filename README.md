@@ -6,7 +6,7 @@ Android application for get and read [Nogizaka46 blog](http://blog.nogizaka46.co
 Screenshot
 ------
 
-### Current Version (1.2.3)
+### Current Version (2.0.0)
 
 <img src="./images/capture.png">
 <div></div>
