@@ -8,7 +8,7 @@ Screenshot
 
 ### Current Version (1.2.3)
 
-<img src="./images/capture.png"">
+<img src="./images/capture.png">
 <div></div>
 <img src="./images/nogifeed_member_detail.gif" style="width:px">
 <div></div>

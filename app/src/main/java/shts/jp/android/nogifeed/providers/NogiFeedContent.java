@@ -11,8 +11,9 @@ public class NogiFeedContent {
      * Version 1. add TABLE_FAVORITE
      * Version 2. add TABLE_PROFILE_WIDGET
      *            add TABLE_UNREAD
+     * Version 3. delete all table
      */
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
 
     public static final String TABLE_FAVORITE = "favorite";
     public static final String TABLE_PROFILE_WIDGET = "profile_widget";

@@ -1,10 +1,12 @@
 
 package shts.jp.android.nogifeed.providers;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import shts.jp.android.nogifeed.common.Logger;
 
@@ -50,8 +52,11 @@ public class NogiFeedDatabaseHelper extends SQLiteOpenHelper {
     private static final String DROP_UNREAD_TABLE_SQL = "DROP TABLE IF EXISTS "
             + NogiFeedContent.TABLE_UNREAD;
 
+    private Context context;
+
     public NogiFeedDatabaseHelper(Context context) {
         super(context, NogiFeedContent.DATABASE_NAME, null, NogiFeedContent.DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
