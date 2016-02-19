@@ -3,6 +3,7 @@ package shts.jp.android.nogifeed.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ public class AllMemberGridListFragment extends Fragment {
 
     private GridView gridView;
     private AllMemberGridListAdapter gridAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public enum Type {
         UNKNOWN,
@@ -97,6 +99,22 @@ public class AllMemberGridListFragment extends Fragment {
 
         }
 
+        // SwipeRefreshLayoutの設定
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Member.all();
+            }
+        });
+        swipeRefreshLayout.setColorSchemeResources(
+                R.color.primary, R.color.primary, R.color.primary, R.color.primary);
+        swipeRefreshLayout.post(new Runnable() {
+            @Override public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        });
+
         gridView = (GridView) view.findViewById(R.id.gridview);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -141,6 +159,9 @@ public class AllMemberGridListFragment extends Fragment {
 
     @Subscribe
     public void onGotAllMembers(Member.GetMembersCallback callback) {
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
         if (callback.e == null && callback.members != null) {
             gridAdapter = new AllMemberGridListAdapter(getActivity(), callback.members);
             gridView.setAdapter(gridAdapter);

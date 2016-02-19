@@ -74,6 +74,12 @@ public class FavoriteMemberFeedListFragment extends Fragment {
         swipeRefreshLayout.setSwipeableChildren(R.id.recyclerview, R.id.empty_view);
         swipeRefreshLayout.setColorSchemeResources(
                 R.color.primary, R.color.primary, R.color.primary, R.color.primary);
+        swipeRefreshLayout.post(new Runnable() {
+            @Override public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        });
+
         setupFavoriteMemberFeed();
 
         return view;
