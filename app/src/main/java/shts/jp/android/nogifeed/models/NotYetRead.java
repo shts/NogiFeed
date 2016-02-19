@@ -70,10 +70,9 @@ public class NotYetRead extends ParseObject {
     }
 
     public static void add(String entryObjectId) {
-        final Entry entry = Entry.getReference(entryObjectId);
-        entry.fetchIfNeededInBackground(new GetCallback<ParseObject>() {
+        Entry.getReference(entryObjectId).fetchIfNeededInBackground(new GetCallback<Entry>() {
             @Override
-            public void done(ParseObject object, ParseException e) {
+            public void done(Entry entry, ParseException e) {
                 NotYetRead notYetRead = new NotYetRead();
                 notYetRead.put("articleUrl", entry.getBlogUrl());
                 notYetRead.put("memberObjectId", entry.getAuthorId());
