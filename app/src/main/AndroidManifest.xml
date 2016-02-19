@@ -87,7 +87,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activities.MemberDetailActivity2"
+            android:name=".activities.MemberDetailActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
         </activity>

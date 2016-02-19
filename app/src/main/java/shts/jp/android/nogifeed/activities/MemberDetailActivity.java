@@ -11,16 +11,16 @@ import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.fragments.MemberDetailFragment2;
 import shts.jp.android.nogifeed.models.Member;
 
-public class MemberDetailActivity2 extends AppCompatActivity {
+public class MemberDetailActivity extends AppCompatActivity {
 
-    private static final String TAG = MemberDetailActivity2.class.getSimpleName();
+    private static final String TAG = MemberDetailActivity.class.getSimpleName();
 
     public static Intent getStartIntent(Context context, Member member) {
         return getStartIntent(context, member.getObjectId());
     }
 
     public static Intent getStartIntent(Context context, String memberObjectId) {
-        Intent intent = new Intent(context, MemberDetailActivity2.class);
+        Intent intent = new Intent(context, MemberDetailActivity.class);
         intent.putExtra("memberObjectId", memberObjectId);
         return intent;
     }

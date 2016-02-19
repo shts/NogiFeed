@@ -14,9 +14,9 @@ import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.NotYetRead;
 import shts.jp.android.nogifeed.utils.DateUtils;
 
-public class MemberFeedListAdapter2 extends RecyclableAdapter<Entry> {
+public class MemberFeedListAdapter extends RecyclableAdapter<Entry> {
 
-    private static final String TAG = MemberFeedListAdapter2.class.getSimpleName();
+    private static final String TAG = MemberFeedListAdapter.class.getSimpleName();
 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView titleTextView;
@@ -45,7 +45,7 @@ public class MemberFeedListAdapter2 extends RecyclableAdapter<Entry> {
         this.clickCallback = clickCallback;
     }
 
-    public MemberFeedListAdapter2(Context context, List<Entry> list) {
+    public MemberFeedListAdapter(Context context, List<Entry> list) {
         super(context, list);
     }
 

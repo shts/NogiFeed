@@ -17,7 +17,7 @@ import com.squareup.otto.Subscribe;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.ConfigureActivity;
-import shts.jp.android.nogifeed.activities.MemberDetailActivity2;
+import shts.jp.android.nogifeed.activities.MemberDetailActivity;
 import shts.jp.android.nogifeed.adapters.AllMemberGridListAdapter;
 import shts.jp.android.nogifeed.models.Favorite;
 import shts.jp.android.nogifeed.models.Member;
@@ -122,7 +122,7 @@ public class AllMemberGridListFragment extends Fragment {
                 final Member member = (Member) gridView.getItemAtPosition(i);
                 switch (type) {
                     case ALL_MEMBER:
-                        startActivity(MemberDetailActivity2
+                        startActivity(MemberDetailActivity
                                 .getStartIntent(getActivity(), member));
                         break;
 
