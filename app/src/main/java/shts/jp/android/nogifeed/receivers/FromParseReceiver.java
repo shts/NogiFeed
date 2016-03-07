@@ -5,11 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import shts.jp.android.nogifeed.common.Logger;
+import shts.jp.android.nogifeed.entities.Blog;
 import shts.jp.android.nogifeed.entities.News;
 import shts.jp.android.nogifeed.models.NotYetRead;
 import shts.jp.android.nogifeed.views.notifications.BlogUpdateNotification;
@@ -34,20 +39,14 @@ public class FromParseReceiver extends BroadcastReceiver {
             String data = extra.getString("com.parse.Data");
             JSONObject json = new JSONObject(data);
 
-            if (action.equals("android.shts.jp.nogifeed.UPDATE_STATUS")) {
-                // ブログ更新通知の場合
-                final String entryObjectId = json.getString("_entryObjectId");
-                final String title = json.getString("_title");
-                final String author = json.getString("_author");
-                final String author_id = json.getString("_author_id");
-                final String author_image_url = json.getString("_author_image_url");
+            if (action.equals("android.shts.jp.nogifeed.UPDATE_STATUS2")) {
+                Blog blog = new Blog(json);
 
                 // 未読記事としてマーキング
-                NotYetRead.add(entryObjectId);
+                NotYetRead.add(blog.getEntryObjectId());
 
                 // Notification通知
-                new BlogUpdateNotification(context).show(
-                        entryObjectId, title, author, author_id, author_image_url);
+                new BlogUpdateNotification(context).show(blog);
 
             } else if (action.equals("android.shts.jp.nogifeed.UPDATE_NEWS")) {
                 // ニュース通知の場合

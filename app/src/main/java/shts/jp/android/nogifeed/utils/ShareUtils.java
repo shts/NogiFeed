@@ -2,6 +2,7 @@ package shts.jp.android.nogifeed.utils;
 
 import android.content.Intent;
 
+import shts.jp.android.nogifeed.entities.Blog;
 import shts.jp.android.nogifeed.entities.News;
 import shts.jp.android.nogifeed.models.Entry;
 
@@ -20,11 +21,11 @@ public class ShareUtils {
         return intent;
     }
 
-    public static Intent getShareBlogIntent(Entry entry) {
+    public static Intent getShareBlogIntent(Blog blog) {
         StringBuilder sb = new StringBuilder();
-        sb.append(entry.getTitle()).append(" | ");
-        sb.append(entry.getAuthor()).append("\n");
-        sb.append(entry.getBlogUrl());
+        sb.append(blog.getTitle()).append(" | ");
+        sb.append(blog.getAuthor()).append("\n");
+        sb.append(blog.getUrl());
 
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");

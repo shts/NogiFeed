@@ -19,6 +19,7 @@ import com.squareup.otto.Subscribe;
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.BlogActivity;
 import shts.jp.android.nogifeed.adapters.MemberFeedListAdapter;
+import shts.jp.android.nogifeed.entities.Blog;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.Favorite;
 import shts.jp.android.nogifeed.models.eventbus.BusHolder;
@@ -97,7 +98,7 @@ public class MemberDetailFragment2 extends Fragment {
         adapter.setClickCallback(new MemberFeedListAdapter.OnItemClickCallback() {
             @Override
             public void onClick(Entry entry) {
-                activity.startActivity(BlogActivity.getStartIntent(activity, entry.getObjectId()));
+                activity.startActivity(BlogActivity.getStartIntent(activity, new Blog(entry)));
                 ;
             }
         });

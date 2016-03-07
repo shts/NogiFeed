@@ -16,6 +16,7 @@ import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.BlogActivity;
 import shts.jp.android.nogifeed.activities.MemberDetailActivity;
 import shts.jp.android.nogifeed.common.Logger;
+import shts.jp.android.nogifeed.entities.Blog;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.utils.DateUtils;
 import shts.jp.android.nogifeed.utils.PicassoHelper;
@@ -67,7 +68,7 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
         holder.backgroundImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(BlogActivity.getStartIntent(context, entry.getObjectId()));
+                context.startActivity(BlogActivity.getStartIntent(context, new Blog(entry)));
                 TrackerUtils.sendTrack(context, TAG,
                         "OnClicked", "-> Blog : " + "entry(" + entry.toString() + ")");
             }

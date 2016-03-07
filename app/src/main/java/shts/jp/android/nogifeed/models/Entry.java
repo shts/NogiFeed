@@ -115,10 +115,6 @@ public class Entry extends ParseObject {
         return getString("title");
     }
 
-    public String getBody() {
-        return getString("body");
-    }
-
     public String getBlogUrl() {
         return getString("url");
     }

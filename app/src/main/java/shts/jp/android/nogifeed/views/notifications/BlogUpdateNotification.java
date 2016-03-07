@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.BlogActivity;
 import shts.jp.android.nogifeed.common.Logger;
+import shts.jp.android.nogifeed.entities.Blog;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.Favorite;
 import shts.jp.android.nogifeed.utils.PreferencesUtils;
@@ -35,12 +36,14 @@ public class BlogUpdateNotification extends NotificationWithId {
     public static final int RES_ID_NOTIFICATION_ENABLE = R.string.setting_enable_blog_notification_key;
     /** ブログ更新通知制限設定(お気に入りメンバーのみ通知する設定) */
     public static final int RES_ID_NOTIFICATION_RESTRICTION_ENABLE = R.string.setting_enable_blog_notification_restriction_key;
+
+    private static final CircleTransformation TRANSFORMATION = new CircleTransformation();
+
     public BlogUpdateNotification(Context context) {
         super(context);
     }
 
-    public void show(String entryObjectId, String title, String author,
-                     String authorId, String authorImageUrl) {
+    public void show(Blog blog) {
         // ブログ更新通知可否設定
         if (!enable()) {
             Logger.d(TAG, "do not show notification because of disable from SettingsFragment");
@@ -49,30 +52,13 @@ public class BlogUpdateNotification extends NotificationWithId {
         // ブログ更新通知制限設定
         if (restrict()) {
             // 押しメンの場合false, 押しメンでない場合trueを返却する
-            if (!Favorite.exist(authorId)) {
+            if (!Favorite.exist(blog.getAuthorId())) {
                 Logger.d(TAG, "do not show restricted because of disable from SettingsFragment");
                 return;
             }
         }
 
-        show(entryObjectId, title, author, authorImageUrl);
-    }
-
-    /** ブログ更新通知可否判定 */
-    private boolean enable() {
-        final String key = context.getResources().getString(RES_ID_NOTIFICATION_ENABLE);
-        return PreferencesUtils.getBoolean(context, key, true);
-    }
-
-    /** ブログ更新通知制限判定(推しメンのみ通知する設定) */
-    private boolean restrict() {
-        final String key = context.getResources().getString(RES_ID_NOTIFICATION_RESTRICTION_ENABLE);
-        return PreferencesUtils.getBoolean(context, key, true);
-    }
-
-    private void show(String entryObjectId, String title, String author, String authorImageUrl) {
-
-        Intent intent = BlogActivity.getStartIntent(context, entryObjectId);
+        Intent intent = BlogActivity.getStartIntent(context, blog);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -82,8 +68,8 @@ public class BlogUpdateNotification extends NotificationWithId {
                 context, notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.notification_blog_update);
-        views.setTextViewText(R.id.title, title);
-        views.setTextViewText(R.id.text, author);
+        views.setTextViewText(R.id.title, blog.getTitle());
+        views.setTextViewText(R.id.text, blog.getAuthor());
         Notification notification = new NotificationCompat.Builder(context)
                 .setContentIntent(contentIntent)
                 .setContent(views)
@@ -99,10 +85,22 @@ public class BlogUpdateNotification extends NotificationWithId {
 
         notified(notificationId);
 
-        if (!TextUtils.isEmpty(authorImageUrl)) {
-            Picasso.with(context).load(authorImageUrl)
-                    .transform(new CircleTransformation()).into(views, R.id.icon, notificationId, notification);
+        if (!TextUtils.isEmpty(blog.getAuthorImageUrl())) {
+            Picasso.with(context).load(blog.getAuthorImageUrl())
+                    .transform(TRANSFORMATION).into(views, R.id.icon, notificationId, notification);
         }
+    }
+
+    /** ブログ更新通知可否判定 */
+    private boolean enable() {
+        final String key = context.getResources().getString(RES_ID_NOTIFICATION_ENABLE);
+        return PreferencesUtils.getBoolean(context, key, true);
+    }
+
+    /** ブログ更新通知制限判定(推しメンのみ通知する設定) */
+    private boolean restrict() {
+        final String key = context.getResources().getString(RES_ID_NOTIFICATION_RESTRICTION_ENABLE);
+        return PreferencesUtils.getBoolean(context, key, true);
     }
 
     @Override

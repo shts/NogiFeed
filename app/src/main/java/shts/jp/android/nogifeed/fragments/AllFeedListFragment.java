@@ -17,6 +17,7 @@ import com.squareup.otto.Subscribe;
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.BlogActivity;
 import shts.jp.android.nogifeed.adapters.AllFeedListAdapter;
+import shts.jp.android.nogifeed.entities.Blog;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.Favorite;
 import shts.jp.android.nogifeed.models.eventbus.BusHolder;
@@ -51,7 +52,7 @@ public class AllFeedListFragment extends Fragment {
                 Entry entry = (Entry) parent.getItemAtPosition(position);
                 if (entry != null) {
                     getActivity().startActivity(
-                            BlogActivity.getStartIntent(getActivity(), entry.getObjectId()));
+                            BlogActivity.getStartIntent(getActivity(), new Blog(entry)));
                 }
             }
         });

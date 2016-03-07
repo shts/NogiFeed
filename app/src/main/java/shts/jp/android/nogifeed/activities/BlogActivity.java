@@ -8,14 +8,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.entities.Blog;
 import shts.jp.android.nogifeed.fragments.BlogFragment;
-import shts.jp.android.nogifeed.models.Entry;
 
 public class BlogActivity extends BaseActivity {
 
-    public static Intent getStartIntent(Context context, String entryObjectId) {
+    public static Intent getStartIntent(Context context, Blog blog) {
         Intent intent = new Intent(context, BlogActivity.class);
-        intent.putExtra(Entry.KEY, entryObjectId);
+        intent.putExtra("blog", blog);
         return intent;
     }
 
@@ -24,8 +24,8 @@ public class BlogActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blog);
 
-        String entryObjectId = getIntent().getStringExtra(Entry.KEY);
-        BlogFragment blogFragment = BlogFragment.newInstance(entryObjectId);
+        final Blog blog = getIntent().getParcelableExtra("blog");
+        BlogFragment blogFragment = BlogFragment.newInstance(blog);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, blogFragment, BlogFragment.class.getSimpleName());
