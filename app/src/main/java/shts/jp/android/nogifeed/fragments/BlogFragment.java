@@ -156,6 +156,7 @@ public class BlogFragment extends Fragment {
                     return;
                 }
                 toolbar.setTitle(entry.getTitle());
+                toolbar.setSubtitle(entry.getAuthor());
                 webView.loadUrl(entry.getBlogUrl());
             }
         });
