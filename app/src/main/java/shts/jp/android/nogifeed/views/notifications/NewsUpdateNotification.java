@@ -70,7 +70,6 @@ public class NewsUpdateNotification extends NotificationWithId {
         // TODO: 通知制限機能を追加する
 //        final String restrictKeyResId = context.getResources().getString(RES_ID_NOTIFICATION_RESTRICTION_ENABLE);
         return true;
-
     }
 
     @Override
