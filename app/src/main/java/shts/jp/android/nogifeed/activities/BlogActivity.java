@@ -77,4 +77,18 @@ public class BlogActivity extends BaseActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    @Override
+    public void onBackPressed() {
+        BlogFragment blogFragment =
+                (BlogFragment) getSupportFragmentManager().findFragmentByTag(
+                        BlogFragment.class.getSimpleName());
+
+        if (blogFragment != null) {
+            if (blogFragment.isVisible()) {
+                if (blogFragment.onBackPressed()) return;
+            }
+        }
+        super.onBackPressed();
+    }
 }

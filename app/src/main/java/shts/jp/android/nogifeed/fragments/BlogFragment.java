@@ -296,4 +296,11 @@ public class BlogFragment extends Fragment {
         return false;
     }
 
+    public boolean onBackPressed() {
+        if (floatingActionsMenu != null && floatingActionsMenu.isExpanded()) {
+            floatingActionsMenu.collapse();
+            return true;
+        }
+        return false;
+    }
 }
