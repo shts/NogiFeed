@@ -1,92 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <!-- A CardView that contains a TextView -->
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
-        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:cardCornerRadius="2dp"
-        >
+        android:layout_gravity="center"
+        card_view:cardCornerRadius="2dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <ImageView
-                android:scaleType="centerCrop"
                 android:id="@+id/card_background"
-                android:src="@drawable/nogifeed_list_activated_holo"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                />
+                android:scaleType="centerCrop"
+                android:src="@drawable/nogifeed_list_activated_holo" />
 
             <LinearLayout
-                android:layout_alignBottom="@id/card_background"
-                android:background="#5f000000"
                 android:id="@+id/card_rebel"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
-                android:paddingRight="16dp"
-                android:orientation="horizontal">
+                android:layout_alignBottom="@id/card_background"
+                android:background="#5f000000"
+                android:orientation="horizontal"
+                android:paddingRight="16dp">
 
                 <ImageView
                     android:id="@+id/profile_image"
-                    android:layout_gravity="center_vertical"
-                    android:padding="16dp"
                     android:layout_width="72dp"
                     android:layout_height="72dp"
-                    android:src="@drawable/kensyusei"
-                    />
+                    android:layout_gravity="center_vertical"
+                    android:padding="16dp"
+                    android:src="@drawable/kensyusei" />
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/card_title"
-                        android:textSize="12sp"
-                        android:textColor="#fff"
-                        android:gravity="center_vertical"
                         android:layout_width="match_parent"
                         android:layout_height="36dp"
-                        android:text="Title"
-                        android:textStyle="bold"
-                        android:maxLength="46"
                         android:ellipsize="end"
-                        />
+                        android:gravity="center_vertical"
+                        android:maxLength="46"
+                        android:text="Title"
+                        android:textColor="#fff"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="36dp"
                         android:orientation="horizontal">
+
                         <TextView
                             android:id="@+id/authorname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
                             android:text="Author"
                             android:textColor="#fff"
-                            android:gravity="center_vertical"
-                            android:textSize="12sp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent" />
+                            android:textSize="12sp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                         <TextView
                             android:id="@+id/updated"
-                            android:textSize="12sp"
-                            android:textColor="#fff"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:paddingRight="16dp"
                             android:text="update"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent" />
+                            android:textColor="#fff"
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
