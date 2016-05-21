@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.View;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.entities.Blog;
@@ -27,9 +30,28 @@ public class BlogActivity extends BaseActivity {
         final Blog blog = getIntent().getParcelableExtra("blog");
         BlogFragment blogFragment = BlogFragment.newInstance(blog);
 
+        setupToolbar(blog);
+
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, blogFragment, BlogFragment.class.getSimpleName());
         ft.commit();
+    }
+
+    private void setupToolbar(@Nullable Blog blog) {
+        if (blog == null) return;
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar == null) return;
+
+        toolbar.setTitle(blog.getTitle());
+        toolbar.setSubtitle(blog.getAuthor());
+        toolbar.setNavigationIcon(R.drawable.ic_clear_white_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

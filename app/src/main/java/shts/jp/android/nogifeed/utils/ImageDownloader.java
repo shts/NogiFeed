@@ -69,7 +69,7 @@ class ImageDownloader {
 
     private void addCounter() {
         counter++;
-        if (urls.size() >= counter) {
+        if (urls.size() <= counter) {
             onComplete(responseList);
         }
     }
@@ -101,6 +101,9 @@ class ImageDownloader {
             sb.append("throwable(").append(throwable).append(") ");
             sb.append("file(").append(file).append(") ");
             return sb.toString();
+        }
+        public File getFile() {
+            return file;
         }
     }
 

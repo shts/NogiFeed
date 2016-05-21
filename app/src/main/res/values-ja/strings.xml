@@ -28,6 +28,11 @@
     <string name="setting_title_notification_restriction_blog">ブログ更新通知制限</string>
     <string name="setting_summary_notification_restriction_blog">推しメン登録したメンバーのみブログ更新通知を受け取るかどうか設定できます</string>
 
+    <!-- Download -->
+    <string name="setting_category_title_download">ダウンロード設定</string>
+    <string name="setting_title_download_thumbnail">サムネイルダウンロード制限</string>
+    <string name="setting_summary_download_thumbnail">一括ダウンロードの時にサムネイルとダウンロードしないようにする</string>
+
     <!-- activity all members -->
     <string name="failed_get_all_members">"メンバーが取得できませんでした。ネットワークの状態を確認してください"</string>
 
@@ -105,7 +110,9 @@
     <string name="already_set_same_widget">"そのメンバーはすでに登録されています"</string>
 
     <!-- fragment blog  -->
+    <string name="permission_require_dialog_message">画像のダウンロードには許可が必要です</string>
     <string name="no_download_image">"ダウンロードする画像がありません"</string>
+    <string name="recomend_download_thumbnail">"このブログの高解像度画像の有効期限が切れています"</string>
     <string name="downloading_image">"ダウンロード中です …"</string>
     <string name="download_image">"画像をダウンロードする"</string>
     <string name="download_finish">"ダウンロード完了しました"</string>

@@ -90,6 +90,12 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.PermissionRequireActivity"
+            android:label="@string/app_name"
+            android:theme="@style/PermissionRequireActivity"
+            android:screenOrientation="portrait">
+        </activity>
         <!-- authorities do not change -->
         <provider
             android:authorities="android.shts.jp.nogifeed.providers.nogifeed"
