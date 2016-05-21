@@ -21,6 +21,16 @@
         <item name="android:width">72dp</item>
         <item name="android:height">72dp</item>
     </style>
+    
+    <style name="PermissionRequireActivity" parent="Theme.AppCompat">
+        <item name="android:windowEnterAnimation">@null</item>
+        <item name="android:windowExitAnimation">@null</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 
     <!-- blog update notification style -->
     <style name="NotificationText" parent="android:TextAppearance.StatusBar.EventContent" />

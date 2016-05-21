@@ -212,6 +212,8 @@ public class BlogFragment extends Fragment {
     @Subscribe
     public void onFinishDownload(
             WaitMinimunImageDownloader.Callback.CompleteDownloadImage callback) {
+        fabDownload.setColorNormalResId(R.color.accent);
+        fabDownload.setTitle(getString(R.string.download_image));
         if (callback != null
                 && !callback.responseList.isEmpty()
                 && callback.responseList != null) {
@@ -232,6 +234,8 @@ public class BlogFragment extends Fragment {
      */
     @Subscribe
     public void onFinishDownload(SimpleImageDownloader.Callback callback) {
+        fabDownload.setColorNormalResId(R.color.accent);
+        fabDownload.setTitle(getString(R.string.download_image));
         if (callback != null && callback.file != null) {
             scanComplete(getActivity(), callback.file);
         }

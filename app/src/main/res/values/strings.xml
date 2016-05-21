@@ -114,6 +114,7 @@
     <string name="already_set_same_widget">Already set same member</string>
 
     <!-- fragment blog  -->
+    <string name="permission_require_dialog_message">Need to permission</string>
     <string name="no_download_image">This blog does not have images</string>
     <string name="downloading_image">Now Downloading …</string>
     <string name="download_image">Download all images</string>

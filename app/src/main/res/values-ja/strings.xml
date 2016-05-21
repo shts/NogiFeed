@@ -105,6 +105,7 @@
     <string name="already_set_same_widget">"そのメンバーはすでに登録されています"</string>
 
     <!-- fragment blog  -->
+    <string name="permission_require_dialog_message">画像のダウンロードには許可が必要です</string>
     <string name="no_download_image">"ダウンロードする画像がありません"</string>
     <string name="downloading_image">"ダウンロード中です …"</string>
     <string name="download_image">"画像をダウンロードする"</string>

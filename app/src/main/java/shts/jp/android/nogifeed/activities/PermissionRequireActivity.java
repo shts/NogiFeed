@@ -24,6 +24,7 @@ import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.PermissionUtils;
 import permissions.dispatcher.RuntimePermissions;
+import shts.jp.android.nogifeed.R;
 
 @RuntimePermissions
 public class PermissionRequireActivity extends AppCompatActivity {
@@ -105,7 +106,7 @@ public class PermissionRequireActivity extends AppCompatActivity {
 
     private void showRationalDialog(final PermissionRequest request) {
         new AlertDialog.Builder(this)
-                //.setMessage(R.string.permission_rationale_message)
+                .setMessage(R.string.permission_require_dialog_message)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
