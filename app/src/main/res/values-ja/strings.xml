@@ -32,8 +32,8 @@
 
     <!-- Download -->
     <string name="setting_category_title_download">ダウンロード設定</string>
-    <string name="setting_title_download_thumbnail">サムネイルダウンロード制限</string>
-    <string name="setting_summary_download_thumbnail">一括ダウンロードの時にサムネイルとダウンロードしないようにする</string>
+    <string name="setting_title_download_thumbnail">サムネイルダウンロード</string>
+    <string name="setting_summary_download_thumbnail">画像一括ダウンロードの時にサムネイルもダウンロードする</string>
 
     <!-- activity all members -->
     <string name="failed_get_all_members">"メンバーが取得できませんでした。ネットワークの状態を確認してください"</string>
