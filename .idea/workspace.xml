@@ -20,12 +20,10 @@
   <component name="ChangeListManager">
     <list default="true" id="2ebf2418-1188-4e0e-b49b-fec47b5ce5a2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/activities/PermissionRequireActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/activities/PermissionRequireActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/fragments/BlogFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/fragments/BlogFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values-ja/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values-ja/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/xml/pref_settings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/xml/pref_settings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
     </list>
     <ignored path="NogiFeed.iws" />
@@ -54,33 +52,55 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BlogFragment.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BlogFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/fragments/BlogFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.3312883">
-              <caret line="214" column="8" selection-start-line="214" selection-start-column="8" selection-end-line="214" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="116" column="71" selection-start-line="116" selection-start-column="71" selection-end-line="116" selection-end-column="71" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3335#3567#0" expanded="true" />
-                <element signature="e#3566#3567#0" expanded="true" />
-                <element signature="e#3699#4532#0" expanded="true" />
-                <element signature="e#4079#4105#0" expanded="true" />
-                <element signature="e#4315#4352#0" expanded="true" />
-                <element signature="e#4531#4532#0" expanded="true" />
-                <element signature="e#4722#4941#0" expanded="true" />
-                <element signature="e#4940#4941#0" expanded="true" />
-                <element signature="e#6883#6917#0" expanded="true" />
-                <element signature="e#6965#6996#0" expanded="true" />
-                <element signature="e#7362#7389#0" expanded="true" />
-                <element signature="e#7752#7779#0" expanded="true" />
-                <element signature="e#9282#9790#0" expanded="true" />
-                <element signature="e#9521#9748#0" expanded="true" />
-                <element signature="e#9747#9748#0" expanded="true" />
-                <element signature="e#9789#9790#0" expanded="true" />
-                <element signature="e#9888#9912#0" expanded="true" />
-                <element signature="e#9971#10348#0" expanded="true" />
-                <element signature="e#10347#10348#0" expanded="true" />
+                <element signature="e#3391#3623#0" expanded="true" />
+                <element signature="e#3622#3623#0" expanded="true" />
+                <element signature="e#3755#4653#0" expanded="true" />
+                <element signature="e#4436#4473#0" expanded="true" />
+                <element signature="e#4652#4653#0" expanded="true" />
+                <element signature="e#4843#5062#0" expanded="true" />
+                <element signature="e#5061#5062#0" expanded="true" />
+                <element signature="e#5293#5350#0" expanded="true" />
+                <element signature="e#7176#7210#0" expanded="true" />
+                <element signature="e#7258#7289#0" expanded="true" />
+                <element signature="e#7655#7682#0" expanded="true" />
+                <element signature="e#8045#8072#0" expanded="true" />
+                <element signature="e#8498#8532#0" expanded="true" />
+                <element signature="e#9312#9346#0" expanded="true" />
+                <element signature="e#9812#10320#0" expanded="true" />
+                <element signature="e#10051#10278#0" expanded="true" />
+                <element signature="e#10277#10278#0" expanded="true" />
+                <element signature="e#10319#10320#0" expanded="true" />
+                <element signature="e#10418#10442#0" expanded="true" />
+                <element signature="e#10501#10878#0" expanded="true" />
+                <element signature="e#10877#10878#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values-ja/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-2.2156863">
+              <caret line="114" column="36" selection-start-line="114" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.44444445">
+              <caret line="124" column="61" selection-start-line="124" selection-start-column="61" selection-end-line="124" selection-end-column="61" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1878,12 +1898,13 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_blog.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/utils/ImageDownloader.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_blog.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values-ja/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/activities/PermissionRequireActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/xml/pref_settings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/fragments/BlogFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values-ja/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
       </list>
     </option>
   </component>
@@ -2007,6 +2028,36 @@
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="xml" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NogiFeed" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NogiFeed" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -2090,11 +2141,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
+              <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
+              <option name="myItemId" value="nogifeed" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2125,6 +2176,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="nogifeed" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="receivers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2518,11 +2573,11 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31409168" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.11375212" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293718" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12224109" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37691003" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -2535,7 +2590,7 @@
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293718" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31527093" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35550082" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -2768,8 +2823,8 @@
         <state vertical-scroll-proportion="0.27713627">
           <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
           <folding>
-            <element signature="e#2712#2713#0" expanded="true" />
-            <element signature="e#2739#2740#0" expanded="true" />
+            <element signature="e#2712#2713#0" expanded="false" />
+            <element signature="e#2739#2740#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2793,33 +2848,17 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-ja/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4">
-          <caret line="104" column="31" selection-start-line="104" selection-start-column="31" selection-end-line="104" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.63076925">
-          <caret line="116" column="38" selection-start-line="116" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/activities/PermissionRequireActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5316456">
           <caret line="103" column="33" selection-start-line="103" selection-start-column="33" selection-end-line="103" selection-end-column="33" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3769#3811#0" expanded="true" />
-            <element signature="e#3869#4098#0" expanded="true" />
-            <element signature="e#4097#4098#0" expanded="true" />
-            <element signature="e#4160#4422#0" expanded="true" />
-            <element signature="e#4421#4422#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#3769#3811#0" expanded="false" />
+            <element signature="e#3869#4098#0" expanded="false" />
+            <element signature="e#4097#4098#0" expanded="false" />
+            <element signature="e#4160#4422#0" expanded="false" />
+            <element signature="e#4421#4422#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2842,32 +2881,96 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/views/notifications/BlogUpdateNotification.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2920354">
+          <caret line="101" column="98" selection-start-line="101" selection-start-column="60" selection-end-line="101" selection-end-column="98" />
+          <folding>
+            <element signature="e#1749#1750#0" expanded="false" />
+            <element signature="e#1779#1780#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/utils/PreferencesUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.17699115">
+          <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/pref_settings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1904762">
+          <caret line="32" column="14" selection-start-line="32" selection-start-column="14" selection-end-line="32" selection-end-column="14" />
+          <folding>
+            <element signature="e#164#209#0" expanded="true" />
+            <element signature="e#272#318#0" expanded="true" />
+            <element signature="e#556#614#0" expanded="true" />
+            <element signature="e#877#923#0" expanded="true" />
+            <element signature="e#950#991#0" expanded="true" />
+            <element signature="e#1020#1063#0" expanded="true" />
+            <element signature="e#1599#1640#0" expanded="true" />
+            <element signature="e#1694#1741#0" expanded="true" />
+            <element signature="e#1768#1810#0" expanded="true" />
+            <element signature="e#1839#1883#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/receivers/FromParseReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.39823008">
+          <caret line="51" column="28" selection-start-line="51" selection-start-column="28" selection-end-line="51" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/fragments/BlogFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.3312883">
-          <caret line="214" column="8" selection-start-line="214" selection-start-column="8" selection-end-line="214" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="116" column="71" selection-start-line="116" selection-start-column="71" selection-end-line="116" selection-end-column="71" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3335#3567#0" expanded="true" />
-            <element signature="e#3566#3567#0" expanded="true" />
-            <element signature="e#3699#4532#0" expanded="true" />
-            <element signature="e#4079#4105#0" expanded="true" />
-            <element signature="e#4315#4352#0" expanded="true" />
-            <element signature="e#4531#4532#0" expanded="true" />
-            <element signature="e#4722#4941#0" expanded="true" />
-            <element signature="e#4940#4941#0" expanded="true" />
-            <element signature="e#6883#6917#0" expanded="true" />
-            <element signature="e#6965#6996#0" expanded="true" />
-            <element signature="e#7362#7389#0" expanded="true" />
-            <element signature="e#7752#7779#0" expanded="true" />
-            <element signature="e#9282#9790#0" expanded="true" />
-            <element signature="e#9521#9748#0" expanded="true" />
-            <element signature="e#9747#9748#0" expanded="true" />
-            <element signature="e#9789#9790#0" expanded="true" />
-            <element signature="e#9888#9912#0" expanded="true" />
-            <element signature="e#9971#10348#0" expanded="true" />
-            <element signature="e#10347#10348#0" expanded="true" />
+            <element signature="e#3391#3623#0" expanded="true" />
+            <element signature="e#3622#3623#0" expanded="true" />
+            <element signature="e#3755#4653#0" expanded="true" />
+            <element signature="e#4436#4473#0" expanded="true" />
+            <element signature="e#4652#4653#0" expanded="true" />
+            <element signature="e#4843#5062#0" expanded="true" />
+            <element signature="e#5061#5062#0" expanded="true" />
+            <element signature="e#5293#5350#0" expanded="true" />
+            <element signature="e#7176#7210#0" expanded="true" />
+            <element signature="e#7258#7289#0" expanded="true" />
+            <element signature="e#7655#7682#0" expanded="true" />
+            <element signature="e#8045#8072#0" expanded="true" />
+            <element signature="e#8498#8532#0" expanded="true" />
+            <element signature="e#9312#9346#0" expanded="true" />
+            <element signature="e#9812#10320#0" expanded="true" />
+            <element signature="e#10051#10278#0" expanded="true" />
+            <element signature="e#10277#10278#0" expanded="true" />
+            <element signature="e#10319#10320#0" expanded="true" />
+            <element signature="e#10418#10442#0" expanded="true" />
+            <element signature="e#10501#10878#0" expanded="true" />
+            <element signature="e#10877#10878#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-ja/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.2156863">
+          <caret line="114" column="36" selection-start-line="114" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44444445">
+          <caret line="124" column="61" selection-start-line="124" selection-start-column="61" selection-end-line="124" selection-end-column="61" />
+          <folding />
         </state>
       </provider>
     </entry>

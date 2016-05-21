@@ -33,4 +33,12 @@
             />
         -->
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/setting_category_title_download">
+        <CheckBoxPreference
+            android:key="@string/setting_enable_thumbnail_download_key"
+            android:title="@string/setting_title_download_thumbnail"
+            android:summary="@string/setting_summary_download_thumbnail"
+            android:defaultValue="true"
+            />
+    </PreferenceCategory>
 </PreferenceScreen>

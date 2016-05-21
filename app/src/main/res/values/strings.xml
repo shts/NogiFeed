@@ -13,6 +13,8 @@
     <string name="setting_enable_news_notification_key">pref_key_news_updated_notification_enable</string>
     <string name="setting_enable_news_notification_restriction_key">pref_key_news_updated_notification_restriction_enable</string>
 
+    <string name="setting_enable_thumbnail_download_key">pref_key_thumbnail_download_enable</string>
+
     <!-- Blog -->
     <string name="setting_category_title_notification">Notification</string>
     <string name="setting_title_notification">Blog Update Notification</string>
@@ -23,6 +25,10 @@
     <!-- News -->
     <string name="setting_title_notification_blog">News Update Notification</string>
     <string name="setting_summary_notification_blog">Receive news update notification</string>
+    <!-- Download -->
+    <string name="setting_category_title_download">Download</string>
+    <string name="setting_title_download_thumbnail">Download Thumbnail Image</string>
+    <string name="setting_summary_download_thumbnail">Download Thumbnail Image</string>
 
     <!-- activity all members -->
     <string name="failed_get_all_members">Failed to get all members. Check your network state.</string>
@@ -116,6 +122,7 @@
     <!-- fragment blog  -->
     <string name="permission_require_dialog_message">Need to permission</string>
     <string name="no_download_image">This blog does not have images</string>
+    <string name="recomend_download_thumbnail">All raw image expiration</string>
     <string name="downloading_image">Now Downloading …</string>
     <string name="download_image">Download all images</string>
     <string name="download_finish">Finish Download</string>

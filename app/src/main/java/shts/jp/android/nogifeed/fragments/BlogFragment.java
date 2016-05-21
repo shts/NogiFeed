@@ -32,6 +32,7 @@ import shts.jp.android.nogifeed.activities.PermissionRequireActivity;
 import shts.jp.android.nogifeed.entities.Blog;
 import shts.jp.android.nogifeed.models.NotYetRead;
 import shts.jp.android.nogifeed.models.eventbus.BusHolder;
+import shts.jp.android.nogifeed.utils.PreferencesUtils;
 import shts.jp.android.nogifeed.utils.SdCardUtils;
 import shts.jp.android.nogifeed.utils.ShareUtils;
 import shts.jp.android.nogifeed.utils.SimpleImageDownloader;
@@ -108,11 +109,18 @@ public class BlogFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ArrayList<String> urlList = new ArrayList<>();
-                urlList.addAll(blog.getUploadedThumbnailUrlList());
+                if (downloadThumbnail()) {
+                    urlList.addAll(blog.getUploadedThumbnailUrlList());
+                }
                 urlList.addAll(blog.getUploadedRawUrlList());
                 if (urlList.isEmpty()) {
-                    Snackbar.make(coordinatorLayout, R.string.no_download_image, Snackbar.LENGTH_LONG)
-                            .show();
+                    if (downloadThumbnail()) {
+                        Snackbar.make(coordinatorLayout, R.string.no_download_image, Snackbar.LENGTH_LONG)
+                                .show();
+                    } else {
+                        Snackbar.make(coordinatorLayout, R.string.recomend_download_thumbnail, Snackbar.LENGTH_LONG)
+                                .show();
+                    }
                     return;
                 }
                 fabDownload.setColorNormalResId(R.color.primary);
@@ -137,6 +145,10 @@ public class BlogFragment extends Fragment {
         webView.loadUrl(blog.getUrl());
 
         return view;
+    }
+
+    private boolean downloadThumbnail() {
+        return PreferencesUtils.getBoolean(getContext(), getString(R.string.setting_enable_thumbnail_download_key), true);
     }
 
     private void showDownloadConfirmDialog(WebView webView) {
