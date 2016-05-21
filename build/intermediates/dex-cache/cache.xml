@@ -1,2 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.3.0/8a62fd16fcc1c06f284fc98e6cbded2a5af1dd4c/bolts-tasks-1.3.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="8a62fd16fcc1c06f284fc98e6cbded2a5af1dd4c">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/bolts-tasks-1.3.0_24318520e463bcbcf1f3b9febabf7efca57c365b.jar" />
+    </item>
+    <item
+        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.3.3/1262995965440e28ba5c4d480c9c9ab4ccce84cc/picasso-2.3.3.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="1262995965440e28ba5c4d480c9c9ab4ccce84cc">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/picasso-2.3.3_24fd63ae3e584d50a5376609c3006358a473cfdf.jar" />
+    </item>
+    <item
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/com.android.support-support-vector-drawable-23.4.0_7906f5a42e35b2f9734033d9d91c7698b61a7225.jar" />
+    </item>
+    <item
+        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/library-2.4.0_18477289386316d7a7f8d59d3c93cfc200f9af9a.jar" />
+    </item>
+    <item
+        jar="/Applications/adt-bundle-mac-x86_64-20131030/sdk/extras/android/m2repository/com/android/support/support-annotations/23.4.0/support-annotations-23.4.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/support-annotations-23.4.0_71dea11449af507b953401ba27f75852a941d73c.jar" />
+    </item>
+    <item
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/libs/internal_impl-23.4.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/internal_impl-23.4.0_4afcb8b3abbad2037c6f1605da6ebaea10ce01e1.jar" />
+    </item>
+    <item
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/me.gujun.android.taggroup/library/1.4/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="f91fda9bdd268cd21a0ef9d8f40154ded0bd4c53">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/me.gujun.android.taggroup-library-1.4_5fd32d62adb7fdc645edea07da2cb3e39c1e646a.jar" />
+    </item>
+    <item
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="d9ecde39b460470e655de6e47c05573d2d5a8bfb">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/com.android.support-cardview-v7-23.4.0_4a12aba49ebe6fae489d8717b7494795c9d29998.jar" />
+    </item>
+    <item
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/io.reactivex/rxandroid/1.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="d4c4b83de2f6412072d2a29b1b7a5b03edaad5ff">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/io.reactivex-rxandroid-1.1.0_964f5a0724bbc428971cae78235436d3e1a26698.jar" />
+    </item>
+    <item
+        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/org.jbundle.util.osgi.wrapped/org.jbundle.util.osgi.wrapped.org.apache.http.client/4.1.2/98c86e42679fe7ac066f6c242e0d14f0bce0bb7c/org.jbundle.util.osgi.wrapped.org.apache.http.client-4.1.2.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="98c86e42679fe7ac066f6c242e0d14f0bce0bb7c">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/org.jbundle.util.osgi.wrapped.org.apache.http.client-4.1.2_b2f12ba7f710dbedfae5d210c6dbc5dc45331c24.jar" />
+    </item>
+    <item
+        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.7.2/d7e275ba05aa380ca254f72d0c0ffebaedc3adcf/jsoup-1.7.2.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="d7e275ba05aa380ca254f72d0c0ffebaedc3adcf">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/jsoup-1.7.2_e052848f45e5e5ea063f95952e90898e02aa885f.jar" />
+    </item>
+    <item
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/com.android.support-animated-vector-drawable-23.4.0_8a8c6872513ba6ae4499ba4146c3be7d884b8f98.jar" />
+    </item>
+    <item
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.11/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="0f700f6802ba1a1f1fa7ac26d5db0666a89d75a6">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/com.google.android.gms-play-services-6.1.11_0a62c36b58e3e6412b2d8526fe77be3def8a95fd.jar" />
+    </item>
+    <item
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/design/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="5326d9a850d491714fef8cbfaa9ea3416f0bf0d2">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/com.android.support-design-23.4.0_0cbf6958008a6b55e6faa616820dc2b0c005feb0.jar" />
+    </item>
+    <item
+        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.loopj.android/android-async-http/1.4.8/77bbfe240e437ecb396d982afa0d3bd4f9090ba7/android-async-http-1.4.8.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="77bbfe240e437ecb396d982afa0d3bd4f9090ba7">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/android-async-http-1.4.8_d85231e5f41bbccd60e3b297e0e920a28750eda9.jar" />
+    </item>
+    <item
+        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-applinks/1.3.0/bc535105332645408ef5f1380215cc954b842178/bolts-applinks-1.3.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="bc535105332645408ef5f1380215cc954b842178">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/bolts-applinks-1.3.0_9df1c8f6b3fba215580429ad129a7d4d0c72ebb8.jar" />
+    </item>
+    <item
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/com.android.support-support-v4-23.4.0_7e8de5ff00184cc90bd32f1b99c47dc4cc704d1e.jar" />
+    </item>
+    <item
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/com.android.support-recyclerview-v7-23.4.0_b4188441b5d7a5e2cd906fc35b6a36c6b8dc6ba2.jar" />
+    </item>
+    <item
+        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.squareup/otto/1.3.8/cf615176cd1177edf71d3c9605f8dc148fede6be/otto-1.3.8.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="cf615176cd1177edf71d3c9605f8dc148fede6be">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/otto-1.3.8_5c6b9756fddb5f0aabb2cda3cab21719ef1d1f60.jar" />
+    </item>
+    <item
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/com.android.support-appcompat-v7-23.4.0_e95f9c0fade4be8ba7f6ab432f8890f28c768c86.jar" />
+    </item>
+    <item
+        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/frankiesardo/icepick/3.2.0/5ab94f3bba3f9315532eb1ca5547d120c4f71dae/icepick-3.2.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="5ab94f3bba3f9315532eb1ca5547d120c4f71dae">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/icepick-3.2.0_4c7843de3b6db7bd92524a13378efdff4b52618c.jar" />
+    </item>
+    <item
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.jpardogo.materialtabstrip/library/1.0.5/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="9379b711762196bf7ec8bb0324779b444df6d182">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/com.jpardogo.materialtabstrip-library-1.0.5_cbc0e881deedebb5cf3da70f43e246c09e479ab0.jar" />
+    </item>
+    <item
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.github.machinarius/preferencefragment/0.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="648463e00c6883d01b6c11a6781776203334b6fc">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/com.github.machinarius-preferencefragment-0.1.1_eb3ecb44ac819ed83a9a0b6dfa4b0a818b8034e8.jar" />
+    </item>
+    <item
+        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.parse/parse-android/1.11.0/6592129dec2caa8791d322c7e4b6b7a30e8eadae/parse-android-1.11.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="6592129dec2caa8791d322c7e4b6b7a30e8eadae">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/parse-android-1.11.0_a0b143a75ba9025d32ba8621f0d27ff2f1b86c77.jar" />
+    </item>
+    <item
+        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/io.reactivex/rxjava/1.1.0/748f0546d5c3c27f1aef07270ffea0c45f0c42a4/rxjava-1.1.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="748f0546d5c3c27f1aef07270ffea0c45f0c42a4">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/rxjava-1.1.0_a2a5d8f925952c8cae26f3a332508a370e91ce59.jar" />
+    </item>
+    <item
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.github.hotchemi/permissionsdispatcher/2.1.2/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="ed8d366fb3fa21ea086af1dbdb12cee5a4668851">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/com.github.hotchemi-permissionsdispatcher-2.1.2_8bb1d531f7fe86c8b28bb6b684fe40e1a89a51ad.jar" />
+    </item>
+    <item
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/net.i2p.android.ext/floatingactionbutton/1.10.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="03bb03938a4c7792c8168e6fee71253669d53407">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/net.i2p.android.ext-floatingactionbutton-1.10.1_ed02169f67976a939b7d51acc09e0826219c2080.jar" />
+    </item>
+
+</items>

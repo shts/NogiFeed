@@ -25,6 +25,9 @@
     <!-- News -->
     <string name="setting_title_notification_blog">News Update Notification</string>
     <string name="setting_summary_notification_blog">Receive news update notification</string>
+    <!-- TODO -->
+    <string name="setting_title_notification_restriction_blog">Blog Update Notification Restriction</string>
+    <string name="setting_summary_notification_restriction_blog">Receive blog update notification only fav members</string>
     <!-- Download -->
     <string name="setting_category_title_download">Download</string>
     <string name="setting_title_download_thumbnail">Download Thumbnail Image</string>
