@@ -1,19 +1,18 @@
 package shts.jp.android.nogifeed.fragments;
 
-import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +24,11 @@ import com.squareup.otto.Subscribe;
 import net.i2p.android.ext.floatingactionbutton.FloatingActionButton;
 import net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import shts.jp.android.nogifeed.R;
+import shts.jp.android.nogifeed.activities.PermissionRequireActivity;
 import shts.jp.android.nogifeed.entities.Blog;
 import shts.jp.android.nogifeed.models.NotYetRead;
 import shts.jp.android.nogifeed.models.eventbus.BusHolder;
@@ -38,11 +38,12 @@ import shts.jp.android.nogifeed.utils.SimpleImageDownloader;
 import shts.jp.android.nogifeed.utils.WaitMinimunImageDownloader;
 import shts.jp.android.nogifeed.views.dialogs.DownloadConfirmDialog;
 
-// TODO: How terrible code...
-// TODO:
 public class BlogFragment extends Fragment {
 
     private static final String TAG = BlogFragment.class.getSimpleName();
+
+    private static final int DOWNLOAD = 0;
+    private static final int DOWNLOAD_LIST = 1;
 
     private WebView webView;
 
@@ -93,31 +94,20 @@ public class BlogFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_blog, null);
 
-        final Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        toolbar.setTitle(blog.getTitle());
-        toolbar.setSubtitle(blog.getAuthor());
-        toolbar.setNavigationIcon(R.drawable.ic_clear_white_24dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
-
         floatingActionsMenu = (FloatingActionsMenu) view.findViewById(R.id.multiple_actions);
         FloatingActionButton fabShare = (FloatingActionButton) view.findViewById(R.id.fab_action_share);
         fabShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 floatingActionsMenu.collapse();
-                getActivity().startActivity(ShareUtils.getShareBlogIntent(blog));
+                startActivity(ShareUtils.getShareBlogIntent(blog));
             }
         });
         fabDownload = (FloatingActionButton) view.findViewById(R.id.fab_action_download);
         fabDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<String> urlList = new ArrayList<>();
+                ArrayList<String> urlList = new ArrayList<>();
                 urlList.addAll(blog.getUploadedThumbnailUrlList());
                 urlList.addAll(blog.getUploadedRawUrlList());
                 if (urlList.isEmpty()) {
@@ -127,7 +117,8 @@ public class BlogFragment extends Fragment {
                 }
                 fabDownload.setColorNormalResId(R.color.primary);
                 fabDownload.setTitle(getString(R.string.downloading_image));
-                download(urlList);
+                startActivityForResult(PermissionRequireActivity
+                        .getDownloadStartIntent(getActivity(), urlList), DOWNLOAD_LIST);
             }
         });
 
@@ -137,8 +128,7 @@ public class BlogFragment extends Fragment {
         webView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                WebView webView = (WebView) view;
-                showDownloadConfirmDialog(webView);
+                showDownloadConfirmDialog((WebView) view);
                 return false;
             }
         });
@@ -159,7 +149,8 @@ public class BlogFragment extends Fragment {
             confirmDialog.setCallbacks(new DownloadConfirmDialog.Callbacks() {
                 @Override
                 public void onClickPositiveButton() {
-                    download(url);
+                    startActivityForResult(PermissionRequireActivity
+                            .getDownloadStartIntent(getActivity(), url), DOWNLOAD);
                 }
                 @Override
                 public void onClickNegativeButton() {}
@@ -184,81 +175,33 @@ public class BlogFragment extends Fragment {
         }
     }
 
-    private List<String> downloadTargetList;
-    private void download(List<String> urlList) {
-        if (!hasPermission()) {
-            // 権限がない場合はリクエスト
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_DOWNLOAD_ALL);
-            downloadTargetList = urlList;
-            return;
-        }
-        if (!new WaitMinimunImageDownloader(getActivity(), urlList).get()) {
-            showSnackbar(false);
-        }
-    }
-
-    private String downloadTarget;
-    private void download(String url) {
-        if (!hasPermission()) {
-            // 権限がない場合はリクエスト
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_DOWNLOAD);
-            downloadTarget = url;
-            return;
-        }
-        if (!new SimpleImageDownloader(getActivity(), url).get()) {
-            showSnackbar(false);
-        }
-    }
-
-    private static final int REQUEST_DOWNLOAD = 1;
-    private static final int REQUEST_DOWNLOAD_ALL = 2;
-
-    private boolean hasPermission() {
-        final int permission = ContextCompat.checkSelfPermission(
-                getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        return permission == PackageManager.PERMISSION_GRANTED;
-    }
-
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (REQUEST_DOWNLOAD == requestCode) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                download(downloadTarget);
-            } else {
-                fabDownload.setColorNormalResId(R.color.accent);
-                fabDownload.setTitle(getString(R.string.download_image));
-                Snackbar.make(coordinatorLayout, R.string.no_permission_download, Snackbar.LENGTH_LONG)
-                        .show();
-            }
-        } else if (REQUEST_DOWNLOAD_ALL == requestCode) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                download(downloadTargetList);
-            } else {
-                fabDownload.setColorNormalResId(R.color.accent);
-                fabDownload.setTitle(getString(R.string.download_image));
-                Snackbar.make(coordinatorLayout, R.string.no_permission_download, Snackbar.LENGTH_LONG)
-                        .show();
-            }
-        }
-    }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-    private Uri recentDownloadedUri;
-    /**
-     * WaitMinimunImageDownloader のコールバック
-     * @param callback callback
-     */
-    @Subscribe
-    public void onFinishDownload(
-            WaitMinimunImageDownloader.Callback.ResponseDownloadImage callback) {
-        if (callback != null && callback.file != null) {
-            SdCardUtils.scanFile(getActivity(), callback.file,
-                    new MediaScannerConnection.OnScanCompletedListener() {
-                        @Override
-                        public void onScanCompleted(String path, Uri uri) {
-                            Log.w(TAG, "path(" + path + ") uri(" + uri + ")");
-                            recentDownloadedUri = uri;
-                        }
-                    });
+        if (resultCode != Activity.RESULT_OK) {
+            fabDownload.setColorNormalResId(R.color.accent);
+            fabDownload.setTitle(getString(R.string.download_image));
+            Snackbar.make(coordinatorLayout, R.string.no_permission_download, Snackbar.LENGTH_LONG)
+                    .show();
+            return;
+        }
+
+        switch (requestCode) {
+            case DOWNLOAD:
+                if (!new SimpleImageDownloader(getActivity(), data.getStringArrayListExtra(
+                        PermissionRequireActivity.ExtraKey.DOWNLOAD)).get()) {
+                    Snackbar.make(coordinatorLayout, R.string.failed_to_download, Snackbar.LENGTH_LONG)
+                            .show();
+                }
+                break;
+            case DOWNLOAD_LIST:
+                if (!new WaitMinimunImageDownloader(getActivity(), data.getStringArrayListExtra(
+                        PermissionRequireActivity.ExtraKey.DOWNLOAD)).get()) {
+                    Snackbar.make(coordinatorLayout, R.string.failed_to_download, Snackbar.LENGTH_LONG)
+                            .show();
+                }
+                break;
         }
     }
 
@@ -269,9 +212,18 @@ public class BlogFragment extends Fragment {
     @Subscribe
     public void onFinishDownload(
             WaitMinimunImageDownloader.Callback.CompleteDownloadImage callback) {
-        // TODO: レスポンスリスト内にerrorがないことを確認してからSnackbarを表示すること
-        // TODO: 一部画像のダウンロードに失敗した場合はその旨を通知すること
-        showSnackbar(true);
+        if (callback != null
+                && !callback.responseList.isEmpty()
+                && callback.responseList != null) {
+            for (int i = callback.responseList.size(); 0 < i; --i) {
+                WaitMinimunImageDownloader.Response response = callback.responseList.get(i - 1);
+                File file = response.getFile();
+                if (file != null) {
+                    scanComplete(getActivity(), file);
+                    return;
+                }
+            }
+        }
     }
 
     /**
@@ -281,46 +233,43 @@ public class BlogFragment extends Fragment {
     @Subscribe
     public void onFinishDownload(SimpleImageDownloader.Callback callback) {
         if (callback != null && callback.file != null) {
-            SdCardUtils.scanFile(getActivity(), callback.file,
-                    new MediaScannerConnection.OnScanCompletedListener() {
-                        @Override
-                        public void onScanCompleted(String path, Uri uri) {
-                            Log.w(TAG, "path(" + path + ") uri(" + uri + ")");
-                            recentDownloadedUri = uri;
-                            final Activity activity = getActivity();
-                            if (activity != null) {
-                                activity.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        showSnackbar(true);
-                                    }
-                                });
-                            }
-                        }
-                    });
+            scanComplete(getActivity(), callback.file);
         }
     }
 
-    private void showSnackbar(boolean isSucceed) {
-        fabDownload.setColorNormalResId(R.color.accent);
-        fabDownload.setTitle(getString(R.string.download_image));
-        if (isSucceed) {
-            Snackbar.make(coordinatorLayout, R.string.download_finish, Snackbar.LENGTH_LONG)
-                    .setAction("確認する", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent();
-                            intent.setAction(Intent.ACTION_VIEW);
-                            intent.setDataAndType(recentDownloadedUri, "image/jpeg");
-                            getActivity().startActivity(intent);
-                        }
-                    })
-                    .setActionTextColor(getResources().getColor(R.color.accent))
-                    .show();
-        } else {
-            Snackbar.make(coordinatorLayout, R.string.failed_to_download, Snackbar.LENGTH_LONG)
-                    .show();
-        }
+    private void scanComplete(@Nullable Context context, @NonNull File file) {
+        scanComplete(context, file, true);
+    }
+
+    private void scanComplete(@Nullable Context context, @NonNull File file, final boolean showSnackbar) {
+        if (context == null) return;
+        SdCardUtils.scanFile(context, file,
+                new MediaScannerConnection.OnScanCompletedListener() {
+                    @Override
+                    public void onScanCompleted(String path, final Uri uri) {
+                        new android.os.Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (showSnackbar) showSnackbar(uri);
+                            }
+                        });
+                    }
+                });
+    }
+
+    private void showSnackbar(final Uri uri) {
+        Snackbar.make(coordinatorLayout, R.string.download_finish, Snackbar.LENGTH_LONG)
+                .setAction("確認する", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_VIEW);
+                        intent.setDataAndType(uri, "image/jpeg");
+                        startActivity(intent);
+                    }
+                })
+                .setActionTextColor(ContextCompat.getColor(getActivity(), R.color.accent))
+                .show();
     }
 
     public boolean goBack() {

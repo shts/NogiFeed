@@ -89,7 +89,7 @@ public class WaitMinimunImageDownloader extends ImageDownloader {
      * @return デフォルトは1秒
      */
     public int getWaitTime() {
-        return 3000;
+        return 1500;
     }
 
 }
