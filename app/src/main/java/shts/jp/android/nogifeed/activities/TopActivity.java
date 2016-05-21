@@ -122,23 +122,6 @@ public class TopActivity extends AppCompatActivity {
                 }
             }
         }
-
-        // 全件フィード画面でない場合は、全件フィード画面へ遷移する
-        if (!topAllFeedFragment()) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.container, new AllFeedListFragment(), AllFeedListFragment.class.getSimpleName());
-            ft.commit();
-            setLastSelectedMenuId(R.id.menu_all_feed);
-            return;
-        }
-
         super.onBackPressed();
-    }
-
-    private boolean topAllFeedFragment() {
-        AllFeedListFragment allFeedListFragment =
-                (AllFeedListFragment) getSupportFragmentManager().findFragmentByTag(
-                        AllFeedListFragment.class.getSimpleName());
-        return allFeedListFragment != null && !allFeedListFragment.isVisible();
     }
 }
