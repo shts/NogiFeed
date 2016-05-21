@@ -1,5 +1,6 @@
 package shts.jp.android.nogifeed.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.parse.ParseQuery;
 import com.squareup.otto.Subscribe;
 
 import shts.jp.android.nogifeed.R;
@@ -127,6 +129,7 @@ public class AllMemberGridListFragment extends Fragment {
                         break;
 
                     case ADD_FAVORITE:
+                        getActivity().setResult(Activity.RESULT_OK);
                         Favorite.toggle(member.getObjectId());
                         break;
 

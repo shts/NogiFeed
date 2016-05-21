@@ -1,5 +1,6 @@
 package shts.jp.android.nogifeed.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,15 +14,12 @@ import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
-import java.util.List;
-
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.AllMemberActivity;
 import shts.jp.android.nogifeed.adapters.FavoriteFeedListAdapter;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.Favorite;
 import shts.jp.android.nogifeed.models.eventbus.BusHolder;
-import shts.jp.android.nogifeed.views.MultiSwipeRefreshLayout;
 
 // TODO: インストール後に何度か起動された時、アプリ評価を誘導する View を表示する
 // TODO: View にお気に入り機能と共有機能を追加する
@@ -29,10 +27,9 @@ public class FavoriteMemberFeedListFragment extends Fragment {
 
     private static final String TAG = FavoriteMemberFeedListFragment.class.getSimpleName();
 
-    private MultiSwipeRefreshLayout swipeRefreshLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private View emptyView;
-    private static List<Entry> cache;
 
     @Override
     public void onResume() {
@@ -53,7 +50,7 @@ public class FavoriteMemberFeedListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = AllMemberActivity.getStartIntent(getActivity());
-                getContext().startActivity(intent);
+                startActivityForResult(intent, 0);
             }
         });
 
@@ -64,16 +61,14 @@ public class FavoriteMemberFeedListFragment extends Fragment {
         recyclerView.setHasFixedSize(true); // アイテムは固定サイズ
 
         // SwipeRefreshLayoutの設定
-        swipeRefreshLayout = (MultiSwipeRefreshLayout) view.findViewById(R.id.refresh);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 setupFavoriteMemberFeed();
             }
         });
-        swipeRefreshLayout.setSwipeableChildren(R.id.recyclerview, R.id.empty_view);
-        swipeRefreshLayout.setColorSchemeResources(
-                R.color.primary, R.color.primary, R.color.primary, R.color.primary);
+        swipeRefreshLayout.setColorSchemeResources(R.color.primary);
         swipeRefreshLayout.post(new Runnable() {
             @Override public void run() {
                 swipeRefreshLayout.setRefreshing(true);
@@ -83,6 +78,19 @@ public class FavoriteMemberFeedListFragment extends Fragment {
         setupFavoriteMemberFeed();
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
+            swipeRefreshLayout.post(new Runnable() {
+                @Override public void run() {
+                    swipeRefreshLayout.setRefreshing(true);
+                    setupFavoriteMemberFeed();
+                }
+            });
+        }
     }
 
     private void setupFavoriteMemberFeed() {
