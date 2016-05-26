@@ -1,5 +1,6 @@
 package shts.jp.android.nogifeed.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -91,6 +92,7 @@ public class BlogFragment extends Fragment {
         BusHolder.get().unregister(this);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_blog, null);
@@ -133,6 +135,7 @@ public class BlogFragment extends Fragment {
         coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.coordinator);
 
         webView = (WebView) view.findViewById(R.id.browser);
+        webView.getSettings().setJavaScriptEnabled(true);
         webView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
