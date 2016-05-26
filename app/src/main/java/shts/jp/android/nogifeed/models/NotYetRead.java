@@ -10,6 +10,7 @@ import com.parse.SaveCallback;
 
 import java.util.List;
 
+import shts.jp.android.nogifeed.entities.Blog;
 import shts.jp.android.nogifeed.models.eventbus.BusHolder;
 
 @ParseClassName("NotYetRead")
@@ -69,19 +70,14 @@ public class NotYetRead extends ParseObject {
         return -1;
     }
 
-    public static void add(String entryObjectId) {
-        Entry.getReference(entryObjectId).fetchIfNeededInBackground(new GetCallback<Entry>() {
+    public static void add(Blog blog) {
+        NotYetRead notYetRead = new NotYetRead();
+        notYetRead.put("articleUrl", blog.getUrl());
+        notYetRead.put("memberObjectId", blog.getAuthorId());
+        notYetRead.pinInBackground(new SaveCallback() {
             @Override
-            public void done(Entry entry, ParseException e) {
-                NotYetRead notYetRead = new NotYetRead();
-                notYetRead.put("articleUrl", entry.getBlogUrl());
-                notYetRead.put("memberObjectId", entry.getAuthorId());
-                notYetRead.pinInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        BusHolder.get().post(new ChangedReadState());
-                    }
-                });
+            public void done(ParseException e) {
+                BusHolder.get().post(new ChangedReadState());
             }
         });
     }

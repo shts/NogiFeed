@@ -43,7 +43,7 @@ public class FromParseReceiver extends BroadcastReceiver {
                 Blog blog = new Blog(json);
 
                 // 未読記事としてマーキング
-                NotYetRead.add(blog.getEntryObjectId());
+                NotYetRead.add(blog);
 
                 // Notification通知
                 new BlogUpdateNotification(context).show(blog);

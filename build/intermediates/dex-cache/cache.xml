@@ -121,18 +121,18 @@
         <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/com.android.support-support-v4-23.4.0_7e8de5ff00184cc90bd32f1b99c47dc4cc704d1e.jar" />
     </item>
     <item
-        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
-        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/com.android.support-recyclerview-v7-23.4.0_b4188441b5d7a5e2cd906fc35b6a36c6b8dc6ba2.jar" />
-    </item>
-    <item
         jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.squareup/otto/1.3.8/cf615176cd1177edf71d3c9605f8dc148fede6be/otto-1.3.8.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="cf615176cd1177edf71d3c9605f8dc148fede6be">
         <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/otto-1.3.8_5c6b9756fddb5f0aabb2cda3cab21719ef1d1f60.jar" />
+    </item>
+    <item
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/com.android.support-recyclerview-v7-23.4.0_b4188441b5d7a5e2cd906fc35b6a36c6b8dc6ba2.jar" />
     </item>
     <item
         jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/jars/classes.jar"
@@ -149,18 +149,18 @@
         <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/icepick-3.2.0_4c7843de3b6db7bd92524a13378efdff4b52618c.jar" />
     </item>
     <item
-        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.jpardogo.materialtabstrip/library/1.0.5/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="9379b711762196bf7ec8bb0324779b444df6d182">
-        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/com.jpardogo.materialtabstrip-library-1.0.5_cbc0e881deedebb5cf3da70f43e246c09e479ab0.jar" />
-    </item>
-    <item
         jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.github.machinarius/preferencefragment/0.1.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.3"
         sha1="648463e00c6883d01b6c11a6781776203334b6fc">
         <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/com.github.machinarius-preferencefragment-0.1.1_eb3ecb44ac819ed83a9a0b6dfa4b0a818b8034e8.jar" />
+    </item>
+    <item
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.jpardogo.materialtabstrip/library/1.0.5/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="9379b711762196bf7ec8bb0324779b444df6d182">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/release/com.jpardogo.materialtabstrip-library-1.0.5_cbc0e881deedebb5cf3da70f43e246c09e479ab0.jar" />
     </item>
     <item
         jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.parse/parse-android/1.11.0/6592129dec2caa8791d322c7e4b6b7a30e8eadae/parse-android-1.11.0.jar"
