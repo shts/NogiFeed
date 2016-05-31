@@ -236,8 +236,7 @@ public class BlogFragment extends Fragment {
                 WaitMinimunImageDownloader.Response response = callback.responseList.get(i - 1);
                 File file = response.getFile();
                 if (file != null) {
-                    scanComplete(getActivity(), file);
-                    return;
+                    scanComplete(getActivity(), file, 0 <= i);
                 }
             }
         }
