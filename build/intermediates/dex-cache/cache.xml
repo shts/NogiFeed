@@ -1,2 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/Applications/git/android/NogiFeed/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="27a50266addf833bdea2152b2721105caf925940">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_07c1cf7cce3f3fbeb9b481359679419c32c7892b/classes.dex" />
+    </item>
+
+</items>
