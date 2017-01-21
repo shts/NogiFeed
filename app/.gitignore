@@ -16,3 +16,5 @@ gradle.properties
 
 #Google Analytics Settings
 src/main/res/xml/global_tracker.xml
+
+*.json
