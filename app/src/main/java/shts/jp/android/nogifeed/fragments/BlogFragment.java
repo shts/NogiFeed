@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
@@ -114,7 +115,15 @@ public class BlogFragment extends Fragment {
                 if (downloadThumbnail()) {
                     urlList.addAll(entry.getUploadedThumbnailUrls());
                 }
-                urlList.addAll(entry.getUploadedRawImageUrls());
+
+                // 高画質画像が有効期限切れのトーストを表示する
+                if (entry.getUploadedRawImageUrls() == null
+                        || entry.getUploadedRawImageUrls().isEmpty()) {
+                    Toast.makeText(getActivity(),  R.string.recomend_download_thumbnail, Toast.LENGTH_SHORT).show();
+                } else {
+                    urlList.addAll(entry.getUploadedRawImageUrls());
+                }
+
                 if (urlList.isEmpty()) {
                     if (downloadThumbnail()) {
                         Snackbar.make(coordinatorLayout, R.string.no_download_image, Snackbar.LENGTH_LONG)
@@ -273,7 +282,7 @@ public class BlogFragment extends Fragment {
 
     private void showSnackbar(final Uri uri) {
         Snackbar.make(coordinatorLayout, R.string.download_finish, Snackbar.LENGTH_LONG)
-                .setAction("確認する", new View.OnClickListener() {
+                .setAction(R.string.confirm, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent();

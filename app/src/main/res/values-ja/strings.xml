@@ -118,6 +118,7 @@
     <string name="downloading_image">"ダウンロード中です …"</string>
     <string name="download_image">"画像をダウンロードする"</string>
     <string name="download_finish">"ダウンロード完了しました"</string>
+    <string name="confirm">確認する</string>
     <string name="failed_to_download">"ダウンロードに失敗しました。通信環境をご確認下さい"</string>
     <string name="no_permission_download">"アプリに書き込み権限がないためダウンロードできません"</string>
 

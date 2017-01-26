@@ -129,6 +129,7 @@
     <string name="downloading_image">Now Downloading …</string>
     <string name="download_image">Download all images</string>
     <string name="download_finish">Finish Download</string>
+    <string name="confirm">Confirm</string>
     <string name="failed_to_download">Failed to download. Please check your network</string>
     <string name="no_permission_download">Cannot download images because of have not permission</string>
 

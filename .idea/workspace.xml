@@ -58,18 +58,27 @@
       <file leaf-file-name="BlogFragment.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/fragments/BlogFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="291">
-              <caret line="266" column="48" selection-start-line="266" selection-start-column="36" selection-end-line="266" selection-end-column="48" />
+            <state relative-caret-position="185">
+              <caret line="118" column="41" selection-start-line="118" selection-start-column="41" selection-end-line="118" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#7549#7583#0" expanded="true" />
-                <element signature="e#7631#7662#0" expanded="true" />
-                <element signature="e#8871#8905#0" expanded="true" />
-                <element signature="e#10165#10673#0" expanded="true" />
-                <element signature="e#10672#10673#0" expanded="true" />
-                <element signature="e#10771#10795#0" expanded="true" />
-                <element signature="e#10854#11231#0" expanded="true" />
-                <element signature="e#11230#11231#0" expanded="true" />
+                <element signature="e#4433#4469#0" expanded="true" />
+                <element signature="e#4757#4783#0" expanded="true" />
+                <element signature="e#4934#4970#0" expanded="true" />
+                <element signature="e#5206#5243#0" expanded="true" />
+                <element signature="e#6182#6239#0" expanded="true" />
+                <element signature="e#7918#7952#0" expanded="true" />
+                <element signature="e#8000#8031#0" expanded="true" />
+                <element signature="e#9240#9274#0" expanded="true" />
+                <element signature="e#10034#10068#0" expanded="true" />
+                <element signature="e#10534#11042#0" expanded="true" />
+                <element signature="e#10773#11000#0" expanded="true" />
+                <element signature="e#10999#11000#0" expanded="true" />
+                <element signature="e#11041#11042#0" expanded="true" />
+                <element signature="e#11140#11164#0" expanded="true" />
+                <element signature="e#11215#11231#0" expanded="true" />
+                <element signature="e#11233#11610#0" expanded="true" />
+                <element signature="e#11609#11610#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1917,8 +1926,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/models/NotYetRead.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/models/UnreadArticle.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/providers/dao/UnreadArticle.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/providers/dao/Favorite.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/providers/FavoriteContentObserver.java" />
@@ -1966,8 +1973,10 @@
         <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/NogiFeedApplication.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/fragments/FavoriteMemberFeedListFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_favorite_feed_list.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/fragments/BlogFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/fragments/AllFeedListFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values-ja/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/fragments/BlogFragment.java" />
       </list>
     </option>
   </component>
@@ -2679,7 +2688,7 @@
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24937862" sideWeight="0.5065574" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33114755" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.49344262" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -2694,7 +2703,7 @@
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17213115" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20491803" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29660314" sideWeight="0.49344262" order="0" side_tool="false" content_ui="tabs" />
@@ -2718,14 +2727,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/providers/dao/ProfileWidgets.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="45" selection-start-line="9" selection-start-column="45" selection-end-line="9" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gradle.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -2988,7 +2989,7 @@
         <state relative-caret-position="30">
           <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3096,14 +3097,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/attrs.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -3195,20 +3188,45 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="131" column="27" selection-start-line="131" selection-start-column="27" selection-end-line="131" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-ja/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="120" column="31" selection-start-line="120" selection-start-column="31" selection-end-line="120" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shts/jp/android/nogifeed/fragments/BlogFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="266" column="48" selection-start-line="266" selection-start-column="36" selection-end-line="266" selection-end-column="48" />
+        <state relative-caret-position="185">
+          <caret line="118" column="41" selection-start-line="118" selection-start-column="41" selection-end-line="118" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#7549#7583#0" expanded="true" />
-            <element signature="e#7631#7662#0" expanded="true" />
-            <element signature="e#8871#8905#0" expanded="true" />
-            <element signature="e#10165#10673#0" expanded="true" />
-            <element signature="e#10672#10673#0" expanded="true" />
-            <element signature="e#10771#10795#0" expanded="true" />
-            <element signature="e#10854#11231#0" expanded="true" />
-            <element signature="e#11230#11231#0" expanded="true" />
+            <element signature="e#4433#4469#0" expanded="true" />
+            <element signature="e#4757#4783#0" expanded="true" />
+            <element signature="e#4934#4970#0" expanded="true" />
+            <element signature="e#5206#5243#0" expanded="true" />
+            <element signature="e#6182#6239#0" expanded="true" />
+            <element signature="e#7918#7952#0" expanded="true" />
+            <element signature="e#8000#8031#0" expanded="true" />
+            <element signature="e#9240#9274#0" expanded="true" />
+            <element signature="e#10034#10068#0" expanded="true" />
+            <element signature="e#10534#11042#0" expanded="true" />
+            <element signature="e#10773#11000#0" expanded="true" />
+            <element signature="e#10999#11000#0" expanded="true" />
+            <element signature="e#11041#11042#0" expanded="true" />
+            <element signature="e#11140#11164#0" expanded="true" />
+            <element signature="e#11215#11231#0" expanded="true" />
+            <element signature="e#11233#11610#0" expanded="true" />
+            <element signature="e#11609#11610#0" expanded="true" />
           </folding>
         </state>
       </provider>
