@@ -11,21 +11,18 @@ import java.util.List;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.models.Entry;
-import shts.jp.android.nogifeed.models.NotYetRead;
-import shts.jp.android.nogifeed.utils.DateUtils;
+import shts.jp.android.nogifeed.providers.dao.UnreadArticles;
 
 public class MemberFeedListAdapter extends RecyclableAdapter<Entry> {
 
-    private static final String TAG = MemberFeedListAdapter.class.getSimpleName();
-
-    class ViewHolder extends RecyclerView.ViewHolder {
+    private class ViewHolder extends RecyclerView.ViewHolder {
         TextView titleTextView;
         TextView authorNameTextView;
         TextView updatedTextView;
         View unreadMarker;
         View root;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             root = view;
             titleTextView = (TextView) view.findViewById(R.id.title);
@@ -36,7 +33,7 @@ public class MemberFeedListAdapter extends RecyclableAdapter<Entry> {
     }
 
     public interface OnItemClickCallback {
-        public void onClick(Entry entry);
+        void onClick(Entry entry);
     }
 
     private OnItemClickCallback clickCallback;
@@ -45,8 +42,11 @@ public class MemberFeedListAdapter extends RecyclableAdapter<Entry> {
         this.clickCallback = clickCallback;
     }
 
+    private Context context;
+
     public MemberFeedListAdapter(Context context, List<Entry> list) {
         super(context, list);
+        this.context = context;
     }
 
     @Override
@@ -54,9 +54,9 @@ public class MemberFeedListAdapter extends RecyclableAdapter<Entry> {
         final ViewHolder holder = (ViewHolder) viewHolder;
         final Entry entry = (Entry) object;
         holder.titleTextView.setText(entry.getTitle());
-        holder.authorNameTextView.setText(entry.getAuthor());
-        holder.updatedTextView.setText(DateUtils.dateToString(entry.getPublishedDate()));
-        final boolean unread = NotYetRead.isRead(entry.getBlogUrl());
+        holder.authorNameTextView.setText(entry.getMemberName());
+        holder.updatedTextView.setText(entry.getPublished());
+        final boolean unread = UnreadArticles.exist(context, entry.getUrl());
         if (unread) {
             holder.unreadMarker.setVisibility(View.VISIBLE);
         } else {
@@ -74,7 +74,6 @@ public class MemberFeedListAdapter extends RecyclableAdapter<Entry> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(LayoutInflater inflater, ViewGroup viewGroup) {
         View view = inflater.inflate(R.layout.list_item_member_entry, viewGroup, false);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 }

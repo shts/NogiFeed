@@ -13,8 +13,6 @@ import shts.jp.android.nogifeed.fragments.NewsBrowseFragment;
 
 public class NewsBrowseActivity extends AppCompatActivity {
 
-    private static final String TAG = NewsBrowseActivity.class.getSimpleName();
-
     public static Intent getStartIntent(final Context context, News news) {
         Intent intent = new Intent(context, NewsBrowseActivity.class);
         intent.putExtra("news", news);

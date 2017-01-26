@@ -1,5 +1,6 @@
 package shts.jp.android.nogifeed.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,22 +13,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.squareup.otto.Subscribe;
+import java.util.ArrayList;
+import java.util.List;
 
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.AllMemberActivity;
 import shts.jp.android.nogifeed.adapters.FavoriteFeedListAdapter;
-import shts.jp.android.nogifeed.models.Entry;
-import shts.jp.android.nogifeed.models.Favorite;
+import shts.jp.android.nogifeed.api.NogiFeedApiClient;
+import shts.jp.android.nogifeed.models.Entries;
 import shts.jp.android.nogifeed.models.eventbus.BusHolder;
+import shts.jp.android.nogifeed.providers.dao.Favorite;
+import shts.jp.android.nogifeed.providers.dao.Favorites;
+import shts.jp.android.nogifeed.views.HackySwipeRefreshLayout;
 
 // TODO: インストール後に何度か起動された時、アプリ評価を誘導する View を表示する
 // TODO: View にお気に入り機能と共有機能を追加する
 public class FavoriteMemberFeedListFragment extends Fragment {
 
-    private static final String TAG = FavoriteMemberFeedListFragment.class.getSimpleName();
-
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private HackySwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private View emptyView;
 
@@ -45,6 +55,7 @@ public class FavoriteMemberFeedListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        @SuppressLint("InflateParams")
         View view = inflater.inflate(R.layout.fragment_favorite_feed_list, null);
         view.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,21 +72,22 @@ public class FavoriteMemberFeedListFragment extends Fragment {
         recyclerView.setHasFixedSize(true); // アイテムは固定サイズ
 
         // SwipeRefreshLayoutの設定
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        swipeRefreshLayout = (HackySwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                setupFavoriteMemberFeed();
+                getEntries();
             }
         });
         swipeRefreshLayout.setColorSchemeResources(R.color.primary);
         swipeRefreshLayout.post(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 swipeRefreshLayout.setRefreshing(true);
             }
         });
 
-        setupFavoriteMemberFeed();
+        getEntries();
 
         return view;
     }
@@ -84,48 +96,78 @@ public class FavoriteMemberFeedListFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
-            swipeRefreshLayout.post(new Runnable() {
-                @Override public void run() {
-                    swipeRefreshLayout.setRefreshing(true);
-                    setupFavoriteMemberFeed();
+            getEntries();
+        }
+    }
+
+    private CompositeSubscription subscriptions = new CompositeSubscription();
+
+    private void getEntries() {
+        setVisibilityEmptyView(false);
+
+        subscriptions.add(createFavoriteMemberObservable()
+                .map(new Func1<Favorites, List<Integer>>() {
+                    @Override
+                    public List<Integer> call(Favorites favorites) {
+                        List<Integer> memberIds = new ArrayList<>();
+                        for (Favorite f : favorites) {
+                            memberIds.add(f.memberId);
+                        }
+                        return memberIds;
+                    }
+                })
+                .flatMap(new Func1<List<Integer>, Observable<Entries>>() {
+                    @Override
+                    public Observable<Entries> call(List<Integer> integers) {
+                        return NogiFeedApiClient.getMemberEntries(integers, 0, 30);
+                    }
+                })
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        swipeRefreshLayout.setRefreshing(true);
+                    }
+                })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Entries>() {
+                    @Override
+                    public void onCompleted() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        setVisibilityEmptyView(false);
+                        swipeRefreshLayout.setRefreshing(false);
+                        Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
+                                Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(Entries entries) {
+                        if (entries == null || entries.isEmpty()) {
+                            setVisibilityEmptyView(true);
+                            return;
+                        }
+                        recyclerView.setAdapter(new FavoriteFeedListAdapter(getActivity(), entries));
+                    }
+                }));
+    }
+
+    private Observable<Favorites> createFavoriteMemberObservable() {
+        return Observable.create(new Observable.OnSubscribe<Favorites>() {
+            @Override
+            public void call(Subscriber<? super Favorites> subscriber) {
+                try {
+                    subscriber.onNext(Favorites.all(getContext()));
+                    subscriber.onCompleted();
+                } catch (Throwable e) {
+                    subscriber.onError(e);
                 }
-            });
-        }
-    }
-
-    private void setupFavoriteMemberFeed() {
-        setVisibilityEmptyView(false);
-        Favorite.all();
-    }
-
-    @Subscribe
-    public void onGotAllFavorities(Favorite.GetFavoritesCallback callback) {
-        if (callback.hasError()) {
-            if (swipeRefreshLayout.isRefreshing()) {
-                swipeRefreshLayout.setRefreshing(false);
             }
-            setVisibilityEmptyView(true);
-            return;
-        }
-        Entry.findById(30, 0, callback.favorites);
-    }
-
-    @Subscribe
-    public void onGotAllEntries(Entry.GotAllEntryCallback.FindById callback) {
-        setVisibilityEmptyView(true);
-        if (swipeRefreshLayout != null) {
-            if (swipeRefreshLayout.isRefreshing()) {
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        }
-        if (callback.hasError()) {
-            // Show error toast
-            Toast.makeText(getActivity(), getResources().getString(R.string.feed_failure),
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
-        setVisibilityEmptyView(false);
-        recyclerView.setAdapter(new FavoriteFeedListAdapter(getActivity(), callback.entries));
+        });
     }
 
     private void setVisibilityEmptyView(boolean isVisible) {

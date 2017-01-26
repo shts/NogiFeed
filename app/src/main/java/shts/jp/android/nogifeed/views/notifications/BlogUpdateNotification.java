@@ -9,16 +9,13 @@ import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 
-import com.parse.GetCallback;
-import com.parse.ParseException;
 import com.squareup.picasso.Picasso;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.BlogActivity;
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.entities.Blog;
 import shts.jp.android.nogifeed.models.Entry;
-import shts.jp.android.nogifeed.models.Favorite;
+import shts.jp.android.nogifeed.providers.dao.Favorites;
 import shts.jp.android.nogifeed.utils.PreferencesUtils;
 import shts.jp.android.nogifeed.views.transformations.CircleTransformation;
 
@@ -39,11 +36,14 @@ public class BlogUpdateNotification extends NotificationWithId {
 
     private static final CircleTransformation TRANSFORMATION = new CircleTransformation();
 
+    private Context context;
+
     public BlogUpdateNotification(Context context) {
         super(context);
+        this.context = context;
     }
 
-    public void show(Blog blog) {
+    public void show(Entry entry) {
         // ブログ更新通知可否設定
         if (!enable()) {
             Logger.d(TAG, "do not show notification because of disable from SettingsFragment");
@@ -52,13 +52,13 @@ public class BlogUpdateNotification extends NotificationWithId {
         // ブログ更新通知制限設定
         if (restrict()) {
             // 押しメンの場合false, 押しメンでない場合trueを返却する
-            if (!Favorite.exist(blog.getAuthorId())) {
+            if (!Favorites.exist(context, entry.getMemberId())) {
                 Logger.d(TAG, "do not show restricted because of disable from SettingsFragment");
                 return;
             }
         }
 
-        Intent intent = BlogActivity.getStartIntent(context, blog);
+        Intent intent = BlogActivity.getStartIntent(context, entry);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -68,8 +68,8 @@ public class BlogUpdateNotification extends NotificationWithId {
                 context, notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.notification_blog_update);
-        views.setTextViewText(R.id.title, blog.getTitle());
-        views.setTextViewText(R.id.text, blog.getAuthor());
+        views.setTextViewText(R.id.title, entry.getTitle());
+        views.setTextViewText(R.id.text, entry.getMemberName());
         Notification notification = new NotificationCompat.Builder(context)
                 .setContentIntent(contentIntent)
                 .setContent(views)
@@ -85,8 +85,8 @@ public class BlogUpdateNotification extends NotificationWithId {
 
         notified(notificationId);
 
-        if (!TextUtils.isEmpty(blog.getAuthorImageUrl())) {
-            Picasso.with(context).load(blog.getAuthorImageUrl())
+        if (!TextUtils.isEmpty(entry.getMemberImageUrl())) {
+            Picasso.with(context).load(entry.getMemberImageUrl())
                     .transform(TRANSFORMATION).into(views, R.id.icon, notificationId, notification);
         }
     }

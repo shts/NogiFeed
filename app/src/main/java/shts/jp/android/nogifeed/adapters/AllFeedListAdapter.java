@@ -14,8 +14,7 @@ import java.util.List;
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.MemberDetailActivity;
 import shts.jp.android.nogifeed.models.Entry;
-import shts.jp.android.nogifeed.models.Favorite;
-import shts.jp.android.nogifeed.utils.DateUtils;
+import shts.jp.android.nogifeed.providers.dao.Favorites;
 import shts.jp.android.nogifeed.utils.PicassoHelper;
 
 public class AllFeedListAdapter extends BindableAdapter<Entry> {
@@ -64,7 +63,7 @@ public class AllFeedListAdapter extends BindableAdapter<Entry> {
     public void bindView(final Entry entry, int position, View view) {
         final ViewHolder holder = (ViewHolder) view.getTag();
 
-        final String profileImageUrl = entry.getAuthorImageUrl();
+        final String profileImageUrl = entry.getMemberImageUrl();
         if (TextUtils.isEmpty(profileImageUrl)) {
             // kenkyusei
             holder.profileImageView.setImageResource(R.drawable.kensyusei);
@@ -75,16 +74,18 @@ public class AllFeedListAdapter extends BindableAdapter<Entry> {
             @Override
             public void onClick(View view) {
                 Intent intent = MemberDetailActivity.getStartIntent(
-                        getContext(), entry.getAuthorId());
+                        getContext(), entry.getMemberId());
                 getContext().startActivity(intent);
             }
         });
 
         holder.titleTextView.setText(entry.getTitle());
-        holder.authorNameTextView.setText(entry.getAuthor());
-        holder.updatedTextView.setText(DateUtils.dateToString(entry.getEntryDate()));
+        holder.authorNameTextView.setText(entry.getMemberName());
+        // TODO:
+//        holder.updatedTextView.setText(DateUtils.dateToString(entry.getEntryDate()));
+        holder.updatedTextView.setText(entry.getPublished());
         holder.favoriteImageView.setVisibility(
-                Favorite.exist(entry.getAuthorId()) ? View.VISIBLE : View.GONE);
+                Favorites.exist(getContext(), entry.getMemberId()) ? View.VISIBLE : View.GONE);
 
         if (getCount() - 1 <= position) {
             pageMaxScrolledListener.onScrolledMaxPage();

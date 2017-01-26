@@ -29,8 +29,6 @@ import shts.jp.android.nogifeed.R;
 @RuntimePermissions
 public class PermissionRequireActivity extends AppCompatActivity {
 
-    private static final String TAG = PermissionRequireActivity.class.getSimpleName();
-
     @IntDef(Type.DOWNLOAD)
     @Retention(RetentionPolicy.SOURCE)
     public @interface Type {

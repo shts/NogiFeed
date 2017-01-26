@@ -9,6 +9,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -25,16 +26,16 @@ public class NogiFeedProvider extends ContentProvider {
         URI_MATCHER.addURI(NogiFeedContent.AUTHORITY, NogiFeedContent.TABLE_PROFILE_WIDGET, PROFILE_WIDGET);
         URI_MATCHER.addURI(NogiFeedContent.AUTHORITY, NogiFeedContent.TABLE_UNREAD, UNREAD);
 	}
-	private NogiFeedDatabaseHelper mDBHelper;
+	private NogiFeedDatabaseHelper dbHelper;
 
 	@Override
 	public boolean onCreate() {
-		mDBHelper = new NogiFeedDatabaseHelper(getContext());
+		dbHelper = new NogiFeedDatabaseHelper(getContext());
 		return true;
 	}
 
 	@Override
-	public Uri insert(Uri uri, ContentValues initialValues) {
+	public Uri insert(@NonNull Uri uri, ContentValues initialValues) {
 		if ((URI_MATCHER.match(uri) != FAVORITE)
                 && (URI_MATCHER.match(uri) != PROFILE_WIDGET)
                 && (URI_MATCHER.match(uri) != UNREAD)) {
@@ -48,7 +49,7 @@ public class NogiFeedProvider extends ContentProvider {
 			values = new ContentValues();
 		}
 
-		SQLiteDatabase db = mDBHelper.getWritableDatabase();
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
 
 		long rowID;
 		switch (URI_MATCHER.match(uri)) {
@@ -84,8 +85,8 @@ public class NogiFeedProvider extends ContentProvider {
 	}
 
 	@Override
-	public int delete(Uri uri, String whereClause, String[] whereArgs) {
-		SQLiteDatabase db = mDBHelper.getWritableDatabase();
+	public int delete(@NonNull Uri uri, String whereClause, String[] whereArgs) {
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		int count;
 
 		switch (URI_MATCHER.match(uri)) {
@@ -94,7 +95,7 @@ public class NogiFeedProvider extends ContentProvider {
 				count = db.delete(NogiFeedContent.TABLE_FAVORITE, whereClause, whereArgs);
 			} else {
 				count = db.delete(NogiFeedContent.TABLE_FAVORITE, " "
-						+ NogiFeedContent.Favorite.KEY_ID + " like '%'", null);
+						+ NogiFeedContent.Favorite.Key.ID + " like '%'", null);
 			}
 			break;
         case PROFILE_WIDGET:
@@ -102,7 +103,7 @@ public class NogiFeedProvider extends ContentProvider {
                 count = db.delete(NogiFeedContent.TABLE_PROFILE_WIDGET, whereClause, whereArgs);
             } else {
                 count = db.delete(NogiFeedContent.TABLE_PROFILE_WIDGET, " "
-                        + NogiFeedContent.ProfileWidget.KEY_ID + " like '%'", null);
+                        + NogiFeedContent.ProfileWidget.Key.ID + " like '%'", null);
             }
             break;
         case UNREAD:
@@ -110,7 +111,7 @@ public class NogiFeedProvider extends ContentProvider {
                 count = db.delete(NogiFeedContent.TABLE_UNREAD, whereClause, whereArgs);
             } else {
                 count = db.delete(NogiFeedContent.TABLE_UNREAD, " "
-                        + NogiFeedContent.UnRead.KEY_ID + " like '%'", null);
+                        + NogiFeedContent.UnRead.Key.ID + " like '%'", null);
             }
             break;
 		default:
@@ -121,10 +122,10 @@ public class NogiFeedProvider extends ContentProvider {
 	}
 
 	@Override
-	public int update(Uri uri, ContentValues values, String where,
+	public int update(@NonNull Uri uri, ContentValues values, String where,
 			String[] whereArgs) {
 
-		SQLiteDatabase db = mDBHelper.getWritableDatabase();
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		int count;
 		switch (URI_MATCHER.match(uri)) {
 		case FAVORITE:
@@ -145,7 +146,7 @@ public class NogiFeedProvider extends ContentProvider {
 	}
 
 	@Override
-	public Cursor query(Uri uri, String[] projection, String selection,
+	public Cursor query(@NonNull Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
 
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
@@ -156,7 +157,7 @@ public class NogiFeedProvider extends ContentProvider {
 		case FAVORITE:
             qb.setTables(NogiFeedContent.TABLE_FAVORITE);
 			if (TextUtils.isEmpty(sortOrder)) {
-				orderBy = NogiFeedContent.Favorite.KEY_ID + " DESC";
+				orderBy = NogiFeedContent.Favorite.Key.ID + " DESC";
 			} else {
 				orderBy = sortOrder;
 			}
@@ -164,7 +165,7 @@ public class NogiFeedProvider extends ContentProvider {
         case PROFILE_WIDGET:
             qb.setTables(NogiFeedContent.TABLE_PROFILE_WIDGET);
             if (TextUtils.isEmpty(sortOrder)) {
-                orderBy = NogiFeedContent.ProfileWidget.KEY_ID + " DESC";
+                orderBy = NogiFeedContent.ProfileWidget.Key.ID + " DESC";
             } else {
                 orderBy = sortOrder;
             }
@@ -172,7 +173,7 @@ public class NogiFeedProvider extends ContentProvider {
         case UNREAD:
             qb.setTables(NogiFeedContent.TABLE_UNREAD);
             if (TextUtils.isEmpty(sortOrder)) {
-                orderBy = NogiFeedContent.UnRead.KEY_ID + " DESC";
+                orderBy = NogiFeedContent.UnRead.Key.ID + " DESC";
             } else {
                 orderBy = sortOrder;
             }
@@ -181,7 +182,7 @@ public class NogiFeedProvider extends ContentProvider {
 			throw new IllegalArgumentException("Unknown URL " + uri);
 		}
 
-		SQLiteDatabase db = mDBHelper.getReadableDatabase();
+		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		Cursor cursor = qb.query(db, projection, selection, selectionArgs,
 				null, null, orderBy);
 		cursor.setNotificationUri(getContext().getContentResolver(), uri);
@@ -189,7 +190,7 @@ public class NogiFeedProvider extends ContentProvider {
 	}
 
 	@Override
-	public String getType(Uri uri) {
+	public String getType(@NonNull Uri uri) {
 		switch (URI_MATCHER.match(uri)) {
 		case FAVORITE:
 			return NogiFeedContent.Favorite.CONTENT_TYPE;

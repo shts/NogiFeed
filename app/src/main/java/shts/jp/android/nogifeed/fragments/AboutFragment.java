@@ -1,5 +1,6 @@
 package shts.jp.android.nogifeed.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,16 +21,14 @@ import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.adapters.BindableAdapter;
 import shts.jp.android.nogifeed.utils.IntentUtils;
 import shts.jp.android.nogifeed.utils.PicassoHelper;
-import shts.jp.android.nogifeed.utils.TrackerUtils;
 
 public class AboutFragment extends Fragment {
 
-    private static final String TAG = AboutFragment.class.getSimpleName();
     private static final String URL_ICON = "https://avatars1.githubusercontent.com/u/7928836?v=3&s=460";
     private ListView listView;
 
     private void setupAboutListAdapter() {
-        List<AboutItem> abouts = new ArrayList<AboutItem>();
+        List<AboutItem> abouts = new ArrayList<>();
         abouts.add(new AboutItem(getResources().getString(R.string.about_item_share),
                 R.drawable.ic_social_share, new OnClickListener() {
             @Override
@@ -55,14 +54,13 @@ public class AboutFragment extends Fragment {
     }
 
     private void setupListHeader(LayoutInflater inflater, ListView listView) {
-        View view = inflater.inflate(R.layout.about_header, null);
+        @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.about_header, null);
 
         ImageView developerIcon = (ImageView) view.findViewById(R.id.developer_icon);
         developerIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 IntentUtils.showDeveloper(getActivity());
-                TrackerUtils.sendTrack(getActivity(), TAG, "OnClicked", "developerIcon");
             }
         });
         PicassoHelper.loadAndCircleTransform(getActivity(), developerIcon, URL_ICON);
@@ -72,7 +70,7 @@ public class AboutFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_about, null);
+        @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.fragment_about, null);
 
         final Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nav_menu_about_app);
@@ -93,7 +91,6 @@ public class AboutFragment extends Fragment {
 
                 if (aboutItem != null && aboutItem.listener != null) {
                     aboutItem.listener.onClick();
-                    TrackerUtils.sendTrack(getActivity(), TAG, "OnClicked", aboutItem.title);
                 }
             }
         });
@@ -104,47 +101,49 @@ public class AboutFragment extends Fragment {
 
     class AboutItem {
         public final String title;
-        public final int iconRes;
-        public final OnClickListener listener;
+        final int iconRes;
+        final OnClickListener listener;
+
         AboutItem(String title, int iconRes, OnClickListener listener) {
             this.title = title;
             this.iconRes = iconRes;
             this.listener = listener;
         }
     }
+
     public interface OnClickListener {
-        public void onClick();
+        void onClick();
     }
 
-    static class AboutListAdapter extends BindableAdapter {
+    static class AboutListAdapter extends BindableAdapter<AboutItem> {
 
         class ViewHolder {
             TextView textView;
             ImageView imageView;
+
             ViewHolder(View view) {
                 textView = (TextView) view.findViewById(R.id.title);
                 imageView = (ImageView) view.findViewById(R.id.icon);
             }
         }
 
-        public AboutListAdapter(Context context, List<AboutItem> list) {
+        AboutListAdapter(Context context, List<AboutItem> list) {
             super(context, list);
         }
 
         @Override
         public View newView(LayoutInflater inflater, int position, ViewGroup container) {
-            View view = inflater.inflate(R.layout.list_item_about_action, null);
+            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.list_item_about_action, null);
             final ViewHolder holder = new ViewHolder(view);
             view.setTag(holder);
             return view;
         }
 
         @Override
-        public void bindView(Object item, int position, View view) {
+        public void bindView(AboutItem item, int position, View view) {
             final ViewHolder holder = (ViewHolder) view.getTag();
-            AboutItem aboutLocalItem = (AboutItem) item;
-            holder.imageView.setImageResource(aboutLocalItem.iconRes);
-            holder.textView.setText(aboutLocalItem.title);
+            holder.imageView.setImageResource(item.iconRes);
+            holder.textView.setText(item.title);
         }
     }
 }

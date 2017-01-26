@@ -18,8 +18,6 @@ import shts.jp.android.nogifeed.fragments.RequestFragment;
  */
 public class OtherMenuActivity extends AppCompatActivity {
 
-    private static final String TAG = OtherMenuActivity.class.getSimpleName();
-
     public static Intent getStartIntent(Context context, int id) {
         Intent intent = new Intent(context, OtherMenuActivity.class);
         intent.putExtra("menu_id", id);

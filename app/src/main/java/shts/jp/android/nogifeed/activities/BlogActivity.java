@@ -1,24 +1,24 @@
 package shts.jp.android.nogifeed.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 
 import shts.jp.android.nogifeed.R;
-import shts.jp.android.nogifeed.entities.Blog;
 import shts.jp.android.nogifeed.fragments.BlogFragment;
+import shts.jp.android.nogifeed.models.Entry;
 
-public class BlogActivity extends BaseActivity {
+public class BlogActivity extends AppCompatActivity {
 
-    public static Intent getStartIntent(Context context, Blog blog) {
+    public static Intent getStartIntent(Context context, Entry entry) {
         Intent intent = new Intent(context, BlogActivity.class);
-        intent.putExtra("blog", blog);
+        intent.putExtra("entry", entry);
         return intent;
     }
 
@@ -27,24 +27,24 @@ public class BlogActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blog);
 
-        final Blog blog = getIntent().getParcelableExtra("blog");
-        BlogFragment blogFragment = BlogFragment.newInstance(blog);
+        Entry entry = getIntent().getParcelableExtra("entry");
+        BlogFragment blogFragment = BlogFragment.newInstance(entry);
 
-        setupToolbar(blog);
+        setupToolbar(entry);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, blogFragment, BlogFragment.class.getSimpleName());
         ft.commit();
     }
 
-    private void setupToolbar(@Nullable Blog blog) {
-        if (blog == null) return;
+    private void setupToolbar(@Nullable Entry entry) {
+        if (entry == null) return;
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar == null) return;
 
-        toolbar.setTitle(blog.getTitle());
-        toolbar.setSubtitle(blog.getAuthor());
+        toolbar.setTitle(entry.getTitle());
+        toolbar.setSubtitle(entry.getMemberName());
         toolbar.setNavigationIcon(R.drawable.ic_clear_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,11 +52,6 @@ public class BlogActivity extends BaseActivity {
                 finish();
             }
         });
-    }
-
-    @Override
-    public Activity getTrackerActivity() {
-        return BlogActivity.this;
     }
 
     @Override

@@ -30,9 +30,9 @@ import java.util.ArrayList;
 
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.PermissionRequireActivity;
-import shts.jp.android.nogifeed.entities.Blog;
-import shts.jp.android.nogifeed.models.NotYetRead;
+import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.models.eventbus.BusHolder;
+import shts.jp.android.nogifeed.providers.dao.UnreadArticles;
 import shts.jp.android.nogifeed.utils.PreferencesUtils;
 import shts.jp.android.nogifeed.utils.SdCardUtils;
 import shts.jp.android.nogifeed.utils.ShareUtils;
@@ -53,11 +53,11 @@ public class BlogFragment extends Fragment {
     private FloatingActionButton fabDownload;
     private FloatingActionsMenu floatingActionsMenu;
 
-    private Blog blog;
+    private Entry entry;
 
-    public static BlogFragment newInstance(Blog blog) {
+    public static BlogFragment newInstance(Entry entry) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable("blog", blog);
+        bundle.putParcelable("entry", entry);
         BlogFragment blogFragment = new BlogFragment();
         blogFragment.setArguments(bundle);
         return blogFragment;
@@ -68,15 +68,15 @@ public class BlogFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         if (savedInstanceState != null) {
-            blog = savedInstanceState.getParcelable("blog");
+            entry = savedInstanceState.getParcelable("entry");
         } else {
-            blog = getArguments().getParcelable("blog");
+            entry = getArguments().getParcelable("entry");
         }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable("blog", blog);
+        outState.putParcelable("entry", entry);
         super.onSaveInstanceState(outState);
     }
 
@@ -95,7 +95,7 @@ public class BlogFragment extends Fragment {
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_blog, null);
+        @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.fragment_blog, null);
 
         floatingActionsMenu = (FloatingActionsMenu) view.findViewById(R.id.multiple_actions);
         FloatingActionButton fabShare = (FloatingActionButton) view.findViewById(R.id.fab_action_share);
@@ -103,7 +103,7 @@ public class BlogFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 floatingActionsMenu.collapse();
-                startActivity(ShareUtils.getShareBlogIntent(blog));
+                startActivity(ShareUtils.getShareBlogIntent(entry));
             }
         });
         fabDownload = (FloatingActionButton) view.findViewById(R.id.fab_action_download);
@@ -112,9 +112,9 @@ public class BlogFragment extends Fragment {
             public void onClick(View v) {
                 ArrayList<String> urlList = new ArrayList<>();
                 if (downloadThumbnail()) {
-                    urlList.addAll(blog.getUploadedThumbnailUrlList());
+                    urlList.addAll(entry.getUploadedThumbnailUrls());
                 }
-                urlList.addAll(blog.getUploadedRawUrlList());
+                urlList.addAll(entry.getUploadedRawImageUrls());
                 if (urlList.isEmpty()) {
                     if (downloadThumbnail()) {
                         Snackbar.make(coordinatorLayout, R.string.no_download_image, Snackbar.LENGTH_LONG)
@@ -145,8 +145,8 @@ public class BlogFragment extends Fragment {
         });
         webView.setWebViewClient(new BrowserViewClient());
 
-        webView.loadUrl(blog.getUrl());
-
+        webView.loadUrl(entry.getUrl());
+        UnreadArticles.remove(getContext(), entry.getUrl());
         return view;
     }
 
@@ -183,10 +183,6 @@ public class BlogFragment extends Fragment {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
             return true;
-        }
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            NotYetRead.delete(blog.getEntryObjectId());
         }
     }
 

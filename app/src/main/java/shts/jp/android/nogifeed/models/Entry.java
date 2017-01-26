@@ -1,162 +1,200 @@
 package shts.jp.android.nogifeed.models;
 
-import com.parse.FindCallback;
-import com.parse.ParseClassName;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import shts.jp.android.nogifeed.models.eventbus.BusHolder;
+/**
+ t.string :title
+ t.string :url
+ t.string :member_id
+ t.string :original_raw_image_urls
+ t.string :original_thumbnail_urls
+ t.string :uploaded_raw_image_urls
+ t.string :uploaded_thumbnail_urls
+ t.string :published
+ */
+public class Entry implements Parcelable {
 
-@ParseClassName("Entry")
-public class Entry extends ParseObject {
+    @SerializedName(value = "__id", alternate = {"id", "_id"})
+    @Expose
+    private Integer id;
+    @SerializedName(value = "__title", alternate = {"title", "_title"})
+    @Expose
+    private String title;
+    @SerializedName(value = "__url", alternate = {"url", "_url"})
+    @Expose
+    private String url;
+    @SerializedName(value = "__published", alternate = {"published", "_published"})
+    @Expose
+    private String published;
+    @SerializedName(value = "__original_raw_image_urls", alternate = {"original_raw_image_urls", "_original_raw_image_urls"})
+    @Expose
+    private String originalRawImageUrls;
+    @SerializedName(value = "__original_thumbnail_urls", alternate = {"original_thumbnail_urls", "_original_thumbnail_urls"})
+    @Expose
+    private String originalThumbnailUrls;
+    @SerializedName(value = "__uploaded_raw_image_urls", alternate = {"uploaded_raw_image_urls", "_uploaded_raw_image_urls"})
+    @Expose
+    private String uploadedRawImageUrls;
+    @SerializedName(value = "__uploaded_thumbnail_urls", alternate = {"uploaded_thumbnail_urls", "_uploaded_thumbnail_urls"})
+    @Expose
+    private String uploadedThumbnailUrls;
+    @SerializedName(value = "__member_id", alternate = {"member_id", "_member_id"})
+    @Expose
+    private Integer memberId;
+    @SerializedName(value = "__member_name", alternate = {"member_name", "_member_name"})
+    @Expose
+    private String memberName;
+    @SerializedName(value = "__member_image_url", alternate = {"member_image_url", "_member_image_url"})
+    @Expose
+    private String memberImageUrl;
 
-    public static final String KEY = Entry.class.getSimpleName();
-
-    public Entry() {
-        // for ParseObject
+    public Entry(Integer id, String title, String url, String published, String originalRawImageUrls, String originalThumbnailUrls, String uploadedRawImageUrls, String uploadedThumbnailUrls, Integer memberId, String memberName, String memberImageUrl) {
+        this.id = id;
+        this.title = title;
+        this.url = url;
+        this.published = published;
+        this.originalRawImageUrls = originalRawImageUrls;
+        this.originalThumbnailUrls = originalThumbnailUrls;
+        this.uploadedRawImageUrls = uploadedRawImageUrls;
+        this.uploadedThumbnailUrls = uploadedThumbnailUrls;
+        this.memberId = memberId;
+        this.memberName = memberName;
+        this.memberImageUrl = memberImageUrl;
     }
 
-    public static Entry getReference(String objectId) {
-        return ParseObject.createWithoutData(Entry.class, objectId);
-    }
-
-    public static void findById(int limit, int skip, String memberObjectId) {
-        ParseQuery<Entry> q = query(limit, skip);
-        q.whereEqualTo("author_id", memberObjectId);
-        q.findInBackground(new FindCallback<Entry>() {
-            @Override
-            public void done(List<Entry> entries, ParseException e) {
-                BusHolder.get().post(new GotAllEntryCallback.FindById(entries, e));
-            }
-        });
-    }
-
-    public static void findById(int limit, int skip, List<Favorite> favorites) {
-        List<String> ids = new ArrayList<>();
-        for (Favorite favorite : favorites) {
-            ids.add(favorite.getMemberObjectId());
-        }
-        ParseQuery<Entry> q = query(limit, skip);
-        q.whereContainedIn("author_id", ids);
-        q.orderByDescending("published");
-        q.findInBackground(new FindCallback<Entry>() {
-            @Override
-            public void done(List<Entry> entries, ParseException e) {
-                BusHolder.get().post(new GotAllEntryCallback.FindById(entries, e));
-            }
-        });
-    }
-
-    public static void all(int limit, int skip) {
-        query(limit, skip).findInBackground(new FindCallback<Entry>() {
-            @Override
-            public void done(List<Entry> entries, ParseException e) {
-                BusHolder.get().post(new GotAllEntryCallback.All(entries, e));
-            }
-        });
-    }
-
-    public static void next(int limit, int skip) {
-        query(limit, skip).findInBackground(new FindCallback<Entry>() {
-            @Override
-            public void done(List<Entry> entries, ParseException e) {
-                BusHolder.get().post(new GotAllEntryCallback.Next(entries, e));
-            }
-        });
-    }
-
-    private static ParseQuery<Entry> query(int limit, int skip) {
-        ParseQuery<Entry> query = ParseQuery.getQuery(Entry.class);
-        query.orderByDescending("published");
-        query.setLimit(limit);
-        query.setSkip(skip);
-        return query;
-    }
-
-    public static class GotAllEntryCallback {
-        public final List<Entry> entries;
-        public final ParseException e;
-        GotAllEntryCallback(List<Entry> entries, ParseException e) {
-            this.entries = entries;
-            this.e = e;
-        }
-        public static class All extends GotAllEntryCallback {
-            All(List<Entry> entries, ParseException e) { super(entries, e); }
-        }
-        public static class Next extends GotAllEntryCallback {
-            Next(List<Entry> entries, ParseException e) { super(entries, e); }
-        }
-        public static class FindById extends GotAllEntryCallback {
-            FindById(List<Entry> entries, ParseException e) { super(entries, e); }
-        }
-        public boolean hasError() {
-            return e != null || entries == null || entries.isEmpty();
-        }
-    }
-
-    public String getAuthor() {
-        return getString("author");
-    }
-
-    public String getAuthorId() {
-        return getString("author_id");
-    }
-
-    public String getAuthorImageUrl() {
-        return getString("author_image_url");
+    public Integer getId() {
+        return id;
     }
 
     public String getTitle() {
-        return getString("title");
+        return title;
     }
 
-    public String getBlogUrl() {
-        return getString("url");
+    public String getUrl() {
+        return url;
     }
 
-    public Date getEntryDate() {
-        return getDate("date");
+    public String getPublished() {
+        return published;
     }
 
-    public Date getPublishedDate() {
-        return getDate("published");
+    public List<String> getOriginalRawImageUrls() {
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            JSONArray array = new JSONArray(originalRawImageUrls);
+            final int N = array.length();
+            for (int i = 0; i < N; i++) {
+                list.add(array.getString(i));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
-    public List<String> getOriginalRawImageUrlList() {
-        return getList("original_raw_img_url");
+    public List<String> getOriginalThumbnailUrls() {
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            JSONArray array = new JSONArray(originalThumbnailUrls);
+            final int N = array.length();
+            for (int i = 0; i < N; i++) {
+                list.add(array.getString(i));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
-    public List<String> getThumbnailImageUrlList() {
-        return getList("original_thumbnail_url");
+    public List<String> getUploadedRawImageUrls() {
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            JSONArray array = new JSONArray(uploadedRawImageUrls);
+            final int N = array.length();
+            for (int i = 0; i < N; i++) {
+                list.add(array.getString(i));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
-    public List<String> getUploadedThumbnailUrlList() {
-        return getList("uploaded_thumbnail_url");
+    public List<String> getUploadedThumbnailUrls() {
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            JSONArray array = new JSONArray(uploadedThumbnailUrls);
+            final int N = array.length();
+            for (int i = 0; i < N; i++) {
+                list.add(array.getString(i));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
-    public List<String> getUploadedRawImageUrlList() {
-        return getList("uploaded_raw_image_url");
+    public Integer getMemberId() {
+        return memberId;
     }
 
-    public String getYear() {
-        return getString("year");
+    public String getMemberName() {
+        return memberName;
     }
 
-    public String getMonth() {
-        return getString("month");
+    public String getMemberImageUrl() {
+        return memberImageUrl;
     }
 
-    public String getDay() {
-        return getString("day");
+    protected Entry(Parcel in) {
+        title = in.readString();
+        url = in.readString();
+        published = in.readString();
+        originalRawImageUrls = in.readString();
+        originalThumbnailUrls = in.readString();
+        uploadedRawImageUrls = in.readString();
+        uploadedThumbnailUrls = in.readString();
+        memberName = in.readString();
+        memberImageUrl = in.readString();
     }
 
-    public String getDayweek() {
-        return getString("dayweek");
+    public static final Creator<Entry> CREATOR = new Creator<Entry>() {
+        @Override
+        public Entry createFromParcel(Parcel in) {
+            return new Entry(in);
+        }
+
+        @Override
+        public Entry[] newArray(int size) {
+            return new Entry[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(url);
+        dest.writeString(published);
+        dest.writeString(originalRawImageUrls);
+        dest.writeString(originalThumbnailUrls);
+        dest.writeString(uploadedRawImageUrls);
+        dest.writeString(uploadedThumbnailUrls);
+        dest.writeString(memberName);
+        dest.writeString(memberImageUrl);
+    }
 }

@@ -14,17 +14,20 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.parse.ParseQuery;
-import com.squareup.otto.Subscribe;
-
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.ConfigureActivity;
 import shts.jp.android.nogifeed.activities.MemberDetailActivity;
 import shts.jp.android.nogifeed.adapters.AllMemberGridListAdapter;
-import shts.jp.android.nogifeed.models.Favorite;
+import shts.jp.android.nogifeed.api.NogiFeedApiClient;
 import shts.jp.android.nogifeed.models.Member;
-import shts.jp.android.nogifeed.models.ProfileWidget;
-import shts.jp.android.nogifeed.models.eventbus.BusHolder;
+import shts.jp.android.nogifeed.models.Members;
+import shts.jp.android.nogifeed.providers.FavoriteContentObserver;
+import shts.jp.android.nogifeed.providers.dao.Favorites;
+import shts.jp.android.nogifeed.providers.dao.ProfileWidgets;
 
 public class AllMemberGridListFragment extends Fragment {
 
@@ -33,6 +36,8 @@ public class AllMemberGridListFragment extends Fragment {
     private GridView gridView;
     private AllMemberGridListAdapter gridAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
+
+    private CompositeSubscription subscriptions = new CompositeSubscription();
 
     public enum Type {
         UNKNOWN,
@@ -53,6 +58,13 @@ public class AllMemberGridListFragment extends Fragment {
     }
 
     private Type type;
+
+    private FavoriteContentObserver favoriteContentObserver = new FavoriteContentObserver() {
+        @Override
+        public void onChangeState(@State int state) {
+            if (gridAdapter != null) gridAdapter.notifyDataSetChanged();
+        }
+    };
 
     public static AllMemberGridListFragment newInstance(Type type) {
         AllMemberGridListFragment allMemberGridListFragment
@@ -106,11 +118,10 @@ public class AllMemberGridListFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Member.all();
+                getAllMembers();
             }
         });
-        swipeRefreshLayout.setColorSchemeResources(
-                R.color.primary, R.color.primary, R.color.primary, R.color.primary);
+        swipeRefreshLayout.setColorSchemeResources(R.color.primary);
         swipeRefreshLayout.post(new Runnable() {
             @Override public void run() {
                 swipeRefreshLayout.setRefreshing(true);
@@ -130,11 +141,11 @@ public class AllMemberGridListFragment extends Fragment {
 
                     case ADD_FAVORITE:
                         getActivity().setResult(Activity.RESULT_OK);
-                        Favorite.toggle(member.getObjectId());
+                        Favorites.toggle(getContext(), member);
                         break;
 
                     case ADD_WIDGET:
-                        if (ProfileWidget.exist(member.getObjectId())) {
+                        if (ProfileWidgets.exist(getContext(), member)) {
                             Toast.makeText(getActivity(), R.string.already_set_same_widget, Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -144,36 +155,45 @@ public class AllMemberGridListFragment extends Fragment {
                 }
             }
         });
-        Member.all();
+        getAllMembers();
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        BusHolder.get().register(this);
+        favoriteContentObserver.register(getContext());
     }
 
     @Override
     public void onPause() {
+        favoriteContentObserver.unregister(getContext());
         super.onPause();
-        BusHolder.get().unregister(this);
     }
 
-    @Subscribe
-    public void onGotAllMembers(Member.GetMembersCallback callback) {
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.setRefreshing(false);
-        }
-        if (callback.e == null && callback.members != null) {
-            gridAdapter = new AllMemberGridListAdapter(getActivity(), callback.members);
-            gridView.setAdapter(gridAdapter);
-        }
-    }
+    private void getAllMembers() {
+        subscriptions.add(NogiFeedApiClient.getAllMembers()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Members>() {
+                    @Override
+                    public void onCompleted() {
 
-    @Subscribe
-    public void onChangedFavoriteState(Favorite.ChangedFavoriteState state) {
-        if (gridAdapter != null) gridAdapter.notifyDataSetChanged();
-    }
+                    }
 
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Members members) {
+                        swipeRefreshLayout.setRefreshing(false);
+                        if (members != null) {
+                            gridAdapter = new AllMemberGridListAdapter(getActivity(), members);
+                            gridView.setAdapter(gridAdapter);
+                        }
+                    }
+                }));
+    }
 }

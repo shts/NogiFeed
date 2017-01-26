@@ -4,29 +4,27 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.squareup.otto.Subscribe;
-
 import java.util.List;
 
 import me.gujun.android.taggroup.TagGroup;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import shts.jp.android.nogifeed.R;
-import shts.jp.android.nogifeed.models.Favorite;
+import shts.jp.android.nogifeed.api.NogiFeedApiClient;
 import shts.jp.android.nogifeed.models.Member;
-import shts.jp.android.nogifeed.models.eventbus.BusHolder;
+import shts.jp.android.nogifeed.providers.FavoriteContentObserver;
+import shts.jp.android.nogifeed.providers.dao.Favorites;
 import shts.jp.android.nogifeed.utils.PicassoHelper;
 
 public class ViewMemberDetailHeader extends LinearLayout {
-
-    private static final String TAG = ViewMemberDetailHeader.class.getSimpleName();
 
     private View rootView;
 
@@ -65,75 +63,80 @@ public class ViewMemberDetailHeader extends LinearLayout {
         tags = (TagGroup) rootView.findViewById(R.id.tags);
     }
 
-    public void setup(final String memberObjectId) {
+    private CompositeSubscription subscriptions = new CompositeSubscription();
 
-        if (Favorite.exist(memberObjectId)) {
+    public void setup(int memberId) {
+        if (Favorites.exist(getContext(), memberId)) {
             favoriteIcon.setVisibility(View.VISIBLE);
         } else {
             favoriteIcon.setVisibility(View.GONE);
         }
+        subscriptions.add(NogiFeedApiClient.getMember(memberId)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Member>() {
+                    @Override
+                    public void onCompleted() {
 
-        Member.getReference(memberObjectId).fetchIfNeededInBackground(new GetCallback<Member>() {
-            @Override
-            public void done(Member member, ParseException e) {
-
-                final Context context = getContext();
-                final String objectId = member.getObjectId();
-
-                if ("sdpSHPvZXg".equals(objectId) || "ojTXXVhx6n".equals(objectId) /* for debug */
-                        || "uJs1wH6AdB".equals(objectId) || "DAkpwgMk8w".equals(objectId)) {
-                    profileImageView.setImageResource(R.drawable.kensyusei);
-
-                    birthdayTextView.setVisibility(View.GONE);
-                    bloodTypeTextView.setVisibility(View.GONE);
-                    constellationTextView.setVisibility(View.GONE);
-                    heightTextView.setVisibility(View.GONE);
-                    tags.setVisibility(View.GONE);
-
-                } else {
-                    final String profileImageUrl = member.getProfileImageUrl();
-                    PicassoHelper.loadAndCircleTransform(
-                            context, profileImageView, profileImageUrl);
-
-                    nameSubTextView.setText(member.getNameSub());
-
-                    final Resources res = context.getResources();
-                    birthdayTextView.setText(res.getString(R.string.property_name_birthday, member.getBirthday()));
-                    bloodTypeTextView.setText(res.getString(R.string.property_name_blood_type, member.getBloodType()));
-                    constellationTextView.setText(res.getString(R.string.property_name_constellation, member.getConstellation()));
-                    heightTextView.setText(res.getString(R.string.property_name_height, member.getHeight()));
-
-                    List<String> statusList = member.getStatus();
-                    if (statusList != null && !statusList.isEmpty()) {
-                        tags.setTags(member.getStatus());
                     }
-                }
-                nameMainTextView.setText(member.getNameMain());
-            }
-        });
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Member member) {
+                        if (TextUtils.isEmpty(member.getImageUrl())) {
+                            profileImageView.setImageResource(R.drawable.kensyusei);
+                            birthdayTextView.setVisibility(View.GONE);
+                            bloodTypeTextView.setVisibility(View.GONE);
+                            constellationTextView.setVisibility(View.GONE);
+                            heightTextView.setVisibility(View.GONE);
+                            tags.setVisibility(View.GONE);
+                        } else {
+                            final String profileImageUrl = member.getImageUrl();
+                            PicassoHelper.loadAndCircleTransform(
+                                    getContext(), profileImageView, profileImageUrl);
+
+                            nameSubTextView.setText(member.getNameSub());
+
+                            final Resources res = getContext().getResources();
+                            birthdayTextView.setText(res.getString(R.string.property_name_birthday, member.getBirthday()));
+                            bloodTypeTextView.setText(res.getString(R.string.property_name_blood_type, member.getBloodType()));
+                            constellationTextView.setText(res.getString(R.string.property_name_constellation, member.getConstellation()));
+                            heightTextView.setText(res.getString(R.string.property_name_height, member.getHeight()));
+
+                            List<String> statusList = member.getStatus();
+                            if (statusList != null && !statusList.isEmpty()) {
+                                tags.setTags(member.getStatus());
+                            }
+                        }
+                        nameMainTextView.setText(member.getNameMain());
+                    }
+                }));
     }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        BusHolder.get().register(this);
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        BusHolder.get().unregister(this);
-        super.onDetachedFromWindow();
-    }
-
-    @Subscribe
-    public void onChangedFavoriteState(Favorite.ChangedFavoriteState state) {
-        if (state.e == null) {
-            if (state.action == Favorite.ChangedFavoriteState.Action.ADD) {
+    private FavoriteContentObserver favoriteContentObserver = new FavoriteContentObserver() {
+        @Override
+        public void onChangeState(@State int state) {
+            if (state == State.ADD) {
                 favoriteIcon.setVisibility(View.VISIBLE);
             } else {
                 favoriteIcon.setVisibility(View.GONE);
             }
         }
+    };
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        favoriteContentObserver.register(getContext());
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        favoriteContentObserver.unregister(getContext());
+        super.onDetachedFromWindow();
+    }
 }

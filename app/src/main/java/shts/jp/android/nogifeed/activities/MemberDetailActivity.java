@@ -16,13 +16,12 @@ public class MemberDetailActivity extends AppCompatActivity {
     private static final String TAG = MemberDetailActivity.class.getSimpleName();
 
     public static Intent getStartIntent(Context context, Member member) {
-        return getStartIntent(context, member.getObjectId());
+        return getStartIntent(context, member.getId());
     }
 
-    public static Intent getStartIntent(Context context, String memberObjectId) {
-        Intent intent = new Intent(context, MemberDetailActivity.class);
-        intent.putExtra("memberObjectId", memberObjectId);
-        return intent;
+    public static Intent getStartIntent(Context context, int memberId) {
+        return new Intent(context, MemberDetailActivity.class)
+                .putExtra("memberId", memberId);
     }
 
     @Override
@@ -30,9 +29,8 @@ public class MemberDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_detail2);
 
-        String memberObjectId = getIntent().getStringExtra("memberObjectId");
         MemberDetailFragment2 memberDetailFragment2
-                = MemberDetailFragment2.newInstance(memberObjectId);
+                = MemberDetailFragment2.newInstance(getIntent().getIntExtra("memberId", -1));
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, memberDetailFragment2, MemberDetailFragment2.class.getSimpleName());

@@ -16,23 +16,20 @@ import shts.jp.android.nogifeed.R;
 import shts.jp.android.nogifeed.activities.BlogActivity;
 import shts.jp.android.nogifeed.activities.MemberDetailActivity;
 import shts.jp.android.nogifeed.common.Logger;
-import shts.jp.android.nogifeed.entities.Blog;
 import shts.jp.android.nogifeed.models.Entry;
-import shts.jp.android.nogifeed.utils.DateUtils;
 import shts.jp.android.nogifeed.utils.PicassoHelper;
-import shts.jp.android.nogifeed.utils.TrackerUtils;
 
 public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
 
     private static final String TAG = FavoriteFeedListAdapter.class.getSimpleName();
     private final Context context;
 
-    public FavoriteFeedListAdapter(Context context, List list) {
+    public FavoriteFeedListAdapter(Context context, List<Entry> list) {
         super(context, list);
         this.context = context;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    private class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView backgroundImageView;
         ImageView profileImageView;
@@ -40,7 +37,7 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
         TextView authorTextView;
         TextView updatedTextView;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             titleTextView = (TextView) view.findViewById(R.id.card_title);
             authorTextView = (TextView) view.findViewById(R.id.authorname);
@@ -55,9 +52,9 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
         final ViewHolder holder = (ViewHolder) viewHolder;
         final Entry entry = (Entry) object;
         holder.titleTextView.setText(entry.getTitle());
-        holder.authorTextView.setText(entry.getAuthor());
-        holder.updatedTextView.setText(DateUtils.dateToString(entry.getPublishedDate()));
-        List<String> urls = entry.getUploadedThumbnailUrlList();
+        holder.authorTextView.setText(entry.getMemberName());
+        holder.updatedTextView.setText(entry.getPublished());
+        List<String> urls = entry.getOriginalThumbnailUrls();
         if (urls != null && !urls.isEmpty()) {
             PicassoHelper.load(
                     context, holder.backgroundImageView, urls.get(0));
@@ -68,13 +65,11 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
         holder.backgroundImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(BlogActivity.getStartIntent(context, new Blog(entry)));
-                TrackerUtils.sendTrack(context, TAG,
-                        "OnClicked", "-> Blog : " + "entry(" + entry.toString() + ")");
+                context.startActivity(BlogActivity.getStartIntent(context, entry));
             }
         });
 
-        final String profileImageUrl = entry.getAuthorImageUrl();
+        final String profileImageUrl = entry.getMemberImageUrl();
         if (!TextUtils.isEmpty(profileImageUrl)) {
             PicassoHelper.loadAndCircleTransform(
                     context, holder.profileImageView, profileImageUrl);
@@ -82,9 +77,7 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
                 @Override
                 public void onClick(View view) {
                     context.startActivity(MemberDetailActivity
-                            .getStartIntent(context, entry.getAuthorId()));
-                    TrackerUtils.sendTrack(context, TAG,
-                            "OnClicked", "-> Detail : " + "entry(" + entry.toString() + ")");
+                            .getStartIntent(context, entry.getMemberId()));
                 }
             });
         } else {
@@ -103,7 +96,6 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
                 view.requestLayout();
             }
         }
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 }
