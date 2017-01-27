@@ -12,15 +12,18 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
+import shts.jp.android.nogifeed.utils.DateUtils;
+
 /**
- t.string :title
- t.string :url
- t.string :member_id
- t.string :original_raw_image_urls
- t.string :original_thumbnail_urls
- t.string :uploaded_raw_image_urls
- t.string :uploaded_thumbnail_urls
- t.string :published
+ * t.string :title
+ * t.string :url
+ * t.string :member_id
+ * t.string :original_raw_image_urls
+ * t.string :original_thumbnail_urls
+ * t.string :uploaded_raw_image_urls
+ * t.string :uploaded_thumbnail_urls
+ * t.string :published <- まちがえた
+ * t.datetime :published2 <- こっちをつかう
  */
 public class Entry implements Parcelable {
 
@@ -33,9 +36,9 @@ public class Entry implements Parcelable {
     @SerializedName(value = "__url", alternate = {"url", "_url"})
     @Expose
     private String url;
-    @SerializedName(value = "__published", alternate = {"published", "_published"})
+    @SerializedName(value = "__published2", alternate = {"published2", "_published2"})
     @Expose
-    private String published;
+    private String published2;
     @SerializedName(value = "__original_raw_image_urls", alternate = {"original_raw_image_urls", "_original_raw_image_urls"})
     @Expose
     private String originalRawImageUrls;
@@ -62,7 +65,7 @@ public class Entry implements Parcelable {
         this.id = id;
         this.title = title;
         this.url = url;
-        this.published = published;
+        this.published2 = published;
         this.originalRawImageUrls = originalRawImageUrls;
         this.originalThumbnailUrls = originalThumbnailUrls;
         this.uploadedRawImageUrls = uploadedRawImageUrls;
@@ -85,7 +88,7 @@ public class Entry implements Parcelable {
     }
 
     public String getPublished() {
-        return published;
+        return DateUtils.parse(this.published2);
     }
 
     public List<String> getOriginalRawImageUrls() {
@@ -159,7 +162,7 @@ public class Entry implements Parcelable {
     protected Entry(Parcel in) {
         title = in.readString();
         url = in.readString();
-        published = in.readString();
+        published2 = in.readString();
         originalRawImageUrls = in.readString();
         originalThumbnailUrls = in.readString();
         uploadedRawImageUrls = in.readString();
@@ -189,7 +192,7 @@ public class Entry implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(title);
         dest.writeString(url);
-        dest.writeString(published);
+        dest.writeString(published2);
         dest.writeString(originalRawImageUrls);
         dest.writeString(originalThumbnailUrls);
         dest.writeString(uploadedRawImageUrls);

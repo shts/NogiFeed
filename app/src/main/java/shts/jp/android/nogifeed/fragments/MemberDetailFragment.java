@@ -27,18 +27,25 @@ import shts.jp.android.nogifeed.api.NogiFeedApiClient;
 import shts.jp.android.nogifeed.models.Entries;
 import shts.jp.android.nogifeed.models.Entry;
 import shts.jp.android.nogifeed.providers.FavoriteContentObserver;
+import shts.jp.android.nogifeed.providers.UnreadArticlesContentObserver;
 import shts.jp.android.nogifeed.providers.dao.Favorites;
 import shts.jp.android.nogifeed.views.DividerItemDecoration;
 import shts.jp.android.nogifeed.views.ViewMemberDetailHeader;
 
-public class MemberDetailFragment2 extends Fragment {
+public class MemberDetailFragment extends Fragment {
 
-    public static MemberDetailFragment2 newInstance(int memberId) {
+    public static MemberDetailFragment newInstance(int memberId) {
         Bundle bundle = new Bundle();
         bundle.putInt("memberId", memberId);
-        MemberDetailFragment2 memberDetailFragment2 =  new MemberDetailFragment2();
-        memberDetailFragment2.setArguments(bundle);
-        return memberDetailFragment2;
+        MemberDetailFragment memberDetailFragment = new MemberDetailFragment();
+        memberDetailFragment.setArguments(bundle);
+        return memberDetailFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        unreadArticlesContentObserver.register(getContext());
     }
 
     @Override
@@ -51,6 +58,13 @@ public class MemberDetailFragment2 extends Fragment {
     public void onPause() {
         favoriteContentObserver.unregister(getContext());
         super.onPause();
+    }
+
+    @Override
+    public void onDestroyView() {
+        unreadArticlesContentObserver.unregister(getContext());
+        subscriptions.unsubscribe();
+        super.onDestroyView();
     }
 
     private RecyclerView recyclerView;
@@ -138,6 +152,13 @@ public class MemberDetailFragment2 extends Fragment {
             } else {
                 Snackbar.make(coordinatorLayout, R.string.unregistered_favorite_member, Snackbar.LENGTH_SHORT).show();
             }
+        }
+    };
+
+    private UnreadArticlesContentObserver unreadArticlesContentObserver = new UnreadArticlesContentObserver() {
+        @Override
+        public void onChangeState(@State int state) {
+            recyclerView.getAdapter().notifyDataSetChanged();
         }
     };
 }

@@ -94,6 +94,7 @@ public class AllFeedListFragment extends Fragment {
     }
 
     private void getAllFeeds() {
+        counter = 0;
         swipeRefreshLayout.setRefreshing(true);
 
         subscriptions.add(NogiFeedApiClient.getAllEntries((counter * PAGE_LIMIT), PAGE_LIMIT)

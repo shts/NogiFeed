@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import shts.jp.android.nogifeed.R;
-import shts.jp.android.nogifeed.fragments.MemberDetailFragment2;
+import shts.jp.android.nogifeed.fragments.MemberDetailFragment;
 import shts.jp.android.nogifeed.models.Member;
 
 public class MemberDetailActivity extends AppCompatActivity {
@@ -29,11 +29,11 @@ public class MemberDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_detail2);
 
-        MemberDetailFragment2 memberDetailFragment2
-                = MemberDetailFragment2.newInstance(getIntent().getIntExtra("memberId", -1));
+        MemberDetailFragment memberDetailFragment
+                = MemberDetailFragment.newInstance(getIntent().getIntExtra("memberId", -1));
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, memberDetailFragment2, MemberDetailFragment2.class.getSimpleName());
+        ft.replace(R.id.container, memberDetailFragment, MemberDetailFragment.class.getSimpleName());
         ft.commit();
     }
 

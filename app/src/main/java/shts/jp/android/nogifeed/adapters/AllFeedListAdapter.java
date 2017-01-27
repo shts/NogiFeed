@@ -3,6 +3,7 @@ package shts.jp.android.nogifeed.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,8 +82,6 @@ public class AllFeedListAdapter extends BindableAdapter<Entry> {
 
         holder.titleTextView.setText(entry.getTitle());
         holder.authorNameTextView.setText(entry.getMemberName());
-        // TODO:
-//        holder.updatedTextView.setText(DateUtils.dateToString(entry.getEntryDate()));
         holder.updatedTextView.setText(entry.getPublished());
         holder.favoriteImageView.setVisibility(
                 Favorites.exist(getContext(), entry.getMemberId()) ? View.VISIBLE : View.GONE);

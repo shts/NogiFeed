@@ -4,37 +4,33 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import shts.jp.android.nogifeed.common.Logger;
 
 public class DateUtils {
 
     private static final String TAG = DateUtils.class.getSimpleName();
-    private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy'/'MM'/'dd HH:mm:ss");
 
-    public static synchronized String formatUpdated(String source) {
-        Logger.d(TAG, "formatUpdated source(" + source + ")");
-        String updated = null;
+    private DateUtils() {
+    }
+
+    private static final SimpleDateFormat from = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);
+    private static final SimpleDateFormat to = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.JAPAN);
+
+    /**
+     * ブログ記事の日付( yyyy-MM-dd'T'HH:mm:ss.SSS )を yyyy-MM-dd HH:mm 形式に変換する
+     * 変換に失敗した場合はパラメータをそのまま返す
+     *
+     * @param d 2016-11-27T11:57:00.000Z
+     * @return yyyy-MM-dd HH:mm
+     */
+    public static String parse(String d) {
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-            Date date = sdf.parse(source);
-            updated = FORMATTER.format(date);
-
+            return to.format(from.parse(d));
         } catch (ParseException e) {
-            Logger.e(TAG, "failed to parse");
-            return null;
+            e.printStackTrace();
         }
-        return updated;
-    }
-
-    public static synchronized Date formatUpdatedDate(String source) throws ParseException {
-        return FORMATTER.parse(formatUpdated(source));
-    }
-
-    public static String dateToString(Date date) {
-        Calendar datetime = Calendar.getInstance();
-        datetime.setTime(date);
-        return datetime.get(Calendar.YEAR) + "/" + (datetime.get(Calendar.MONTH) + 1)
-                + "/" + datetime.get(Calendar.DATE);
+        return d;
     }
 }
