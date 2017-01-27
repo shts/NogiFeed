@@ -73,17 +73,17 @@ public class FavoriteFeedListAdapter extends RecyclableAdapter<Entry> {
         if (!TextUtils.isEmpty(profileImageUrl)) {
             PicassoHelper.loadAndCircleTransform(
                     context, holder.profileImageView, profileImageUrl);
-            holder.profileImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    context.startActivity(MemberDetailActivity
-                            .getStartIntent(context, entry.getMemberId()));
-                }
-            });
         } else {
             Logger.w(TAG, "profileImageUrl is empty");
             holder.profileImageView.setImageResource(R.drawable.kensyusei);
         }
+        holder.profileImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(MemberDetailActivity
+                        .getStartIntent(context, entry.getMemberId()));
+            }
+        });
     }
 
     @Override

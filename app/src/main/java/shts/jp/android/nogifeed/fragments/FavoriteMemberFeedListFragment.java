@@ -28,30 +28,15 @@ import shts.jp.android.nogifeed.activities.AllMemberActivity;
 import shts.jp.android.nogifeed.adapters.FavoriteFeedListAdapter;
 import shts.jp.android.nogifeed.api.NogiFeedApiClient;
 import shts.jp.android.nogifeed.models.Entries;
-import shts.jp.android.nogifeed.models.eventbus.BusHolder;
 import shts.jp.android.nogifeed.providers.dao.Favorite;
 import shts.jp.android.nogifeed.providers.dao.Favorites;
 import shts.jp.android.nogifeed.views.HackySwipeRefreshLayout;
 
-// TODO: インストール後に何度か起動された時、アプリ評価を誘導する View を表示する
-// TODO: View にお気に入り機能と共有機能を追加する
 public class FavoriteMemberFeedListFragment extends Fragment {
 
     private HackySwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private View emptyView;
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        BusHolder.get().register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        BusHolder.get().unregister(this);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -98,6 +83,12 @@ public class FavoriteMemberFeedListFragment extends Fragment {
         if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
             getEntries();
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        subscriptions.unsubscribe();
+        super.onDestroyView();
     }
 
     private CompositeSubscription subscriptions = new CompositeSubscription();

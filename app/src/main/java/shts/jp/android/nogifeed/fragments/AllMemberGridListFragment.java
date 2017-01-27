@@ -171,6 +171,12 @@ public class AllMemberGridListFragment extends Fragment {
         super.onPause();
     }
 
+    @Override
+    public void onDestroyView() {
+        subscriptions.unsubscribe();
+        super.onDestroyView();
+    }
+
     private void getAllMembers() {
         subscriptions.add(NogiFeedApiClient.getAllMembers()
                 .subscribeOn(Schedulers.newThread())
