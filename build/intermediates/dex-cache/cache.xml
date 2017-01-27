@@ -210,21 +210,21 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/logging-interceptor/3.2.0/a56f28d5b7fab623c6c1d2afa08dd496d873ac21/logging-interceptor-3.2.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.3"
-        sha1="a56f28d5b7fab623c6c1d2afa08dd496d873ac21">
-        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/logging-interceptor-3.2.0_3726aa35d7350a353f2922dbb770ca8cf5efa56a.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Applications/git/android/NogiFeed/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/9.0.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.3"
         sha1="0dc8ab07eeceda5e99b305c8069765056b6e5c9d">
         <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-analytics-impl-9.0.0_23b0e89141100b2c422751e7509bef74367fad6b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/saitoushouta/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/logging-interceptor/3.2.0/a56f28d5b7fab623c6c1d2afa08dd496d873ac21/logging-interceptor-3.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="a56f28d5b7fab623c6c1d2afa08dd496d873ac21">
+        <dex dex="/Applications/git/android/NogiFeed/app/build/intermediates/pre-dexed/debug/logging-interceptor-3.2.0_3726aa35d7350a353f2922dbb770ca8cf5efa56a.jar" />
     </item>
     <item
         is-multidex="false"
