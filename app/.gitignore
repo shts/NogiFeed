@@ -1,6 +1,7 @@
 # Android Studio files
 /build
 
+build/
 */build
 *.iml
 *.iws
