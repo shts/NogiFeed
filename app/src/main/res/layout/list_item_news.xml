@@ -1,35 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
-    android:paddingRight="16dp"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:minHeight="@dimen/entry_list_item_min_height"
+    android:orientation="horizontal"
+    android:paddingEnd="16dp"
+    android:paddingStart="0dp">
 
     <ImageView
-        android:id="@+id/news_icon"
-        android:layout_gravity="center_vertical"
-        android:padding="16dp"
+        android:id="@+id/newsIcon"
         android:layout_width="72dp"
         android:layout_height="72dp"
-        android:src="@drawable/kensyusei"
-        />
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@null"
+        android:padding="16dp"
+        tools:src="@drawable/ic_news_other" />
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/news_title"
-            android:textSize="12sp"
-            android:gravity="center_vertical"
+            android:id="@+id/newsTitle"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="Title"
-            android:textStyle="bold"
-            android:maxLength="46"
             android:ellipsize="end"
-            />
+            android:gravity="center_vertical"
+            android:maxLength="46"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            tools:text="Title" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,15 +43,15 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <TextView
-                android:id="@+id/news_date"
-                android:textSize="12sp"
-                android:gravity="center_vertical"
-                android:text="update"
+                android:id="@+id/newsDate"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textSize="12sp"
+                tools:text="update" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -1,39 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primary"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <LinearLayout
-        android:padding="16dp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <EditText
-                android:id="@+id/req_editor"
-                android:hint="ご意見・ご要望をお聞かせください"
+                android:id="@+id/requestEditor"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:hint="@string/request_hint" />
         </android.support.design.widget.TextInputLayout>
+
         <Button
-            android:id="@+id/req_send_button"
-            android:text="NogiFeedに意見を送る"
+            android:id="@+id/sendButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/request_send_button" />
+
         <TextView
             android:id="@+id/link"
-            android:paddingTop="4dp"
-            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="4dp" />
     </LinearLayout>
 </LinearLayout>

@@ -12,8 +12,6 @@ import net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu;
 
 public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior<FloatingActionsMenu> {
 
-    private static final String TAG = FloatingActionMenuBehavior.class.getSimpleName();
-
     public FloatingActionMenuBehavior(Context context, AttributeSet attrs) {
         // コンストラクタを追加しないとクラスを見つけることができず強制終了する
     }

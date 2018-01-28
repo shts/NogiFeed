@@ -5,14 +5,17 @@ import android.os.Looper;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 
+import shts.jp.android.nogifeed.R;
+
 public class HackySwipeRefreshLayout extends SwipeRefreshLayout {
 
     public HackySwipeRefreshLayout(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public HackySwipeRefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setColorSchemeResources(R.color.primary);
     }
 
     /**

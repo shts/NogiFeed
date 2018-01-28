@@ -8,11 +8,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import shts.jp.android.nogifeed.common.Logger;
-
 public class NewsList extends ArrayList<News> {
-
-    private static final String TAG = NewsList.class.getSimpleName();
 
     public void filter(Context context) {
         NewsList filteredNewsList = new NewsList();
@@ -55,12 +51,10 @@ public class NewsList extends ArrayList<News> {
         public int compare(News lhs, News rhs) {
             final Date lhsDate = lhs.getDate();
             if (lhsDate == null) {
-                Logger.w(TAG, "lhsDate is null");
                 return 0;
             }
             final Date rhsDate = rhs.getDate();
             if (rhsDate == null) {
-                Logger.w(TAG, "rhsDate is null");
                 return 0;
             }
             return lhsDate.compareTo(rhsDate) * sort;

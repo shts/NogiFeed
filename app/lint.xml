@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="Typos">
+        <ignore regexp="Nogi" />
+        <ignore regexp="nogifeed" />
+    </issue>
+    <issue id="UnusedResources" severity="ignore">
+        <ignore path="src/main/res/layout/activity_news_browse" />
+        <ignore path="src/main/res/layout/activity_top" />
+        <ignore path="src/main/res/layout/activity_blog" />
+        <ignore path="src/main/res/layout/activity_member_detail" />
+
+        <ignore path="src/main/res/values/color_material" />
+    </issue>
+</lint>

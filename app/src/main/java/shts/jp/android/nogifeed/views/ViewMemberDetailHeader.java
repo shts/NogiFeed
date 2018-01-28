@@ -96,7 +96,7 @@ public class ViewMemberDetailHeader extends LinearLayout {
                             tags.setVisibility(View.GONE);
                         } else {
                             final String profileImageUrl = member.getImageUrl();
-                            PicassoHelper.loadAndCircleTransform(
+                            PicassoHelper.INSTANCE.loadAndCircleTransform(
                                     getContext(), profileImageView, profileImageUrl);
 
                             nameSubTextView.setText(member.getNameSub());

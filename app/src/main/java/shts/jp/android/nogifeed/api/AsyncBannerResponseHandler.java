@@ -7,7 +7,6 @@ import android.util.Xml;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
-import org.apache.http.Header;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -16,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import cz.msebera.android.httpclient.Header;
 import shts.jp.android.nogifeed.entities.Banner;
 
 public abstract class AsyncBannerResponseHandler extends AsyncHttpResponseHandler {
@@ -36,6 +36,7 @@ public abstract class AsyncBannerResponseHandler extends AsyncHttpResponseHandle
 
     public abstract void onFinish(ArrayList<Banner> bannerList);
 
+    // int statusCode, Header[] headers, byte[] responseBytes
     @Override
     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
         ArrayList<Banner> banners = Parser.parse(responseBody);

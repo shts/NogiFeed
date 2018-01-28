@@ -2,22 +2,22 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinator"
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.TopActivity">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refresh"
+    <shts.jp.android.nogifeed.views.HackySwipeRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/news_feed_list"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/newsFeedList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/grey_50" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+            app:layoutManager="LinearLayoutManager" />
+    </shts.jp.android.nogifeed.views.HackySwipeRefreshLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -25,9 +25,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:src="@drawable/ic_filter_list_white_18dp"
         app:borderWidth="0dp"
-        app:layout_anchor="@id/refresh"
+        app:layout_anchor="@id/refreshLayout"
         app:layout_anchorGravity="bottom|right|end" />
 </android.support.design.widget.CoordinatorLayout>

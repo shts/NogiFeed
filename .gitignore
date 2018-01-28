@@ -11,12 +11,11 @@ proguard/
 *.iml
 *.ipr
 *.iws
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/libraries/
+.idea/
 .gradle
 app/build/
 .DS_Store
+/build
 
 # Secret property
 gradle.properties

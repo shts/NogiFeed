@@ -2,15 +2,10 @@ package shts.jp.android.nogifeed.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
-import shts.jp.android.nogifeed.common.Logger;
 
 public class DateUtils {
-
-    private static final String TAG = DateUtils.class.getSimpleName();
 
     private DateUtils() {
     }

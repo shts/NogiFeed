@@ -58,8 +58,6 @@
 
     <string name="dialog_confirm_download_title">画像ダウンロード</string>
     <string name="dialog_confirm_download_message">画像をダウンロードしますか？</string>
-    <string name="dialog_confirm_download_positive_btn">はい</string>
-    <string name="dialog_confirm_download_negative_btn">いいえ</string>
 
     <string name="toast_download_complete">ダウンロードが完了しました</string>
 
@@ -128,5 +126,9 @@
 
     <!-- widget chooser -->
     <string name="select_widget_title">"メンバーを選択してください"</string>
+
+    <!-- fragment request -->
+    <string name="request_hint">ご意見・ご要望をお聞かせください</string>
+    <string name="request_send_button">NogiFeedに意見を送る</string>
 
 </resources>

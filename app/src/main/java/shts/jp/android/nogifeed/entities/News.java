@@ -3,15 +3,16 @@ package shts.jp.android.nogifeed.entities;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import shts.jp.android.nogifeed.R;
-import shts.jp.android.nogifeed.common.Logger;
 import shts.jp.android.nogifeed.utils.PreferencesUtils;
 
 public class News implements Parcelable {
@@ -147,12 +148,12 @@ public class News implements Parcelable {
         return Type.from(iconType);
     }
 
-    private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy.MM.dd");
-    public Date getDate() {
+    private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy.MM.dd", Locale.US);
+    Date getDate() {
         try {
             return SDF.parse(this.date);
         } catch (ParseException e) {
-            Logger.e(TAG, "failed to parse date", e);
+            Log.e(TAG, "failed to parse date", e);
         }
         return null;
     }
