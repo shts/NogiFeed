@@ -51,8 +51,12 @@ class FavoriteAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         entryViewHolder.itemView.apply {
             rootView.setOnClickListener { clickListener?.onClickEntry(entry) }
 
-            PicassoHelper.load(entryThumbnailView,
-                    entry.originalThumbnailUrls[0], R.drawable.noimage)
+            if (entry.originalThumbnailUrls.isEmpty()) {
+                entryThumbnailView.setImageResource(R.drawable.noimage)
+            } else {
+                PicassoHelper.load(entryThumbnailView,
+                        entry.originalThumbnailUrls[0], R.drawable.noimage)
+            }
             PicassoHelper.loadAndCircleTransform(
                     profileImageView, entry.memberImageUrl, R.drawable.kensyusei)
 

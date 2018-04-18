@@ -16,21 +16,6 @@
 #   public *;
 #}
 
-# strip logging
--assumenosideeffects class android.util.Log {
-    <methods>;
-}
-
--assumenosideeffects class shts.jp.android.nogifeed.common.Logger {
-    <methods>;
-}
-
--keepattributes *Annotation*
--keepclassmembers class ** {
-    @com.squareup.otto.Subscribe public *;
-    @com.squareup.otto.Produce public *;
-}
-
 # RxJava
 -keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
     long producerIndex;

@@ -16,8 +16,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 
-import icepick.Icepick;
-import icepick.State;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.OnShowRationale;
@@ -42,7 +40,6 @@ public class PermissionRequireActivity extends AppCompatActivity {
         String DOWNLOAD = "urlList";
     }
 
-    @State
     ArrayList<String> urlList;
 
     public static Intent getDownloadStartIntent(@NonNull Context context, @NonNull String url) {
@@ -61,18 +58,8 @@ public class PermissionRequireActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            Icepick.restoreInstanceState(this, savedInstanceState);
-        } else {
-            urlList = getIntent().getStringArrayListExtra(ExtraKey.DOWNLOAD);
-        }
+        urlList = getIntent().getStringArrayListExtra(ExtraKey.DOWNLOAD);
         PermissionRequireActivityPermissionsDispatcher.requestWithCheck(this);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        Icepick.saveInstanceState(this, outState);
-        super.onSaveInstanceState(outState);
     }
 
     @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)

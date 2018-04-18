@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 
-import org.apache.http.protocol.HTTP
-
 object IntentUtils {
 
     private val URL_TWITTER = "https://twitter.com/"
@@ -32,10 +30,11 @@ object IntentUtils {
 
     fun recommendApp(context: Context) {
         val text = RECOMEND_TEXT + "\n" + PLAY_STORE_URL
-        val intent = Intent()
-        intent.action = Intent.ACTION_SEND
-        intent.type = HTTP.PLAIN_TEXT_TYPE
-        intent.putExtra(Intent.EXTRA_TEXT, text)
+        val intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, text)
+        }
         context.startActivity(intent)
     }
 }

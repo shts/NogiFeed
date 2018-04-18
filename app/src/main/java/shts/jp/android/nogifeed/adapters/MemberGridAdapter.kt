@@ -8,11 +8,14 @@ import kotlinx.android.synthetic.main.list_item_member.view.*
 import shts.jp.android.nogifeed.R
 import shts.jp.android.nogifeed.models.Member
 import shts.jp.android.nogifeed.models.Members
-import shts.jp.android.nogifeed.providers.dao.Favorites
 import shts.jp.android.nogifeed.utils.PicassoHelper
 
 interface OnMemberClickListener {
     fun onClickMember(member: Member)
+}
+
+interface OnMemberFavoriteListener {
+    fun isFavorite(member: Member): Boolean
 }
 
 class MemberGridAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -20,10 +23,15 @@ class MemberGridAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val members: Members = Members()
 
     var clickListener: OnMemberClickListener? = null
+    var favoriteListener: OnMemberFavoriteListener? = null
 
     fun add(members: Members) {
         this.members.addAll(members)
         this.notifyDataSetChanged()
+    }
+
+    fun clear() {
+        this.members.clear()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
@@ -35,7 +43,8 @@ class MemberGridAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         holder.itemView.apply {
             rootView.setOnClickListener { clickListener?.onClickMember(member) }
             PicassoHelper.loadAndCircleTransform(profileImageView, member.imageUrl, R.drawable.kensyusei)
-            val favorite = Favorites.exist(favoriteIconView.context, member)
+//            val favorite = Favorites.exist(favoriteIconView.context, member)
+            val favorite = favoriteListener?.isFavorite(member) ?: false
             favoriteIconView.visibility = if (favorite) View.VISIBLE else View.GONE
             memberNameView.text = member.nameMain
         }

@@ -16,18 +16,18 @@
         android:layout_margin="5dp">
 
         <ImageView
-            android:id="@+id/profile_image"
+            android:id="@+id/profileImageView"
             android:layout_width="72dp"
             android:layout_height="72dp"
             android:contentDescription="@null"
             android:src="@drawable/kensyusei" />
 
         <ImageView
-            android:id="@+id/favorite_icon"
+            android:id="@+id/favoriteIconView"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_alignBottom="@id/profile_image"
-            android:layout_alignEnd="@id/profile_image"
+            android:layout_alignBottom="@id/profileImageView"
+            android:layout_alignEnd="@id/profileImageView"
             android:layout_marginBottom="-8dp"
             android:layout_marginEnd="-8dp"
             android:contentDescription="@null"
@@ -36,36 +36,36 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/name_main"
+        android:id="@+id/nameMainTextView"
         style="@style/MemberDetailHeader.TextView.Name.Main" />
 
     <TextView
-        android:id="@+id/name_sub"
+        android:id="@+id/nameSubTextView"
         style="@style/MemberDetailHeader.TextView.Name.Sub"
         android:layout_marginBottom="5dp" />
 
     <TextView
-        android:id="@+id/constellation"
+        android:id="@+id/constellationTextView"
         style="@style/MemberDetailHeader.TextView.Properties"
         android:layout_marginBottom="3dp" />
 
     <TextView
-        android:id="@+id/blood_type"
+        android:id="@+id/bloodTypeTextView"
         style="@style/MemberDetailHeader.TextView.Properties"
         android:layout_marginBottom="3dp" />
 
     <TextView
-        android:id="@+id/birthday"
+        android:id="@+id/birthdayTextView"
         style="@style/MemberDetailHeader.TextView.Properties"
         android:layout_marginBottom="3dp" />
 
     <TextView
-        android:id="@+id/height"
+        android:id="@+id/heightTextView"
         style="@style/MemberDetailHeader.TextView.Properties"
         android:layout_marginBottom="3dp" />
 
     <me.gujun.android.taggroup.TagGroup
-        android:id="@+id/tags"
+        android:id="@+id/tagGroupView"
         style="@style/TagGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

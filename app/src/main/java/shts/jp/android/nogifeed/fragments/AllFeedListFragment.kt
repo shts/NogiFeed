@@ -1,5 +1,7 @@
 package shts.jp.android.nogifeed.fragments
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
@@ -9,33 +11,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_all_feed_list.*
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
-import rx.subscriptions.CompositeSubscription
 import shts.jp.android.nogifeed.R
 import shts.jp.android.nogifeed.activities.BlogActivity
 import shts.jp.android.nogifeed.activities.MemberDetailActivity
 import shts.jp.android.nogifeed.adapters.AllFeedAdapter
 import shts.jp.android.nogifeed.adapters.OnEntryClickListener
 import shts.jp.android.nogifeed.adapters.OnPageMaxScrolledListener
-import shts.jp.android.nogifeed.api.NogiFeedApiClient
 import shts.jp.android.nogifeed.models.Entry
-import shts.jp.android.nogifeed.providers.FavoriteContentObserver
+import shts.jp.android.nogifeed.viewmodels.AllFeedListViewModel
 
 class AllFeedListFragment : Fragment() {
 
     companion object {
-        private val PAGE_LIMIT = 30
-
         val newInstance: AllFeedListFragment = AllFeedListFragment()
     }
 
-    private var counter = 0
+    private val viewModel by lazy {
+        ViewModelProviders.of(this).get(AllFeedListViewModel::class.java)
+    }
 
     private val adapter: AllFeedAdapter = AllFeedAdapter().apply {
         scrollListener = object : OnPageMaxScrolledListener {
             override fun onScrolledMaxPage() {
-                getNextFeed()
+                viewModel.getNextEntries()
             }
         }
         clickListener = object : OnEntryClickListener {
@@ -49,18 +47,26 @@ class AllFeedListFragment : Fragment() {
         }
     }
 
-    private val subscriptions: CompositeSubscription = CompositeSubscription()
-
-    private val favoriteContentObserver = object : FavoriteContentObserver() {
-        override fun onChangeState(@State state: Int) {
-            adapter.notifyDataSetChanged()
-        }
-    }
-
-    // 推しメン登録は個人ページより行われるので resume <-> pause だと拾えない
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        favoriteContentObserver.register(context)
+
+        viewModel.allEntriesLiveData.observe(this, Observer {
+            if (it != null) adapter.add(it)
+        })
+
+        viewModel.allProcessing.observe(this, Observer {
+            if (it != null) refreshLayout.isRefreshing = it
+        })
+
+        viewModel.allResult.observe(this, Observer {
+            if (it != null && !it) {
+                Toast.makeText(activity, R.string.feed_failure, Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        viewModel.stateData.observe(this, Observer {
+            if (it != null) adapter.notifyDataSetChanged()
+        })
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -73,50 +79,11 @@ class AllFeedListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         allFeedList.adapter = adapter
         allFeedList.addItemDecoration(DividerItemDecoration(context, VERTICAL))
-
-        refreshLayout.setOnRefreshListener { getAllFeeds() }
+        refreshLayout.setOnRefreshListener { viewModel.getAllEntries() }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        getAllFeeds()
-    }
-
-    private fun getAllFeeds() {
-        counter = 0
-
-        subscriptions.add(NogiFeedApiClient.getAllEntries(counter * PAGE_LIMIT, PAGE_LIMIT)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { refreshLayout.isRefreshing = true }
-                .subscribe({ entries ->
-                    refreshLayout.isRefreshing = false
-                    adapter.add(entries)
-                }, {
-                    refreshLayout.isRefreshing = false
-                    Toast.makeText(activity, R.string.feed_failure, Toast.LENGTH_SHORT).show()
-                }))
-    }
-
-    private fun getNextFeed() {
-        refreshLayout.isRefreshing = false
-
-        counter++
-        subscriptions.add(NogiFeedApiClient.getAllEntries(counter * PAGE_LIMIT, PAGE_LIMIT)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ entries ->
-                    if (entries != null) {
-                        adapter.add(entries)
-                    } else {
-                        Toast.makeText(activity, R.string.feed_failure, Toast.LENGTH_SHORT).show()
-                    }
-                }, { }))
-    }
-
-    override fun onDestroyView() {
-        favoriteContentObserver.unregister(context)
-        subscriptions.unsubscribe()
-        super.onDestroyView()
+        viewModel.getAllEntries()
     }
 }

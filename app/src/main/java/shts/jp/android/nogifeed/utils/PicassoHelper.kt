@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.widget.ImageView
 
 import com.squareup.picasso.Picasso
+import shts.jp.android.nogifeed.models.Entry
 
 import shts.jp.android.nogifeed.views.transformations.CircleTransformation
 
