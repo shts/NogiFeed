@@ -135,6 +135,5 @@ public class NogiFeedApiClient {
         })
         @POST("/registration")
         Observable<Void> registrationId(@Body HashMap<String, String> body);
-
     }
 }

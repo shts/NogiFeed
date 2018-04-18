@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shts.jp.android.nogifeed.views.HackySwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/refresh"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/all_feed_list"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/allFeedList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey_50" />
+        app:layoutManager="LinearLayoutManager" />
 </shts.jp.android.nogifeed.views.HackySwipeRefreshLayout>

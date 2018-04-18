@@ -5,19 +5,20 @@
     android:layout_height="match_parent">
 
     <shts.jp.android.nogifeed.views.HackySwipeRefreshLayout
-        android:id="@+id/refresh"
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerview"
+            android:id="@+id/favoriteList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"
+            app:layoutManager="LinearLayoutManager" />
     </shts.jp.android.nogifeed.views.HackySwipeRefreshLayout>
 
     <FrameLayout
-        android:id="@+id/empty_view"
+        android:id="@+id/emptyView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -38,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add_white_18dp"
         app:borderWidth="0dp" />

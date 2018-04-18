@@ -1,33 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:padding="10dp">
+
     <ImageView
         android:id="@+id/icon"
-        android:src="@drawable/kensyusei"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"/>
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/kensyusei" />
+
     <TextView
         android:id="@+id/title"
-        android:text="title"
+        style="@style/NotificationTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/icon"
         android:layout_alignParentTop="true"
-        android:paddingLeft="15dp"
+        android:layout_toEndOf="@id/icon"
         android:ellipsize="end"
         android:maxLines="1"
+        android:paddingEnd="0dp"
+        android:paddingStart="16dp"
         android:scrollHorizontally="true"
-        style="@style/NotificationTitle" />
+        tools:text="title" />
+
     <TextView
         android:id="@+id/text"
-        android:text="text"
+        style="@style/NotificationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/icon"
         android:layout_below="@id/title"
-        android:paddingLeft="15dp"
-        style="@style/NotificationText" />
+        android:layout_toEndOf="@id/icon"
+        android:paddingEnd="0dp"
+        android:paddingStart="16dp"
+        tools:text="text" />
 </RelativeLayout>

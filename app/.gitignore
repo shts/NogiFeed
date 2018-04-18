@@ -1,6 +1,7 @@
 # Android Studio files
 /build
 
+build/
 */build
 *.iml
 *.iws
@@ -8,6 +9,9 @@
 .idea/
 .gradle/
 local.properties
+
+manifest-merger-release-report.txt
+
 # Secret property
 gradle.properties
 

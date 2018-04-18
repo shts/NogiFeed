@@ -1,84 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <View
+    <android.support.v4.widget.Space
         android:layout_width="match_parent"
-        android:layout_height="30dp"/>
+        android:layout_height="30dp" />
 
     <RelativeLayout
-        android:layout_gravity="center"
-        android:layout_margin="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/profile_image"
-            android:src="@drawable/kensyusei"
-            android:layout_width="72dp"
-            android:layout_height="72dp" />
-        <ImageView
-            android:id="@+id/favorite_icon"
-            android:visibility="gone"
-            android:layout_alignRight="@id/profile_image"
-            android:layout_alignBottom="@id/profile_image"
-            android:src="@drawable/favorite_normal_72"
-            android:layout_marginRight="-8dp"
-            android:layout_marginBottom="-8dp"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
-    </RelativeLayout>
-    <!--
-    <ImageView
-        android:id="@+id/profile_image"
-        android:layout_gravity="center"
-        android:layout_margin="5dp"
-        android:src="@drawable/kensyusei"
-        android:layout_width="72dp"
-        android:layout_height="72dp" />
-    -->
-
-    <TextView
-        android:id="@+id/name_main"
-        style="@style/MemberDetailHeader.TextView.Name.Main"
-        />
-    <TextView
-        android:layout_marginBottom="5dp"
-        android:id="@+id/name_sub"
-        style="@style/MemberDetailHeader.TextView.Name.Sub"
-        />
-    <TextView
-        android:layout_marginBottom="3dp"
-        android:id="@+id/constellation"
-        style="@style/MemberDetailHeader.TextView.Properties"
-        />
-    <TextView
-        android:layout_marginBottom="3dp"
-        android:id="@+id/blood_type"
-        style="@style/MemberDetailHeader.TextView.Properties"
-        />
-    <TextView
-        android:layout_marginBottom="3dp"
-        android:id="@+id/birthday"
-        style="@style/MemberDetailHeader.TextView.Properties"
-        />
-    <TextView
-        android:layout_marginBottom="3dp"
-        android:id="@+id/height"
-        style="@style/MemberDetailHeader.TextView.Properties"
-        />
-
-    <me.gujun.android.taggroup.TagGroup
-        android:layout_marginTop="3dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:id="@+id/tags"
-        app:atg_borderColor="@color/purple_200"
-        app:atg_textColor="@color/primary"
+        android:layout_margin="5dp">
+
+        <ImageView
+            android:id="@+id/profileImageView"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:contentDescription="@null"
+            android:src="@drawable/kensyusei" />
+
+        <ImageView
+            android:id="@+id/favoriteIconView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignBottom="@id/profileImageView"
+            android:layout_alignEnd="@id/profileImageView"
+            android:layout_marginBottom="-8dp"
+            android:layout_marginEnd="-8dp"
+            android:contentDescription="@null"
+            android:src="@drawable/favorite_normal_72"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/nameMainTextView"
+        style="@style/MemberDetailHeader.TextView.Name.Main" />
+
+    <TextView
+        android:id="@+id/nameSubTextView"
+        style="@style/MemberDetailHeader.TextView.Name.Sub"
+        android:layout_marginBottom="5dp" />
+
+    <TextView
+        android:id="@+id/constellationTextView"
+        style="@style/MemberDetailHeader.TextView.Properties"
+        android:layout_marginBottom="3dp" />
+
+    <TextView
+        android:id="@+id/bloodTypeTextView"
+        style="@style/MemberDetailHeader.TextView.Properties"
+        android:layout_marginBottom="3dp" />
+
+    <TextView
+        android:id="@+id/birthdayTextView"
+        style="@style/MemberDetailHeader.TextView.Properties"
+        android:layout_marginBottom="3dp" />
+
+    <TextView
+        android:id="@+id/heightTextView"
+        style="@style/MemberDetailHeader.TextView.Properties"
+        android:layout_marginBottom="3dp" />
+
+    <me.gujun.android.taggroup.TagGroup
+        android:id="@+id/tagGroupView"
+        style="@style/TagGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="3dp"
         app:atg_backgroundColor="@color/purple_200"
-        style="@style/TagGroup" />
+        app:atg_borderColor="@color/purple_200"
+        app:atg_textColor="@color/primary" />
 
 </LinearLayout>

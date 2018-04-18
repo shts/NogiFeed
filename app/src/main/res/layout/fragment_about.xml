@@ -1,17 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <ListView
-        android:id="@+id/about_list"
+        android:elevation="4dp"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+        <include
+            android:id="@+id/aboutHeaderView"
+            layout="@layout/about_header" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:divider="@drawable/divider_item"
+        android:showDividers="middle|end"
+        android:orientation="vertical">
+
+        <include
+            android:foreground="?android:attr/selectableItemBackground"
+            android:id="@+id/socialShareListItem"
+            layout="@layout/list_item_about_action" />
+
+        <include
+            android:foreground="?android:attr/selectableItemBackground"
+            android:id="@+id/thumbUpListItem"
+            layout="@layout/list_item_about_action" />
+
+        <include
+            android:foreground="?android:attr/selectableItemBackground"
+            android:id="@+id/mentionListItem"
+            layout="@layout/list_item_about_action" />
+    </LinearLayout>
 </LinearLayout>

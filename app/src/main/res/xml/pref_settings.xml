@@ -22,16 +22,6 @@
             android:summary="@string/setting_summary_notification_blog"
             android:defaultValue="true"
             />
-        <!--
-        <MultiSelectListPreference
-            android:key="@string/setting_enable_news_notification_restriction_key"
-            android:title="ニュース更新通知制限"
-            android:summary="興味のあるニュースのみ通知を受け取ることができます"
-            android:dialogTitle="ニュース"
-            android:entries="@array/news_category_array"
-            android:entryValues="@array/news_category_array_value"
-            />
-        -->
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/setting_category_title_download">
         <CheckBoxPreference

@@ -34,7 +34,7 @@ public class NewsUpdateNotification extends NotificationWithId {
 
         if (!enable(news)) { return; }
 
-        Intent intent = NewsBrowseActivity.getStartIntent(context, news);
+        Intent intent = NewsBrowseActivity.Companion.getStartIntent(context, news);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 

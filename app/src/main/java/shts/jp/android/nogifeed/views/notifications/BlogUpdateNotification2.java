@@ -23,15 +23,15 @@ import shts.jp.android.nogifeed.views.transformations.CircleTransformation;
 
 public class BlogUpdateNotification2 {
 
-    private static final String TAG = BlogUpdateNotification.class.getSimpleName();
+    private static final String TAG = BlogUpdateNotification2.class.getSimpleName();
 
     private static final String NOTIFICATION_ID_KEY = "pref_key_blog_update_notification_id";
     private static final int DEFAULT_NOTIFICATION_ID = 1000;
 
     /** ブログ更新通知可否設定 */
-    private static final int NOTIFICATION_ENABLE = R.string.setting_enable_blog_notification_key;
+    public static final int NOTIFICATION_ENABLE = R.string.setting_enable_blog_notification_key;
     /** ブログ更新通知制限設定(お気に入りメンバーのみ通知する設定) */
-    private static final int NOTIFICATION_RESTRICTION_ENABLE = R.string.setting_enable_blog_notification_restriction_key;
+    public static final int NOTIFICATION_RESTRICTION_ENABLE = R.string.setting_enable_blog_notification_restriction_key;
 
     public static void showExecUiThread(@NonNull final Context context,
                                         @NonNull final Entry entry) {
@@ -57,7 +57,7 @@ public class BlogUpdateNotification2 {
             return;
         }
 
-        Intent intent = BlogActivity.getStartIntent(context, entry);
+        Intent intent = BlogActivity.Companion.getStartIntent(context, entry);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 

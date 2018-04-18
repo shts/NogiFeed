@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="shts.jp.android.nogifeed">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <!-- for push service START -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,22 +12,25 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-    <permission android:protectionLevel="signature"
-        android:name="shts.jp.android.nogifeed.permission.C2D_MESSAGE" />
+    <permission
+        android:name="shts.jp.android.nogifeed.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
     <uses-permission android:name="shts.jp.android.nogifeed.permission.C2D_MESSAGE" />
 
     <application
         android:name=".NogiFeedApplication"
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme">
         <!--This meta-data tag is required to use Google Play Services.-->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
         <activity
-            android:name=".MyActivity"
+            android:name=".activities.TopActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -35,71 +38,67 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.DeepLinkActivity">
+        <activity
+            android:name=".activities.DeepLinkActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- deep link from default -->
-                <data android:scheme="http" android:host="blog.nogizaka46.com" android:path="/smph/"/>
+                <data
+                    android:host="blog.nogizaka46.com"
+                    android:path="/smph/"
+                    android:scheme="http" />
                 <!-- deep link from chrome -->
-                <data android:scheme="intent" android:host="blog.nogizaka46.com" android:path="/smph/"/>
+                <data
+                    android:host="blog.nogizaka46.com"
+                    android:path="/smph/"
+                    android:scheme="intent" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activities.BlogActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
-        </activity>
+            android:theme="@style/AppTheme.ActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.AllMemberActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait">
-        </activity>
+            android:label="@string/choose_member"
+            android:theme="@style/MemberSelect"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.NewsBrowseActivity"
             android:label="@string/action_news"
-            android:screenOrientation="portrait">
-        </activity>
+            android:theme="@style/AppTheme.ActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.MemberDetailActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.OtherMenuActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".activities.MemberListActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.PermissionRequireActivity"
             android:label="@string/app_name"
-            android:theme="@style/PermissionRequireActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/PermissionRequireActivity" />
 
         <!-- authorities do not change -->
-        <service
-            android:name="shts.jp.android.nogifeed.receivers.PushReceiver">
+        <service android:name="shts.jp.android.nogifeed.receivers.PushReceiver">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
         <provider
-            android:authorities="android.shts.jp.nogifeed.providers.nogifeed"
-            android:name="shts.jp.android.nogifeed.providers.NogiFeedProvider"/>
+            android:name="shts.jp.android.nogifeed.providers.NogiFeedProvider"
+            android:authorities="android.shts.jp.nogifeed.providers.nogifeed" />
 
         <service android:name="shts.jp.android.nogifeed.receivers.TokenRegistrationService" />
-        <service
-            android:name="shts.jp.android.nogifeed.receivers.TokenRefreshService">
+        <service android:name="shts.jp.android.nogifeed.receivers.TokenRefreshService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
